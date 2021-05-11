@@ -85,7 +85,7 @@ def verify_design_files(font_config):
                             assert width * 2 == height, design_file_path
                         elif east_asian_width_status == 'F' or east_asian_width_status == 'W':
                             assert width == height, design_file_path
-                        else: # 'A' or 'N'
+                        else:  # 'A' or 'N'
                             assert width * 2 == height or width == height, design_file_path
                         assert font_config.px == height, design_file_path
 
