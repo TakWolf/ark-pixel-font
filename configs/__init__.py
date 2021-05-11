@@ -45,6 +45,7 @@ class FontConfig:
         self.output_basic_name = f'ark-pixel-{px}px'
         self.release_basic_name = f'ark-pixel-font-{px}px'
         self.design_dir = os.path.join(workspace_define.design_dir, str(px))
+        self.svg_outputs_dir = os.path.join(workspace_define.svg_outputs_dir, str(px))
         self.zip_file_name = f'{self.release_basic_name}-all-v{version}.zip'
         self.zip_file_release_path = os.path.join(workspace_define.release_dir, self.zip_file_name)
         # 构建参数
