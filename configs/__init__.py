@@ -45,6 +45,8 @@ class FontConfig:
         self.output_basic_name = f'ark-pixel-{px}px'
         self.release_basic_name = f'ark-pixel-font-{px}px'
         self.design_dir = os.path.join(workspace_define.design_dir, str(px))
+        self.zip_file_name = f'{self.release_basic_name}-all-v{version}.zip'
+        self.zip_file_release_path = os.path.join(workspace_define.release_dir, self.zip_file_name)
         # 构建参数
         self.is_include_draft = is_include_draft
         # 语言变种相关配置
