@@ -19,12 +19,12 @@ def _parse_design_file_name(design_file_name):
     assert 1 <= len(params) <= 2, design_file_name
     uni_hex_name = params[0].lower() if params[0] == 'notdef' else params[0].upper()
     if len(params) >= 2:
-        language_flavors = params[1].lower().split(',')
-        for language_flavor in language_flavors:
+        available_language_flavors = params[1].lower().split(',')
+        for language_flavor in available_language_flavors:
             assert configs.language_flavors.__contains__(language_flavor), design_file_name
     else:
-        language_flavors = []
-    return uni_hex_name, language_flavors
+        available_language_flavors = []
+    return uni_hex_name, available_language_flavors
 
 
 def classify_design_files(font_config):
@@ -42,7 +42,7 @@ def classify_design_files(font_config):
                     for design_file_name in design_file_names:
                         if design_file_name.endswith('.png'):
                             design_file_from_path = os.path.join(design_file_parent_dir, design_file_name)
-                            uni_hex_name, language_flavors = _parse_design_file_name(design_file_name)
+                            uni_hex_name, available_language_flavors = _parse_design_file_name(design_file_name)
                             if uni_hex_name == 'notdef':
                                 design_file_to_dir = design_flavor_dir
                             else:
@@ -51,7 +51,7 @@ def classify_design_files(font_config):
                                 block_dir_name = f'{unicode_block.begin:04X}-{unicode_block.end:04X} {unicode_block.name}'
                                 design_file_to_dir = os.path.join(design_flavor_dir, block_dir_name)
                             fs_util.make_dirs_if_not_exists(design_file_to_dir)
-                            design_file_name = f'{uni_hex_name}{" " if len(language_flavors) > 0 else ""}{",".join(language_flavors)}.png'
+                            design_file_name = f'{uni_hex_name}{" " if len(available_language_flavors) > 0 else ""}{",".join(available_language_flavors)}.png'
                             design_file_to_path = os.path.join(design_file_to_dir, design_file_name)
                             shutil.move(design_file_from_path, design_file_to_path)
                             logger.info(f'classify design file: {design_file_to_path}')
