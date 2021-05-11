@@ -154,7 +154,11 @@ def collect_available_design(font_config):
         whole_alphabet.update(available_language_flavor_alphabet)
         language_flavor_alphabet = set(no_flavor_alphabet)
         language_flavor_alphabet.update(available_language_flavor_alphabet)
+        language_flavor_alphabet = list(language_flavor_alphabet)
+        language_flavor_alphabet.sort(key=lambda c: ord(c))
         language_flavor_alphabet_map[language_flavor] = language_flavor_alphabet
+    whole_alphabet = list(whole_alphabet)
+    whole_alphabet.sort(key=lambda c: ord(c))
     design_file_paths_map = {}
     for language_flavor, available_language_flavor_design_file_paths in available_language_flavor_design_file_paths_map.items():
         design_file_paths = dict(no_flavor_design_file_paths)
