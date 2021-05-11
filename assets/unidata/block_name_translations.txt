@@ -1,0 +1,28 @@
+# Block name translations
+
+Basic Latin; 基础拉丁字符
+Latin-1 Supplement; 拉丁字符-1 补充
+Latin Extended-A; 拉丁字符 扩展-A
+Latin Extended-B; 拉丁字符 扩展-B
+Spacing Modifier Letters; 间距修饰字符
+Greek and Coptic; 希腊和科普特字符
+Cyrillic; 西里尔字符
+General Punctuation; 常用标点符号
+Letterlike Symbols; 字母式符号
+Number Forms; 数字形式
+Arrows; 箭头
+Mathematical Operators; 算术操作符
+Miscellaneous Technical; 杂项科技符号
+Enclosed Alphanumerics; 封闭式字母数字
+Box Drawing; 制表符
+Geometric Shapes; 几何图形
+Miscellaneous Symbols; 杂项符号
+CJK Symbols and Punctuation; 中日韩标点符号
+Hiragana; 平假名
+Katakana; 片假名
+Bopomofo; 汉语注音符号
+Enclosed CJK Letters and Months; 封闭式中日韩字母和月份
+CJK Unified Ideographs; 中日韩统一表意字符
+Halfwidth and Fullwidth Forms; 半角和全角形式
+
+# EOF
