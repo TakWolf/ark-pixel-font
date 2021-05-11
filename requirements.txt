@@ -1,0 +1,2 @@
+fonttools==4.22.1
+pypng==0.0.20
