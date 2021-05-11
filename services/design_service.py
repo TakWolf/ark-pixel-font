@@ -98,3 +98,66 @@ def verify_design_files(font_config):
                         svg_file_path = os.path.join(svg_file_parent_dir, design_file_name.replace('.png', '.svg'))
                         glyph_util.save_outlines_to_svg(outlines, width * font_config.em_dot_size, height * font_config.em_dot_size, svg_file_path)
                         logger.info(f'make svg file: {svg_file_path}')
+
+
+def collect_available_design(font_config):
+    """
+    收集可用字母表，生成设计文件映射表
+    """
+    # 遍历文件并分组
+    no_flavor_alphabet = set()
+    no_flavor_design_file_paths = {}
+    available_language_flavor_alphabet_map = {}
+    available_language_flavor_design_file_paths_map = {}
+    for language_flavor in font_config.language_flavor_configs.keys():
+        available_language_flavor_alphabet_map[language_flavor] = set()
+        available_language_flavor_design_file_paths_map[language_flavor] = {}
+    design_flavor_names = ['final']
+    if font_config.is_include_draft:
+        design_flavor_names.append('draft')
+    for design_flavor_name in design_flavor_names:
+        design_flavor_dir = os.path.join(font_config.design_dir, design_flavor_name)
+        if os.path.isdir(design_flavor_dir):
+            for design_file_parent_dir, _, design_file_names in os.walk(design_flavor_dir):
+                for design_file_name in design_file_names:
+                    if design_file_name.endswith('.png'):
+                        design_file_path = os.path.join(design_file_parent_dir, design_file_name)
+                        uni_hex_name, available_language_flavors = _parse_design_file_name(design_file_name)
+                        if len(available_language_flavors) > 0:
+                            for language_flavor in font_config.language_flavor_configs.keys():
+                                if available_language_flavors.__contains__(language_flavor):
+                                    language_flavor_alphabet = available_language_flavor_alphabet_map[language_flavor]
+                                    language_flavor_design_file_paths = available_language_flavor_design_file_paths_map[language_flavor]
+                                    if uni_hex_name == 'notdef':
+                                        if '.notdef' not in language_flavor_design_file_paths:
+                                            language_flavor_design_file_paths['.notdef'] = design_file_path
+                                    else:
+                                        code_point = int(uni_hex_name, 16)
+                                        c = chr(code_point)
+                                        if not language_flavor_alphabet.__contains__(c):
+                                            language_flavor_alphabet.add(c)
+                                            language_flavor_design_file_paths[code_point] = design_file_path
+                        else:
+                            if uni_hex_name == 'notdef':
+                                if '.notdef' not in no_flavor_design_file_paths:
+                                    no_flavor_design_file_paths['.notdef'] = design_file_path
+                            else:
+                                code_point = int(uni_hex_name, 16)
+                                c = chr(code_point)
+                                if not no_flavor_alphabet.__contains__(c):
+                                    no_flavor_alphabet.add(c)
+                                    no_flavor_design_file_paths[code_point] = design_file_path
+    # 合并各个组
+    whole_alphabet = set(no_flavor_alphabet)
+    language_flavor_alphabet_map = {}
+    for language_flavor, available_language_flavor_alphabet in available_language_flavor_alphabet_map.items():
+        whole_alphabet.update(available_language_flavor_alphabet)
+        language_flavor_alphabet = set(no_flavor_alphabet)
+        language_flavor_alphabet.update(available_language_flavor_alphabet)
+        language_flavor_alphabet_map[language_flavor] = language_flavor_alphabet
+    design_file_paths_map = {}
+    for language_flavor, available_language_flavor_design_file_paths in available_language_flavor_design_file_paths_map.items():
+        design_file_paths = dict(no_flavor_design_file_paths)
+        design_file_paths.update(available_language_flavor_design_file_paths)
+        design_file_paths_map[language_flavor] = design_file_paths
+    return whole_alphabet, language_flavor_alphabet_map, design_file_paths_map

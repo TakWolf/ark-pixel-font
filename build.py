@@ -12,6 +12,7 @@ def main():
     for font_config in font_configs:
         design_service.classify_design_files(font_config)
         design_service.verify_design_files(font_config)
+        whole_alphabet, language_flavor_alphabet_map, design_file_paths_map = design_service.collect_available_design(font_config)
 
 
 if __name__ == '__main__':
