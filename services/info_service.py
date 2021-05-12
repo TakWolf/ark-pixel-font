@@ -16,10 +16,7 @@ def _get_unicode_char_count_infos(alphabet):
         count_map[i] = count
     positions = list(count_map.keys())
     positions.sort()
-    infos = []
-    for i in positions:
-        infos.append((configs.unicode_blocks[i], count_map[i]))
-    return infos
+    return [(configs.unicode_blocks[i], count_map[i]) for i in positions]
 
 
 def _get_gb2312_char_count_infos(alphabet):
