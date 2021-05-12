@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ display_name }} - Preview</title>
+    <style>
+        @font-face {
+            font-family: app-font;
+            src: url("{{ font_file_name }}");
+        }
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            color: #4b4b4b;
+            font-family: app-font, sans-serif;
+            font-size: {{ font_px * 4 }}px;
+            line-height: {{ font_px * 4 }}px;
+            word-break: break-all;
+            background-image: linear-gradient(90deg, rgba(255, 0, 0, 0.1) 4%, rgba(0, 0, 0, 0) 4%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 255, 0.1) 50%, rgba(0, 0, 255, 0.1) 54%, rgba(0, 0, 0, 0) 54%), linear-gradient(180deg, rgba(255, 0, 0, 0.1) 4%, rgba(0, 0, 0, 0) 4%);
+            background-size: {{ font_px * 4 }}px {{ font_px * 4 }}px;
+        }
+    </style>
+</head>
+<body>
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+<br>
+abcdefghijklmnopqrstuvwxyz
+<br>
+0123456789
+<br>
+!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
+<br>
+{{ content }}
+</body>
+</html>

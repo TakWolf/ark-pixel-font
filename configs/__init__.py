@@ -1,6 +1,8 @@
 import os
 import time
 
+from jinja2 import Environment, FileSystemLoader
+
 from configs import workspace_define
 from utils import unicode_util
 
@@ -67,6 +69,8 @@ class FontLanguageFlavorConfig:
         self.otf_file_output_path = os.path.join(workspace_define.outputs_dir, self.otf_file_name)
         self.ttf_file_name = f'{font_config.output_basic_name}-{language_flavor}.ttf'
         self.ttf_file_output_path = os.path.join(workspace_define.outputs_dir, self.ttf_file_name)
+        self.preview_html_file_name = f'preview-{font_config.px}px-{language_flavor}.html'
+        self.preview_html_file_output_path = os.path.join(workspace_define.outputs_dir, self.preview_html_file_name)
         self.zip_file_name = f'{font_config.release_basic_name}-{language_flavor}-v{version}.zip'
         self.zip_file_release_path = os.path.join(workspace_define.release_dir, self.zip_file_name)
 
@@ -75,3 +79,5 @@ font_configs = [
     FontConfig(12, 10, -2, False),
     FontConfig(16, 13, -3, False)
 ]
+
+template_env = Environment(loader=FileSystemLoader(workspace_define.templates_dir))

@@ -1,2 +1,4 @@
 fonttools==4.22.1
+Jinja2==2.11.3
+MarkupSafe==1.1.1
 pypng==0.0.20
