@@ -10,26 +10,13 @@ from utils import glyph_util
 logger = logging.getLogger('font-service')
 
 
-def _get_uni_hex_name(c):
-    """
-    获取字符的 uni 16进制名称
-    用于设计文件和字体字符的命名
-    """
-    code_point = ord(c)
-    if code_point <= 0xFFFF:
-        return f'{code_point:04X}'
-    else:
-        return f'{code_point:08X}'
-
-
 def _get_glyph_infos(alphabet):
     glyph_order = ['.notdef']
     character_map = {}
     for c in alphabet:
-        uni_hex_name = _get_uni_hex_name(c)
-        glyph_name = f'uni{uni_hex_name}'
-        glyph_order.append(glyph_name)
         code_point = ord(c)
+        glyph_name = f'uni{code_point:04X}'
+        glyph_order.append(glyph_name)
         character_map[code_point] = glyph_name
     return glyph_order, character_map
 
