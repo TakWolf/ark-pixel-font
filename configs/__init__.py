@@ -49,8 +49,8 @@ class FontConfig:
         self.svg_outputs_dir = os.path.join(workspace_define.svg_outputs_dir, str(px))
         self.info_file_name = f'font-info-{px}px.md'
         self.info_file_output_path = os.path.join(workspace_define.outputs_dir, self.info_file_name)
-        self.demo_article_html_file_name = f'demo-article-{px}px.html'
-        self.demo_article_html_file_output_path = os.path.join(workspace_define.outputs_dir, self.demo_article_html_file_name)
+        self.demo_html_file_name = f'demo-{px}px.html'
+        self.demo_html_file_output_path = os.path.join(workspace_define.outputs_dir, self.demo_html_file_name)
         self.release_basic_name = f'ark-pixel-font-{px}px'
         self.zip_file_name = f'{self.release_basic_name}-all-v{version}.zip'
         self.zip_file_release_path = os.path.join(workspace_define.release_dir, self.zip_file_name)
