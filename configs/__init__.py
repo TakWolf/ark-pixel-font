@@ -20,7 +20,7 @@ designer_url = 'https://takwolf.com'
 license_description = 'This Font Software is licensed under the SIL Open Font License, Version 1.1.'
 license_info_url = 'https://scripts.sil.org/OFL'
 
-language_flavors = [
+locale_flavors = [
     'zh_cn',  # 中文-中国大陆
     'zh_hk',  # 中文-香港特别行政区
     'zh_tw',  # 中文-台湾地区
@@ -57,23 +57,23 @@ class FontConfig:
         # 构建参数
         self.is_include_draft = is_include_draft
         # 语言变种相关配置
-        self.language_flavor_configs = [FontLanguageFlavorConfig(self, language_flavor) for language_flavor in language_flavors]
+        self.locale_flavor_configs = [FontLocaleFlavorConfig(self, locale_flavor) for locale_flavor in locale_flavors]
 
 
-class FontLanguageFlavorConfig:
-    def __init__(self, font_config, language_flavor):
-        self.language_flavor = language_flavor
+class FontLocaleFlavorConfig:
+    def __init__(self, font_config, locale_flavor):
+        self.locale_flavor = locale_flavor
         # 字体信息
-        self.display_name = f'{font_config.display_name} {language_flavor.upper()}'
-        self.unique_name = f'{font_config.unique_name}-{language_flavor.upper()}'
+        self.display_name = f'{font_config.display_name} {locale_flavor.upper()}'
+        self.unique_name = f'{font_config.unique_name}-{locale_flavor.upper()}'
         # 相关路径
-        self.otf_file_name = f'{font_config.output_basic_name}-{language_flavor}.otf'
+        self.otf_file_name = f'{font_config.output_basic_name}-{locale_flavor}.otf'
         self.otf_file_output_path = os.path.join(workspace_define.outputs_dir, self.otf_file_name)
-        self.ttf_file_name = f'{font_config.output_basic_name}-{language_flavor}.ttf'
+        self.ttf_file_name = f'{font_config.output_basic_name}-{locale_flavor}.ttf'
         self.ttf_file_output_path = os.path.join(workspace_define.outputs_dir, self.ttf_file_name)
-        self.preview_html_file_name = f'preview-{font_config.px}px-{language_flavor}.html'
+        self.preview_html_file_name = f'preview-{font_config.px}px-{locale_flavor}.html'
         self.preview_html_file_output_path = os.path.join(workspace_define.outputs_dir, self.preview_html_file_name)
-        self.zip_file_name = f'{font_config.release_basic_name}-{language_flavor}-v{version}.zip'
+        self.zip_file_name = f'{font_config.release_basic_name}-{locale_flavor}-v{version}.zip'
         self.zip_file_release_path = os.path.join(workspace_define.release_dir, self.zip_file_name)
 
 

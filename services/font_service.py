@@ -89,16 +89,16 @@ def _make_font_file(name_strings, em_dot_size, units_per_em, ascent, descent, gl
     logger.info(f'make {file_path}')
 
 
-def make_fonts(font_config, language_flavor_alphabet_map, design_file_paths_map):
-    for language_flavor_config in font_config.language_flavor_configs:
+def make_fonts(font_config, locale_flavor_alphabet_map, design_file_paths_map):
+    for locale_flavor_config in font_config.locale_flavor_configs:
         name_strings = {
             'copyright': configs.copyright_string,
-            'familyName': language_flavor_config.display_name,
+            'familyName': locale_flavor_config.display_name,
             'styleName': font_config.style_name,
-            'uniqueFontIdentifier': f'{language_flavor_config.unique_name}-{font_config.style_name};{configs.version}',
-            'fullName': language_flavor_config.display_name,
+            'uniqueFontIdentifier': f'{locale_flavor_config.unique_name}-{font_config.style_name};{configs.version}',
+            'fullName': locale_flavor_config.display_name,
             'version': configs.version,
-            'psName': f'{language_flavor_config.unique_name}-{font_config.style_name}',
+            'psName': f'{locale_flavor_config.unique_name}-{font_config.style_name}',
             'designer': configs.designer,
             'description': configs.description,
             'vendorURL': configs.vendor_url,
@@ -106,8 +106,8 @@ def make_fonts(font_config, language_flavor_alphabet_map, design_file_paths_map)
             'licenseDescription': configs.license_description,
             'licenseInfoURL': configs.license_info_url
         }
-        alphabet = language_flavor_alphabet_map[language_flavor_config.language_flavor]
-        design_file_paths = design_file_paths_map[language_flavor_config.language_flavor]
+        alphabet = locale_flavor_alphabet_map[locale_flavor_config.locale_flavor]
+        design_file_paths = design_file_paths_map[locale_flavor_config.locale_flavor]
         glyph_order, character_map = _get_glyph_infos(alphabet)
-        _make_font_file(name_strings, font_config.em_dot_size, font_config.units_per_em, font_config.ascent, font_config.descent, glyph_order, character_map, design_file_paths, False, language_flavor_config.otf_file_output_path)
-        _make_font_file(name_strings, font_config.em_dot_size, font_config.units_per_em, font_config.ascent, font_config.descent, glyph_order, character_map, design_file_paths, True, language_flavor_config.ttf_file_output_path)
+        _make_font_file(name_strings, font_config.em_dot_size, font_config.units_per_em, font_config.ascent, font_config.descent, glyph_order, character_map, design_file_paths, False, locale_flavor_config.otf_file_output_path)
+        _make_font_file(name_strings, font_config.em_dot_size, font_config.units_per_em, font_config.ascent, font_config.descent, glyph_order, character_map, design_file_paths, True, locale_flavor_config.ttf_file_output_path)

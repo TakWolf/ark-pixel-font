@@ -78,7 +78,7 @@ def make_info_file(font_config, alphabet):
         file.write(f'| 像素尺寸 | {font_config.px}px |\n')
         file.write(f'| 版本号 | {configs.version} |\n')
         file.write(f'| 字符总数 | {len(alphabet)} |\n')
-        file.write(f'| 语言变种 | {"、".join([language_flavor_config.language_flavor for language_flavor_config in font_config.language_flavor_configs])} |\n')
+        file.write(f'| 语言变种 | {"、".join([locale_flavor_config.locale_flavor for locale_flavor_config in font_config.locale_flavor_configs])} |\n')
         file.write('\n')
         file.write('## Unicode 字符分布\n')
         file.write('\n')
@@ -90,20 +90,20 @@ def make_info_file(font_config, alphabet):
     logger.info(f'----> make {file_path}')
 
 
-def make_preview_html_files(font_config, language_flavor_alphabet_map):
+def make_preview_html_files(font_config, locale_flavor_alphabet_map):
     template = configs.template_env.get_template('preview.html')
-    for language_flavor_config in font_config.language_flavor_configs:
-        display_name = language_flavor_config.display_name
-        font_file_name = language_flavor_config.otf_file_name
+    for locale_flavor_config in font_config.locale_flavor_configs:
+        display_name = locale_flavor_config.display_name
+        font_file_name = locale_flavor_config.otf_file_name
         font_px = font_config.px
-        alphabet = language_flavor_alphabet_map[language_flavor_config.language_flavor]
+        alphabet = locale_flavor_alphabet_map[locale_flavor_config.locale_flavor]
         html = template.render(
             display_name=display_name,
             font_file_name=font_file_name,
             font_px=font_px,
             content=''.join([c for c in alphabet if ord(c) >= 128])
         )
-        file_path = language_flavor_config.preview_html_file_output_path
+        file_path = locale_flavor_config.preview_html_file_output_path
         with open(file_path, 'w', encoding='utf-8') as file:
             file.write(html)
         logger.info(f'make {file_path}')
