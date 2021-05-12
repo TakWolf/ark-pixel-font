@@ -109,9 +109,9 @@ def collect_available_design(font_config):
     no_flavor_design_file_paths = {}
     available_language_flavor_alphabet_map = {}
     available_language_flavor_design_file_paths_map = {}
-    for language_flavor in font_config.language_flavor_configs.keys():
-        available_language_flavor_alphabet_map[language_flavor] = set()
-        available_language_flavor_design_file_paths_map[language_flavor] = {}
+    for language_flavor_config in font_config.language_flavor_configs:
+        available_language_flavor_alphabet_map[language_flavor_config.language_flavor] = set()
+        available_language_flavor_design_file_paths_map[language_flavor_config.language_flavor] = {}
     design_flavor_names = ['final']
     if font_config.is_include_draft:
         design_flavor_names.append('draft')
@@ -124,10 +124,10 @@ def collect_available_design(font_config):
                         design_file_path = os.path.join(design_file_parent_dir, design_file_name)
                         uni_hex_name, available_language_flavors = _parse_design_file_name(design_file_name)
                         if len(available_language_flavors) > 0:
-                            for language_flavor in font_config.language_flavor_configs.keys():
-                                if available_language_flavors.__contains__(language_flavor):
-                                    language_flavor_alphabet = available_language_flavor_alphabet_map[language_flavor]
-                                    language_flavor_design_file_paths = available_language_flavor_design_file_paths_map[language_flavor]
+                            for language_flavor_config in font_config.language_flavor_configs:
+                                if available_language_flavors.__contains__(language_flavor_config.language_flavor):
+                                    language_flavor_alphabet = available_language_flavor_alphabet_map[language_flavor_config.language_flavor]
+                                    language_flavor_design_file_paths = available_language_flavor_design_file_paths_map[language_flavor_config.language_flavor]
                                     if uni_hex_name == 'notdef':
                                         if '.notdef' not in language_flavor_design_file_paths:
                                             language_flavor_design_file_paths['.notdef'] = design_file_path

@@ -81,7 +81,7 @@ def make_info_file(font_config, alphabet):
         file.write(f'| 像素尺寸 | {font_config.px}px |\n')
         file.write(f'| 版本号 | {configs.version} |\n')
         file.write(f'| 字符总数 | {len(alphabet)} |\n')
-        file.write(f'| 语言变种 | {"、".join(font_config.language_flavor_configs.keys())} |\n')
+        file.write(f'| 语言变种 | {"、".join([language_flavor_config.language_flavor for language_flavor_config in font_config.language_flavor_configs])} |\n')
         file.write('\n')
         file.write('## Unicode 字符分布\n')
         file.write('\n')

@@ -90,7 +90,7 @@ def _make_font_file(name_strings, em_dot_size, units_per_em, ascent, descent, gl
 
 
 def make_fonts(font_config, language_flavor_alphabet_map, design_file_paths_map):
-    for language_flavor_config in font_config.language_flavor_configs.values():
+    for language_flavor_config in font_config.language_flavor_configs:
         name_strings = {
             'copyright': configs.copyright_string,
             'familyName': language_flavor_config.display_name,

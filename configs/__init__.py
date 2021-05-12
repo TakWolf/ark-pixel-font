@@ -53,9 +53,7 @@ class FontConfig:
         # 构建参数
         self.is_include_draft = is_include_draft
         # 语言变种相关配置
-        self.language_flavor_configs = {}
-        for language_flavor in language_flavors:
-            self.language_flavor_configs[language_flavor] = FontLanguageFlavorConfig(self, language_flavor)
+        self.language_flavor_configs = [FontLanguageFlavorConfig(self, language_flavor) for language_flavor in language_flavors]
 
 
 class FontLanguageFlavorConfig:
