@@ -21,11 +21,11 @@ license_description = 'This Font Software is licensed under the SIL Open Font Li
 license_info_url = 'https://scripts.sil.org/OFL'
 
 language_flavors = [
-    'sc',     # 简体中文
-    'tc_hk',  # 繁体中文-中国香港
-    'tc_tw',  # 繁体中文-中国台湾
-    'jp',     # 日文
-    'ko'      # 韩文
+    'zh_cn',  # 中文-中国大陆
+    'zh_hk',  # 中文-香港特别行政区
+    'zh_tw',  # 中文-台湾地区
+    'ja',     # 日语
+    'ko'      # 朝鲜语
 ]
 
 
