@@ -107,3 +107,12 @@ def make_preview_html_files(font_config, language_flavor_alphabet_map):
         with open(file_path, 'w', encoding='utf-8') as file:
             file.write(html)
         logger.info(f'make {file_path}')
+
+
+def make_demo_article_html_file(font_config):
+    template = configs.template_env.get_template('demo-article.html')
+    html = template.render(font_config=font_config)
+    file_path = font_config.demo_article_html_file_output_path
+    with open(file_path, 'w', encoding='utf-8') as file:
+        file.write(html)
+    logger.info(f'make {file_path}')
