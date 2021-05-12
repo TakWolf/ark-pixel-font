@@ -43,9 +43,11 @@ class FontConfig:
         self.descent = descent_px * self.em_dot_size
         # 相关路径
         self.output_basic_name = f'ark-pixel-{px}px'
-        self.release_basic_name = f'ark-pixel-font-{px}px'
         self.design_dir = os.path.join(workspace_define.design_dir, str(px))
         self.svg_outputs_dir = os.path.join(workspace_define.svg_outputs_dir, str(px))
+        self.info_file_name = f'font-info-{px}px.md'
+        self.info_file_output_path = os.path.join(workspace_define.outputs_dir, self.info_file_name)
+        self.release_basic_name = f'ark-pixel-font-{px}px'
         self.zip_file_name = f'{self.release_basic_name}-all-v{version}.zip'
         self.zip_file_release_path = os.path.join(workspace_define.release_dir, self.zip_file_name)
         # 构建参数
