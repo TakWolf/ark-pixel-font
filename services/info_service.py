@@ -87,7 +87,7 @@ def make_info_file(font_config, alphabet):
         file.write('## GB2312 字符分布\n')
         file.write('\n')
         _write_gb2312_char_count_infos_table(file, _get_gb2312_char_count_infos(alphabet))
-    logger.info(f'----> make {file_path}')
+    logger.info(f'make {file_path}')
 
 
 def make_preview_html_files(font_config, locale_flavor_alphabet_map):
