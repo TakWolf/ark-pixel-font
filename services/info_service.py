@@ -1,7 +1,7 @@
 import logging
 
 import configs
-from utils import gb2312_util, unicode_util
+from utils import gb2312_util, unicode_util, shift_jis_util
 
 logger = logging.getLogger('info-service')
 
@@ -20,31 +20,36 @@ def _get_unicode_char_count_infos(alphabet):
 
 
 def _get_gb2312_char_count_infos(alphabet):
-    alphabet_level_1 = gb2312_util.get_alphabet_level_1()
-    alphabet_level_2 = gb2312_util.get_alphabet_level_2()
-    alphabet_other = gb2312_util.get_alphabet_other()
-    infos = [
-        ('一级汉字', 0, len(alphabet_level_1)),
-        ('二级汉字', 0, len(alphabet_level_2)),
-        ('其他字符和标点符号', 0, len(alphabet_other)),
-        ('总计', 0, len(alphabet_level_1) + len(alphabet_level_2) + len(alphabet_other))
-    ]
+    level_1_count = 0
+    level_2_count = 0
+    other_count = 0
+    total_count = 0
     for c in alphabet:
-        need_update_position = -1
-        if alphabet_level_1.__contains__(c):
-            need_update_position = 0
-        elif alphabet_level_2.__contains__(c):
-            need_update_position = 1
-        elif alphabet_other.__contains__(c):
-            need_update_position = 2
-        if need_update_position >= 0:
-            title, count, total = infos[need_update_position]
+        block_name = gb2312_util.query_block(c)
+        if block_name == 'level-1':
+            level_1_count += 1
+            total_count += 1
+        elif block_name == 'level-2':
+            level_2_count += 1
+            total_count += 1
+        elif block_name == 'other':
+            other_count += 1
+            total_count += 1
+    return [
+        ('一级汉字', level_1_count, gb2312_util.alphabet_level_1_count),
+        ('二级汉字', level_2_count, gb2312_util.alphabet_level_2_count),
+        ('其他字符', other_count, gb2312_util.alphabet_other_count),
+        ('总计', total_count, gb2312_util.alphabet_count)
+    ]
+
+
+def _get_shift_jis_char_count_infos(alphabet):
+    count = 0
+    for c in alphabet:
+        if shift_jis_util.is_chr_include(c):
             count += 1
-            infos[need_update_position] = (title, count, total)
-            title, count, total = infos[3]
-            count += 1
-            infos[3] = (title, count, total)
-    return infos
+    total = len(shift_jis_util.get_alphabet())
+    return count, total
 
 
 def _write_unicode_char_count_infos_table(file, infos):
@@ -62,6 +67,14 @@ def _write_gb2312_char_count_infos_table(file, infos):
     for title, count, total in infos:
         finished_emoji = "🏆" if count == total else "🚧"
         file.write(f'| {title} | {count} / {total} {finished_emoji} |\n')
+
+
+def _write_shift_jis_char_count_infos_table(file, infos):
+    file.write('| 覆盖情况 |\n')
+    file.write('|---:|\n')
+    count, total = infos
+    finished_emoji = "🏆" if count == total else "🚧"
+    file.write(f'| {count} / {total} {finished_emoji} |\n')
 
 
 def make_info_file(font_config, alphabet):
@@ -86,7 +99,15 @@ def make_info_file(font_config, alphabet):
         file.write('\n')
         file.write('## GB2312 字符分布\n')
         file.write('\n')
+        file.write('常用简体中文编码集。统计不包含 ASCII，和 Unicode 有交集。\n')
+        file.write('\n')
         _write_gb2312_char_count_infos_table(file, _get_gb2312_char_count_infos(alphabet))
+        file.write('\n')
+        file.write('## Shift-JIS 字符分布\n')
+        file.write('\n')
+        file.write('常用日语编码集。统计仅包含可打印字符，包含 ASCII，和 Unicode 有交集。\n')
+        file.write('\n')
+        _write_shift_jis_char_count_infos_table(file, _get_shift_jis_char_count_infos(alphabet))
     logger.info(f'make {file_path}')
 
 
