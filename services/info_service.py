@@ -1,7 +1,7 @@
 import logging
 
 import configs
-from utils import gb2312_util, unicode_util, shift_jis_util
+from utils import unicode_util, gb2312_util, shift_jis_util
 
 logger = logging.getLogger('info-service')
 

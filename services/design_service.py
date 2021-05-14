@@ -4,7 +4,7 @@ import shutil
 import unicodedata
 
 import configs
-from utils import unicode_util, fs_util, glyph_util
+from utils import fs_util, glyph_util, unicode_util
 
 logger = logging.getLogger('design-service')
 
