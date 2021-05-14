@@ -5,6 +5,8 @@ from utils import unicode_util, gb2312_util, shift_jis_util
 
 logger = logging.getLogger('info-service')
 
+unicode_blocks_doc_url = 'https://www.unicode.org/Public/UNIDATA/Blocks.txt'
+
 
 def _get_unicode_char_count_infos(alphabet):
     count_map = {}
@@ -95,17 +97,19 @@ def make_info_file(font_config, alphabet):
         file.write('\n')
         file.write('## Unicode 字符分布\n')
         file.write('\n')
+        file.write(f'区块定义参考：[{unicode_blocks_doc_url}]({unicode_blocks_doc_url})\n')
+        file.write('\n')
         _write_unicode_char_count_infos_table(file, _get_unicode_char_count_infos(alphabet))
         file.write('\n')
         file.write('## GB2312 字符分布\n')
         file.write('\n')
-        file.write('常用简体中文编码集。统计不包含 ASCII，和 Unicode 有交集。\n')
+        file.write('简体中文参考字符集。统计不包含 ASCII，和 Unicode 有交集。\n')
         file.write('\n')
         _write_gb2312_char_count_infos_table(file, _get_gb2312_char_count_infos(alphabet))
         file.write('\n')
         file.write('## Shift-JIS 字符分布\n')
         file.write('\n')
-        file.write('常用日语编码集。统计仅包含可打印字符，包含 ASCII，和 Unicode 有交集。\n')
+        file.write('日语参考字符集。统计仅包含可打印字符，包含 ASCII，和 Unicode 有交集。\n')
         file.write('\n')
         _write_shift_jis_char_count_infos_table(file, _get_shift_jis_char_count_infos(alphabet))
     logger.info(f'make {file_path}')
