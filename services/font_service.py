@@ -10,17 +10,6 @@ from utils import glyph_util
 logger = logging.getLogger('font-service')
 
 
-def _get_glyph_infos(alphabet):
-    glyph_order = ['.notdef']
-    character_map = {}
-    for c in alphabet:
-        code_point = ord(c)
-        glyph_name = f'uni{code_point:04X}'
-        glyph_order.append(glyph_name)
-        character_map[code_point] = glyph_name
-    return glyph_order, character_map
-
-
 def _convert_point_to_open_type(point, ascent):
     """
     转换左上角坐标系为 OpenType 坐标系
@@ -60,20 +49,27 @@ def _draw_glyph(design_file_path, em_dot_size, ascent, is_ttf):
         return pen.getCharString(), advance_width
 
 
-def _draw_glyphs(character_map, design_file_path_map, em_dot_size, ascent, is_ttf):
-    glyphs = {}
-    advance_widths = {}
-    glyphs['.notdef'], advance_widths['.notdef'] = _draw_glyph(design_file_path_map['.notdef'], em_dot_size, ascent, is_ttf)
-    for code_point, glyph_name in character_map.items():
-        glyphs[glyph_name], advance_widths[glyph_name] = _draw_glyph(design_file_path_map[code_point], em_dot_size, ascent, is_ttf)
-    return glyphs, advance_widths
+def _draw_glyphs(glyph_infos_pool, design_file_paths, em_dot_size, ascent, is_ttf):
+    glyph_infos_map = {}
+    for code_point, design_file_path in design_file_paths.items():
+        if design_file_path in glyph_infos_pool:
+            glyph_infos = glyph_infos_pool[design_file_path]
+        else:
+            glyph_infos = _draw_glyph(design_file_path, em_dot_size, ascent, is_ttf)
+            glyph_infos_pool[design_file_path] = glyph_infos
+        glyph_infos_map[code_point] = glyph_infos
+    return glyph_infos_map
 
 
-def _make_font_file(name_strings, em_dot_size, units_per_em, ascent, descent, glyph_order, character_map, design_file_path_map, is_ttf, file_path):
+def _make_font_file(name_strings, units_per_em, ascent, descent, glyph_order, character_map, glyph_infos_map, is_ttf, file_path):
     builder = FontBuilder(units_per_em, isTTF=is_ttf)
     builder.setupGlyphOrder(glyph_order)
     builder.setupCharacterMap(character_map)
-    glyphs, advance_widths = _draw_glyphs(character_map, design_file_path_map, em_dot_size, ascent, is_ttf)
+    glyphs = {}
+    advance_widths = {}
+    glyphs['.notdef'], advance_widths['.notdef'] = glyph_infos_map['.notdef']
+    for code_point, glyph_name in character_map.items():
+        glyphs[glyph_name], advance_widths[glyph_name] = glyph_infos_map[code_point]
     if is_ttf:
         builder.setupGlyf(glyphs)
         metrics = {glyph_name: (advance_width, builder.font['glyf'][glyph_name].xMin) for glyph_name, advance_width in advance_widths.items()}
@@ -90,6 +86,8 @@ def _make_font_file(name_strings, em_dot_size, units_per_em, ascent, descent, gl
 
 
 def make_fonts(font_config, locale_flavor_alphabet_map, design_file_paths_map):
+    glyph_infos_otf_pool = {}
+    glyph_infos_ttf_pool = {}
     for locale_flavor_config in font_config.locale_flavor_configs:
         name_strings = {
             'copyright': configs.copyright_string,
@@ -106,8 +104,16 @@ def make_fonts(font_config, locale_flavor_alphabet_map, design_file_paths_map):
             'licenseDescription': configs.license_description,
             'licenseInfoURL': configs.license_info_url
         }
+        glyph_order = ['.notdef']
+        character_map = {}
         alphabet = locale_flavor_alphabet_map[locale_flavor_config.locale_flavor]
+        for c in alphabet:
+            code_point = ord(c)
+            glyph_name = f'uni{code_point:04X}'
+            glyph_order.append(glyph_name)
+            character_map[code_point] = glyph_name
         design_file_paths = design_file_paths_map[locale_flavor_config.locale_flavor]
-        glyph_order, character_map = _get_glyph_infos(alphabet)
-        _make_font_file(name_strings, font_config.em_dot_size, font_config.units_per_em, font_config.ascent, font_config.descent, glyph_order, character_map, design_file_paths, False, locale_flavor_config.otf_file_output_path)
-        _make_font_file(name_strings, font_config.em_dot_size, font_config.units_per_em, font_config.ascent, font_config.descent, glyph_order, character_map, design_file_paths, True, locale_flavor_config.ttf_file_output_path)
+        glyph_infos_otf_map = _draw_glyphs(glyph_infos_otf_pool, design_file_paths, font_config.em_dot_size, font_config.ascent, False)
+        _make_font_file(name_strings, font_config.units_per_em, font_config.ascent, font_config.descent, glyph_order, character_map, glyph_infos_otf_map, False, locale_flavor_config.otf_file_output_path)
+        glyph_infos_ttf_map = _draw_glyphs(glyph_infos_ttf_pool, design_file_paths, font_config.em_dot_size, font_config.ascent, True)
+        _make_font_file(name_strings, font_config.units_per_em, font_config.ascent, font_config.descent, glyph_order, character_map, glyph_infos_ttf_map, True, locale_flavor_config.ttf_file_output_path)
