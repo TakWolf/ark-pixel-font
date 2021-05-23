@@ -23,7 +23,7 @@ def query_block(c):
     elif 0xC940 <= code <= 0xF9D5:
         return 'level-2'
     else:
-        raise Exception(f'impossible code: {code}')
+        return 'ext'
 
 
 def get_alphabet_other():
