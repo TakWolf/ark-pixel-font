@@ -1,5 +1,7 @@
 import logging
 
+import minify_html
+
 import configs
 from utils import unicode_util, gb2312_util, shift_jis_util
 
@@ -128,6 +130,7 @@ def make_preview_html_files(font_config, locale_flavor_alphabet_map):
             font_px=font_px,
             content=''.join([c for c in alphabet if ord(c) >= 128])
         )
+        html = minify_html.minify(html, minify_css=True, minify_js=True)
         file_path = locale_flavor_config.preview_html_file_output_path
         with open(file_path, 'w', encoding='utf-8') as file:
             file.write(html)
@@ -137,6 +140,7 @@ def make_preview_html_files(font_config, locale_flavor_alphabet_map):
 def make_demo_html_file(font_config):
     template = configs.template_env.get_template('demo.html')
     html = template.render(font_config=font_config)
+    html = minify_html.minify(html, minify_css=True, minify_js=True)
     file_path = font_config.demo_html_file_output_path
     with open(file_path, 'w', encoding='utf-8') as file:
         file.write(html)
