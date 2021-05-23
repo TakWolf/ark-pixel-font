@@ -8,9 +8,6 @@
             margin: 0;
             padding: 0;
         }
-        body {
-            font-family: sans-serif;
-        }
         .theme-light {
             color: #4b4b4b;
             background-color: white;
@@ -52,7 +49,7 @@
                 src: url("{{ locale_flavor_config.otf_file_name }}");
             }
             .app-font-{{ locale_flavor_config.locale_flavor }} {
-                font-family: {{ locale_flavor_config.unique_name }}, sans-serif;
+                font-family: {{ locale_flavor_config.unique_name }}, cursive;
             }
         {% endfor %}
     </style>
