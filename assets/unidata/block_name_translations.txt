@@ -17,6 +17,7 @@ Enclosed Alphanumerics; 封闭式字母数字
 Box Drawing; 制表符
 Geometric Shapes; 几何图形
 Miscellaneous Symbols; 杂项符号
+CJK Radicals Supplement; 中日韩部首补充
 CJK Symbols and Punctuation; 中日韩标点符号
 Hiragana; 平假名
 Katakana; 片假名
