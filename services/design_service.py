@@ -72,14 +72,15 @@ def verify_design_files(font_config):
                         design_file_path = os.path.join(design_file_parent_dir, design_file_name)
                         design_data, width, height = glyph_util.load_design_data_from_png(design_file_path)
                         uni_hex_name, _ = _parse_design_file_name(design_file_name)
-
-                        # 校验设计文件的半角和全角尺寸
                         if uni_hex_name == 'notdef':
-                            east_asian_width_status = 'H'
+                            code_point = -1
+                            c = None
                         else:
                             code_point = int(uni_hex_name, 16)
                             c = chr(code_point)
-                            east_asian_width_status = unicodedata.east_asian_width(c)
+
+                        # 校验设计文件的半角和全角尺寸
+                        east_asian_width_status = unicodedata.east_asian_width(c) if c else 'H'
                         if east_asian_width_status == 'H' or east_asian_width_status == 'Na':
                             assert width * 2 == height, design_file_path
                         elif east_asian_width_status == 'F' or east_asian_width_status == 'W':
@@ -87,6 +88,13 @@ def verify_design_files(font_config):
                         else:  # 'A' or 'N'
                             assert width * 2 == height or width == height, design_file_path
                         assert font_config.px == height, design_file_path
+
+                        # 校验汉字顶部和右侧是否留有1像素间距
+                        if 0x4E00 <= code_point <= 0x9FFF:
+                            for alpha in design_data[0]:
+                                assert alpha == 0, design_file_path
+                            for i in range(0, len(design_data)):
+                                assert design_data[i][-1] == 0, design_file_path
 
                         # 格式化设计文件
                         glyph_util.save_design_data_to_png(design_data, design_file_path)
