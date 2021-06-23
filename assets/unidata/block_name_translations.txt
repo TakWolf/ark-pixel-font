@@ -1,6 +1,6 @@
 # Block name translations
 
-Basic Latin; 基础拉丁字符
+Basic Latin; 基本拉丁字符
 Latin-1 Supplement; 拉丁字符-1 补充
 Latin Extended-A; 拉丁字符 扩展-A
 Latin Extended-B; 拉丁字符 扩展-B
@@ -15,6 +15,7 @@ Mathematical Operators; 算术操作符
 Miscellaneous Technical; 杂项科技符号
 Enclosed Alphanumerics; 封闭式字母数字
 Box Drawing; 制表符
+Block Elements; 方块元素
 Geometric Shapes; 几何图形
 Miscellaneous Symbols; 杂项符号
 CJK Radicals Supplement; 中日韩部首补充
