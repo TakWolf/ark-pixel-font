@@ -49,6 +49,8 @@ def classify_design_files(font_config):
                                 _, unicode_block = unicode_util.index_code_point_in_blocks(configs.unicode_blocks, code_point)
                                 block_dir_name = f'{unicode_block.begin:04X}-{unicode_block.end:04X} {unicode_block.name}'
                                 design_file_to_dir = os.path.join(design_flavor_dir, block_dir_name)
+                                if 0x4E00 <= code_point <= 0x9FFF:
+                                    design_file_to_dir = os.path.join(design_file_to_dir, f'{uni_hex_name[0:-2]}-')
                             fs_util.make_dirs_if_not_exists(design_file_to_dir)
                             design_file_name = f'{uni_hex_name}{" " if len(available_locale_flavors) > 0 else ""}{",".join(available_locale_flavors)}.png'
                             design_file_to_path = os.path.join(design_file_to_dir, design_file_name)
