@@ -12,7 +12,7 @@ logger = logging.getLogger('design-service')
 def _parse_design_file_name(design_file_name):
     """
     解析设计文件名称
-    例如：'0030 sc,jp.png'
+    例如：'0030 zh_cn,ja.png'
     """
     params = design_file_name.replace('.png', '').split(' ')
     assert 1 <= len(params) <= 2, design_file_name
@@ -154,7 +154,7 @@ def collect_available_design(font_config):
                                 if not no_flavor_alphabet.__contains__(c):
                                     no_flavor_alphabet.add(c)
                                     no_flavor_design_file_paths[code_point] = design_file_path
-    # 合并各个组
+    # 合并每个组
     whole_alphabet = set(no_flavor_alphabet)
     locale_flavor_alphabet_map = {}
     for locale_flavor, available_locale_flavor_alphabet in available_locale_flavor_alphabet_map.items():
