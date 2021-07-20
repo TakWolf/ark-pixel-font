@@ -15,4 +15,4 @@ outputs_dir = 'outputs'
 
 svg_outputs_dir = os.path.join(outputs_dir, 'svg')
 
-release_dir = 'release'
+releases_dir = 'releases'

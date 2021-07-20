@@ -53,7 +53,7 @@ class FontConfig:
         self.demo_html_file_output_path = os.path.join(workspace_define.outputs_dir, self.demo_html_file_name)
         self.release_basic_name = f'ark-pixel-font-{px}px'
         self.zip_file_name = f'{self.release_basic_name}-all-v{version}.zip'
-        self.zip_file_release_path = os.path.join(workspace_define.release_dir, self.zip_file_name)
+        self.zip_file_release_path = os.path.join(workspace_define.releases_dir, self.zip_file_name)
         # 构建参数
         self.is_include_draft = is_include_draft
         # 语言变种相关配置
@@ -74,7 +74,7 @@ class FontLocaleFlavorConfig:
         self.preview_html_file_name = f'preview-{font_config.px}px-{locale_flavor}.html'
         self.preview_html_file_output_path = os.path.join(workspace_define.outputs_dir, self.preview_html_file_name)
         self.zip_file_name = f'{font_config.release_basic_name}-{locale_flavor}-v{version}.zip'
-        self.zip_file_release_path = os.path.join(workspace_define.release_dir, self.zip_file_name)
+        self.zip_file_release_path = os.path.join(workspace_define.releases_dir, self.zip_file_name)
 
 
 font_configs = [
