@@ -2,8 +2,9 @@ import re
 
 
 class UnicodeBlock:
-    def __init__(self, name, begin, end):
+    def __init__(self, name, name_cn, begin, end):
         self.name = name
+        self.name_cn = name_cn
         self.begin = begin
         self.end = end
         self.capacity = end - begin + 1
@@ -24,7 +25,11 @@ def load_blocks_db(db_path):
                 begin = int(arr[0], 16)
                 end = int(arr[1], 16)
                 name = arr[2]
-                unicode_blocks.append(UnicodeBlock(name, begin, end))
+                if len(arr) >= 4:
+                    name_cn = arr[3]
+                else:
+                    name_cn = None
+                unicode_blocks.append(UnicodeBlock(name, name_cn, begin, end))
     return unicode_blocks
 
 
@@ -33,14 +38,3 @@ def index_code_point_in_blocks(unicode_blocks, code_point):
         if unicode_block.begin <= code_point <= unicode_block.end:
             return i, unicode_block
     return -1, None
-
-
-def load_block_name_translations(file_path):
-    unicode_block_name_translations = {}
-    with open(file_path, 'r', encoding='utf-8') as file:
-        for line in file.readlines():
-            line = line.split('#', 1)[0].strip()
-            if line != '':
-                arr = line.split('; ')
-                unicode_block_name_translations[arr[0]] = arr[1]
-    return unicode_block_name_translations

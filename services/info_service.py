@@ -86,7 +86,7 @@ def _write_unicode_char_count_infos_table(file, infos):
     for unicode_block, count in infos:
         code_point_range = f'0x{unicode_block.begin:04X}~0x{unicode_block.end:04X}'
         finished_emoji = "🏆" if count == unicode_block.char_count else "🚧"
-        file.write(f'| {code_point_range} | {unicode_block.name} | {configs.unicode_block_name_translations.get(unicode_block.name, "")} | {count} / {unicode_block.char_count} {finished_emoji} |\n')
+        file.write(f'| {code_point_range} | {unicode_block.name} | {unicode_block.name_cn if unicode_block.name_cn else ""} | {count} / {unicode_block.char_count} {finished_emoji} |\n')
 
 
 def _write_gb2312_char_count_infos_table(file, infos):

@@ -35,15 +35,15 @@
 #
 # @missing: 0000..10FFFF; No_Block
 
-0000..007F; Basic Latin
-0080..00FF; Latin-1 Supplement
-0100..017F; Latin Extended-A
-0180..024F; Latin Extended-B
+0000..007F; Basic Latin; 基本拉丁字符
+0080..00FF; Latin-1 Supplement; 拉丁字符-1 补充
+0100..017F; Latin Extended-A; 拉丁字符 扩展-A
+0180..024F; Latin Extended-B; 拉丁字符 扩展-B
 0250..02AF; IPA Extensions
-02B0..02FF; Spacing Modifier Letters
+02B0..02FF; Spacing Modifier Letters; 占位修饰符号
 0300..036F; Combining Diacritical Marks
-0370..03FF; Greek and Coptic
-0400..04FF; Cyrillic
+0370..03FF; Greek and Coptic; 希腊字符及科普特字符
+0400..04FF; Cyrillic; 西里尔字符
 0500..052F; Cyrillic Supplement
 0530..058F; Armenian
 0590..05FF; Hebrew
@@ -71,7 +71,7 @@
 0F00..0FFF; Tibetan
 1000..109F; Myanmar
 10A0..10FF; Georgian
-1100..11FF; Hangul Jamo
+1100..11FF; Hangul Jamo; 谚文字母
 1200..137F; Ethiopic
 1380..139F; Ethiopic Supplement
 13A0..13FF; Cherokee
@@ -106,22 +106,22 @@
 1DC0..1DFF; Combining Diacritical Marks Supplement
 1E00..1EFF; Latin Extended Additional
 1F00..1FFF; Greek Extended
-2000..206F; General Punctuation
+2000..206F; General Punctuation; 常用标点符号
 2070..209F; Superscripts and Subscripts
 20A0..20CF; Currency Symbols
 20D0..20FF; Combining Diacritical Marks for Symbols
-2100..214F; Letterlike Symbols
-2150..218F; Number Forms
-2190..21FF; Arrows
-2200..22FF; Mathematical Operators
-2300..23FF; Miscellaneous Technical
+2100..214F; Letterlike Symbols; 字母式符号
+2150..218F; Number Forms; 数字形式
+2190..21FF; Arrows; 箭头
+2200..22FF; Mathematical Operators; 数学运算符
+2300..23FF; Miscellaneous Technical; 杂项工业符号
 2400..243F; Control Pictures
 2440..245F; Optical Character Recognition
-2460..24FF; Enclosed Alphanumerics
-2500..257F; Box Drawing
-2580..259F; Block Elements
-25A0..25FF; Geometric Shapes
-2600..26FF; Miscellaneous Symbols
+2460..24FF; Enclosed Alphanumerics; 带圈或括号的字母数字
+2500..257F; Box Drawing; 制表符
+2580..259F; Block Elements; 方块元素
+25A0..25FF; Geometric Shapes; 几何图形
+2600..26FF; Miscellaneous Symbols; 杂项符号
 2700..27BF; Dingbats
 27C0..27EF; Miscellaneous Mathematical Symbols-A
 27F0..27FF; Supplemental Arrows-A
@@ -138,23 +138,23 @@
 2D80..2DDF; Ethiopic Extended
 2DE0..2DFF; Cyrillic Extended-A
 2E00..2E7F; Supplemental Punctuation
-2E80..2EFF; CJK Radicals Supplement
-2F00..2FDF; Kangxi Radicals
+2E80..2EFF; CJK Radicals Supplement; 中日韩部首补充
+2F00..2FDF; Kangxi Radicals; 康熙部首
 2FF0..2FFF; Ideographic Description Characters
-3000..303F; CJK Symbols and Punctuation
-3040..309F; Hiragana
-30A0..30FF; Katakana
-3100..312F; Bopomofo
+3000..303F; CJK Symbols and Punctuation; 中日韩符号和标点
+3040..309F; Hiragana; 日文平假名
+30A0..30FF; Katakana; 日文片假名
+3100..312F; Bopomofo; 注音字母
 3130..318F; Hangul Compatibility Jamo
 3190..319F; Kanbun
 31A0..31BF; Bopomofo Extended
 31C0..31EF; CJK Strokes
 31F0..31FF; Katakana Phonetic Extensions
-3200..32FF; Enclosed CJK Letters and Months
+3200..32FF; Enclosed CJK Letters and Months; 带圈中日韩字母和月份
 3300..33FF; CJK Compatibility
 3400..4DBF; CJK Unified Ideographs Extension A
 4DC0..4DFF; Yijing Hexagram Symbols
-4E00..9FFF; CJK Unified Ideographs
+4E00..9FFF; CJK Unified Ideographs; 中日韩统一表意文字
 A000..A48F; Yi Syllables
 A490..A4CF; Yi Radicals
 A4D0..A4FF; Lisu
@@ -181,7 +181,7 @@ AB00..AB2F; Ethiopic Extended-A
 AB30..AB6F; Latin Extended-E
 AB70..ABBF; Cherokee Supplement
 ABC0..ABFF; Meetei Mayek
-AC00..D7AF; Hangul Syllables
+AC00..D7AF; Hangul Syllables; 谚文音节
 D7B0..D7FF; Hangul Jamo Extended-B
 D800..DB7F; High Surrogates
 DB80..DBFF; High Private Use Surrogates
@@ -196,7 +196,7 @@ FE20..FE2F; Combining Half Marks
 FE30..FE4F; CJK Compatibility Forms
 FE50..FE6F; Small Form Variants
 FE70..FEFF; Arabic Presentation Forms-B
-FF00..FFEF; Halfwidth and Fullwidth Forms
+FF00..FFEF; Halfwidth and Fullwidth Forms; 半角和全角形式
 FFF0..FFFF; Specials
 10000..1007F; Linear B Syllabary
 10080..100FF; Linear B Ideograms
