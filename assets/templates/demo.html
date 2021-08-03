@@ -31,6 +31,16 @@
         .page {
             padding: 64px 192px;
         }
+        @media screen and (max-width: 1024px) {
+            .page {
+                padding: 64px 64px;
+            }
+        }
+        @media screen and (max-width: 750px) {
+            .page {
+                padding: 64px 16px;
+            }
+        }
         .title {
             margin-top: {{ font_config.px * 4 }}px;
             margin-bottom: {{ font_config.px * 2 }}px;
@@ -55,10 +65,10 @@
         {% endfor %}
     </style>
 </head>
-<body>
+<body class="theme-light">
 <div class="btn-apply-theme theme-light" style="top: 0; left: 0;" onclick="applyLightTheme()"></div>
 <div class="btn-apply-theme theme-dark" style="top: 0; right: 0;" onclick="applyDarkTheme()"></div>
-<div id="page" class="page theme-light">
+<div class="page">
     <h1 class="title app-font-zh_cn">任天堂</h1>
     <a class="content app-font-zh_cn" href="https://zh.wikipedia.org/zh-cn/%E4%BB%BB%E5%A4%A9%E5%A0%82" target="_blank">https://zh.wikipedia.org/zh-cn/%E4%BB%BB%E5%A4%A9%E5%A0%82</a>
     <p class="content app-font-zh_cn">任天堂是一家主要从事电子游戏和玩具的开发、制造与发行的日本公司。于1889年在日本京都创立，至今公司总部仍设于京都。任天堂最初以生产花札起家，1970年代后期投入电子游戏产业，在1983年推出家用游戏机 Family Computer（俗称红白机）、及在1985年推出游戏软件《超级马力欧兄弟》后，逐渐成为世界知名的电子游戏开发商。随着电子游戏事业的成功，任天堂亦向日本以外地区发展，现已有任天堂（美国）、任天堂（香港）等多家海外子公司。</p>
@@ -85,11 +95,11 @@
 </div>
 <script>
     function applyLightTheme() {
-        document.getElementById('page').className = 'page theme-light'
+        document.body.className = 'theme-light'
     }
 
     function applyDarkTheme() {
-        document.getElementById('page').className = 'page theme-dark'
+        document.body.className = 'theme-dark'
     }
 </script>
 </body>
