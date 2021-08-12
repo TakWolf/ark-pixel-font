@@ -1,5 +1,5 @@
-fonttools==4.25.1
+fonttools==4.26.2
 Jinja2==3.0.1
 MarkupSafe==2.0.1
-minify-html==0.4.11
+minify-html==0.6.8
 pypng==0.0.20
