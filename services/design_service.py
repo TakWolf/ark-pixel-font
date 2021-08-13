@@ -114,13 +114,11 @@ def collect_available_design(font_config):
     收集可用字母表，生成设计文件映射表
     """
     # 遍历文件并分组
-    no_flavor_alphabet = set()
+    alphabet = set()
     no_flavor_design_file_paths = {}
-    available_locale_flavor_alphabet_map = {}
-    available_locale_flavor_design_file_paths_map = {}
+    locale_flavor_design_file_paths_map = {}
     for locale_flavor_config in font_config.locale_flavor_configs:
-        available_locale_flavor_alphabet_map[locale_flavor_config.locale_flavor] = set()
-        available_locale_flavor_design_file_paths_map[locale_flavor_config.locale_flavor] = {}
+        locale_flavor_design_file_paths_map[locale_flavor_config.locale_flavor] = {}
     design_flavor_names = ['final']
     if font_config.is_include_draft:
         design_flavor_names.append('draft')
@@ -135,16 +133,13 @@ def collect_available_design(font_config):
                         if len(available_locale_flavors) > 0:
                             for locale_flavor_config in font_config.locale_flavor_configs:
                                 if available_locale_flavors.__contains__(locale_flavor_config.locale_flavor):
-                                    locale_flavor_alphabet = available_locale_flavor_alphabet_map[locale_flavor_config.locale_flavor]
-                                    locale_flavor_design_file_paths = available_locale_flavor_design_file_paths_map[locale_flavor_config.locale_flavor]
+                                    locale_flavor_design_file_paths = locale_flavor_design_file_paths_map[locale_flavor_config.locale_flavor]
                                     if uni_hex_name == 'notdef':
                                         if '.notdef' not in locale_flavor_design_file_paths:
                                             locale_flavor_design_file_paths['.notdef'] = design_file_path
                                     else:
                                         code_point = int(uni_hex_name, 16)
-                                        c = chr(code_point)
-                                        if not locale_flavor_alphabet.__contains__(c):
-                                            locale_flavor_alphabet.add(c)
+                                        if code_point not in locale_flavor_design_file_paths:
                                             locale_flavor_design_file_paths[code_point] = design_file_path
                         else:
                             if uni_hex_name == 'notdef':
@@ -152,25 +147,15 @@ def collect_available_design(font_config):
                                     no_flavor_design_file_paths['.notdef'] = design_file_path
                             else:
                                 code_point = int(uni_hex_name, 16)
-                                c = chr(code_point)
-                                if not no_flavor_alphabet.__contains__(c):
-                                    no_flavor_alphabet.add(c)
+                                if code_point not in no_flavor_design_file_paths:
                                     no_flavor_design_file_paths[code_point] = design_file_path
+                                    alphabet.add(chr(code_point))
     # 合并每个组
-    whole_alphabet = set(no_flavor_alphabet)
-    locale_flavor_alphabet_map = {}
-    for locale_flavor, available_locale_flavor_alphabet in available_locale_flavor_alphabet_map.items():
-        whole_alphabet.update(available_locale_flavor_alphabet)
-        locale_flavor_alphabet = set(no_flavor_alphabet)
-        locale_flavor_alphabet.update(available_locale_flavor_alphabet)
-        locale_flavor_alphabet = list(locale_flavor_alphabet)
-        locale_flavor_alphabet.sort(key=lambda c: ord(c))
-        locale_flavor_alphabet_map[locale_flavor] = locale_flavor_alphabet
-    whole_alphabet = list(whole_alphabet)
-    whole_alphabet.sort(key=lambda c: ord(c))
+    alphabet = list(alphabet)
+    alphabet.sort(key=lambda c: ord(c))
     design_file_paths_map = {}
-    for locale_flavor, available_locale_flavor_design_file_paths in available_locale_flavor_design_file_paths_map.items():
+    for locale_flavor, locale_flavor_design_file_paths in locale_flavor_design_file_paths_map.items():
         design_file_paths = dict(no_flavor_design_file_paths)
-        design_file_paths.update(available_locale_flavor_design_file_paths)
+        design_file_paths.update(locale_flavor_design_file_paths)
         design_file_paths_map[locale_flavor] = design_file_paths
-    return whole_alphabet, locale_flavor_alphabet_map, design_file_paths_map
+    return alphabet, design_file_paths_map
