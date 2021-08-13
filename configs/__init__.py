@@ -71,6 +71,8 @@ class FontLocaleFlavorConfig:
         # 相关路径
         self.otf_file_name = f'{font_config.output_basic_name}-{locale_flavor}.otf'
         self.otf_file_output_path = os.path.join(workspace_define.outputs_dir, self.otf_file_name)
+        self.woff2_file_name = f'{font_config.output_basic_name}-{locale_flavor}.woff2'
+        self.woff2_file_output_path = os.path.join(workspace_define.outputs_dir, self.woff2_file_name)
         self.ttf_file_name = f'{font_config.output_basic_name}-{locale_flavor}.ttf'
         self.ttf_file_output_path = os.path.join(workspace_define.outputs_dir, self.ttf_file_name)
 

@@ -61,7 +61,7 @@ def _draw_glyphs(glyph_infos_pool, design_file_paths, em_dot_size, ascent, is_tt
     return glyph_infos_map
 
 
-def _make_font_file(name_strings, units_per_em, ascent, descent, glyph_order, character_map, glyph_infos_map, is_ttf, file_path):
+def _create_font_builder(name_strings, units_per_em, ascent, descent, glyph_order, character_map, glyph_infos_map, is_ttf):
     builder = FontBuilder(units_per_em, isTTF=is_ttf)
     builder.setupGlyphOrder(glyph_order)
     builder.setupCharacterMap(character_map)
@@ -81,8 +81,7 @@ def _make_font_file(name_strings, units_per_em, ascent, descent, glyph_order, ch
     builder.setupNameTable(name_strings)
     builder.setupOS2(sTypoAscender=ascent, usWinAscent=ascent, usWinDescent=-descent)
     builder.setupPost()
-    builder.save(file_path)
-    logger.info(f'make {file_path}')
+    return builder
 
 
 def make_fonts(font_config, alphabet, design_file_paths_map):
@@ -93,8 +92,8 @@ def make_fonts(font_config, alphabet, design_file_paths_map):
         glyph_name = f'uni{code_point:04X}'
         glyph_order.append(glyph_name)
         character_map[code_point] = glyph_name
-    glyph_infos_otf_pool = {}
-    glyph_infos_ttf_pool = {}
+    otf_glyph_infos_pool = {}
+    ttf_glyph_infos_pool = {}
     for locale_flavor_config in font_config.locale_flavor_configs:
         name_strings = {
             'copyright': configs.copyright_string,
@@ -112,7 +111,14 @@ def make_fonts(font_config, alphabet, design_file_paths_map):
             'licenseInfoURL': configs.license_info_url
         }
         design_file_paths = design_file_paths_map[locale_flavor_config.locale_flavor]
-        glyph_infos_otf_map = _draw_glyphs(glyph_infos_otf_pool, design_file_paths, font_config.em_dot_size, font_config.ascent, False)
-        _make_font_file(name_strings, font_config.units_per_em, font_config.ascent, font_config.descent, glyph_order, character_map, glyph_infos_otf_map, False, locale_flavor_config.otf_file_output_path)
-        glyph_infos_ttf_map = _draw_glyphs(glyph_infos_ttf_pool, design_file_paths, font_config.em_dot_size, font_config.ascent, True)
-        _make_font_file(name_strings, font_config.units_per_em, font_config.ascent, font_config.descent, glyph_order, character_map, glyph_infos_ttf_map, True, locale_flavor_config.ttf_file_output_path)
+        otf_glyph_infos_map = _draw_glyphs(otf_glyph_infos_pool, design_file_paths, font_config.em_dot_size, font_config.ascent, False)
+        otf_builder = _create_font_builder(name_strings, font_config.units_per_em, font_config.ascent, font_config.descent, glyph_order, character_map, otf_glyph_infos_map, False)
+        otf_builder.save(locale_flavor_config.otf_file_output_path)
+        logger.info(f'make {locale_flavor_config.otf_file_output_path}')
+        otf_builder.font.flavor = 'woff2'
+        otf_builder.save(locale_flavor_config.woff2_file_output_path)
+        logger.info(f'make {locale_flavor_config.woff2_file_output_path}')
+        ttf_glyph_infos_map = _draw_glyphs(ttf_glyph_infos_pool, design_file_paths, font_config.em_dot_size, font_config.ascent, True)
+        ttf_builder = _create_font_builder(name_strings, font_config.units_per_em, font_config.ascent, font_config.descent, glyph_order, character_map, ttf_glyph_infos_map, True)
+        ttf_builder.save(locale_flavor_config.ttf_file_output_path)
+        logger.info(f'make {locale_flavor_config.ttf_file_output_path}')
