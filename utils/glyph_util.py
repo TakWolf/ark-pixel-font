@@ -145,8 +145,8 @@ def save_outlines_to_svg(outlines, width, height, file_path):
         for outline in outlines:
             path_string = '    '
             for i, (x, y) in enumerate(outline):
-                path_string += f'{"M" if i == 0 else "L"} {x}, {y}'
-            path_string += ' z'
+                path_string += f'{"M" if i == 0 else "L"} {x} {y} '
+            path_string += 'z'
             path_strings.append(path_string)
         d = '\n'.join(path_strings)
         file.write(f'    <path d="\n{d}\n    " />\n')
