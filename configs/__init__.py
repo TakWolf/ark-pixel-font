@@ -54,6 +54,8 @@ class FontConfig:
         self.demo_html_file_output_path = os.path.join(workspace_define.outputs_dir, self.demo_html_file_name)
         self.otf_zip_file_name = f'ark-pixel-font-{px}px-otf-v{version}.zip'
         self.otf_zip_file_release_path = os.path.join(workspace_define.releases_dir, self.otf_zip_file_name)
+        self.woff2_zip_file_name = f'ark-pixel-font-{px}px-woff2-v{version}.zip'
+        self.woff2_zip_file_release_path = os.path.join(workspace_define.releases_dir, self.woff2_zip_file_name)
         self.ttf_zip_file_name = f'ark-pixel-font-{px}px-ttf-v{version}.zip'
         self.ttf_zip_file_release_path = os.path.join(workspace_define.releases_dir, self.ttf_zip_file_name)
         # 构建参数
