@@ -85,7 +85,14 @@ def _make_font_file(name_strings, units_per_em, ascent, descent, glyph_order, ch
     logger.info(f'make {file_path}')
 
 
-def make_fonts(font_config, locale_flavor_alphabet_map, design_file_paths_map):
+def make_fonts(font_config, alphabet, design_file_paths_map):
+    glyph_order = ['.notdef']
+    character_map = {}
+    for c in alphabet:
+        code_point = ord(c)
+        glyph_name = f'uni{code_point:04X}'
+        glyph_order.append(glyph_name)
+        character_map[code_point] = glyph_name
     glyph_infos_otf_pool = {}
     glyph_infos_ttf_pool = {}
     for locale_flavor_config in font_config.locale_flavor_configs:
@@ -104,14 +111,6 @@ def make_fonts(font_config, locale_flavor_alphabet_map, design_file_paths_map):
             'licenseDescription': configs.license_description,
             'licenseInfoURL': configs.license_info_url
         }
-        glyph_order = ['.notdef']
-        character_map = {}
-        alphabet = locale_flavor_alphabet_map[locale_flavor_config.locale_flavor]
-        for c in alphabet:
-            code_point = ord(c)
-            glyph_name = f'uni{code_point:04X}'
-            glyph_order.append(glyph_name)
-            character_map[code_point] = glyph_name
         design_file_paths = design_file_paths_map[locale_flavor_config.locale_flavor]
         glyph_infos_otf_map = _draw_glyphs(glyph_infos_otf_pool, design_file_paths, font_config.em_dot_size, font_config.ascent, False)
         _make_font_file(name_strings, font_config.units_per_em, font_config.ascent, font_config.descent, glyph_order, character_map, glyph_infos_otf_map, False, locale_flavor_config.otf_file_output_path)

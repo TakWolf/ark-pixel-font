@@ -155,24 +155,17 @@ def make_info_file(font_config, alphabet):
     logger.info(f'make {file_path}')
 
 
-def make_preview_html_files(font_config, locale_flavor_alphabet_map):
+def make_preview_html_files(font_config, alphabet):
     template = configs.template_env.get_template('preview.html')
-    for locale_flavor_config in font_config.locale_flavor_configs:
-        display_name = locale_flavor_config.display_name
-        font_file_name = locale_flavor_config.otf_file_name
-        font_px = font_config.px
-        alphabet = locale_flavor_alphabet_map[locale_flavor_config.locale_flavor]
-        html = template.render(
-            display_name=display_name,
-            font_file_name=font_file_name,
-            font_px=font_px,
-            content=''.join([c for c in alphabet if ord(c) >= 128])
-        )
-        html = minify_html.minify(html, minify_css=True, minify_js=True)
-        file_path = locale_flavor_config.preview_html_file_output_path
-        with open(file_path, 'w', encoding='utf-8') as file:
-            file.write(html)
-        logger.info(f'make {file_path}')
+    html = template.render(
+        font_config=font_config,
+        alphabet=''.join([c for c in alphabet if ord(c) >= 128])
+    )
+    html = minify_html.minify(html, minify_css=True, minify_js=True)
+    file_path = font_config.preview_html_file_output_path
+    with open(file_path, 'w', encoding='utf-8') as file:
+        file.write(html)
+    logger.info(f'make {file_path}')
 
 
 def make_demo_html_file(font_config):
