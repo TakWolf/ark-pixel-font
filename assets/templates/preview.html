@@ -57,7 +57,7 @@
         {% for locale_flavor_config in font_config.locale_flavor_configs %}
             @font-face {
                 font-family: {{ locale_flavor_config.unique_name }};
-                src: url("{{ locale_flavor_config.otf_file_name }}");
+                src: url("{{ locale_flavor_config.woff2_file_name }}");
             }
             .app-font-{{ locale_flavor_config.locale_flavor }} {
                 font-family: {{ locale_flavor_config.unique_name }}, cursive;
