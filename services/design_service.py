@@ -20,7 +20,7 @@ def _parse_design_file_name(design_file_name):
     if len(params) >= 2:
         available_locale_flavors = params[1].lower().split(',')
         for locale_flavor in available_locale_flavors:
-            assert configs.locale_flavors.__contains__(locale_flavor), design_file_name
+            assert locale_flavor in configs.locale_flavors, design_file_name
     else:
         available_locale_flavors = []
     return uni_hex_name, available_locale_flavors
@@ -132,7 +132,7 @@ def collect_available_design(font_config):
                         uni_hex_name, available_locale_flavors = _parse_design_file_name(design_file_name)
                         if len(available_locale_flavors) > 0:
                             for locale_flavor_config in font_config.locale_flavor_configs:
-                                if available_locale_flavors.__contains__(locale_flavor_config.locale_flavor):
+                                if locale_flavor_config.locale_flavor in available_locale_flavors:
                                     locale_flavor_design_file_paths = locale_flavor_design_file_paths_map[locale_flavor_config.locale_flavor]
                                     if uni_hex_name == 'notdef':
                                         if '.notdef' not in locale_flavor_design_file_paths:

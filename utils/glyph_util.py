@@ -53,7 +53,7 @@ def get_outlines_from_design_data(design_data, dot_size):
                 new_point_group = {(x, y)}
                 for i, point_group in enumerate(reversed(point_group_list)):
                     # 遍历方向为右下，因此只需检查左上
-                    if point_group.__contains__((x - 1, y)) or point_group.__contains__((x, y - 1)):
+                    if (x - 1, y) in point_group or (x, y - 1) in point_group:
                         point_group_list.remove(point_group)
                         new_point_group = new_point_group.union(point_group)
                 point_group_list.append(new_point_group)
