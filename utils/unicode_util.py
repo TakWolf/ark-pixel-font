@@ -1,5 +1,7 @@
 import re
 
+blocks_doc_url = 'https://www.unicode.org/Public/UNIDATA/Blocks.txt'
+
 
 class UnicodeBlock:
     def __init__(self, name, name_cn, begin, end):

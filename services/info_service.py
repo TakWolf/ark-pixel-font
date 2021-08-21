@@ -7,8 +7,6 @@ from utils import unicode_util, gb2312_util, big5_util, shift_jis_util
 
 logger = logging.getLogger('info-service')
 
-unicode_blocks_doc_url = 'https://www.unicode.org/Public/UNIDATA/Blocks.txt'
-
 
 def _get_unicode_char_count_infos(alphabet):
     count_map = {}
@@ -131,7 +129,7 @@ def make_info_file(font_config, alphabet):
         file.write('\n')
         file.write('## Unicode 字符分布\n')
         file.write('\n')
-        file.write(f'区块定义参考：[{unicode_blocks_doc_url}]({unicode_blocks_doc_url})\n')
+        file.write(f'区块定义参考：[{unicode_util.blocks_doc_url}]({unicode_util.blocks_doc_url})\n')
         file.write('\n')
         _write_unicode_char_count_infos_table(file, _get_unicode_char_count_infos(alphabet))
         file.write('\n')
