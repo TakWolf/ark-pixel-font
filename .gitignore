@@ -142,3 +142,4 @@ cython_debug/
 
 # Project
 outputs/
+releases/
