@@ -1,6 +1,6 @@
 import itertools
 
-alphabet_single_ascii_count = 95
+alphabet_single_ascii_count = 95 + 2
 alphabet_single_other_count = 63
 alphabet_double_basic_count = 524
 alphabet_double_word_count = 6355
@@ -45,6 +45,8 @@ def get_alphabet_single_ascii():
             alphabet.append(c)
         except UnicodeDecodeError:
             pass
+    alphabet.append('¥') # 0xA5
+    alphabet.append('‾') # 0x203E
     assert len(alphabet) == alphabet_single_ascii_count
     return alphabet
 
