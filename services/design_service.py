@@ -150,9 +150,10 @@ def collect_available_design(font_config):
                                 if code_point not in no_flavor_design_file_paths:
                                     no_flavor_design_file_paths[code_point] = design_file_path
                                     alphabet.add(chr(code_point))
-    # 合并每个组
+    # 字母表排序
     alphabet = list(alphabet)
     alphabet.sort(key=lambda c: ord(c))
+    # 合并设计文件路径组
     design_file_paths_map = {}
     for locale_flavor, locale_flavor_design_file_paths in locale_flavor_design_file_paths_map.items():
         design_file_paths = dict(no_flavor_design_file_paths)
