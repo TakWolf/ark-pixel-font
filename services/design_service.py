@@ -46,7 +46,7 @@ def classify_design_files(font_config):
                                 design_file_to_dir = design_flavor_dir
                             else:
                                 code_point = int(uni_hex_name, 16)
-                                _, unicode_block = unicode_util.index_code_point_in_blocks(configs.unicode_blocks, code_point)
+                                _, unicode_block = unicode_util.index_block_by_code_point(configs.unicode_blocks, code_point)
                                 block_dir_name = f'{unicode_block.begin:04X}-{unicode_block.end:04X} {unicode_block.name}'
                                 design_file_to_dir = os.path.join(design_flavor_dir, block_dir_name)
                                 if 0x4E00 <= code_point <= 0x9FFF:

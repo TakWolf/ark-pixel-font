@@ -33,7 +33,7 @@ def load_blocks_db(db_path):
     return unicode_blocks
 
 
-def index_code_point_in_blocks(unicode_blocks, code_point):
+def index_block_by_code_point(unicode_blocks, code_point):
     for i, unicode_block in enumerate(unicode_blocks):
         if unicode_block.begin <= code_point <= unicode_block.end:
             return i, unicode_block

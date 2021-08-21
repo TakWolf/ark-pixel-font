@@ -14,7 +14,7 @@ def _get_unicode_char_count_infos(alphabet):
     count_map = {}
     for c in alphabet:
         code_point = ord(c)
-        i, _ = unicode_util.index_code_point_in_blocks(configs.unicode_blocks, code_point)
+        i, _ = unicode_util.index_block_by_code_point(configs.unicode_blocks, code_point)
         count = count_map.get(i, 0)
         count += 1
         count_map[i] = count
