@@ -8,7 +8,7 @@ from utils import unicode_util
 
 unicode_blocks = unicode_util.load_blocks_db(workspace_define.unicode_blocks_db_path)
 
-version_name = '0.0.1'
+version_name = '0.0.0'
 version_time = time.strftime("%Y%m%d")
 version = f'{version_name}-{version_time}'
 copyright_string = "Copyright (c) 2021, TakWolf (https://ark-pixel-font.takwolf.com), with Reserved Font Name 'Ark Pixel'."
