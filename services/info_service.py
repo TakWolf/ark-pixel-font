@@ -100,7 +100,7 @@ def _write_unicode_char_count_infos_table(file, infos):
     for unicode_block, count in infos:
         code_point_range = f'0x{unicode_block.begin:04X}~0x{unicode_block.end:04X}'
         progress = count / unicode_block.char_count
-        finished_emoji = "🏆" if count == unicode_block.char_count else "🚧"
+        finished_emoji = "🚩" if count == unicode_block.char_count else "🚧"
         file.write(f'| {code_point_range} | {unicode_block.name} | {unicode_block.name_cn if unicode_block.name_cn else ""} | {count} / {unicode_block.char_count} | {progress:.2%} {finished_emoji} |\n')
 
 
@@ -109,7 +109,7 @@ def _write_locale_char_count_infos_table(file, infos):
     file.write('|---|---:|---:|\n')
     for title, count, total in infos:
         progress = count / total
-        finished_emoji = "🏆" if count == total else "🚧"
+        finished_emoji = "🚩" if count == total else "🚧"
         file.write(f'| {title} | {count} / {total} | {progress:.2%} {finished_emoji} |\n')
 
 
