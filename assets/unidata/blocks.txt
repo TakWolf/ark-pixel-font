@@ -35,22 +35,22 @@
 #
 # @missing: 0000..10FFFF; No_Block
 
-0000..007F; Basic Latin; 基本拉丁字符
-0080..00FF; Latin-1 Supplement; 拉丁字符-1 补充
-0100..017F; Latin Extended-A; 拉丁字符 扩展-A
-0180..024F; Latin Extended-B; 拉丁字符 扩展-B
-0250..02AF; IPA Extensions
+0000..007F; Basic Latin; 基本拉丁字母
+0080..00FF; Latin-1 Supplement; 拉丁字母-1 补充
+0100..017F; Latin Extended-A; 拉丁字母 扩展-A
+0180..024F; Latin Extended-B; 拉丁字母 扩展-B
+0250..02AF; IPA Extensions; 国际音标扩展
 02B0..02FF; Spacing Modifier Letters; 占位修饰符号
-0300..036F; Combining Diacritical Marks
-0370..03FF; Greek and Coptic; 希腊字符及科普特字符
-0400..04FF; Cyrillic; 西里尔字符
-0500..052F; Cyrillic Supplement
-0530..058F; Armenian
-0590..05FF; Hebrew
-0600..06FF; Arabic
-0700..074F; Syriac
-0750..077F; Arabic Supplement
-0780..07BF; Thaana
+0300..036F; Combining Diacritical Marks; 组合附加符号
+0370..03FF; Greek and Coptic; 希腊字母及科普特字母
+0400..04FF; Cyrillic; 西里尔字母
+0500..052F; Cyrillic Supplement; 西里尔字母 补充
+0530..058F; Armenian; 亚美尼亚字母
+0590..05FF; Hebrew; 希伯来文
+0600..06FF; Arabic; 阿拉伯文
+0700..074F; Syriac; 叙利亚文
+0750..077F; Arabic Supplement; 阿拉伯文 补充
+0780..07BF; Thaana; 它拿字母
 07C0..07FF; NKo
 0800..083F; Samaritan
 0840..085F; Mandaic
@@ -107,7 +107,7 @@
 1E00..1EFF; Latin Extended Additional
 1F00..1FFF; Greek Extended
 2000..206F; General Punctuation; 常用标点符号
-2070..209F; Superscripts and Subscripts
+2070..209F; Superscripts and Subscripts; 上标和下标
 20A0..20CF; Currency Symbols
 20D0..20FF; Combining Diacritical Marks for Symbols
 2100..214F; Letterlike Symbols; 字母式符号
@@ -122,7 +122,7 @@
 2580..259F; Block Elements; 方块元素
 25A0..25FF; Geometric Shapes; 几何图形
 2600..26FF; Miscellaneous Symbols; 杂项符号
-2700..27BF; Dingbats
+2700..27BF; Dingbats; 印刷符号
 27C0..27EF; Miscellaneous Mathematical Symbols-A
 27F0..27FF; Supplemental Arrows-A
 2800..28FF; Braille Patterns
@@ -150,7 +150,7 @@
 31A0..31BF; Bopomofo Extended
 31C0..31EF; CJK Strokes
 31F0..31FF; Katakana Phonetic Extensions
-3200..32FF; Enclosed CJK Letters and Months; 带圈中日韩字母和月份
+3200..32FF; Enclosed CJK Letters and Months; 带圈或括号的中日韩字母和月份
 3300..33FF; CJK Compatibility
 3400..4DBF; CJK Unified Ideographs Extension A
 4DC0..4DFF; Yijing Hexagram Symbols
