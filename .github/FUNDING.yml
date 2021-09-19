@@ -1,0 +1,4 @@
+# 赞助按钮的配置文件，参考文档：
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/displaying-a-sponsor-button-in-your-repository
+
+custom: ['https://afdian.net/@takwolf']
