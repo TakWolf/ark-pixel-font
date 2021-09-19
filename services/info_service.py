@@ -161,14 +161,14 @@ def make_info_file(font_config, alphabet):
     logger.info(f'make {file_path}')
 
 
-def make_preview_html_files(font_config, alphabet):
-    template = configs.template_env.get_template('preview.html')
+def make_alphabet_html_file(font_config, alphabet):
+    template = configs.template_env.get_template('alphabet.html')
     html = template.render(
         font_config=font_config,
         alphabet=''.join([c for c in alphabet if ord(c) >= 128])
     )
     html = minify_html.minify(html, minify_css=True, minify_js=True)
-    file_path = font_config.preview_html_file_output_path
+    file_path = font_config.alphabet_html_file_output_path
     with open(file_path, 'w', encoding='utf-8') as file:
         file.write(html)
     logger.info(f'make {file_path}')

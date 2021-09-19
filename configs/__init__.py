@@ -52,8 +52,8 @@ class FontConfig:
         self.svg_outputs_dir = os.path.join(workspace_define.svg_outputs_dir, str(px))
         self.info_file_name = f'font-info-{px}px.md'
         self.info_file_output_path = os.path.join(workspace_define.outputs_dir, self.info_file_name)
-        self.preview_html_file_name = f'preview-{px}px.html'
-        self.preview_html_file_output_path = os.path.join(workspace_define.outputs_dir, self.preview_html_file_name)
+        self.alphabet_html_file_name = f'alphabet-{px}px.html'
+        self.alphabet_html_file_output_path = os.path.join(workspace_define.outputs_dir, self.alphabet_html_file_name)
         self.demo_html_file_name = f'demo-{px}px.html'
         self.demo_html_file_output_path = os.path.join(workspace_define.outputs_dir, self.demo_html_file_name)
         self.release_basic_name = f'{release_basic_name}-{px}px'
