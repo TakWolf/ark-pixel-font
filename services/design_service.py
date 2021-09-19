@@ -82,7 +82,7 @@ def verify_design_files(font_config):
                             c = chr(code_point)
 
                         # 校验设计文件的半角和全角尺寸
-                        east_asian_width_status = unicodedata.east_asian_width(c) if c else 'H'
+                        east_asian_width_status = unicodedata.east_asian_width(c) if c else 'N'
                         if east_asian_width_status == 'H' or east_asian_width_status == 'Na':
                             assert width * 2 == height, design_file_path
                         elif east_asian_width_status == 'F' or east_asian_width_status == 'W':
