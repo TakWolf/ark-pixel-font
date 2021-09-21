@@ -54,6 +54,8 @@ class FontConfig:
         self.info_file_output_path = os.path.join(workspace_define.outputs_dir, self.info_file_name)
         self.preview_image_file_name = f'preview-{px}px.png'
         self.preview_image_file_output_path = os.path.join(workspace_define.outputs_dir, self.preview_image_file_name)
+        self.alphabet_txt_file_name = f'alphabet-{px}px.txt'
+        self.alphabet_txt_file_output_path = os.path.join(workspace_define.outputs_dir, self.alphabet_txt_file_name)
         self.alphabet_html_file_name = f'alphabet-{px}px.html'
         self.alphabet_html_file_output_path = os.path.join(workspace_define.outputs_dir, self.alphabet_html_file_name)
         self.demo_html_file_name = f'demo-{px}px.html'

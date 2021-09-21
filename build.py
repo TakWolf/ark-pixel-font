@@ -16,6 +16,7 @@ def main():
         font_service.make_fonts(font_config, alphabet, design_file_paths_map)
         info_service.make_info_file(font_config, alphabet)
         info_service.make_preview_image_file(font_config)
+        info_service.make_alphabet_txt_file(font_config, alphabet)
         info_service.make_alphabet_html_file(font_config, alphabet)
         info_service.make_demo_html_file(font_config)
 

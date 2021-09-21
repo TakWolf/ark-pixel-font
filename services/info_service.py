@@ -180,6 +180,13 @@ def make_preview_image_file(font_config):
     logger.info(f'make {file_path}')
 
 
+def make_alphabet_txt_file(font_config, alphabet):
+    file_path = font_config.alphabet_txt_file_output_path
+    with open(file_path, 'w', encoding='utf-8') as file:
+        file.write(''.join(alphabet))
+    logger.info(f'make {file_path}')
+
+
 def make_alphabet_html_file(font_config, alphabet):
     template = configs.template_env.get_template('alphabet.html')
     html = template.render(
