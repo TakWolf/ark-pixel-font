@@ -1,5 +1,9 @@
 import logging
+import os.path
+import shutil
 import zipfile
+
+from configs import workspace_define
 
 logger = logging.getLogger('publish-service')
 
@@ -32,3 +36,18 @@ def make_release_zips(font_config):
     _make_otf_release_zip(font_config)
     _make_woff2_release_zip(font_config)
     _make_ttf_release_zip(font_config)
+
+
+def copy_docs_files(font_config):
+    docs_dir = workspace_define.docs_dir
+    for locale_flavor_config in font_config.locale_flavor_configs:
+        shutil.copy(locale_flavor_config.woff2_file_output_path, os.path.join(docs_dir, locale_flavor_config.woff2_file_name))
+        logger.info(f'copy {locale_flavor_config.woff2_file_output_path} to {docs_dir}')
+    shutil.copy(font_config.info_file_output_path, os.path.join(docs_dir, font_config.info_file_name))
+    logger.info(f'copy {font_config.info_file_output_path} to {docs_dir}')
+    shutil.copy(font_config.preview_image_file_output_path, os.path.join(docs_dir, font_config.preview_image_file_name))
+    logger.info(f'copy {font_config.preview_image_file_output_path} to {docs_dir}')
+    shutil.copy(font_config.alphabet_html_file_output_path, os.path.join(docs_dir, font_config.alphabet_html_file_name))
+    logger.info(f'copy {font_config.alphabet_html_file_output_path} to {docs_dir}')
+    shutil.copy(font_config.demo_html_file_output_path, os.path.join(docs_dir, font_config.demo_html_file_name))
+    logger.info(f'copy {font_config.demo_html_file_output_path} to {docs_dir}')
