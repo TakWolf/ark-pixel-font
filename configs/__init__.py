@@ -89,8 +89,8 @@ class FontLocaleFlavorConfig:
 
 
 font_configs = [
-    FontConfig(12, 10, -2),
-    FontConfig(16, 13, -3)
+    FontConfig(12, 10, -2, is_include_draft=True),
+    FontConfig(16, 13, -3, is_include_draft=True)
 ]
 
 template_env = Environment(loader=FileSystemLoader(workspace_define.templates_dir))
