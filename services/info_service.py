@@ -166,14 +166,15 @@ def make_preview_image_file(font_config):
     image_fonts = {}
     for locale_flavor_config in font_config.locale_flavor_configs:
         image_fonts[locale_flavor_config.locale_flavor] = ImageFont.truetype(locale_flavor_config.otf_file_output_path, font_config.px)
-    image = Image.new('RGBA', (font_config.px * 35, font_config.px * 15), (255, 255, 255))
+    image = Image.new('RGBA', (font_config.px * 35, font_config.px * 17), (255, 255, 255))
     ImageDraw.Draw(image).text((font_config.px, font_config.px), '方舟像素字体 / Ark Pixel Font', fill=(0, 0, 0), font=image_fonts['zh_cn'])
     ImageDraw.Draw(image).text((font_config.px, font_config.px * 3), '我们每天度过的称之为日常的生活，其实是一个个奇迹的连续也说不定。', fill=(0, 0, 0), font=image_fonts['zh_cn'])
     ImageDraw.Draw(image).text((font_config.px, font_config.px * 5), '我們每天度過的稱之為日常的生活，其實是一個個奇跡的連續也說不定。', fill=(0, 0, 0), font=image_fonts['zh_hk'])
     ImageDraw.Draw(image).text((font_config.px, font_config.px * 7), '日々、私たちが過ごしている日常は、実は奇跡の連続なのかもしれない。', fill=(0, 0, 0), font=image_fonts['ja'])
-    ImageDraw.Draw(image).text((font_config.px, font_config.px * 9), 'The quick brown fox jumps over a lazy dog.', fill=(0, 0, 0), font=image_fonts['zh_cn'])
-    ImageDraw.Draw(image).text((font_config.px, font_config.px * 11), '0123456789', fill=(0, 0, 0), font=image_fonts['zh_cn'])
-    ImageDraw.Draw(image).text((font_config.px, font_config.px * 13), '★☆♠♡♢♣♤♥♦♧♩♪♫♬⚐⚑⚓⚔✈☯☀☂☎☏', fill=(0, 0, 0), font=image_fonts['zh_cn'])
+    ImageDraw.Draw(image).text((font_config.px, font_config.px * 9), 'THE QUICK BROWN FOX JUMPS OVER A LAZY DOG.', fill=(0, 0, 0), font=image_fonts['zh_cn'])
+    ImageDraw.Draw(image).text((font_config.px, font_config.px * 11), 'the quick brown fox jumps over a lazy dog.', fill=(0, 0, 0), font=image_fonts['zh_cn'])
+    ImageDraw.Draw(image).text((font_config.px, font_config.px * 13), '0123456789', fill=(0, 0, 0), font=image_fonts['zh_cn'])
+    ImageDraw.Draw(image).text((font_config.px, font_config.px * 15), '★☆♠♡♢♣♤♥♦♧♩♪♫♬⚐⚑⚓⚔✈☯☀☂☎☏', fill=(0, 0, 0), font=image_fonts['zh_cn'])
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
     file_path = font_config.preview_image_file_output_path
     image.save(file_path)
