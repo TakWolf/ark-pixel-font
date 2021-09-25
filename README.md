@@ -4,11 +4,15 @@
 [![MIT License](https://img.shields.io/badge/license-MIT-green)](https://opensource.org/licenses/MIT)
 [![Releases](https://img.shields.io/github/v/release/TakWolf/ark-pixel-font)](https://github.com/TakWolf/ark-pixel-font/releases)
 
-一款开源的像素风格中日韩文等宽字体，支持 12 和 16 像素。
+一款开源的像素风格中日韩文等宽字体，主要支持 12 和 16 像素两个尺寸，另外有实验性质的 10 像素尺寸。
 
 这个项目不仅提供了全部的字形设计源文件，也提供了构建字体所需要的完整程序。
 
 ## 预览
+
+- 10 像素
+
+![preview-10px.png](docs/preview-10px.png)
 
 - 12 像素
 
@@ -20,8 +24,8 @@
 
 ## 字符统计
 
+- [10 像素](docs/font-info-10px.md)
 - [12 像素](docs/font-info-12px.md)
-
 - [16 像素](docs/font-info-16px.md)
 
 ## 特定语言区域变种
