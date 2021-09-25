@@ -89,6 +89,7 @@ class FontLocaleFlavorConfig:
 
 
 font_configs = [
+    FontConfig(10, 9, -1, is_include_draft=True),
     FontConfig(12, 10, -2, is_include_draft=True),
     FontConfig(16, 13, -3, is_include_draft=True)
 ]
