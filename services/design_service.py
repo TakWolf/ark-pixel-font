@@ -4,6 +4,7 @@ import shutil
 import unicodedata
 
 import configs
+from configs import workspace_define
 from utils import fs_util, glyph_util, unicode_util
 
 logger = logging.getLogger('design-service')
@@ -30,11 +31,12 @@ def classify_design_files(font_config):
     """
     按照 Unicode 区块分类设计文件
     """
-    if os.path.isdir(font_config.design_dir):
-        for design_flavor_name in os.listdir(font_config.design_dir):
-            design_flavor_dir = os.path.join(font_config.design_dir, design_flavor_name)
+    design_dir = os.path.join(workspace_define.design_dir, str(font_config.px))
+    if os.path.isdir(design_dir):
+        for design_flavor_name in os.listdir(design_dir):
+            design_flavor_dir = os.path.join(design_dir, design_flavor_name)
             if os.path.isdir(design_flavor_dir):
-                design_flavor_tmp_dir = os.path.join(font_config.design_dir, f'{design_flavor_name}.tmp')
+                design_flavor_tmp_dir = os.path.join(design_dir, f'{design_flavor_name}.tmp')
                 os.rename(design_flavor_dir, design_flavor_tmp_dir)
                 os.mkdir(design_flavor_dir)
                 for design_file_parent_dir, _, design_file_names in os.walk(design_flavor_tmp_dir):
@@ -63,11 +65,13 @@ def verify_design_files(font_config):
     """
     校验设计文件，并生成 SVG
     """
+    design_dir = os.path.join(workspace_define.design_dir, str(font_config.px))
+    svg_outputs_dir = os.path.join(workspace_define.outputs_dir, str(font_config.px))
     for design_flavor_name in ['final', 'draft']:
-        design_flavor_dir = os.path.join(font_config.design_dir, design_flavor_name)
+        design_flavor_dir = os.path.join(design_dir, design_flavor_name)
         if os.path.isdir(design_flavor_dir):
             for design_file_parent_dir, _, design_file_names in os.walk(design_flavor_dir):
-                svg_file_parent_dir = design_file_parent_dir.replace(font_config.design_dir, font_config.svg_outputs_dir)
+                svg_file_parent_dir = design_file_parent_dir.replace(design_dir, svg_outputs_dir)
                 fs_util.make_dirs_if_not_exists(svg_file_parent_dir)
                 for design_file_name in design_file_names:
                     if design_file_name.endswith('.png'):
@@ -119,11 +123,12 @@ def collect_available_design(font_config):
     locale_flavor_design_file_paths_map = {}
     for locale_flavor_config in font_config.locale_flavor_configs:
         locale_flavor_design_file_paths_map[locale_flavor_config.locale_flavor] = {}
+    design_dir = os.path.join(workspace_define.design_dir, str(font_config.px))
     design_flavor_names = ['final']
     if font_config.is_include_draft:
         design_flavor_names.append('draft')
     for design_flavor_name in design_flavor_names:
-        design_flavor_dir = os.path.join(font_config.design_dir, design_flavor_name)
+        design_flavor_dir = os.path.join(design_dir, design_flavor_name)
         if os.path.isdir(design_flavor_dir):
             for design_file_parent_dir, _, design_file_names in os.walk(design_flavor_dir):
                 for design_file_name in design_file_names:

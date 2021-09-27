@@ -1,12 +1,9 @@
-import os
 import time
 
 from jinja2 import Environment, FileSystemLoader
 
 from configs import workspace_define
 from utils import unicode_util
-
-unicode_blocks = unicode_util.load_blocks_db(workspace_define.unicode_blocks_db_path)
 
 font_display_name = 'Ark Pixel'
 font_unique_name = 'ArkPixel'
@@ -46,27 +43,17 @@ class FontConfig:
         self.units_per_em = px * self.em_dot_size
         self.ascent = ascent_px * self.em_dot_size
         self.descent = descent_px * self.em_dot_size
-        # 路径清单
+        # 文件清单
         self.output_basic_name = f'{output_basic_name}-{px}px'
-        self.design_dir = os.path.join(workspace_define.design_dir, str(px))
-        self.svg_outputs_dir = os.path.join(workspace_define.svg_outputs_dir, str(px))
         self.info_file_name = f'font-info-{px}px.md'
-        self.info_file_output_path = os.path.join(workspace_define.outputs_dir, self.info_file_name)
         self.preview_image_file_name = f'preview-{px}px.png'
-        self.preview_image_file_output_path = os.path.join(workspace_define.outputs_dir, self.preview_image_file_name)
         self.alphabet_txt_file_name = f'alphabet-{px}px.txt'
-        self.alphabet_txt_file_output_path = os.path.join(workspace_define.outputs_dir, self.alphabet_txt_file_name)
         self.alphabet_html_file_name = f'alphabet-{px}px.html'
-        self.alphabet_html_file_output_path = os.path.join(workspace_define.outputs_dir, self.alphabet_html_file_name)
         self.demo_html_file_name = f'demo-{px}px.html'
-        self.demo_html_file_output_path = os.path.join(workspace_define.outputs_dir, self.demo_html_file_name)
         self.release_basic_name = f'{release_basic_name}-{px}px'
         self.otf_zip_file_name = f'{self.release_basic_name}-otf-v{version}.zip'
-        self.otf_zip_file_release_path = os.path.join(workspace_define.releases_dir, self.otf_zip_file_name)
         self.woff2_zip_file_name = f'{self.release_basic_name}-woff2-v{version}.zip'
-        self.woff2_zip_file_release_path = os.path.join(workspace_define.releases_dir, self.woff2_zip_file_name)
         self.ttf_zip_file_name = f'{self.release_basic_name}-ttf-v{version}.zip'
-        self.ttf_zip_file_release_path = os.path.join(workspace_define.releases_dir, self.ttf_zip_file_name)
         # 构建参数
         self.is_include_draft = is_include_draft
         # 语言变种相关配置
@@ -79,13 +66,10 @@ class FontLocaleFlavorConfig:
         # 字体信息
         self.display_name = f'{font_config.display_name} {locale_flavor.upper()}'
         self.unique_name = f'{font_config.unique_name}-{locale_flavor.upper()}'
-        # 路径清单
+        # 文件清单
         self.otf_file_name = f'{font_config.output_basic_name}-{locale_flavor}.otf'
-        self.otf_file_output_path = os.path.join(workspace_define.outputs_dir, self.otf_file_name)
         self.woff2_file_name = f'{font_config.output_basic_name}-{locale_flavor}.woff2'
-        self.woff2_file_output_path = os.path.join(workspace_define.outputs_dir, self.woff2_file_name)
         self.ttf_file_name = f'{font_config.output_basic_name}-{locale_flavor}.ttf'
-        self.ttf_file_output_path = os.path.join(workspace_define.outputs_dir, self.ttf_file_name)
 
 
 font_configs = [
@@ -93,5 +77,7 @@ font_configs = [
     FontConfig(12, 10, -2, is_include_draft=True),
     FontConfig(16, 13, -3, is_include_draft=True)
 ]
+
+unicode_blocks = unicode_util.load_blocks_db(workspace_define.unicode_blocks_db_path)
 
 template_env = Environment(loader=FileSystemLoader(workspace_define.templates_dir))

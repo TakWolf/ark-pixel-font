@@ -1,10 +1,12 @@
 import logging
+import os.path
 
 from fontTools.fontBuilder import FontBuilder
 from fontTools.pens.t2CharStringPen import T2CharStringPen
 from fontTools.pens.ttGlyphPen import TTGlyphPen
 
 import configs
+from configs import workspace_define
 from utils import glyph_util
 
 logger = logging.getLogger('font-service')
@@ -111,14 +113,20 @@ def make_fonts(font_config, alphabet, design_file_paths_map):
             'licenseInfoURL': configs.license_info_url
         }
         design_file_paths = design_file_paths_map[locale_flavor_config.locale_flavor]
+
         otf_glyph_infos_map = _draw_glyphs(otf_glyph_infos_pool, design_file_paths, font_config.em_dot_size, font_config.ascent, False)
         otf_builder = _create_font_builder(name_strings, font_config.units_per_em, font_config.ascent, font_config.descent, glyph_order, character_map, otf_glyph_infos_map, False)
-        otf_builder.save(locale_flavor_config.otf_file_output_path)
-        logger.info(f'make {locale_flavor_config.otf_file_output_path}')
+        otf_file_output_path = os.path.join(workspace_define.outputs_dir, locale_flavor_config.otf_file_name)
+        otf_builder.save(otf_file_output_path)
+        logger.info(f'make {otf_file_output_path}')
+
         otf_builder.font.flavor = 'woff2'
-        otf_builder.save(locale_flavor_config.woff2_file_output_path)
-        logger.info(f'make {locale_flavor_config.woff2_file_output_path}')
+        woff2_file_output_path = os.path.join(workspace_define.outputs_dir, locale_flavor_config.woff2_file_name)
+        otf_builder.save(woff2_file_output_path)
+        logger.info(f'make {woff2_file_output_path}')
+
         ttf_glyph_infos_map = _draw_glyphs(ttf_glyph_infos_pool, design_file_paths, font_config.em_dot_size, font_config.ascent, True)
         ttf_builder = _create_font_builder(name_strings, font_config.units_per_em, font_config.ascent, font_config.descent, glyph_order, character_map, ttf_glyph_infos_map, True)
-        ttf_builder.save(locale_flavor_config.ttf_file_output_path)
-        logger.info(f'make {locale_flavor_config.ttf_file_output_path}')
+        ttf_file_output_path = os.path.join(workspace_define.outputs_dir, locale_flavor_config.ttf_file_name)
+        ttf_builder.save(ttf_file_output_path)
+        logger.info(f'make {ttf_file_output_path}')

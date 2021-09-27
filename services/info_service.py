@@ -1,9 +1,11 @@
 import logging
+import os
 
 import minify_html
 from PIL import Image, ImageFont, ImageDraw
 
 import configs
+from configs import workspace_define
 from utils import unicode_util, gb2312_util, big5_util, shift_jis_util, ks_x_1001_util
 
 logger = logging.getLogger('info-service')
@@ -115,8 +117,8 @@ def _write_locale_char_count_infos_table(file, infos):
 
 
 def make_info_file(font_config, alphabet):
-    file_path = font_config.info_file_output_path
-    with open(file_path, 'w', encoding='utf-8') as file:
+    file_output_path = os.path.join(workspace_define.outputs_dir, font_config.info_file_name)
+    with open(file_output_path, 'w', encoding='utf-8') as file:
         file.write(f'# {font_config.display_name}\n')
         file.write('\n')
         file.write('## 基本信息\n')
@@ -159,13 +161,14 @@ def make_info_file(font_config, alphabet):
         file.write('韩语参考字符集。统计范围不包含 ASCII，和 Unicode 有交集。\n')
         file.write('\n')
         _write_locale_char_count_infos_table(file, _get_ks_x_1001_char_count_infos(alphabet))
-    logger.info(f'make {file_path}')
+    logger.info(f'make {file_output_path}')
 
 
 def make_preview_image_file(font_config):
     image_fonts = {}
     for locale_flavor_config in font_config.locale_flavor_configs:
-        image_fonts[locale_flavor_config.locale_flavor] = ImageFont.truetype(locale_flavor_config.otf_file_output_path, font_config.px)
+        otf_file_path = os.path.join(workspace_define.outputs_dir, locale_flavor_config.otf_file_name)
+        image_fonts[locale_flavor_config.locale_flavor] = ImageFont.truetype(otf_file_path, font_config.px)
     image = Image.new('RGBA', (font_config.px * 35, font_config.px * 17), (255, 255, 255))
     ImageDraw.Draw(image).text((font_config.px, font_config.px), '方舟像素字体 / Ark Pixel Font', fill=(0, 0, 0), font=image_fonts['zh_cn'])
     ImageDraw.Draw(image).text((font_config.px, font_config.px * 3), '我们每天度过的称之为日常的生活，其实是一个个奇迹的连续也说不定。', fill=(0, 0, 0), font=image_fonts['zh_cn'])
@@ -176,16 +179,16 @@ def make_preview_image_file(font_config):
     ImageDraw.Draw(image).text((font_config.px, font_config.px * 13), '0123456789', fill=(0, 0, 0), font=image_fonts['zh_cn'])
     ImageDraw.Draw(image).text((font_config.px, font_config.px * 15), '★☆♠♡♢♣♤♥♦♧♩♪♫♬⚐⚑⚓⚔✈☯☀☂☎☏', fill=(0, 0, 0), font=image_fonts['zh_cn'])
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
-    file_path = font_config.preview_image_file_output_path
-    image.save(file_path)
-    logger.info(f'make {file_path}')
+    file_output_path = os.path.join(workspace_define.outputs_dir, font_config.preview_image_file_name)
+    image.save(file_output_path)
+    logger.info(f'make {file_output_path}')
 
 
 def make_alphabet_txt_file(font_config, alphabet):
-    file_path = font_config.alphabet_txt_file_output_path
-    with open(file_path, 'w', encoding='utf-8') as file:
+    file_output_path = os.path.join(workspace_define.outputs_dir, font_config.alphabet_txt_file_name)
+    with open(file_output_path, 'w', encoding='utf-8') as file:
         file.write(''.join(alphabet))
-    logger.info(f'make {file_path}')
+    logger.info(f'make {file_output_path}')
 
 
 def make_alphabet_html_file(font_config, alphabet):
@@ -195,17 +198,17 @@ def make_alphabet_html_file(font_config, alphabet):
         alphabet=''.join([c for c in alphabet if ord(c) >= 128])
     )
     html = minify_html.minify(html, minify_css=True, minify_js=True)
-    file_path = font_config.alphabet_html_file_output_path
-    with open(file_path, 'w', encoding='utf-8') as file:
+    file_output_path = os.path.join(workspace_define.outputs_dir, font_config.alphabet_html_file_name)
+    with open(file_output_path, 'w', encoding='utf-8') as file:
         file.write(html)
-    logger.info(f'make {file_path}')
+    logger.info(f'make {file_output_path}')
 
 
 def make_demo_html_file(font_config):
     template = configs.template_env.get_template('demo.html')
     html = template.render(font_config=font_config)
     html = minify_html.minify(html, minify_css=True, minify_js=True)
-    file_path = font_config.demo_html_file_output_path
-    with open(file_path, 'w', encoding='utf-8') as file:
+    file_output_path = os.path.join(workspace_define.outputs_dir, font_config.demo_html_file_name)
+    with open(file_output_path, 'w', encoding='utf-8') as file:
         file.write(html)
-    logger.info(f'make {file_path}')
+    logger.info(f'make {file_output_path}')
