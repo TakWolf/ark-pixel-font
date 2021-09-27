@@ -30,7 +30,7 @@ locale_flavors = [
 
 
 class FontConfig:
-    def __init__(self, px, ascent_px, descent_px, em_dot_size=100, is_include_draft=False):
+    def __init__(self, px, ascent_px, descent_px, em_dot_size=100):
         # 字体信息
         self.display_name = f'{font_display_name} {px}px'
         self.unique_name = f'{font_unique_name}-{px}px'
@@ -54,8 +54,6 @@ class FontConfig:
         self.otf_zip_file_name = f'{self.release_basic_name}-otf-v{version}.zip'
         self.woff2_zip_file_name = f'{self.release_basic_name}-woff2-v{version}.zip'
         self.ttf_zip_file_name = f'{self.release_basic_name}-ttf-v{version}.zip'
-        # 构建参数
-        self.is_include_draft = is_include_draft
         # 语言变种相关配置
         self.locale_flavor_configs = [FontLocaleFlavorConfig(self, locale_flavor) for locale_flavor in locale_flavors]
 
@@ -73,10 +71,12 @@ class FontLocaleFlavorConfig:
 
 
 font_configs = [
-    FontConfig(10, 9, -1, is_include_draft=True),
-    FontConfig(12, 10, -2, is_include_draft=True),
-    FontConfig(16, 13, -3, is_include_draft=True)
+    FontConfig(10, 9, -1),
+    FontConfig(12, 10, -2),
+    FontConfig(16, 13, -3)
 ]
+
+is_include_draft = True
 
 unicode_blocks = unicode_util.load_blocks_db(workspace_define.unicode_blocks_db_path)
 

@@ -125,7 +125,7 @@ def collect_available_design(font_config):
         locale_flavor_design_file_paths_map[locale_flavor_config.locale_flavor] = {}
     design_dir = os.path.join(workspace_define.design_dir, str(font_config.px))
     design_flavor_names = ['final']
-    if font_config.is_include_draft:
+    if configs.is_include_draft:
         design_flavor_names.append('draft')
     for design_flavor_name in design_flavor_names:
         design_flavor_dir = os.path.join(design_dir, design_flavor_name)
