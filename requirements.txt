@@ -1,5 +1,5 @@
 Brotli==1.0.9
-fonttools==4.27.0
+fonttools==4.27.1
 Jinja2==3.0.1
 MarkupSafe==2.0.1
 minify_html==0.6.8
