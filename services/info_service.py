@@ -126,11 +126,9 @@ def make_info_file(font_config, alphabet):
         file.write('| 属性 | 值 |\n')
         file.write('|---|---|\n')
         file.write(f'| 字体名称 | {font_config.display_name} |\n')
-        file.write(f'| 字体风格 | {font_config.style_name} |\n')
         file.write(f'| 像素尺寸 | {font_config.px}px |\n')
         file.write(f'| 版本号 | {font_define.version} |\n')
         file.write(f'| 字符总数 | {len(alphabet)} |\n')
-        file.write(f'| 语言变种 | {"、".join([locale_flavor_config.locale_flavor for locale_flavor_config in font_config.locale_flavor_configs])} |\n')
         file.write('\n')
         file.write('## Unicode 字符分布\n')
         file.write('\n')
@@ -166,9 +164,9 @@ def make_info_file(font_config, alphabet):
 
 def make_preview_image_file(font_config):
     image_fonts = {}
-    for locale_flavor_config in font_config.locale_flavor_configs:
-        otf_file_path = os.path.join(workspace_define.outputs_dir, locale_flavor_config.otf_file_name)
-        image_fonts[locale_flavor_config.locale_flavor] = ImageFont.truetype(otf_file_path, font_config.px)
+    for locale_flavor in configs.locale_flavors:
+        otf_file_path = os.path.join(workspace_define.outputs_dir, font_config.get_output_font_file_name(locale_flavor, 'otf'))
+        image_fonts[locale_flavor] = ImageFont.truetype(otf_file_path, font_config.px)
     image = Image.new('RGBA', (font_config.px * 35, font_config.px * 17), (255, 255, 255))
     ImageDraw.Draw(image).text((font_config.px, font_config.px), '方舟像素字体 / Ark Pixel Font', fill=(0, 0, 0), font=image_fonts['zh_cn'])
     ImageDraw.Draw(image).text((font_config.px, font_config.px * 3), '我们每天度过的称之为日常的生活，其实是一个个奇迹的连续也说不定。', fill=(0, 0, 0), font=image_fonts['zh_cn'])
@@ -195,6 +193,7 @@ def make_alphabet_html_file(font_config, alphabet):
     template = configs.template_env.get_template('alphabet.html')
     html = template.render(
         font_config=font_config,
+        locale_flavors=configs.locale_flavors,
         alphabet=''.join([c for c in alphabet if ord(c) >= 128])
     )
     html = minify_html.minify(html, minify_css=True, minify_js=True)
@@ -206,7 +205,10 @@ def make_alphabet_html_file(font_config, alphabet):
 
 def make_demo_html_file(font_config):
     template = configs.template_env.get_template('demo.html')
-    html = template.render(font_config=font_config)
+    html = template.render(
+        font_config=font_config,
+        locale_flavors=configs.locale_flavors
+    )
     html = minify_html.minify(html, minify_css=True, minify_js=True)
     file_output_path = os.path.join(workspace_define.outputs_dir, font_config.demo_html_file_name)
     with open(file_output_path, 'w', encoding='utf-8') as file:

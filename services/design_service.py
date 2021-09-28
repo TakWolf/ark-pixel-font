@@ -112,8 +112,8 @@ def collect_available_design(font_config):
     alphabet = set()
     no_flavor_design_file_paths = {}
     locale_flavor_design_file_paths_map = {}
-    for locale_flavor_config in font_config.locale_flavor_configs:
-        locale_flavor_design_file_paths_map[locale_flavor_config.locale_flavor] = {}
+    for locale_flavor in configs.locale_flavors:
+        locale_flavor_design_file_paths_map[locale_flavor] = {}
     design_dir = os.path.join(workspace_define.design_dir, str(font_config.px))
     for design_flavor in configs.design_flavors:
         design_flavor_dir = os.path.join(design_dir, design_flavor)
@@ -124,9 +124,9 @@ def collect_available_design(font_config):
                         design_file_path = os.path.join(design_file_parent_dir, design_file_name)
                         uni_hex_name, available_locale_flavors = _parse_design_file_name(design_file_name)
                         if len(available_locale_flavors) > 0:
-                            for locale_flavor_config in font_config.locale_flavor_configs:
-                                if locale_flavor_config.locale_flavor in available_locale_flavors:
-                                    locale_flavor_design_file_paths = locale_flavor_design_file_paths_map[locale_flavor_config.locale_flavor]
+                            for locale_flavor in configs.locale_flavors:
+                                if locale_flavor in available_locale_flavors:
+                                    locale_flavor_design_file_paths = locale_flavor_design_file_paths_map[locale_flavor]
                                     if uni_hex_name == 'notdef':
                                         if '.notdef' not in locale_flavor_design_file_paths:
                                             locale_flavor_design_file_paths['.notdef'] = design_file_path

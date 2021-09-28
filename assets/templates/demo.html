@@ -54,14 +54,16 @@
             font-size: {{ font_config.px * 2 }}px;
             line-height: {{ font_config.px * 3 }}px;
         }
-        {% for locale_flavor_config in font_config.locale_flavor_configs %}
-            @font-face {
-                font-family: {{ locale_flavor_config.unique_name }};
-                src: url("{{ locale_flavor_config.woff2_file_name }}");
-            }
-            .app-font-{{ locale_flavor_config.locale_flavor }} {
-                font-family: {{ locale_flavor_config.unique_name }}, cursive;
-            }
+        {% for locale_flavor in locale_flavors %}
+            {% with font_family = font_config.get_output_unique_name(locale_flavor) %}
+                @font-face {
+                    font-family: {{ font_family }};
+                    src: url("{{ font_config.get_output_font_file_name(locale_flavor, 'woff2') }}");
+                }
+                .app-font-{{ locale_flavor }} {
+                    font-family: {{ font_family }}, cursive;
+                }
+            {% endwith %}
         {% endfor %}
     </style>
 </head>
