@@ -67,8 +67,8 @@ def verify_design_files(font_config):
     """
     design_dir = os.path.join(workspace_define.design_dir, str(font_config.px))
     svg_outputs_dir = os.path.join(workspace_define.svg_outputs_dir, str(font_config.px))
-    for design_flavor_name in ['final', 'draft']:
-        design_flavor_dir = os.path.join(design_dir, design_flavor_name)
+    for design_flavor in configs.design_flavors:
+        design_flavor_dir = os.path.join(design_dir, design_flavor)
         if os.path.isdir(design_flavor_dir):
             for design_file_parent_dir, _, design_file_names in os.walk(design_flavor_dir):
                 svg_file_parent_dir = design_file_parent_dir.replace(design_dir, svg_outputs_dir)
@@ -124,11 +124,8 @@ def collect_available_design(font_config):
     for locale_flavor_config in font_config.locale_flavor_configs:
         locale_flavor_design_file_paths_map[locale_flavor_config.locale_flavor] = {}
     design_dir = os.path.join(workspace_define.design_dir, str(font_config.px))
-    design_flavor_names = ['final']
-    if configs.is_include_draft:
-        design_flavor_names.append('draft')
-    for design_flavor_name in design_flavor_names:
-        design_flavor_dir = os.path.join(design_dir, design_flavor_name)
+    for design_flavor in configs.design_flavors:
+        design_flavor_dir = os.path.join(design_dir, design_flavor)
         if os.path.isdir(design_flavor_dir):
             for design_file_parent_dir, _, design_file_names in os.walk(design_flavor_dir):
                 for design_file_name in design_file_names:
