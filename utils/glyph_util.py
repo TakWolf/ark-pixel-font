@@ -128,26 +128,3 @@ def get_outlines_from_design_data(design_data, dot_size):
             outlines.append(solved_line_segment)
     # 返回
     return outlines
-
-
-def save_outlines_to_svg(outlines, width, height, file_path):
-    """
-    通过轮廓数据，生成 svg 文件
-    <?xml version="1.0" encoding="utf-8"?>
-    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1600" height="1600">
-        <path d="M 1100, 0 L 1200, 0 L 1200, 100 L 1100, 100 z" />
-    </svg>
-    """
-    with open(file_path, 'w', encoding='utf-8') as file:
-        file.write('<?xml version="1.0" encoding="utf-8"?>\n')
-        file.write(f'<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="{width}" height="{height}">\n')
-        path_strings = []
-        for outline in outlines:
-            path_string = '    '
-            for i, (x, y) in enumerate(outline):
-                path_string += f'{"M" if i == 0 else "L"} {x} {y} '
-            path_string += 'z'
-            path_strings.append(path_string)
-        d = '\n'.join(path_strings)
-        file.write(f'    <path d="\n{d}\n    " />\n')
-        file.write('</svg>\n')

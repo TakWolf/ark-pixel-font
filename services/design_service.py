@@ -63,16 +63,13 @@ def classify_design_files(font_config):
 
 def verify_design_files(font_config):
     """
-    校验设计文件，并生成 SVG
+    校验并格式化设计文件
     """
     design_dir = os.path.join(workspace_define.design_dir, str(font_config.px))
-    svg_outputs_dir = os.path.join(workspace_define.svg_outputs_dir, str(font_config.px))
     for design_flavor in configs.design_flavors:
         design_flavor_dir = os.path.join(design_dir, design_flavor)
         if os.path.isdir(design_flavor_dir):
             for design_file_parent_dir, _, design_file_names in os.walk(design_flavor_dir):
-                svg_file_parent_dir = design_file_parent_dir.replace(design_dir, svg_outputs_dir)
-                fs_util.make_dirs_if_not_exists(svg_file_parent_dir)
                 for design_file_name in design_file_names:
                     if design_file_name.endswith('.png'):
                         design_file_path = os.path.join(design_file_parent_dir, design_file_name)
@@ -105,12 +102,6 @@ def verify_design_files(font_config):
                         # 格式化设计文件
                         glyph_util.save_design_data_to_png(design_data, design_file_path)
                         logger.info(f'format design file: {design_file_path}')
-
-                        # 生成 SVG
-                        outlines = glyph_util.get_outlines_from_design_data(design_data, font_config.em_dot_size)
-                        svg_file_path = os.path.join(svg_file_parent_dir, design_file_name.replace('.png', '.svg'))
-                        glyph_util.save_outlines_to_svg(outlines, width * font_config.em_dot_size, height * font_config.em_dot_size, svg_file_path)
-                        logger.info(f'make svg file: {svg_file_path}')
 
 
 def collect_available_design(font_config):
