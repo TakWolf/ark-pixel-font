@@ -1,3 +1,4 @@
+import os.path
 import time
 
 from jinja2 import Environment, FileSystemLoader
@@ -78,6 +79,6 @@ font_configs = [
 
 is_include_draft = True
 
-unicode_blocks = unicode_util.load_blocks_db(workspace_define.unicode_blocks_db_path)
+unicode_blocks = unicode_util.load_blocks_db(os.path.join(workspace_define.unidata_dir, 'blocks.txt'))
 
 template_env = Environment(loader=FileSystemLoader(workspace_define.templates_dir))

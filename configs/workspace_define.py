@@ -1,19 +1,13 @@
 import os
 
-assets_dir = 'assets'
+assets_dir = 'assets/'
+unidata_dir = os.path.join(assets_dir, 'unidata/')
+design_dir = os.path.join(assets_dir, 'design/')
+templates_dir = os.path.join(assets_dir, 'templates/')
 
-unidata_dir = os.path.join(assets_dir, 'unidata')
+outputs_dir = 'outputs/'
+svg_outputs_dir = os.path.join(outputs_dir, 'svg/')
 
-unicode_blocks_db_path = os.path.join(unidata_dir, 'blocks.txt')
+releases_dir = 'releases/'
 
-design_dir = os.path.join(assets_dir, 'design')
-
-templates_dir = os.path.join(assets_dir, 'templates')
-
-outputs_dir = 'outputs'
-
-svg_outputs_dir = os.path.join(outputs_dir, 'svg')
-
-releases_dir = 'releases'
-
-docs_dir = 'docs'
+docs_dir = 'docs/'

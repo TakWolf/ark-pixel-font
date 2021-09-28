@@ -66,7 +66,7 @@ def verify_design_files(font_config):
     校验设计文件，并生成 SVG
     """
     design_dir = os.path.join(workspace_define.design_dir, str(font_config.px))
-    svg_outputs_dir = os.path.join(workspace_define.outputs_dir, str(font_config.px))
+    svg_outputs_dir = os.path.join(workspace_define.svg_outputs_dir, str(font_config.px))
     for design_flavor_name in ['final', 'draft']:
         design_flavor_dir = os.path.join(design_dir, design_flavor_name)
         if os.path.isdir(design_flavor_dir):
