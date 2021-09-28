@@ -5,7 +5,7 @@ import minify_html
 from PIL import Image, ImageFont, ImageDraw
 
 import configs
-from configs import workspace_define
+from configs import font_define, workspace_define
 from utils import unicode_util, gb2312_util, big5_util, shift_jis_util, ks_x_1001_util
 
 logger = logging.getLogger('info-service')
@@ -128,7 +128,7 @@ def make_info_file(font_config, alphabet):
         file.write(f'| 字体名称 | {font_config.display_name} |\n')
         file.write(f'| 字体风格 | {font_config.style_name} |\n')
         file.write(f'| 像素尺寸 | {font_config.px}px |\n')
-        file.write(f'| 版本号 | {configs.version} |\n')
+        file.write(f'| 版本号 | {font_define.version} |\n')
         file.write(f'| 字符总数 | {len(alphabet)} |\n')
         file.write(f'| 语言变种 | {"、".join([locale_flavor_config.locale_flavor for locale_flavor_config in font_config.locale_flavor_configs])} |\n')
         file.write('\n')

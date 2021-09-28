@@ -5,8 +5,7 @@ from fontTools.fontBuilder import FontBuilder
 from fontTools.pens.t2CharStringPen import T2CharStringPen
 from fontTools.pens.ttGlyphPen import TTGlyphPen
 
-import configs
-from configs import workspace_define
+from configs import font_define, workspace_define
 from utils import glyph_util
 
 logger = logging.getLogger('font-service')
@@ -98,19 +97,19 @@ def make_fonts(font_config, alphabet, design_file_paths_map):
     ttf_glyph_infos_pool = {}
     for locale_flavor_config in font_config.locale_flavor_configs:
         name_strings = {
-            'copyright': configs.copyright_string,
+            'copyright': font_define.copyright_string,
             'familyName': locale_flavor_config.display_name,
             'styleName': font_config.style_name,
-            'uniqueFontIdentifier': f'{locale_flavor_config.unique_name}-{font_config.style_name};{configs.version}',
+            'uniqueFontIdentifier': f'{locale_flavor_config.unique_name}-{font_config.style_name};{font_define.version}',
             'fullName': locale_flavor_config.display_name,
-            'version': configs.version,
+            'version': font_define.version,
             'psName': f'{locale_flavor_config.unique_name}-{font_config.style_name}',
-            'designer': configs.designer,
-            'description': configs.description,
-            'vendorURL': configs.vendor_url,
-            'designerURL': configs.designer_url,
-            'licenseDescription': configs.license_description,
-            'licenseInfoURL': configs.license_info_url
+            'designer': font_define.designer,
+            'description': font_define.description,
+            'vendorURL': font_define.vendor_url,
+            'designerURL': font_define.designer_url,
+            'licenseDescription': font_define.license_description,
+            'licenseInfoURL': font_define.license_info_url
         }
         design_file_paths = design_file_paths_map[locale_flavor_config.locale_flavor]
 
