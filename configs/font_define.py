@@ -26,9 +26,9 @@ class FontConfig:
         self.ascent_px = ascent_px
         self.descent_px = descent_px
         self.em_dot_size = em_dot_size
-        self.units_per_em = px * self.em_dot_size
-        self.ascent = ascent_px * self.em_dot_size
-        self.descent = descent_px * self.em_dot_size
+        self.units_per_em = px * em_dot_size
+        self.ascent = ascent_px * em_dot_size
+        self.descent = descent_px * em_dot_size
         # 附加文件清单
         self.info_file_name = f'font-info-{px}px.md'
         self.preview_image_file_name = f'preview-{px}px.png'
