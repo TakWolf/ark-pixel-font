@@ -82,17 +82,19 @@ def verify_design_files(font_config):
                             code_point = int(uni_hex_name, 16)
                             c = chr(code_point)
 
-                        # 校验设计文件的半角和全角尺寸
+                        # 校验宽度
                         east_asian_width_status = unicodedata.east_asian_width(c) if c else 'N'
                         if east_asian_width_status == 'H' or east_asian_width_status == 'Na':
-                            assert width * 2 == height, design_file_path
+                            assert width == font_config.px / 2, design_file_path
                         elif east_asian_width_status == 'F' or east_asian_width_status == 'W':
-                            assert width == height, design_file_path
+                            assert width == font_config.px, design_file_path
                         else:  # 'A' or 'N'
-                            assert width * 2 == height or width == height, design_file_path
-                        assert font_config.px == height, design_file_path
+                            assert width == font_config.px / 2 or width == font_config.px, design_file_path
 
-                        # 校验汉字顶部和右侧是否留有1像素间距
+                        # 校验高度
+                        assert height == font_config.px, design_file_path
+
+                        # 校验间距
                         if 0x4E00 <= code_point <= 0x9FFF:
                             for alpha in design_data[0]:
                                 assert alpha == 0, design_file_path
