@@ -20,9 +20,8 @@ font_configs = [
     FontConfig(16, 13, -3)
 ]
 
-design_flavors = [
-    'final',
-    'draft'
+design_dirs = [
+    workspace_define.design_dir
 ]
 
 unicode_blocks = unicode_util.load_blocks_db(os.path.join(workspace_define.unidata_dir, 'blocks.txt'))
