@@ -15,9 +15,9 @@ locale_flavors = [
 ]
 
 font_configs = [
-    FontConfig(10, 9, -1),
-    FontConfig(12, 10, -2),
-    FontConfig(16, 13, -3)
+    FontConfig(10, 9),
+    FontConfig(12, 10),
+    FontConfig(16, 13)
 ]
 
 design_dirs = [

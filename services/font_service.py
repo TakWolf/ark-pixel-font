@@ -87,6 +87,7 @@ def _create_font_builder(name_strings, units_per_em, ascent, descent, glyph_orde
 
 
 def make_fonts(font_config, alphabet, design_file_paths_map):
+    units_per_em, ascent, descent = font_config.get_metrics()
     glyph_order = ['.notdef']
     character_map = {}
     for c in alphabet:
@@ -116,8 +117,8 @@ def make_fonts(font_config, alphabet, design_file_paths_map):
         }
         design_file_paths = design_file_paths_map[locale_flavor]
 
-        otf_glyph_infos_map = _draw_glyphs(otf_glyph_infos_pool, design_file_paths, font_config.ascent_px, font_config.em_dot_size, False)
-        otf_builder = _create_font_builder(name_strings, font_config.units_per_em, font_config.ascent, font_config.descent, glyph_order, character_map, otf_glyph_infos_map, False)
+        otf_glyph_infos_map = _draw_glyphs(otf_glyph_infos_pool, design_file_paths, font_config.origin_y_px, font_config.em_dot_size, False)
+        otf_builder = _create_font_builder(name_strings, units_per_em, ascent, descent, glyph_order, character_map, otf_glyph_infos_map, False)
         otf_file_output_path = os.path.join(workspace_define.outputs_dir, font_config.get_output_font_file_name(locale_flavor, 'otf'))
         otf_builder.save(otf_file_output_path)
         logger.info(f'make {otf_file_output_path}')
@@ -127,8 +128,8 @@ def make_fonts(font_config, alphabet, design_file_paths_map):
         otf_builder.save(woff2_file_output_path)
         logger.info(f'make {woff2_file_output_path}')
 
-        ttf_glyph_infos_map = _draw_glyphs(ttf_glyph_infos_pool, design_file_paths, font_config.ascent_px, font_config.em_dot_size, True)
-        ttf_builder = _create_font_builder(name_strings, font_config.units_per_em, font_config.ascent, font_config.descent, glyph_order, character_map, ttf_glyph_infos_map, True)
+        ttf_glyph_infos_map = _draw_glyphs(ttf_glyph_infos_pool, design_file_paths, font_config.origin_y_px, font_config.em_dot_size, True)
+        ttf_builder = _create_font_builder(name_strings, units_per_em, ascent, descent, glyph_order, character_map, ttf_glyph_infos_map, True)
         ttf_file_output_path = os.path.join(workspace_define.outputs_dir, font_config.get_output_font_file_name(locale_flavor, 'ttf'))
         ttf_builder.save(ttf_file_output_path)
         logger.info(f'make {ttf_file_output_path}')
