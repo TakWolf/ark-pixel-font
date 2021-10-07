@@ -12,16 +12,16 @@ from utils import glyph_util
 logger = logging.getLogger('font-service')
 
 
-def _convert_point_to_open_type(point, ascent):
+def _convert_point_to_open_type(point, origin_y):
     """
     转换左上角坐标系为 OpenType 坐标系
     """
     x, y = point
-    y = ascent - y
+    y = origin_y - y
     return x, y
 
 
-def _draw_glyph(design_file_path, em_dot_size, ascent, is_ttf):
+def _draw_glyph(design_file_path, origin_y_px, em_dot_size, is_ttf):
     logger.info(f'draw glyph by design file {design_file_path}')
     font_data, width, height = glyph_util.load_design_data_from_png(design_file_path)
     outlines = glyph_util.get_outlines_from_design_data(font_data, em_dot_size)
@@ -32,7 +32,7 @@ def _draw_glyph(design_file_path, em_dot_size, ascent, is_ttf):
     if len(outlines) > 0:
         for outline_index, outline in enumerate(outlines):
             for point_index, point in enumerate(outline):
-                point = _convert_point_to_open_type(point, ascent)
+                point = _convert_point_to_open_type(point, origin_y_px * em_dot_size)
                 if point_index == 0:
                     pen.moveTo(point)
                 else:
@@ -51,13 +51,13 @@ def _draw_glyph(design_file_path, em_dot_size, ascent, is_ttf):
         return pen.getCharString(), advance_width
 
 
-def _draw_glyphs(glyph_infos_pool, design_file_paths, em_dot_size, ascent, is_ttf):
+def _draw_glyphs(glyph_infos_pool, design_file_paths, origin_y_px, em_dot_size, is_ttf):
     glyph_infos_map = {}
     for code_point, design_file_path in design_file_paths.items():
         if design_file_path in glyph_infos_pool:
             glyph_infos = glyph_infos_pool[design_file_path]
         else:
-            glyph_infos = _draw_glyph(design_file_path, em_dot_size, ascent, is_ttf)
+            glyph_infos = _draw_glyph(design_file_path, origin_y_px, em_dot_size, is_ttf)
             glyph_infos_pool[design_file_path] = glyph_infos
         glyph_infos_map[code_point] = glyph_infos
     return glyph_infos_map
@@ -116,7 +116,7 @@ def make_fonts(font_config, alphabet, design_file_paths_map):
         }
         design_file_paths = design_file_paths_map[locale_flavor]
 
-        otf_glyph_infos_map = _draw_glyphs(otf_glyph_infos_pool, design_file_paths, font_config.em_dot_size, font_config.ascent, False)
+        otf_glyph_infos_map = _draw_glyphs(otf_glyph_infos_pool, design_file_paths, font_config.ascent_px, font_config.em_dot_size, False)
         otf_builder = _create_font_builder(name_strings, font_config.units_per_em, font_config.ascent, font_config.descent, glyph_order, character_map, otf_glyph_infos_map, False)
         otf_file_output_path = os.path.join(workspace_define.outputs_dir, font_config.get_output_font_file_name(locale_flavor, 'otf'))
         otf_builder.save(otf_file_output_path)
@@ -127,7 +127,7 @@ def make_fonts(font_config, alphabet, design_file_paths_map):
         otf_builder.save(woff2_file_output_path)
         logger.info(f'make {woff2_file_output_path}')
 
-        ttf_glyph_infos_map = _draw_glyphs(ttf_glyph_infos_pool, design_file_paths, font_config.em_dot_size, font_config.ascent, True)
+        ttf_glyph_infos_map = _draw_glyphs(ttf_glyph_infos_pool, design_file_paths, font_config.ascent_px, font_config.em_dot_size, True)
         ttf_builder = _create_font_builder(name_strings, font_config.units_per_em, font_config.ascent, font_config.descent, glyph_order, character_map, ttf_glyph_infos_map, True)
         ttf_file_output_path = os.path.join(workspace_define.outputs_dir, font_config.get_output_font_file_name(locale_flavor, 'ttf'))
         ttf_builder.save(ttf_file_output_path)
