@@ -40,3 +40,8 @@ def copy_docs_files(font_config):
         ext_file_docs_path = os.path.join(workspace_define.docs_dir, ext_file_name)
         shutil.copy(ext_file_path, ext_file_docs_path)
         logger.info(f'copy from {ext_file_path} to {ext_file_docs_path}')
+
+    index_html_file_path = os.path.join(workspace_define.outputs_dir, 'index.html')
+    index_html_file_docs_path = os.path.join(workspace_define.docs_dir, 'index.html')
+    shutil.copy(index_html_file_path, index_html_file_docs_path)
+    logger.info(f'copy from {index_html_file_path} to {index_html_file_docs_path}')

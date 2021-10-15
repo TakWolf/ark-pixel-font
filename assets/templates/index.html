@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>方舟像素字体 / Ark Pixel Font</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .page {
+            margin-top: 64px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        {% for font_config in font_configs  %}
+            {% for locale_flavor in locale_flavors %}
+                {% with font_family = font_config.get_output_unique_name(locale_flavor) %}
+                    @font-face {
+                        font-family: {{ font_family }};
+                        src: url("{{ font_config.get_output_font_file_name(locale_flavor, 'woff2') }}");
+                    }
+                    .app-font-{{ font_config.px }}px .app-font-{{ locale_flavor }} {
+                        font-family: {{ font_family }}, sans-serif;
+                    }
+                {% endwith %}
+            {% endfor %}
+            .app-font-{{ font_config.px }}px .title {
+                font-size: {{ font_config.px * 3 }}px;
+                font-weight: normal;
+                line-height: {{ font_config.px * 4 }}px;
+            }
+            .app-font-{{ font_config.px }}px .text {
+                font-size: {{ font_config.px * 2 }}px;
+                line-height: {{ font_config.px * 3 }}px;
+            }
+            .app-font-{{ font_config.px }}px .copyright {
+                font-size: {{ font_config.px }}px;
+                line-height: {{ font_config.px * 2 }}px;
+            }
+            .app-font-{{ font_config.px }}px .link-group {
+                margin-top: {{ font_config.px / 2 }}px;
+                margin-bottom: {{ font_config.px / 2 }}px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+            }
+            .app-font-{{ font_config.px }}px .link-tab {
+                margin-left: {{ font_config.px }}px;
+                margin-right: {{ font_config.px }}px;
+                font-size: {{ font_config.px * 2 }}px;
+                line-height: {{ font_config.px * 3 }}px;
+            }
+        {% endfor %}
+        .configs-bar {
+            height: 36px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffd339;
+        }
+        .configs-bar input[type="radio"] {
+            display: none;
+        }
+        .configs-bar input[type="radio"] + span {
+            width: 10px;
+            height: 10px;
+            margin-left: 12px;
+            margin-right: 12px;
+            border-width: 2px;
+            border-color: #4b4b4b;
+            border-style: solid;
+        }
+        .configs-bar input[type="radio"]:checked + span {
+            background-color: #4b4b4b;
+        }
+        .btn-apply-config {
+            height: 100%;
+            margin-left: 24px;
+            margin-right: 24px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            color: #4b4b4b;
+            font-family: Ark-Pixel-12px-ZH_CN, sans-serif;
+            font-size: 24px;
+            line-height: 36px;
+        }
+    </style>
+</head>
+<body class="app-font-12px">
+<form class="configs-bar">
+    {% for font_config in font_configs %}
+        <label class="btn-apply-config">
+            <input name="font_size" type="radio" {{ 'checked' if font_config.px == 12 else '' }} onclick="applyFontSize('{{ font_config.px }}')">
+            <span></span>
+            {{ font_config.px }}px
+        </label>
+    {% endfor %}
+</form>
+<div class="page">
+    <h1 class="title app-font-zh_cn">方舟像素字体 / Ark Pixel Font</h1>
+    <br>
+    <div class="text app-font-zh_cn">一款开源的像素风格中日韩文等宽字体。</div>
+    <div class="link-group">
+        <a class="link-tab app-font-zh_cn" href="https://github.com/TakWolf/ark-pixel-font">github</a>
+        <a class="link-tab app-font-zh_cn" href="https://takwolf.itch.io/ark-pixel-font">itch.io</a>
+    </div>
+    <br>
+    <div class="text app-font-zh_cn">我们每天度过的称之为日常的生活，其实是一个个奇迹的连续也说不定。</div>
+    <div class="text app-font-zh_hk">我們每天度過的稱之為日常的生活，其實是一個個奇跡的連續也說不定。</div>
+    <div class="text app-font-ja">日々、私たちが過ごしている日常は、実は奇跡の連続なのかもしれない。</div>
+    <div class="text app-font-zh_cn">THE QUICK BROWN FOX JUMPS OVER A LAZY DOG.</div>
+    <div class="text app-font-zh_cn">the quick brown fox jumps over a lazy dog.</div>
+    <div class="text app-font-zh_cn">0123456789</div>
+    <div class="text app-font-zh_cn">★☆☺☹♠♡♢♣♤♥♦♧☀☼♩♪♫♬☂☁⚓✈⚔☯☎☏</div>
+    <br>
+    <div class="link-group">
+        {% for font_config in font_configs %}
+            <a class="link-tab app-font-zh_cn" href="demo-{{ font_config.px }}px.html">{{ font_config.px }}px Demo</a>
+        {% endfor %}
+    </div>
+    <div class="link-group">
+        {% for font_config in font_configs %}
+            <a class="link-tab app-font-zh_cn" href="alphabet-{{ font_config.px }}px.html">{{ font_config.px }}px Alphabet</a>
+        {% endfor %}
+    </div>
+    <br>
+    <div class="copyright app-font-zh_cn">Copyright © 2021 狼人小林 All Rights Reserved.</div>
+</div>
+<script>
+    function applyFontSize(px) {
+        document.body.className = 'app-font-' + px + 'px';
+    }
+</script>
+</body>
+</html>

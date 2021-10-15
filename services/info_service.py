@@ -214,3 +214,16 @@ def make_demo_html_file(font_config):
     with open(file_output_path, 'w', encoding='utf-8') as file:
         file.write(html)
     logger.info(f'make {file_output_path}')
+
+
+def make_index_html_file():
+    template = configs.template_env.get_template('index.html')
+    html = template.render(
+        font_configs=configs.font_configs,
+        locale_flavors=configs.locale_flavors
+    )
+    html = minify_html.minify(html, minify_css=True, minify_js=True)
+    file_output_path = os.path.join(workspace_define.outputs_dir, 'index.html')
+    with open(file_output_path, 'w', encoding='utf-8') as file:
+        file.write(html)
+    logger.info(f'make {file_output_path}')
