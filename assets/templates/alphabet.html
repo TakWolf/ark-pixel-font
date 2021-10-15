@@ -9,7 +9,7 @@
             margin: 0;
             padding: 0;
         }
-        .locale-flavor-bar {
+        .configs-bar {
             height: {{ font_config.px * 3 }}px;
             position: fixed;
             top: 0;
@@ -19,10 +19,10 @@
             flex-direction: row;
             background-color: #ffd339;
         }
-        .locale-flavor-bar input[type="radio"] {
+        .configs-bar input[type="radio"] {
             display: none;
         }
-        .locale-flavor-bar input[type="radio"] + span {
+        .configs-bar input[type="radio"] + span {
             width: {{ font_config.px / 5 * 4 }}px;
             height: {{ font_config.px / 5 * 4 }}px;
             margin-left: {{ font_config.px }}px;
@@ -31,10 +31,10 @@
             border-color: #4b4b4b;
             border-style: solid;
         }
-        .locale-flavor-bar input[type="radio"]:checked + span {
+        .configs-bar input[type="radio"]:checked + span {
             background-color: #4b4b4b;
         }
-        .btn-apply-locale-flavor {
+        .btn-apply-config {
             width: {{ font_config.px * 10 }}px;
             height: 100%;
             margin-right: {{ font_config.px * 2 }}px;
@@ -61,16 +61,16 @@
                     src: url("{{ font_config.get_output_font_file_name(locale_flavor, 'woff2') }}");
                 }
                 .app-font-{{ locale_flavor }} {
-                    font-family: {{ font_family }}, cursive;
+                    font-family: {{ font_family }}, sans-serif;
                 }
             {% endwith %}
         {% endfor %}
     </style>
 </head>
 <body class="app-font-{{ locale_flavors[0] }}">
-<form class="locale-flavor-bar">
+<form class="configs-bar">
     {% for locale_flavor in locale_flavors %}
-        <label class="btn-apply-locale-flavor app-font-{{ locale_flavor }}">
+        <label class="btn-apply-config app-font-{{ locale_flavor }}">
             <input name="locale_flavor" type="radio" {{ 'checked' if loop.index == 1 else '' }} onclick="applyLocaleFlavor('{{ locale_flavor }}')">
             <span></span>
             {{ locale_flavor.replace('_', '-') }}
