@@ -322,6 +322,7 @@ def make_afdian_cover():
     image_draw_text_with_shadow(image, ((image.width - 6 * 34) / 2 , 12 * 16), '日々、私たちが過ごしている日常は、\n 実は奇跡の連続なのかもしれない。', text_color, shadow_color, image_font_12_ja)
     image_draw_text_with_shadow(image, ((image.width - 6 * 42) / 2 , 12 * 19), 'THE QUICK BROWN FOX JUMPS OVER A LAZY DOG.\nthe quick brown fox jumps over a lazy dog.\n                0123456789', text_color, shadow_color, image_font_12_zh_cn)
     image_draw_text_with_shadow(image, ((image.width - 6 * 24) / 2, 12 * 23), '★☆☺☹♠♡♢♣♤♥♦♧\n☀☼♩♪♫♬☂☁⚓✈⚔☯', text_color, shadow_color, image_font_12_zh_cn)
+    image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
     file_output_path = os.path.join(workspace_define.outputs_dir, 'afdian-cover.png')
     image.save(file_output_path)
