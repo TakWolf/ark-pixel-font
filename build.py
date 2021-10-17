@@ -21,6 +21,9 @@ def main():
         info_service.make_alphabet_html_file(font_config, alphabet)
         info_service.make_demo_html_file(font_config)
     info_service.make_index_html_file()
+    info_service.make_github_banner()
+    info_service.make_itch_io_banner()
+    info_service.make_itch_io_cover()
 
 
 if __name__ == '__main__':

@@ -4,6 +4,7 @@ assets_dir = 'assets/'
 unidata_dir = os.path.join(assets_dir, 'unidata/')
 design_dir = os.path.join(assets_dir, 'design/')
 templates_dir = os.path.join(assets_dir, 'templates/')
+images_dir = os.path.join(assets_dir, 'images/')
 
 outputs_dir = 'outputs/'
 

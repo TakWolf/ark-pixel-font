@@ -20,6 +20,8 @@ font_configs = [
     FontConfig(16, 13)
 ]
 
+font_config_map = {font_config.px: font_config for font_config in font_configs}
+
 design_dirs = [
     workspace_define.design_dir
 ]
