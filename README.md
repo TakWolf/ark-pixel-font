@@ -1,10 +1,12 @@
+![banner](docs/itch-io-banner.png)
+
 # 方舟像素字体 / Ark Pixel Font
 
 [![SIL Open Font License 1.1](https://img.shields.io/badge/license-OFL--1.1-orange)](https://scripts.sil.org/OFL)
 [![MIT License](https://img.shields.io/badge/license-MIT-green)](https://opensource.org/licenses/MIT)
 [![Releases](https://img.shields.io/github/v/release/TakWolf/ark-pixel-font)](https://github.com/TakWolf/ark-pixel-font/releases)
 
-一款开源的像素风格中日韩文等宽字体，支持 10、12 和 16 三个像素尺寸。
+开源的中日韩文像素字体。等宽，支持 10、12 和 16 像素尺寸。
 
 这个项目不仅提供了全部的字形设计源文件，也提供了构建字体所需要的完整程序。
 
@@ -119,6 +121,11 @@ python ./build.py
  ## 参与改进
 
 任何有关字体和程序上的建议，都欢迎创建 [Issues](https://github.com/TakWolf/ark-pixel-font/issues) 来反馈，也可以通过 [Discussions](https://github.com/TakWolf/ark-pixel-font/discussions) 来讨论。
+
+## 相关页面
+
+- [项目主页](https://ark-pixel-font.takwolf.com)
+- [itch.io](https://takwolf.itch.io/ark-pixel-font)
 
 ## 赞助
 
