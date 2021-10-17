@@ -129,6 +129,7 @@ python ./build.py
 
 ## 赞助
 
+- [收款码](https://github.com/TakWolf/TakWolf/blob/master/payment-qr-codes.md)
 - [爱发电](https://afdian.net/@takwolf)
 
 ## 参考资料
