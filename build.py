@@ -24,6 +24,7 @@ def main():
     info_service.make_github_banner()
     info_service.make_itch_io_banner()
     info_service.make_itch_io_cover()
+    info_service.make_afdian_cover()
 
 
 if __name__ == '__main__':

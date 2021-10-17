@@ -303,3 +303,26 @@ def make_itch_io_cover():
     file_output_path = os.path.join(workspace_define.outputs_dir, 'itch-io-cover.png')
     image.save(file_output_path)
     logger.info(f'make {file_output_path}')
+
+
+def make_afdian_cover():
+    image_font_24_zh_cn = load_image_font_from_outputs(12, 'zh_cn', 24)
+    image_font_12_zh_cn = load_image_font_from_outputs(12, 'zh_cn', 12)
+    image_font_12_zh_hk = load_image_font_from_outputs(12, 'zh_hk', 12)
+    image_font_12_ja = load_image_font_from_outputs(12, 'ja', 12)
+
+    image = Image.open(os.path.join(workspace_define.images_dir, 'afdian-cover-template.png'))
+    text_color = (255, 255, 255)
+    shadow_color = (80, 80, 80)
+    image_draw_text_with_shadow(image, ((image.width - 12 * 12) / 2, 12), '方舟像素字体', text_color, shadow_color, image_font_24_zh_cn)
+    image_draw_text_with_shadow(image, ((image.width - 6 * 14) / 2, 12 * 4), 'Ark Pixel Font', text_color, shadow_color, image_font_12_zh_cn)
+    image_draw_text_with_shadow(image, ((image.width - 6 * 28) / 2, 12 * 7), '★ 开源的中日韩文像素字体 ★', text_color, shadow_color, image_font_12_zh_cn)
+    image_draw_text_with_shadow(image, ((image.width - 6 * 32) / 2 , 12 * 10), '我们每天度过的称之为日常的生活，\n其实是一个个奇迹的连续也说不定。', text_color, shadow_color, image_font_12_zh_cn)
+    image_draw_text_with_shadow(image, ((image.width - 6 * 32) / 2 , 12 * 13), '我們每天度過的稱之為日常的生活，\n其實是一個個奇跡的連續也說不定。', text_color, shadow_color, image_font_12_zh_hk)
+    image_draw_text_with_shadow(image, ((image.width - 6 * 34) / 2 , 12 * 16), '日々、私たちが過ごしている日常は、\n 実は奇跡の連続なのかもしれない。', text_color, shadow_color, image_font_12_ja)
+    image_draw_text_with_shadow(image, ((image.width - 6 * 42) / 2 , 12 * 19), 'THE QUICK BROWN FOX JUMPS OVER A LAZY DOG.\nthe quick brown fox jumps over a lazy dog.\n                0123456789', text_color, shadow_color, image_font_12_zh_cn)
+    image_draw_text_with_shadow(image, ((image.width - 6 * 24) / 2, 12 * 23), '★☆☺☹♠♡♢♣♤♥♦♧\n☀☼♩♪♫♬☂☁⚓✈⚔☯', text_color, shadow_color, image_font_12_zh_cn)
+
+    file_output_path = os.path.join(workspace_define.outputs_dir, 'afdian-cover.png')
+    image.save(file_output_path)
+    logger.info(f'make {file_output_path}')
