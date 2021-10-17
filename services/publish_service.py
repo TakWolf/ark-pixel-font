@@ -29,19 +29,24 @@ def copy_docs_files(font_config):
         shutil.copy(woff2_file_path, woff2_file_docs_path)
         logger.info(f'copy from {woff2_file_path} to {woff2_file_docs_path}')
 
-    ext_file_names = [
+    font_ext_file_names = [
         font_config.info_file_name,
         font_config.preview_image_file_name,
         font_config.alphabet_html_file_name,
         font_config.demo_html_file_name
+    ]
+    for font_ext_file_name in font_ext_file_names:
+        ext_file_path = os.path.join(workspace_define.outputs_dir, font_ext_file_name)
+        ext_file_docs_path = os.path.join(workspace_define.docs_dir, font_ext_file_name)
+        shutil.copy(ext_file_path, ext_file_docs_path)
+        logger.info(f'copy from {ext_file_path} to {ext_file_docs_path}')
+
+    ext_file_names = [
+        'index.html',
+        'itch-io-banner.png'
     ]
     for ext_file_name in ext_file_names:
         ext_file_path = os.path.join(workspace_define.outputs_dir, ext_file_name)
         ext_file_docs_path = os.path.join(workspace_define.docs_dir, ext_file_name)
         shutil.copy(ext_file_path, ext_file_docs_path)
         logger.info(f'copy from {ext_file_path} to {ext_file_docs_path}')
-
-    index_html_file_path = os.path.join(workspace_define.outputs_dir, 'index.html')
-    index_html_file_docs_path = os.path.join(workspace_define.docs_dir, 'index.html')
-    shutil.copy(index_html_file_path, index_html_file_docs_path)
-    logger.info(f'copy from {index_html_file_path} to {index_html_file_docs_path}')
