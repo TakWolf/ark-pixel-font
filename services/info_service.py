@@ -292,7 +292,7 @@ def make_itch_io_cover():
     image = Image.open(os.path.join(workspace_define.images_dir, 'itch-io-cover-template.png'))
     text_color = (255, 255, 255)
     shadow_color = (80, 80, 80)
-    image_draw_text_with_shadow(image, ((image.width - 12 * 12) / 2, 12), '方舟像素字体', text_color, shadow_color, font=image_font_24_zh_cn)
+    image_draw_text_with_shadow(image, ((image.width - 12 * 12) / 2, 12), '方舟像素字体', text_color, shadow_color, image_font_24_zh_cn)
     image_draw_text_with_shadow(image, ((image.width - 6 * 32) / 2 , 12 * 4), '我们每天度过的称之为日常的生活，\n其实是一个个奇迹的连续也说不定。', text_color, shadow_color, image_font_12_zh_cn)
     image_draw_text_with_shadow(image, ((image.width - 6 * 32) / 2 , 12 * 7), '我們每天度過的稱之為日常的生活，\n其實是一個個奇跡的連續也說不定。', text_color, shadow_color, image_font_12_zh_hk)
     image_draw_text_with_shadow(image, ((image.width - 6 * 34) / 2 , 12 * 10), '日々、私たちが過ごしている日常は、\n 実は奇跡の連続なのかもしれない。', text_color, shadow_color, image_font_12_ja)
