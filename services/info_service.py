@@ -167,6 +167,7 @@ def make_preview_image_file(font_config):
     for locale_flavor in configs.locale_flavors:
         otf_file_path = os.path.join(workspace_define.outputs_dir, font_config.get_output_font_file_name(locale_flavor, 'otf'))
         image_fonts[locale_flavor] = ImageFont.truetype(otf_file_path, font_config.px)
+
     image = Image.new('RGBA', (font_config.px * 35, font_config.px * 17), (255, 255, 255))
     ImageDraw.Draw(image).text((font_config.px, font_config.px), '方舟像素字体 / Ark Pixel Font', fill=(0, 0, 0), font=image_fonts['zh_cn'])
     ImageDraw.Draw(image).text((font_config.px, font_config.px * 3), '我们每天度过的称之为日常的生活，其实是一个个奇迹的连续也说不定。', fill=(0, 0, 0), font=image_fonts['zh_cn'])
@@ -175,8 +176,9 @@ def make_preview_image_file(font_config):
     ImageDraw.Draw(image).text((font_config.px, font_config.px * 9), 'THE QUICK BROWN FOX JUMPS OVER A LAZY DOG.', fill=(0, 0, 0), font=image_fonts['zh_cn'])
     ImageDraw.Draw(image).text((font_config.px, font_config.px * 11), 'the quick brown fox jumps over a lazy dog.', fill=(0, 0, 0), font=image_fonts['zh_cn'])
     ImageDraw.Draw(image).text((font_config.px, font_config.px * 13), '0123456789', fill=(0, 0, 0), font=image_fonts['zh_cn'])
-    ImageDraw.Draw(image).text((font_config.px, font_config.px * 15), '★☆☺☹♠♡♢♣♤♥♦♧☀☼♩♪♫♬☂☁⚓✈⚔☯☎☏', fill=(0, 0, 0), font=image_fonts['zh_cn'])
+    ImageDraw.Draw(image).text((font_config.px, font_config.px * 15), '★☆☺☹♠♡♢♣♤♥♦♧☀☼♩♪♫♬☂☁⚓✈⚔☯', fill=(0, 0, 0), font=image_fonts['zh_cn'])
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
+
     file_output_path = os.path.join(workspace_define.outputs_dir, font_config.preview_image_file_name)
     image.save(file_output_path)
     logger.info(f'make {file_output_path}')
