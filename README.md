@@ -16,13 +16,19 @@
 
 ![preview-10px.png](docs/preview-10px.png)
 
+[查看全部字符](https://ark-pixel-font.takwolf.com/alphabet-10px.html)
+
 - 12 像素
 
 ![preview-12px.png](docs/preview-12px.png)
 
+[查看全部字符](https://ark-pixel-font.takwolf.com/alphabet-12px.html)
+
 - 16 像素
 
 ![preview-16px.png](docs/preview-16px.png)
+
+[查看全部字符](https://ark-pixel-font.takwolf.com/alphabet-16px.html)
 
 ## 字符统计
 
