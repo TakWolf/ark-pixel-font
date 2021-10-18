@@ -237,7 +237,7 @@ def load_image_font_from_outputs(px, locale_flavor, size):
     return ImageFont.truetype(otf_file_path, size)
 
 
-def image_draw_text_background(image, alphabet, box_size, text_color, font):
+def image_draw_text_background(image, alphabet, step, box_size, text_color, font):
     alphabet_index = 0
     for index, c in enumerate(alphabet):
         code_point = ord(c)
@@ -250,7 +250,7 @@ def image_draw_text_background(image, alphabet, box_size, text_color, font):
     y_offset = (image.height - y_count * box_size) / 2 + (box_size - font.size) / 2
     for y in range(y_count):
         for x in range(x_count):
-            alphabet_index += 2
+            alphabet_index += step
             ImageDraw.Draw(image).text((x_offset + x * box_size, y_offset + y * box_size), alphabet[alphabet_index], fill=text_color, font=font)
 
 
@@ -268,7 +268,7 @@ def make_github_banner(alphabet_12):
 
     image_template = Image.open(os.path.join(workspace_define.images_dir, 'github-banner-template.png'))
     image = Image.new('RGBA', (image_template.width, image_template.height), (255, 255, 255, 0))
-    image_draw_text_background(image, alphabet_12, 14, (200, 200, 200), image_font_12_zh_cn)
+    image_draw_text_background(image, alphabet_12, 2, 14, (200, 200, 200), image_font_12_zh_cn)
     image.paste(image_template, mask=image_template)
     text_color = (255, 255, 255)
     shadow_color = (80, 80, 80)
@@ -294,7 +294,7 @@ def make_itch_io_banner(alphabet_12):
 
     image_template = Image.open(os.path.join(workspace_define.images_dir, 'itch-io-banner-template.png'))
     image = Image.new('RGBA', (image_template.width, image_template.height), (255, 255, 255, 0))
-    image_draw_text_background(image, alphabet_12, 14, (200, 200, 200), image_font_12_zh_cn)
+    image_draw_text_background(image, alphabet_12, 6, 14, (200, 200, 200), image_font_12_zh_cn)
     image.paste(image_template, mask=image_template)
     text_color = (255, 255, 255)
     shadow_color = (80, 80, 80)
