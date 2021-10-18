@@ -1,4 +1,5 @@
 import logging
+import math
 import os
 
 import minify_html
@@ -236,19 +237,39 @@ def load_image_font_from_outputs(px, locale_flavor, size):
     return ImageFont.truetype(otf_file_path, size)
 
 
+def image_draw_text_background(image, alphabet, box_size, text_color, font):
+    alphabet_index = 0
+    for index, c in enumerate(alphabet):
+        code_point = ord(c)
+        if code_point >= 0x4E00:
+            alphabet_index = index
+            break
+    x_count = math.ceil(image.width / box_size)
+    y_count = math.ceil(image.height / box_size)
+    x_offset = (image.width - x_count * box_size) / 2 + (box_size - font.size) / 2
+    y_offset = (image.height - y_count * box_size) / 2 + (box_size - font.size) / 2
+    for y in range(y_count):
+        for x in range(x_count):
+            alphabet_index += 2
+            ImageDraw.Draw(image).text((x_offset + x * box_size, y_offset + y * box_size), alphabet[alphabet_index], fill=text_color, font=font)
+
+
 def image_draw_text_with_shadow(image, xy, text, text_color, shadow_color, font):
     x, y = xy
     ImageDraw.Draw(image).text((x + 1, y + 1), text, fill=shadow_color, font=font)
     ImageDraw.Draw(image).text((x, y), text, fill=text_color, font=font)
 
 
-def make_github_banner():
+def make_github_banner(alphabet_12):
     image_font_24_zh_cn = load_image_font_from_outputs(12, 'zh_cn', 24)
     image_font_12_zh_cn = load_image_font_from_outputs(12, 'zh_cn', 12)
     image_font_12_zh_hk = load_image_font_from_outputs(12, 'zh_hk', 12)
     image_font_12_ja = load_image_font_from_outputs(12, 'ja', 12)
 
-    image = Image.open(os.path.join(workspace_define.images_dir, 'github-banner-template.png'))
+    image_template = Image.open(os.path.join(workspace_define.images_dir, 'github-banner-template.png'))
+    image = Image.new('RGBA', (image_template.width, image_template.height), (255, 255, 255, 0))
+    image_draw_text_background(image, alphabet_12, 14, (200, 200, 200), image_font_12_zh_cn)
+    image.paste(image_template, mask=image_template)
     text_color = (255, 255, 255)
     shadow_color = (80, 80, 80)
     image_draw_text_with_shadow(image, ((image.width - 12 * 29) / 2, 40 + 12 * 2), '方舟像素字体 / Ark Pixel Font', text_color, shadow_color, image_font_24_zh_cn)
@@ -267,15 +288,18 @@ def make_github_banner():
     logger.info(f'make {file_output_path}')
 
 
-def make_itch_io_banner():
+def make_itch_io_banner(alphabet_12):
     image_font_24_zh_cn = load_image_font_from_outputs(12, 'zh_cn', 24)
     image_font_12_zh_cn = load_image_font_from_outputs(12, 'zh_cn', 12)
 
-    image = Image.open(os.path.join(workspace_define.images_dir, 'itch-io-banner-template.png'))
+    image_template = Image.open(os.path.join(workspace_define.images_dir, 'itch-io-banner-template.png'))
+    image = Image.new('RGBA', (image_template.width, image_template.height), (255, 255, 255, 0))
+    image_draw_text_background(image, alphabet_12, 14, (200, 200, 200), image_font_12_zh_cn)
+    image.paste(image_template, mask=image_template)
     text_color = (255, 255, 255)
     shadow_color = (80, 80, 80)
-    image_draw_text_with_shadow(image, ((image.width - 12 * 29) / 2, 12 * 2), '方舟像素字体 / Ark Pixel Font', text_color, shadow_color, image_font_24_zh_cn)
-    image_draw_text_with_shadow(image, ((image.width - 12 * 29) / 2, 12 * 5), '★ 开源的中日韩文像素字体 ★', text_color, shadow_color, image_font_12_zh_cn)
+    image_draw_text_with_shadow(image, ((image.width - 12 * 29) / 2, 16 + 12 * 2), '方舟像素字体 / Ark Pixel Font', text_color, shadow_color, image_font_24_zh_cn)
+    image_draw_text_with_shadow(image, ((image.width - 12 * 29) / 2, 16 + 12 * 5), '★ 开源的中日韩文像素字体 ★', text_color, shadow_color, image_font_12_zh_cn)
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
     file_output_path = os.path.join(workspace_define.outputs_dir, 'itch-io-banner.png')
