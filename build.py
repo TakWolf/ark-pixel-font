@@ -25,6 +25,7 @@ def main():
     info_service.make_index_html_file()
     info_service.make_github_banner(alphabets[12])
     info_service.make_itch_io_banner(alphabets[12])
+    info_service.make_itch_io_background(alphabets[12])
     info_service.make_itch_io_cover()
     info_service.make_afdian_cover()
 

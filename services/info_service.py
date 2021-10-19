@@ -307,6 +307,18 @@ def make_itch_io_banner(alphabet_12):
     logger.info(f'make {file_output_path}')
 
 
+def make_itch_io_background(alphabet_12):
+    image_font_12_zh_cn = load_image_font_from_outputs(12, 'zh_cn', 12)
+
+    image = Image.new('RGBA', (14 * 50, 14 * 50), (255, 255, 255, 0))
+    image_draw_text_background(image, alphabet_12, 1, 14, (30, 30, 30), image_font_12_zh_cn)
+    image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
+
+    file_output_path = os.path.join(workspace_define.outputs_dir, 'itch-io-background.png')
+    image.save(file_output_path)
+    logger.info(f'make {file_output_path}')
+
+
 def make_itch_io_cover():
     image_font_24_zh_cn = load_image_font_from_outputs(12, 'zh_cn', 24)
     image_font_12_zh_cn = load_image_font_from_outputs(12, 'zh_cn', 12)
