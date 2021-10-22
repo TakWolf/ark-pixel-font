@@ -294,7 +294,7 @@ def make_itch_io_banner(alphabet_12):
 
     image_template = Image.open(os.path.join(workspace_define.images_dir, 'itch-io-banner-template.png'))
     image = Image.new('RGBA', (image_template.width, image_template.height), (255, 255, 255, 0))
-    image_draw_text_background(image, alphabet_12, 6, 14, (200, 200, 200), image_font_12_zh_cn)
+    image_draw_text_background(image, alphabet_12, 5, 14, (200, 200, 200), image_font_12_zh_cn)
     image.paste(image_template, mask=image_template)
     text_color = (255, 255, 255)
     shadow_color = (80, 80, 80)
