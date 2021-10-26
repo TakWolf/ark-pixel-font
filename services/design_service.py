@@ -18,12 +18,12 @@ def _parse_design_file_name(design_file_name):
     assert 1 <= len(params) <= 2, design_file_name
     uni_hex_name = params[0].lower() if params[0] == 'notdef' else params[0].upper()
     if len(params) >= 2:
-        available_locale_flavors = params[1].lower().split(',')
-        for locale_flavor in available_locale_flavors:
-            assert locale_flavor in configs.locale_flavors, design_file_name
+        available_language_specifics = params[1].lower().split(',')
+        for language_specific in available_language_specifics:
+            assert language_specific in configs.language_specifics, design_file_name
     else:
-        available_locale_flavors = []
-    return uni_hex_name, available_locale_flavors
+        available_language_specifics = []
+    return uni_hex_name, available_language_specifics
 
 
 def classify_design_files(font_config):
@@ -42,7 +42,7 @@ def classify_design_files(font_config):
                 if not design_file_name.endswith('.png'):
                     continue
                 design_file_from_path = os.path.join(design_file_parent_dir, design_file_name)
-                uni_hex_name, available_locale_flavors = _parse_design_file_name(design_file_name)
+                uni_hex_name, available_language_specifics = _parse_design_file_name(design_file_name)
                 if uni_hex_name == 'notdef':
                     design_file_to_dir = design_flavor_dir
                 else:
@@ -53,7 +53,7 @@ def classify_design_files(font_config):
                     if unicode_block.name == 'CJK Unified Ideographs':
                         design_file_to_dir = os.path.join(design_file_to_dir, f'{uni_hex_name[0:-2]}-')
                     fs_util.make_dirs_if_not_exists(design_file_to_dir)
-                design_file_name = f'{uni_hex_name}{" " if len(available_locale_flavors) > 0 else ""}{",".join(available_locale_flavors)}.png'
+                design_file_name = f'{uni_hex_name}{" " if len(available_language_specifics) > 0 else ""}{",".join(available_language_specifics)}.png'
                 design_file_to_path = os.path.join(design_file_to_dir, design_file_name)
                 shutil.move(design_file_from_path, design_file_to_path)
                 logger.info(f'classify design file: {design_file_to_path}')
@@ -114,8 +114,8 @@ def collect_available_design(font_config):
     alphabet = set()
     common_design_file_paths = {}
     locale_design_file_paths_map = {}
-    for locale_flavor in configs.locale_flavors:
-        locale_design_file_paths_map[locale_flavor] = {}
+    for language_specific in configs.language_specifics:
+        locale_design_file_paths_map[language_specific] = {}
     for design_dir in configs.design_dirs:
         design_flavor_dir = os.path.join(design_dir, f'{font_config.px}')
         if not os.path.isdir(design_flavor_dir):
@@ -125,15 +125,15 @@ def collect_available_design(font_config):
                 if not design_file_name.endswith('.png'):
                     continue
                 design_file_path = os.path.join(design_file_parent_dir, design_file_name)
-                uni_hex_name, available_locale_flavors = _parse_design_file_name(design_file_name)
+                uni_hex_name, available_language_specifics = _parse_design_file_name(design_file_name)
                 if uni_hex_name == 'notdef':
                     common_design_file_paths['.notdef'] = design_file_path
                 else:
                     code_point = int(uni_hex_name, 16)
-                    if len(available_locale_flavors) > 0:
-                        for locale_flavor in configs.locale_flavors:
-                            if locale_flavor in available_locale_flavors:
-                                locale_design_file_paths_map[locale_flavor][code_point] = design_file_path
+                    if len(available_language_specifics) > 0:
+                        for language_specific in configs.language_specifics:
+                            if language_specific in available_language_specifics:
+                                locale_design_file_paths_map[language_specific][code_point] = design_file_path
                     else:
                         common_design_file_paths[code_point] = design_file_path
                         alphabet.add(chr(code_point))
@@ -142,8 +142,8 @@ def collect_available_design(font_config):
     alphabet.sort(key=lambda c: ord(c))
     # 合并设计文件路径组
     design_file_paths_map = {}
-    for locale_flavor, locale_design_file_paths in locale_design_file_paths_map.items():
+    for language_specific, locale_design_file_paths in locale_design_file_paths_map.items():
         design_file_paths = dict(common_design_file_paths)
         design_file_paths.update(locale_design_file_paths)
-        design_file_paths_map[locale_flavor] = design_file_paths
+        design_file_paths_map[language_specific] = design_file_paths
     return alphabet, design_file_paths_map

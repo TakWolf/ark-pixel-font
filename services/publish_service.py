@@ -13,8 +13,8 @@ def make_release_zips(font_config):
     for font_format in ['otf', 'woff2', 'ttf']:
         zip_file_output_path = os.path.join(workspace_define.releases_dir, font_config.get_release_zip_file_name(font_format))
         with zipfile.ZipFile(zip_file_output_path, 'w') as zip_file:
-            for locale_flavor in configs.locale_flavors:
-                font_file_name = font_config.get_output_font_file_name(locale_flavor, font_format)
+            for language_specific in configs.language_specifics:
+                font_file_name = font_config.get_output_font_file_name(language_specific, font_format)
                 font_file_path = os.path.join(workspace_define.outputs_dir, font_file_name)
                 zip_file.write(font_file_path, font_file_name)
             zip_file.write('LICENSE-OFL', 'OFL.txt')
@@ -22,8 +22,8 @@ def make_release_zips(font_config):
 
 
 def copy_docs_files(font_config):
-    for locale_flavor in configs.locale_flavors:
-        woff2_file_name = font_config.get_output_font_file_name(locale_flavor, 'woff2')
+    for language_specific in configs.language_specifics:
+        woff2_file_name = font_config.get_output_font_file_name(language_specific, 'woff2')
         woff2_file_path = os.path.join(workspace_define.outputs_dir, woff2_file_name)
         woff2_file_docs_path = os.path.join(workspace_define.docs_dir, woff2_file_name)
         shutil.copy(woff2_file_path, woff2_file_docs_path)

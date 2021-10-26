@@ -54,26 +54,26 @@
             background-image: linear-gradient(90deg, rgba(255, 0, 0, 0.1) 4%, rgba(0, 0, 0, 0) 4%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 255, 0.1) 50%, rgba(0, 0, 255, 0.1) 54%, rgba(0, 0, 0, 0) 54%), linear-gradient(180deg, rgba(255, 0, 0, 0.1) 4%, rgba(0, 0, 0, 0) 4%);
             background-size: {{ font_config.px * 4 }}px {{ font_config.px * 4 }}px;
         }
-        {% for locale_flavor in locale_flavors %}
-            {% with font_family = font_config.get_output_unique_name(locale_flavor) %}
+        {% for language_specific in language_specifics %}
+            {% with font_family = font_config.get_output_unique_name(language_specific) %}
                 @font-face {
                     font-family: {{ font_family }};
-                    src: url("{{ font_config.get_output_font_file_name(locale_flavor, 'woff2') }}");
+                    src: url("{{ font_config.get_output_font_file_name(language_specific, 'woff2') }}");
                 }
-                .app-font-{{ locale_flavor }} {
+                .app-font-{{ language_specific }} {
                     font-family: {{ font_family }}, sans-serif;
                 }
             {% endwith %}
         {% endfor %}
     </style>
 </head>
-<body class="app-font-{{ locale_flavors[0] }}">
+<body class="app-font-{{ language_specifics[0] }}">
 <form class="configs-bar">
-    {% for locale_flavor in locale_flavors %}
-        <label class="btn-apply-config app-font-{{ locale_flavor }}">
-            <input name="locale_flavor" type="radio" {{ 'checked' if loop.index == 1 else '' }} onclick="applyLocaleFlavor('{{ locale_flavor }}')">
+    {% for language_specific in language_specifics %}
+        <label class="btn-apply-config app-font-{{ language_specific }}">
+            <input name="language_specific" type="radio" {{ 'checked' if loop.index == 1 else '' }} onclick="applyLocaleFlavor('{{ language_specific }}')">
             <span></span>
-            {{ locale_flavor.replace('_', '-') }}
+            {{ language_specific.replace('_', '-') }}
         </label>
     {% endfor %}
 </form>

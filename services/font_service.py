@@ -97,9 +97,9 @@ def make_fonts(font_config, alphabet, design_file_paths_map):
         character_map[code_point] = glyph_name
     otf_glyph_infos_pool = {}
     ttf_glyph_infos_pool = {}
-    for locale_flavor in configs.locale_flavors:
-        output_display_name = font_config.get_output_display_name(locale_flavor)
-        output_unique_name = font_config.get_output_unique_name(locale_flavor)
+    for language_specific in configs.language_specifics:
+        output_display_name = font_config.get_output_display_name(language_specific)
+        output_unique_name = font_config.get_output_unique_name(language_specific)
         name_strings = {
             'copyright': font_define.copyright_string,
             'familyName': output_display_name,
@@ -115,21 +115,21 @@ def make_fonts(font_config, alphabet, design_file_paths_map):
             'licenseDescription': font_define.license_description,
             'licenseInfoURL': font_define.license_info_url
         }
-        design_file_paths = design_file_paths_map[locale_flavor]
+        design_file_paths = design_file_paths_map[language_specific]
 
         otf_glyph_infos_map = _draw_glyphs(otf_glyph_infos_pool, design_file_paths, font_config.origin_y_px, font_config.em_dot_size, False)
         otf_builder = _create_font_builder(name_strings, units_per_em, ascent, descent, glyph_order, character_map, otf_glyph_infos_map, False)
-        otf_file_output_path = os.path.join(workspace_define.outputs_dir, font_config.get_output_font_file_name(locale_flavor, 'otf'))
+        otf_file_output_path = os.path.join(workspace_define.outputs_dir, font_config.get_output_font_file_name(language_specific, 'otf'))
         otf_builder.save(otf_file_output_path)
         logger.info(f'make {otf_file_output_path}')
 
         otf_builder.font.flavor = 'woff2'
-        woff2_file_output_path = os.path.join(workspace_define.outputs_dir, font_config.get_output_font_file_name(locale_flavor, 'woff2'))
+        woff2_file_output_path = os.path.join(workspace_define.outputs_dir, font_config.get_output_font_file_name(language_specific, 'woff2'))
         otf_builder.save(woff2_file_output_path)
         logger.info(f'make {woff2_file_output_path}')
 
         ttf_glyph_infos_map = _draw_glyphs(ttf_glyph_infos_pool, design_file_paths, font_config.origin_y_px, font_config.em_dot_size, True)
         ttf_builder = _create_font_builder(name_strings, units_per_em, ascent, descent, glyph_order, character_map, ttf_glyph_infos_map, True)
-        ttf_file_output_path = os.path.join(workspace_define.outputs_dir, font_config.get_output_font_file_name(locale_flavor, 'ttf'))
+        ttf_file_output_path = os.path.join(workspace_define.outputs_dir, font_config.get_output_font_file_name(language_specific, 'ttf'))
         ttf_builder.save(ttf_file_output_path)
         logger.info(f'make {ttf_file_output_path}')

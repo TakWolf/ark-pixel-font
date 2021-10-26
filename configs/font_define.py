@@ -38,14 +38,14 @@ class FontConfig:
         descent = (self.origin_y_px - self.px) * self.em_dot_size
         return units_per_em, ascent, descent
 
-    def get_output_display_name(self, locale_flavor):
-        return f'{self.display_name} {locale_flavor.upper()}'
+    def get_output_display_name(self, language_specific):
+        return f'{self.display_name} {language_specific.upper()}'
 
-    def get_output_unique_name(self, locale_flavor):
-        return f'{self.unique_name}-{locale_flavor.upper()}'
+    def get_output_unique_name(self, language_specific):
+        return f'{self.unique_name}-{language_specific.upper()}'
 
-    def get_output_font_file_name(self, locale_flavor, font_format):
-        return f'{output_name}-{self.px}px-{locale_flavor}.{font_format}'
+    def get_output_font_file_name(self, language_specific, font_format):
+        return f'{output_name}-{self.px}px-{language_specific}.{font_format}'
 
     def get_release_zip_file_name(self, font_format):
         return f'{output_name}-font-{self.px}px-{font_format}-v{version}.zip'

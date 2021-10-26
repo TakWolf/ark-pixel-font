@@ -165,9 +165,9 @@ def make_info_file(font_config, alphabet):
 
 def make_preview_image_file(font_config):
     image_fonts = {}
-    for locale_flavor in configs.locale_flavors:
-        otf_file_path = os.path.join(workspace_define.outputs_dir, font_config.get_output_font_file_name(locale_flavor, 'otf'))
-        image_fonts[locale_flavor] = ImageFont.truetype(otf_file_path, font_config.px)
+    for language_specific in configs.language_specifics:
+        otf_file_path = os.path.join(workspace_define.outputs_dir, font_config.get_output_font_file_name(language_specific, 'otf'))
+        image_fonts[language_specific] = ImageFont.truetype(otf_file_path, font_config.px)
 
     image = Image.new('RGBA', (font_config.px * 35, font_config.px * 17), (255, 255, 255))
     ImageDraw.Draw(image).text((font_config.px, font_config.px), '方舟像素字体 / Ark Pixel Font', fill=(0, 0, 0), font=image_fonts['zh_cn'])
@@ -196,7 +196,7 @@ def make_alphabet_html_file(font_config, alphabet):
     template = configs.template_env.get_template('alphabet.html')
     html = template.render(
         font_config=font_config,
-        locale_flavors=configs.locale_flavors,
+        language_specifics=configs.language_specifics,
         alphabet=''.join([c for c in alphabet if ord(c) >= 128])
     )
     html = minify_html.minify(html, minify_css=True, minify_js=True)
@@ -210,7 +210,7 @@ def make_demo_html_file(font_config):
     template = configs.template_env.get_template('demo.html')
     html = template.render(
         font_config=font_config,
-        locale_flavors=configs.locale_flavors
+        language_specifics=configs.language_specifics
     )
     html = minify_html.minify(html, minify_css=True, minify_js=True)
     file_output_path = os.path.join(workspace_define.outputs_dir, font_config.demo_html_file_name)
@@ -223,7 +223,7 @@ def make_index_html_file():
     template = configs.template_env.get_template('index.html')
     html = template.render(
         font_configs=configs.font_configs,
-        locale_flavors=configs.locale_flavors
+        language_specifics=configs.language_specifics
     )
     html = minify_html.minify(html, minify_css=True, minify_js=True)
     file_output_path = os.path.join(workspace_define.outputs_dir, 'index.html')
@@ -232,8 +232,8 @@ def make_index_html_file():
     logger.info(f'make {file_output_path}')
 
 
-def load_image_font_from_outputs(px, locale_flavor, size):
-    otf_file_path = os.path.join(workspace_define.outputs_dir, configs.font_config_map[px].get_output_font_file_name(locale_flavor, 'otf'))
+def load_image_font_from_outputs(px, language_specific, size):
+    otf_file_path = os.path.join(workspace_define.outputs_dir, configs.font_config_map[px].get_output_font_file_name(language_specific, 'otf'))
     return ImageFont.truetype(otf_file_path, size)
 
 
