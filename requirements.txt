@@ -2,6 +2,6 @@ Brotli==1.0.9
 fonttools==4.27.1
 Jinja2==3.0.2
 MarkupSafe==2.0.1
-minify_html==0.6.8
+minify_html==0.6.10
 Pillow==8.4.0
 pypng==0.0.21
