@@ -12,29 +12,43 @@
 
 ## 预览
 
-- 10 像素
+### 10 像素
 
 ![preview-10px.png](docs/preview-10px.png)
 
-[查看全部字符](https://ark-pixel-font.takwolf.com/alphabet-10px.html)
+[更多示例](https://ark-pixel-font.takwolf.com/demo-10px.html)
 
-- 12 像素
+### 12 像素
 
 ![preview-12px.png](docs/preview-12px.png)
 
-[查看全部字符](https://ark-pixel-font.takwolf.com/alphabet-12px.html)
+[更多示例](https://ark-pixel-font.takwolf.com/demo-12px.html)
 
-- 16 像素
+### 16 像素
 
 ![preview-16px.png](docs/preview-16px.png)
 
-[查看全部字符](https://ark-pixel-font.takwolf.com/alphabet-16px.html)
+[更多示例](https://ark-pixel-font.takwolf.com/demo-16px.html)
 
-## 字符统计
+## 字符覆盖
 
-- [10 像素](docs/font-info-10px.md)
-- [12 像素](docs/font-info-12px.md)
-- [16 像素](docs/font-info-16px.md)
+### 10 像素
+
+[字符统计](docs/font-info-10px.md)
+
+[字符表](https://ark-pixel-font.takwolf.com/alphabet-10px.html)
+
+### 12 像素
+
+[字符统计](docs/font-info-12px.md)
+
+[字符表](https://ark-pixel-font.takwolf.com/alphabet-12px.html)
+
+### 16 像素
+
+[字符统计](docs/font-info-16px.md)
+
+[字符表](https://ark-pixel-font.takwolf.com/alphabet-16px.html)
 
 ## 语言特殊字形
 
@@ -124,7 +138,7 @@ python ./build.py
 
 使用 [MIT 许可证](LICENSE-MIT) 授权。
 
- ## 参与改进
+## 参与改进
 
 任何有关字体和程序上的建议，都欢迎创建 [Issues](https://github.com/TakWolf/ark-pixel-font/issues) 来反馈，也可以通过 [Discussions](https://github.com/TakWolf/ark-pixel-font/discussions) 来讨论。
 
