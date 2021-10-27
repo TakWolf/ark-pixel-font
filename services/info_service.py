@@ -25,76 +25,58 @@ def _get_unicode_char_count_infos(alphabet):
     return [(configs.unicode_blocks[i], count_map[i]) for i in positions]
 
 
-def _get_gb2312_char_count_infos(alphabet):
+def _get_locale_char_count_map(alphabet, query_block_func):
     count_map = {}
-    total_count = 0
     for c in alphabet:
-        block_name = gb2312_util.query_block(c)
+        block_name = query_block_func(c)
         if block_name:
             block_count = count_map.get(block_name, 0)
             block_count += 1
             count_map[block_name] = block_count
+            total_count = count_map.get('total', 0)
             total_count += 1
+            count_map['total'] = total_count
+    return count_map
+
+
+def _get_gb2312_char_count_infos(alphabet):
+    count_map = _get_locale_char_count_map(alphabet, gb2312_util.query_block)
     return [
         ('一级汉字', count_map.get('level-1', 0), gb2312_util.alphabet_level_1_count),
         ('二级汉字', count_map.get('level-2', 0), gb2312_util.alphabet_level_2_count),
         ('其他字符', count_map.get('other', 0), gb2312_util.alphabet_other_count),
-        ('总计', total_count, gb2312_util.alphabet_count)
+        ('总计', count_map.get('total', 0), gb2312_util.alphabet_count)
     ]
 
 
 def _get_big5_char_count_infos(alphabet):
-    count_map = {}
-    total_count = 0
-    for c in alphabet:
-        block_name = big5_util.query_block(c)
-        if block_name:
-            block_count = count_map.get(block_name, 0)
-            block_count += 1
-            count_map[block_name] = block_count
-            total_count += 1
+    count_map = _get_locale_char_count_map(alphabet, big5_util.query_block)
     return [
         ('常用汉字', count_map.get('level-1', 0), big5_util.alphabet_level_1_count),
         ('次常用汉字', count_map.get('level-2', 0), big5_util.alphabet_level_2_count),
         ('标点符号、希腊字母、特殊符号，九个计量用汉字', count_map.get('other', 0), big5_util.alphabet_other_count),
-        ('总计', total_count, big5_util.alphabet_count)
+        ('总计', count_map.get('total', 0), big5_util.alphabet_count)
     ]
 
 
 def _get_shift_jis_char_count_infos(alphabet):
-    count_map = {}
-    total_count = 0
-    for c in alphabet:
-        block_name = shift_jis_util.query_block(c)
-        if block_name:
-            block_count = count_map.get(block_name, 0)
-            block_count += 1
-            count_map[block_name] = block_count
-            total_count += 1
+    count_map = _get_locale_char_count_map(alphabet, shift_jis_util.query_block)
     return [
         ('单字节-ASCII字符', count_map.get('single-ascii', 0), shift_jis_util.alphabet_single_ascii_count),
         ('单字节-半角标点和片假名', count_map.get('single-other', 0), shift_jis_util.alphabet_single_other_count),
         ('双字节-假名和其他字符', count_map.get('double-basic', 0), shift_jis_util.alphabet_double_basic_count),
         ('双字节-汉字', count_map.get('double-word', 0), shift_jis_util.alphabet_double_word_count),
-        ('总计', total_count, shift_jis_util.alphabet_count)
+        ('总计', count_map.get('total', 0), shift_jis_util.alphabet_count)
     ]
 
 
 def _get_ks_x_1001_char_count_infos(alphabet):
-    count_map = {}
-    total_count = 0
-    for c in alphabet:
-        block_name = ks_x_1001_util.query_block(c)
-        if block_name:
-            block_count = count_map.get(block_name, 0)
-            block_count += 1
-            count_map[block_name] = block_count
-            total_count += 1
+    count_map = _get_locale_char_count_map(alphabet, ks_x_1001_util.query_block)
     return [
         ('谚文音节', count_map.get('syllable', 0), ks_x_1001_util.alphabet_syllable_count),
         ('汉字', count_map.get('word', 0), ks_x_1001_util.alphabet_word_count),
         ('其他字符', count_map.get('other', 0), ks_x_1001_util.alphabet_other_count),
-        ('总计', total_count, ks_x_1001_util.alphabet_count)
+        ('总计', count_map.get('total', 0), ks_x_1001_util.alphabet_count)
     ]
 
 

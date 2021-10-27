@@ -23,7 +23,7 @@ def query_block(c):
     except UnicodeEncodeError:
         return None
     if len(raw) == 1:
-        return 'ascii'
+        return None  # ascii
     else:
         zone_1 = raw[0] - _block_offset
         if 1 <= zone_1 <= 9:
