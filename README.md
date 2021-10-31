@@ -6,7 +6,7 @@
 [![MIT License](https://img.shields.io/badge/license-MIT-green)](https://opensource.org/licenses/MIT)
 [![Releases](https://img.shields.io/github/v/release/TakWolf/ark-pixel-font)](https://github.com/TakWolf/ark-pixel-font/releases)
 
-开源的中日韩文像素字体。等宽，支持 10、12 和 16 像素尺寸。
+开源的泛中日韩像素字体。支持 10、12 和 16 像素。目标是为像素游戏开发提供一套可用于正文的开箱即用的字体解决方案。
 
 这个项目不仅提供了全部的字形设计源文件，也提供了构建字体所需要的完整程序。
 
