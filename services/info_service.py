@@ -232,7 +232,7 @@ def make_demo_html_file(font_config, alphabet):
         language_specifics=configs.language_specifics
     )
     soup = bs4.BeautifulSoup(html, 'html.parser')
-    elements = soup.select('.title, .content')
+    elements = soup.select('.page')
     for element in elements:
         _handle_demo_html_element(soup, element, alphabet)
     html = str(soup)
