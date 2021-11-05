@@ -256,12 +256,20 @@ def make_index_html_file():
     logger.info(f'make {file_output_path}')
 
 
-def load_image_font_from_outputs(px, language_specific, size):
+def _load_alphabet_from_outputs(px):
+    alphabet_txt_file_path = os.path.join(workspace_define.outputs_dir, configs.font_config_map[px].alphabet_txt_file_name)
+    with open(alphabet_txt_file_path, 'r', encoding='utf-8') as file:
+        text = file.read()
+    alphabet = list(text)
+    return alphabet
+
+
+def _load_image_font_from_outputs(px, language_specific, size):
     otf_file_path = os.path.join(workspace_define.outputs_dir, configs.font_config_map[px].get_output_font_file_name(language_specific, 'otf'))
     return ImageFont.truetype(otf_file_path, size)
 
 
-def image_draw_text_background(image, alphabet, step, box_size, text_color, font):
+def _image_draw_text_background(image, alphabet, step, box_size, text_color, font):
     alphabet_index = 0
     for index, c in enumerate(alphabet):
         code_point = ord(c)
@@ -278,33 +286,34 @@ def image_draw_text_background(image, alphabet, step, box_size, text_color, font
             ImageDraw.Draw(image).text((x_offset + x * box_size, y_offset + y * box_size), alphabet[alphabet_index], fill=text_color, font=font)
 
 
-def image_draw_text_with_shadow(image, xy, text, text_color, shadow_color, font):
+def _image_draw_text_with_shadow(image, xy, text, text_color, shadow_color, font):
     x, y = xy
     ImageDraw.Draw(image).text((x + 1, y + 1), text, fill=shadow_color, font=font)
     ImageDraw.Draw(image).text((x, y), text, fill=text_color, font=font)
 
 
-def make_github_banner(alphabet_12):
-    image_font_24_zh_cn = load_image_font_from_outputs(12, 'zh_cn', 24)
-    image_font_12_zh_cn = load_image_font_from_outputs(12, 'zh_cn', 12)
-    image_font_12_zh_hk = load_image_font_from_outputs(12, 'zh_hk', 12)
-    image_font_12_ja = load_image_font_from_outputs(12, 'ja', 12)
+def make_github_banner():
+    alphabet_12 = _load_alphabet_from_outputs(12)
+    image_font_24_zh_cn = _load_image_font_from_outputs(12, 'zh_cn', 24)
+    image_font_12_zh_cn = _load_image_font_from_outputs(12, 'zh_cn', 12)
+    image_font_12_zh_hk = _load_image_font_from_outputs(12, 'zh_hk', 12)
+    image_font_12_ja = _load_image_font_from_outputs(12, 'ja', 12)
 
     image_template = Image.open(os.path.join(workspace_define.images_dir, 'github-banner-template.png'))
     image = Image.new('RGBA', (image_template.width, image_template.height), (255, 255, 255, 0))
-    image_draw_text_background(image, alphabet_12, 2, 14, (200, 200, 200), image_font_12_zh_cn)
+    _image_draw_text_background(image, alphabet_12, 2, 14, (200, 200, 200), image_font_12_zh_cn)
     image.paste(image_template, mask=image_template)
     text_color = (255, 255, 255)
     shadow_color = (80, 80, 80)
-    image_draw_text_with_shadow(image, ((image.width - 12 * 29) / 2, 40 + 12 * 2), '方舟像素字体 / Ark Pixel Font', text_color, shadow_color, image_font_24_zh_cn)
-    image_draw_text_with_shadow(image, ((image.width - 6 * 28) / 2, 40 + 12 * 5), '★ 开源的泛中日韩像素字体 ★', text_color, shadow_color, image_font_12_zh_cn)
-    image_draw_text_with_shadow(image, ((image.width - 6 * 64) / 2 , 40 + 18 * 5), '我们每天度过的称之为日常的生活，其实是一个个奇迹的连续也说不定。', text_color, shadow_color, image_font_12_zh_cn)
-    image_draw_text_with_shadow(image, ((image.width - 6 * 64) / 2 , 40 + 18 * 6), '我們每天度過的稱之為日常的生活，其實是一個個奇跡的連續也說不定。', text_color, shadow_color, image_font_12_zh_hk)
-    image_draw_text_with_shadow(image, ((image.width - 6 * 66) / 2 , 40 + 18 * 7), '日々、私たちが過ごしている日常は、実は奇跡の連続なのかもしれない。', text_color, shadow_color, image_font_12_ja)
-    image_draw_text_with_shadow(image, ((image.width - 6 * 42) / 2 , 40 + 18 * 8), 'THE QUICK BROWN FOX JUMPS OVER A LAZY DOG.', text_color, shadow_color, image_font_12_zh_cn)
-    image_draw_text_with_shadow(image, ((image.width - 6 * 42) / 2 , 40 + 18 * 9), 'the quick brown fox jumps over a lazy dog.', text_color, shadow_color, image_font_12_zh_cn)
-    image_draw_text_with_shadow(image, ((image.width - 6 * 10) / 2 , 40 + 18 * 10), '0123456789', text_color, shadow_color, image_font_12_zh_cn)
-    image_draw_text_with_shadow(image, ((image.width - 6 * 48) / 2, 40 + 18 * 11), '★☆☺☹♠♡♢♣♤♥♦♧☀☼♩♪♫♬☂☁⚓✈⚔☯', text_color, shadow_color, image_font_12_zh_cn)
+    _image_draw_text_with_shadow(image, ((image.width - 12 * 29) / 2, 40 + 12 * 2), '方舟像素字体 / Ark Pixel Font', text_color, shadow_color, image_font_24_zh_cn)
+    _image_draw_text_with_shadow(image, ((image.width - 6 * 28) / 2, 40 + 12 * 5), '★ 开源的泛中日韩像素字体 ★', text_color, shadow_color, image_font_12_zh_cn)
+    _image_draw_text_with_shadow(image, ((image.width - 6 * 64) / 2 , 40 + 18 * 5), '我们每天度过的称之为日常的生活，其实是一个个奇迹的连续也说不定。', text_color, shadow_color, image_font_12_zh_cn)
+    _image_draw_text_with_shadow(image, ((image.width - 6 * 64) / 2 , 40 + 18 * 6), '我們每天度過的稱之為日常的生活，其實是一個個奇跡的連續也說不定。', text_color, shadow_color, image_font_12_zh_hk)
+    _image_draw_text_with_shadow(image, ((image.width - 6 * 66) / 2 , 40 + 18 * 7), '日々、私たちが過ごしている日常は、実は奇跡の連続なのかもしれない。', text_color, shadow_color, image_font_12_ja)
+    _image_draw_text_with_shadow(image, ((image.width - 6 * 42) / 2 , 40 + 18 * 8), 'THE QUICK BROWN FOX JUMPS OVER A LAZY DOG.', text_color, shadow_color, image_font_12_zh_cn)
+    _image_draw_text_with_shadow(image, ((image.width - 6 * 42) / 2 , 40 + 18 * 9), 'the quick brown fox jumps over a lazy dog.', text_color, shadow_color, image_font_12_zh_cn)
+    _image_draw_text_with_shadow(image, ((image.width - 6 * 10) / 2 , 40 + 18 * 10), '0123456789', text_color, shadow_color, image_font_12_zh_cn)
+    _image_draw_text_with_shadow(image, ((image.width - 6 * 48) / 2, 40 + 18 * 11), '★☆☺☹♠♡♢♣♤♥♦♧☀☼♩♪♫♬☂☁⚓✈⚔☯', text_color, shadow_color, image_font_12_zh_cn)
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
     file_output_path = os.path.join(workspace_define.outputs_dir, 'github-banner.png')
@@ -312,18 +321,19 @@ def make_github_banner(alphabet_12):
     logger.info(f'make {file_output_path}')
 
 
-def make_itch_io_banner(alphabet_12):
-    image_font_24_zh_cn = load_image_font_from_outputs(12, 'zh_cn', 24)
-    image_font_12_zh_cn = load_image_font_from_outputs(12, 'zh_cn', 12)
+def make_itch_io_banner():
+    alphabet_12 = _load_alphabet_from_outputs(12)
+    image_font_24_zh_cn = _load_image_font_from_outputs(12, 'zh_cn', 24)
+    image_font_12_zh_cn = _load_image_font_from_outputs(12, 'zh_cn', 12)
 
     image_template = Image.open(os.path.join(workspace_define.images_dir, 'itch-io-banner-template.png'))
     image = Image.new('RGBA', (image_template.width, image_template.height), (255, 255, 255, 0))
-    image_draw_text_background(image, alphabet_12, 5, 14, (200, 200, 200), image_font_12_zh_cn)
+    _image_draw_text_background(image, alphabet_12, 5, 14, (200, 200, 200), image_font_12_zh_cn)
     image.paste(image_template, mask=image_template)
     text_color = (255, 255, 255)
     shadow_color = (80, 80, 80)
-    image_draw_text_with_shadow(image, ((image.width - 12 * 29) / 2, 16 + 12 * 2), '方舟像素字体 / Ark Pixel Font', text_color, shadow_color, image_font_24_zh_cn)
-    image_draw_text_with_shadow(image, ((image.width - 12 * 29) / 2, 16 + 12 * 5), '★ 开源的泛中日韩像素字体 ★', text_color, shadow_color, image_font_12_zh_cn)
+    _image_draw_text_with_shadow(image, ((image.width - 12 * 29) / 2, 16 + 12 * 2), '方舟像素字体 / Ark Pixel Font', text_color, shadow_color, image_font_24_zh_cn)
+    _image_draw_text_with_shadow(image, ((image.width - 12 * 29) / 2, 16 + 12 * 5), '★ 开源的泛中日韩像素字体 ★', text_color, shadow_color, image_font_12_zh_cn)
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
     file_output_path = os.path.join(workspace_define.outputs_dir, 'itch-io-banner.png')
@@ -331,11 +341,12 @@ def make_itch_io_banner(alphabet_12):
     logger.info(f'make {file_output_path}')
 
 
-def make_itch_io_background(alphabet_12):
-    image_font_12_zh_cn = load_image_font_from_outputs(12, 'zh_cn', 12)
+def make_itch_io_background():
+    alphabet_12 = _load_alphabet_from_outputs(12)
+    image_font_12_zh_cn = _load_image_font_from_outputs(12, 'zh_cn', 12)
 
     image = Image.new('RGBA', (14 * 50, 14 * 50), (255, 255, 255, 0))
-    image_draw_text_background(image, alphabet_12, 1, 14, (30, 30, 30), image_font_12_zh_cn)
+    _image_draw_text_background(image, alphabet_12, 1, 14, (30, 30, 30), image_font_12_zh_cn)
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
     file_output_path = os.path.join(workspace_define.outputs_dir, 'itch-io-background.png')
@@ -344,20 +355,20 @@ def make_itch_io_background(alphabet_12):
 
 
 def make_itch_io_cover():
-    image_font_24_zh_cn = load_image_font_from_outputs(12, 'zh_cn', 24)
-    image_font_12_zh_cn = load_image_font_from_outputs(12, 'zh_cn', 12)
-    image_font_12_zh_hk = load_image_font_from_outputs(12, 'zh_hk', 12)
-    image_font_12_ja = load_image_font_from_outputs(12, 'ja', 12)
+    image_font_24_zh_cn = _load_image_font_from_outputs(12, 'zh_cn', 24)
+    image_font_12_zh_cn = _load_image_font_from_outputs(12, 'zh_cn', 12)
+    image_font_12_zh_hk = _load_image_font_from_outputs(12, 'zh_hk', 12)
+    image_font_12_ja = _load_image_font_from_outputs(12, 'ja', 12)
 
     image = Image.open(os.path.join(workspace_define.images_dir, 'itch-io-cover-template.png'))
     text_color = (255, 255, 255)
     shadow_color = (80, 80, 80)
-    image_draw_text_with_shadow(image, ((image.width - 12 * 12) / 2, 12), '方舟像素字体', text_color, shadow_color, image_font_24_zh_cn)
-    image_draw_text_with_shadow(image, ((image.width - 6 * 32) / 2 , 12 * 4), '我们每天度过的称之为日常的生活，\n其实是一个个奇迹的连续也说不定。', text_color, shadow_color, image_font_12_zh_cn)
-    image_draw_text_with_shadow(image, ((image.width - 6 * 32) / 2 , 12 * 7), '我們每天度過的稱之為日常的生活，\n其實是一個個奇跡的連續也說不定。', text_color, shadow_color, image_font_12_zh_hk)
-    image_draw_text_with_shadow(image, ((image.width - 6 * 34) / 2 , 12 * 10), '日々、私たちが過ごしている日常は、\n 実は奇跡の連続なのかもしれない。', text_color, shadow_color, image_font_12_ja)
-    image_draw_text_with_shadow(image, ((image.width - 6 * 42) / 2 , 12 * 13), 'THE QUICK BROWN FOX JUMPS OVER A LAZY DOG.\nthe quick brown fox jumps over a lazy dog.\n                0123456789', text_color, shadow_color, image_font_12_zh_cn)
-    image_draw_text_with_shadow(image, ((image.width - 6 * 24) / 2, 12 * 17), '★☆☺☹♠♡♢♣♤♥♦♧\n☀☼♩♪♫♬☂☁⚓✈⚔☯', text_color, shadow_color, image_font_12_zh_cn)
+    _image_draw_text_with_shadow(image, ((image.width - 12 * 12) / 2, 12), '方舟像素字体', text_color, shadow_color, image_font_24_zh_cn)
+    _image_draw_text_with_shadow(image, ((image.width - 6 * 32) / 2 , 12 * 4), '我们每天度过的称之为日常的生活，\n其实是一个个奇迹的连续也说不定。', text_color, shadow_color, image_font_12_zh_cn)
+    _image_draw_text_with_shadow(image, ((image.width - 6 * 32) / 2 , 12 * 7), '我們每天度過的稱之為日常的生活，\n其實是一個個奇跡的連續也說不定。', text_color, shadow_color, image_font_12_zh_hk)
+    _image_draw_text_with_shadow(image, ((image.width - 6 * 34) / 2 , 12 * 10), '日々、私たちが過ごしている日常は、\n 実は奇跡の連続なのかもしれない。', text_color, shadow_color, image_font_12_ja)
+    _image_draw_text_with_shadow(image, ((image.width - 6 * 42) / 2 , 12 * 13), 'THE QUICK BROWN FOX JUMPS OVER A LAZY DOG.\nthe quick brown fox jumps over a lazy dog.\n                0123456789', text_color, shadow_color, image_font_12_zh_cn)
+    _image_draw_text_with_shadow(image, ((image.width - 6 * 24) / 2, 12 * 17), '★☆☺☹♠♡♢♣♤♥♦♧\n☀☼♩♪♫♬☂☁⚓✈⚔☯', text_color, shadow_color, image_font_12_zh_cn)
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
     file_output_path = os.path.join(workspace_define.outputs_dir, 'itch-io-cover.png')
@@ -366,22 +377,22 @@ def make_itch_io_cover():
 
 
 def make_afdian_cover():
-    image_font_24_zh_cn = load_image_font_from_outputs(12, 'zh_cn', 24)
-    image_font_12_zh_cn = load_image_font_from_outputs(12, 'zh_cn', 12)
-    image_font_12_zh_hk = load_image_font_from_outputs(12, 'zh_hk', 12)
-    image_font_12_ja = load_image_font_from_outputs(12, 'ja', 12)
+    image_font_24_zh_cn = _load_image_font_from_outputs(12, 'zh_cn', 24)
+    image_font_12_zh_cn = _load_image_font_from_outputs(12, 'zh_cn', 12)
+    image_font_12_zh_hk = _load_image_font_from_outputs(12, 'zh_hk', 12)
+    image_font_12_ja = _load_image_font_from_outputs(12, 'ja', 12)
 
     image = Image.open(os.path.join(workspace_define.images_dir, 'afdian-cover-template.png'))
     text_color = (255, 255, 255)
     shadow_color = (80, 80, 80)
-    image_draw_text_with_shadow(image, ((image.width - 12 * 12) / 2, 12), '方舟像素字体', text_color, shadow_color, image_font_24_zh_cn)
-    image_draw_text_with_shadow(image, ((image.width - 6 * 14) / 2, 12 * 4), 'Ark Pixel Font', text_color, shadow_color, image_font_12_zh_cn)
-    image_draw_text_with_shadow(image, ((image.width - 6 * 28) / 2, 12 * 7), '★ 开源的泛中日韩像素字体 ★', text_color, shadow_color, image_font_12_zh_cn)
-    image_draw_text_with_shadow(image, ((image.width - 6 * 32) / 2 , 12 * 10), '我们每天度过的称之为日常的生活，\n其实是一个个奇迹的连续也说不定。', text_color, shadow_color, image_font_12_zh_cn)
-    image_draw_text_with_shadow(image, ((image.width - 6 * 32) / 2 , 12 * 13), '我們每天度過的稱之為日常的生活，\n其實是一個個奇跡的連續也說不定。', text_color, shadow_color, image_font_12_zh_hk)
-    image_draw_text_with_shadow(image, ((image.width - 6 * 34) / 2 , 12 * 16), '日々、私たちが過ごしている日常は、\n 実は奇跡の連続なのかもしれない。', text_color, shadow_color, image_font_12_ja)
-    image_draw_text_with_shadow(image, ((image.width - 6 * 42) / 2 , 12 * 19), 'THE QUICK BROWN FOX JUMPS OVER A LAZY DOG.\nthe quick brown fox jumps over a lazy dog.\n                0123456789', text_color, shadow_color, image_font_12_zh_cn)
-    image_draw_text_with_shadow(image, ((image.width - 6 * 24) / 2, 12 * 23), '★☆☺☹♠♡♢♣♤♥♦♧\n☀☼♩♪♫♬☂☁⚓✈⚔☯', text_color, shadow_color, image_font_12_zh_cn)
+    _image_draw_text_with_shadow(image, ((image.width - 12 * 12) / 2, 12), '方舟像素字体', text_color, shadow_color, image_font_24_zh_cn)
+    _image_draw_text_with_shadow(image, ((image.width - 6 * 14) / 2, 12 * 4), 'Ark Pixel Font', text_color, shadow_color, image_font_12_zh_cn)
+    _image_draw_text_with_shadow(image, ((image.width - 6 * 28) / 2, 12 * 7), '★ 开源的泛中日韩像素字体 ★', text_color, shadow_color, image_font_12_zh_cn)
+    _image_draw_text_with_shadow(image, ((image.width - 6 * 32) / 2 , 12 * 10), '我们每天度过的称之为日常的生活，\n其实是一个个奇迹的连续也说不定。', text_color, shadow_color, image_font_12_zh_cn)
+    _image_draw_text_with_shadow(image, ((image.width - 6 * 32) / 2 , 12 * 13), '我們每天度過的稱之為日常的生活，\n其實是一個個奇跡的連續也說不定。', text_color, shadow_color, image_font_12_zh_hk)
+    _image_draw_text_with_shadow(image, ((image.width - 6 * 34) / 2 , 12 * 16), '日々、私たちが過ごしている日常は、\n 実は奇跡の連続なのかもしれない。', text_color, shadow_color, image_font_12_ja)
+    _image_draw_text_with_shadow(image, ((image.width - 6 * 42) / 2 , 12 * 19), 'THE QUICK BROWN FOX JUMPS OVER A LAZY DOG.\nthe quick brown fox jumps over a lazy dog.\n                0123456789', text_color, shadow_color, image_font_12_zh_cn)
+    _image_draw_text_with_shadow(image, ((image.width - 6 * 24) / 2, 12 * 23), '★☆☺☹♠♡♢♣♤♥♦♧\n☀☼♩♪♫♬☂☁⚓✈⚔☯', text_color, shadow_color, image_font_12_zh_cn)
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
     file_output_path = os.path.join(workspace_define.outputs_dir, 'afdian-cover.png')
