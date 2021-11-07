@@ -13,7 +13,7 @@ def main():
     for font_config in configs.font_configs:
         design_service.classify_design_files(font_config)
         design_service.verify_design_files(font_config)
-        alphabet, design_file_paths_map = design_service.collect_available_design(font_config)
+        alphabet, design_file_paths_map = design_service.collect_designs(font_config)
         font_service.make_fonts(font_config, alphabet, design_file_paths_map)
         info_service.make_info_file(font_config, alphabet)
         info_service.make_preview_image_file(font_config)

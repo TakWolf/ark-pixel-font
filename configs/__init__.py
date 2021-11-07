@@ -7,6 +7,7 @@ from configs.font_define import FontConfig
 from utils import unicode_util
 
 language_specifics = [
+    'latin',  # 拉丁语
     'zh_cn',  # 中文-中国大陆
     'zh_hk',  # 中文-香港特别行政区
     'zh_tw',  # 中文-台湾地区
