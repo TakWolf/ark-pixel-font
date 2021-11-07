@@ -70,7 +70,7 @@
 <body class="app-font-{{ language_specifics[0] }}">
 <form class="configs-bar">
     {% for language_specific in language_specifics %}
-        <label class="btn-apply-config app-font-{{ language_specific }}">
+        <label class="btn-apply-config app-font-latin">
             <input name="language_specific" type="radio" {{ 'checked' if loop.index == 1 else '' }} onclick="applyLocaleFlavor('{{ language_specific }}')">
             <span></span>
             {{ language_specific.replace('_', '-') }}
