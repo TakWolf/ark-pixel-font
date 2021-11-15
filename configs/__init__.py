@@ -19,6 +19,7 @@ language_specifics = [
     'zh_cn',  # 中文-中国大陆
     'zh_hk',  # 中文-香港特别行政区
     'zh_tw',  # 中文-台湾地区
+    'zh_tr',  # 中文-传统印刷
     'ja',     # 日语
     'ko'      # 朝鲜语
 ]
