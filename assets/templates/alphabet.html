@@ -71,7 +71,7 @@
 <form class="configs-bar">
     {% for language_specific in language_specifics %}
         <label class="btn-apply-config app-font-latin">
-            <input name="language_specific" type="radio" {{ 'checked' if loop.index == 1 else '' }} onclick="applyLocaleFlavor('{{ language_specific }}')">
+            <input name="language_specific" type="radio" {{ 'checked' if loop.index == 1 else '' }} onclick="applyLanguageSpecific('{{ language_specific }}')">
             <span></span>
             {{ language_specific.replace('_', '-') }}
         </label>
@@ -85,8 +85,8 @@
     {{ alphabet }}
 </div>
 <script>
-    function applyLocaleFlavor(localeFlavor) {
-        document.body.className = 'app-font-' + localeFlavor;
+    function applyLanguageSpecific(language_specific) {
+        document.body.className = 'app-font-' + language_specific;
     }
 </script>
 </body>
