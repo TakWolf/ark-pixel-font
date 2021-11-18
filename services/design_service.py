@@ -23,6 +23,7 @@ def _parse_design_file_name(design_file_name):
         for language_specific in configs.language_specifics:
             if language_specific in array:
                 language_specifics.append(language_specific)
+        assert len(language_specifics) == len(array), design_file_name
     return uni_hex_name, language_specifics
 
 
