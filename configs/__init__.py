@@ -6,6 +6,14 @@ from configs import workspace_define
 from configs.font_define import FontConfig
 from utils import unicode_util
 
+font_configs = [
+    FontConfig(10, 9),
+    FontConfig(12, 10),
+    FontConfig(16, 13)
+]
+
+font_config_map = {font_config.px: font_config for font_config in font_configs}
+
 language_specifics = [
     'latin',  # 拉丁语
     'zh_cn',  # 中文-中国大陆
@@ -14,14 +22,6 @@ language_specifics = [
     'ja',     # 日语
     'ko'      # 朝鲜语
 ]
-
-font_configs = [
-    FontConfig(10, 9),
-    FontConfig(12, 10),
-    FontConfig(16, 13)
-]
-
-font_config_map = {font_config.px: font_config for font_config in font_configs}
 
 design_dirs = [
     workspace_define.design_dir
