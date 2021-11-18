@@ -21,32 +21,34 @@ def make_release_zips(font_config):
         logger.info(f'make {zip_file_output_path}')
 
 
-def copy_docs_files(font_config):
+def copy_font_related_files(font_config):
     for language_specific in configs.language_specifics:
-        woff2_file_name = font_config.get_output_font_file_name(language_specific, 'woff2')
-        woff2_file_path = os.path.join(workspace_define.outputs_dir, woff2_file_name)
-        woff2_file_docs_path = os.path.join(workspace_define.docs_dir, woff2_file_name)
-        shutil.copy(woff2_file_path, woff2_file_docs_path)
-        logger.info(f'copy from {woff2_file_path} to {woff2_file_docs_path}')
+        file_name = font_config.get_output_font_file_name(language_specific, 'woff2')
+        file_path = os.path.join(workspace_define.outputs_dir, file_name)
+        file_docs_path = os.path.join(workspace_define.docs_dir, file_name)
+        shutil.copy(file_path, file_docs_path)
+        logger.info(f'copy from {file_path} to {file_docs_path}')
 
-    font_ext_file_names = [
+    docs_ext_file_names = [
         font_config.info_file_name,
         font_config.preview_image_file_name,
         font_config.alphabet_html_file_name,
         font_config.demo_html_file_name
     ]
-    for font_ext_file_name in font_ext_file_names:
-        ext_file_path = os.path.join(workspace_define.outputs_dir, font_ext_file_name)
-        ext_file_docs_path = os.path.join(workspace_define.docs_dir, font_ext_file_name)
-        shutil.copy(ext_file_path, ext_file_docs_path)
-        logger.info(f'copy from {ext_file_path} to {ext_file_docs_path}')
+    for file_name in docs_ext_file_names:
+        file_path = os.path.join(workspace_define.outputs_dir, file_name)
+        file_docs_path = os.path.join(workspace_define.docs_dir, file_name)
+        shutil.copy(file_path, file_docs_path)
+        logger.info(f'copy from {file_path} to {file_docs_path}')
 
-    ext_file_names = [
+
+def copy_other_files():
+    docs_ext_file_names = [
         'index.html',
         'itch-io-banner.png'
     ]
-    for ext_file_name in ext_file_names:
-        ext_file_path = os.path.join(workspace_define.outputs_dir, ext_file_name)
-        ext_file_docs_path = os.path.join(workspace_define.docs_dir, ext_file_name)
-        shutil.copy(ext_file_path, ext_file_docs_path)
-        logger.info(f'copy from {ext_file_path} to {ext_file_docs_path}')
+    for file_name in docs_ext_file_names:
+        file_path = os.path.join(workspace_define.outputs_dir, file_name)
+        file_docs_path = os.path.join(workspace_define.docs_dir, file_name)
+        shutil.copy(file_path, file_docs_path)
+        logger.info(f'copy from {file_path} to {file_docs_path}')
