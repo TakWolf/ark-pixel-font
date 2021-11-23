@@ -256,6 +256,19 @@ def make_index_html_file():
     logger.info(f'make {file_output_path}')
 
 
+def make_playground_html_file():
+    template = configs.template_env.get_template('playground.html')
+    html = template.render(
+        font_configs=configs.font_configs,
+        language_specifics=configs.language_specifics
+    )
+    html = minify_html.minify(html, minify_css=True, minify_js=True)
+    file_output_path = os.path.join(workspace_define.outputs_dir, 'playground.html')
+    with open(file_output_path, 'w', encoding='utf-8') as file:
+        file.write(html)
+    logger.info(f'make {file_output_path}')
+
+
 def _load_alphabet_from_outputs(px):
     alphabet_txt_file_path = os.path.join(workspace_define.outputs_dir, configs.font_config_map[px].alphabet_txt_file_name)
     with open(alphabet_txt_file_path, 'r', encoding='utf-8') as file:

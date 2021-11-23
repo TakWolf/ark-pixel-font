@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>Playground</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        {% for font_config in font_configs  %}
+            {% for language_specific in language_specifics %}
+                @font-face {
+                    font-family: {{ font_config.get_output_unique_name(language_specific) }};
+                    src: url("{{ font_config.get_output_font_file_name(language_specific, 'woff2') }}");
+                }
+            {% endfor %}
+        {% endfor %}
+        .configs-bar-group {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+        .configs-bar {
+            height: 36px;
+            display: flex;
+            flex-direction: row;
+            background-color: #ffd339;
+        }
+        .configs-bar input[type="radio"] {
+            display: none;
+        }
+        .configs-bar input[type="radio"] + span {
+            width: 10px;
+            height: 10px;
+            margin-left: 12px;
+            margin-right: 12px;
+            border-width: 2px;
+            border-color: #4b4b4b;
+            border-style: solid;
+        }
+        .configs-bar input[type="radio"]:checked + span {
+            background-color: #4b4b4b;
+        }
+        .btn-apply-config {
+            height: 100%;
+            margin-left: 24px;
+            margin-right: 24px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            color: #4b4b4b;
+            font-family: Ark-Pixel-12px-LATIN, sans-serif;
+            font-size: 24px;
+            line-height: 36px;
+        }
+        .content {
+            position: fixed;
+            top: 72px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+        }
+        .content textarea {
+            padding: 24px;
+            flex: 1;
+            color: #4b4b4b;
+            outline: none;
+            border: none;
+            resize: none;
+        }
+    </style>
+</head>
+<body>
+<form class="configs-bar-group">
+    <div class="configs-bar">
+        {% for font_config in font_configs %}
+            <label class="btn-apply-config">
+                <input name="font_size" type="radio" {{ 'checked' if font_config.px == 12 else '' }} onclick="applyFontSize('{{ font_config.px }}')">
+                <span></span>
+                {{ font_config.px }}px
+            </label>
+        {% endfor %}
+    </div>
+    <div class="configs-bar" style="background-color: #6ebdff;">
+        {% for language_specific in language_specifics %}
+            <label class="btn-apply-config">
+                <input name="language_specific" type="radio" {{ 'checked' if loop.index == 1 else '' }} onclick="applyLanguageSpecific('{{ language_specific }}')">
+                <span></span>
+                {{ language_specific.replace('_', '-') }}
+            </label>
+        {% endfor %}
+    </div>
+</form>
+<label class="content">
+    <textarea id="input-box" placeholder="请随便写点什么… / Please input something…"></textarea>
+</label>
+<script>
+    var contentConfigs = {
+        fontSize: 12,
+        language_specific: '{{ language_specifics[0] }}'
+    };
+
+    function applyInputBoxStyle() {
+        var style = document.getElementById("input-box").style;
+        style.fontFamily = 'Ark-Pixel-' + contentConfigs.fontSize + 'px-' + contentConfigs.language_specific.toUpperCase() + ', cursive';
+        style.fontSize = contentConfigs.fontSize * 2 + 'px';
+        style.lineHeight = contentConfigs.fontSize * 3 + 'px';
+    }
+
+    applyInputBoxStyle();
+
+    function applyFontSize(px) {
+        contentConfigs.fontSize = px;
+        applyInputBoxStyle();
+    }
+
+    function applyLanguageSpecific(language_specific) {
+        contentConfigs.language_specific = language_specific;
+        applyInputBoxStyle();
+    }
+</script>
+</body>
+</html>

@@ -45,6 +45,7 @@ def copy_font_related_files(font_config):
 def copy_other_files():
     docs_ext_file_names = [
         'index.html',
+        'playground.html',
         'itch-io-banner.png'
     ]
     for file_name in docs_ext_file_names:
