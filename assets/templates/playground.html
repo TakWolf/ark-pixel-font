@@ -88,7 +88,7 @@
     <div class="configs-bar" style="background-color: #6ebdff;">
         {% for language_specific in language_specifics %}
             <label class="btn-apply-config">
-                <input name="language_specific" type="radio" {{ 'checked' if loop.index == 1 else '' }} onclick="applyLanguageSpecific('{{ language_specific }}')">
+                <input name="language_specific" type="radio" {{ 'checked' if loop.index == 2 else '' }} onclick="applyLanguageSpecific('{{ language_specific }}')">
                 <span></span>
                 {{ language_specific.replace('_', '-') }}
             </label>
@@ -101,7 +101,7 @@
 <script>
     var contentConfigs = {
         fontSize: 12,
-        language_specific: '{{ language_specifics[0] }}'
+        language_specific: '{{ language_specifics[1] }}'
     };
 
     function applyInputBoxStyle() {
