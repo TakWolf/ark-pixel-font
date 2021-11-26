@@ -12,6 +12,13 @@ from utils import glyph_util
 logger = logging.getLogger('font-service')
 
 
+def _get_glyph_name(code_point):
+    if isinstance(code_point, int):
+        return f'uni{code_point:04X}'
+    else:
+        return code_point
+
+
 def _convert_point_to_open_type(point, origin_y):
     """
     转换左上角坐标系为 OpenType 坐标系
@@ -59,7 +66,8 @@ def _draw_glyphs(glyph_info_pool, design_file_paths, origin_y_px, em_dot_size, i
         else:
             glyph_info = _draw_glyph(design_file_path, origin_y_px, em_dot_size, is_ttf)
             glyph_info_pool[design_file_path] = glyph_info
-        glyph_info_map[code_point] = glyph_info
+        glyph_name = _get_glyph_name(code_point)
+        glyph_info_map[glyph_name] = glyph_info
     return glyph_info_map
 
 
@@ -69,9 +77,8 @@ def _create_font_builder(name_strings, units_per_em, ascent, descent, glyph_orde
     builder.setupCharacterMap(character_map)
     glyphs = {}
     advance_widths = {}
-    glyphs['.notdef'], advance_widths['.notdef'] = glyph_info_map['.notdef']
-    for code_point, glyph_name in character_map.items():
-        glyphs[glyph_name], advance_widths[glyph_name] = glyph_info_map[code_point]
+    for glyph_name in glyph_order:
+        glyphs[glyph_name], advance_widths[glyph_name] = glyph_info_map[glyph_name]
     if is_ttf:
         builder.setupGlyf(glyphs)
         metrics = {glyph_name: (advance_width, glyphs[glyph_name].xMin) for glyph_name, advance_width in advance_widths.items()}
@@ -92,7 +99,7 @@ def make_fonts(font_config, alphabet, design_file_paths_map):
     character_map = {}
     for c in alphabet:
         code_point = ord(c)
-        glyph_name = f'uni{code_point:04X}'
+        glyph_name = _get_glyph_name(code_point)
         glyph_order.append(glyph_name)
         character_map[code_point] = glyph_name
     otf_glyph_info_pool = {}
