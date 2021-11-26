@@ -51,27 +51,27 @@ def _draw_glyph(design_file_path, origin_y_px, em_dot_size, is_ttf):
         return pen.getCharString(), advance_width
 
 
-def _draw_glyphs(glyph_infos_pool, design_file_paths, origin_y_px, em_dot_size, is_ttf):
-    glyph_infos_map = {}
+def _draw_glyphs(glyph_info_pool, design_file_paths, origin_y_px, em_dot_size, is_ttf):
+    glyph_info_map = {}
     for code_point, design_file_path in design_file_paths.items():
-        if design_file_path in glyph_infos_pool:
-            glyph_infos = glyph_infos_pool[design_file_path]
+        if design_file_path in glyph_info_pool:
+            glyph_info = glyph_info_pool[design_file_path]
         else:
-            glyph_infos = _draw_glyph(design_file_path, origin_y_px, em_dot_size, is_ttf)
-            glyph_infos_pool[design_file_path] = glyph_infos
-        glyph_infos_map[code_point] = glyph_infos
-    return glyph_infos_map
+            glyph_info = _draw_glyph(design_file_path, origin_y_px, em_dot_size, is_ttf)
+            glyph_info_pool[design_file_path] = glyph_info
+        glyph_info_map[code_point] = glyph_info
+    return glyph_info_map
 
 
-def _create_font_builder(name_strings, units_per_em, ascent, descent, glyph_order, character_map, glyph_infos_map, is_ttf):
+def _create_font_builder(name_strings, units_per_em, ascent, descent, glyph_order, character_map, glyph_info_map, is_ttf):
     builder = FontBuilder(units_per_em, isTTF=is_ttf)
     builder.setupGlyphOrder(glyph_order)
     builder.setupCharacterMap(character_map)
     glyphs = {}
     advance_widths = {}
-    glyphs['.notdef'], advance_widths['.notdef'] = glyph_infos_map['.notdef']
+    glyphs['.notdef'], advance_widths['.notdef'] = glyph_info_map['.notdef']
     for code_point, glyph_name in character_map.items():
-        glyphs[glyph_name], advance_widths[glyph_name] = glyph_infos_map[code_point]
+        glyphs[glyph_name], advance_widths[glyph_name] = glyph_info_map[code_point]
     if is_ttf:
         builder.setupGlyf(glyphs)
         metrics = {glyph_name: (advance_width, builder.font['glyf'][glyph_name].xMin) for glyph_name, advance_width in advance_widths.items()}
@@ -95,8 +95,8 @@ def make_fonts(font_config, alphabet, design_file_paths_map):
         glyph_name = f'uni{code_point:04X}'
         glyph_order.append(glyph_name)
         character_map[code_point] = glyph_name
-    otf_glyph_infos_pool = {}
-    ttf_glyph_infos_pool = {}
+    otf_glyph_info_pool = {}
+    ttf_glyph_info_pool = {}
     for language_specific in configs.language_specifics:
         output_display_name = font_config.get_output_display_name(language_specific)
         output_unique_name = font_config.get_output_unique_name(language_specific)
@@ -117,8 +117,8 @@ def make_fonts(font_config, alphabet, design_file_paths_map):
         }
         design_file_paths = design_file_paths_map[language_specific]
 
-        otf_glyph_infos_map = _draw_glyphs(otf_glyph_infos_pool, design_file_paths, font_config.origin_y_px, font_config.em_dot_size, False)
-        otf_builder = _create_font_builder(name_strings, units_per_em, ascent, descent, glyph_order, character_map, otf_glyph_infos_map, False)
+        otf_glyph_info_map = _draw_glyphs(otf_glyph_info_pool, design_file_paths, font_config.origin_y_px, font_config.em_dot_size, False)
+        otf_builder = _create_font_builder(name_strings, units_per_em, ascent, descent, glyph_order, character_map, otf_glyph_info_map, False)
         otf_file_output_path = os.path.join(workspace_define.outputs_dir, font_config.get_output_font_file_name(language_specific, 'otf'))
         otf_builder.save(otf_file_output_path)
         logger.info(f'make {otf_file_output_path}')
@@ -128,8 +128,8 @@ def make_fonts(font_config, alphabet, design_file_paths_map):
         otf_builder.save(woff2_file_output_path)
         logger.info(f'make {woff2_file_output_path}')
 
-        ttf_glyph_infos_map = _draw_glyphs(ttf_glyph_infos_pool, design_file_paths, font_config.origin_y_px, font_config.em_dot_size, True)
-        ttf_builder = _create_font_builder(name_strings, units_per_em, ascent, descent, glyph_order, character_map, ttf_glyph_infos_map, True)
+        ttf_glyph_info_map = _draw_glyphs(ttf_glyph_info_pool, design_file_paths, font_config.origin_y_px, font_config.em_dot_size, True)
+        ttf_builder = _create_font_builder(name_strings, units_per_em, ascent, descent, glyph_order, character_map, ttf_glyph_info_map, True)
         ttf_file_output_path = os.path.join(workspace_define.outputs_dir, font_config.get_output_font_file_name(language_specific, 'ttf'))
         ttf_builder.save(ttf_file_output_path)
         logger.info(f'make {ttf_file_output_path}')
