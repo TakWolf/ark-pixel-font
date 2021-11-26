@@ -39,10 +39,10 @@ class FontConfig:
         return units_per_em, ascent, descent
 
     def get_output_display_name(self, language_specific):
-        return f'{self.display_name} {language_specific.upper()}'
+        return f'{self.display_name} {language_specific}'
 
     def get_output_unique_name(self, language_specific):
-        return f'{self.unique_name}-{language_specific.upper()}'
+        return f'{self.unique_name}-{language_specific}'
 
     def get_output_font_file_name(self, language_specific, font_format):
         return f'{output_name}-{self.px}px-{language_specific}.{font_format}'
