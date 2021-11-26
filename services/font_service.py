@@ -74,7 +74,7 @@ def _create_font_builder(name_strings, units_per_em, ascent, descent, glyph_orde
         glyphs[glyph_name], advance_widths[glyph_name] = glyph_info_map[code_point]
     if is_ttf:
         builder.setupGlyf(glyphs)
-        metrics = {glyph_name: (advance_width, builder.font['glyf'][glyph_name].xMin) for glyph_name, advance_width in advance_widths.items()}
+        metrics = {glyph_name: (advance_width, glyphs[glyph_name].xMin) for glyph_name, advance_width in advance_widths.items()}
     else:
         builder.setupCFF(name_strings['psName'], {'FullName': name_strings['fullName']}, glyphs, {})
         metrics = {glyph_name: (advance_width, glyphs[glyph_name].calcBounds(None)[0]) for glyph_name, advance_width in advance_widths.items()}
