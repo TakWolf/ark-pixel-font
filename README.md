@@ -6,11 +6,16 @@
 [![MIT License](https://img.shields.io/badge/license-MIT-green)](https://opensource.org/licenses/MIT)
 [![Releases](https://img.shields.io/github/v/release/TakWolf/ark-pixel-font)](https://github.com/TakWolf/ark-pixel-font/releases)
 
-开源的泛中日韩像素字体。支持 10、12 和 16 像素。目标是为像素游戏开发提供一套可用于正文的开箱即用的字体解决方案。
+- [主页](https://ark-pixel-font.takwolf.com)
+- [itch.io](https://takwolf.itch.io/ark-pixel-font)
+
+开源的泛中日韩像素字体。支持 10、12 和 16 像素。目标是为像素风格的游戏开发提供一套可用于正文的开箱即用的字体解决方案。
 
 这个项目不仅提供了全部的字形设计源文件，也提供了构建字体所需要的完整程序。
 
 ## 预览
+
+本字体为等宽字体。字形自带 1 像素边距，因此即使将文字紧凑排列，视觉上仍然可以区分每个字符。
 
 ### 10 像素
 
@@ -52,7 +57,7 @@
 
 ## 语言特殊字形
 
-不同国家或地区，由于规范不同，同一个字符，字形可能存在差别。
+不同国家或地区，由于规范或书写习惯不同，同一个字符，字形可能存在差别。
 
 本字体目前支持以下语言特殊字形，分别为：
 
@@ -66,7 +71,9 @@
 | ja | 日语 |
 | ko | 朝鲜语 |
 
-「拉丁语」变种提供在非中日韩环境下使用，标点符号采用英语或欧洲语言习惯。
+「拉丁语」版本在非中日韩环境下使用，标点符号采用英语或欧洲语言习惯。
+
+「中文-传统印刷」版本中，繁体中文大多采用了传统印刷体的写法（也称 [舊字形](https://zh.wikipedia.org/wiki/%E8%88%8A%E5%AD%97%E5%BD%A2) ），以符合香港和台湾地区日常生活中的使用习惯。  
 
 ## 下载和使用
 
@@ -90,6 +97,8 @@
 程序上读取这些图片文件，根据透明度值转化为二维点阵数据，然后转换为轮廓数据，最后绘制字符生成字体。
 
 ## 本地构建
+
+如果您需要对字体做定制化处理（例如制作子集版本），可以通过如下方式在本地构建字体：
 
 计算机中需要安装 [Python3](https://www.python.org/) 和 [virtualenv](https://github.com/pypa/virtualenv) 环境。
 
@@ -144,12 +153,9 @@ python ./build.py
 
 任何有关字体和程序上的建议，都欢迎创建 [Issues](https://github.com/TakWolf/ark-pixel-font/issues) 来反馈，也可以通过 [Discussions](https://github.com/TakWolf/ark-pixel-font/discussions) 来讨论。
 
-## 相关页面
-
-- [项目主页](https://ark-pixel-font.takwolf.com)
-- [itch.io](https://takwolf.itch.io/ark-pixel-font)
-
 ## 赞助
+
+如果您使用了「方舟像素字体」，请考虑赞助来支持开发工作。
 
 - [收款码](https://github.com/TakWolf/TakWolf/blob/master/payment-qr-codes.md)
 - [爱发电](https://afdian.net/@takwolf)
@@ -158,6 +164,7 @@ python ./build.py
 
 - [FontTools](https://github.com/fonttools/fonttools)
 - [Aseprite](https://github.com/aseprite/aseprite)
-- [Font Development Best Practices](http://silnrsi.github.io/FDBP/)
+- [Font Development Best Practices](https://silnrsi.github.io/FDBP/)
 - [Microsoft - OpenType font documentation](https://docs.microsoft.com/en-us/typography/opentype/)
 - [Unicode 字符百科](https://unicode-table.com/)
+- [部件查字工具](http://www.guoxuedashi.net/zidian/bujian/)
