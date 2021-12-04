@@ -1,6 +1,6 @@
 beautifulsoup4==4.10.0
 Brotli==1.0.9
-fonttools==4.28.2
+fonttools==4.28.3
 Jinja2==3.0.3
 MarkupSafe==2.0.1
 minify_html==0.7.0
