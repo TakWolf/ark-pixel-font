@@ -56,6 +56,7 @@ def classify_design_files(font_config):
                     fs_util.make_dirs_if_not_exists(design_file_to_dir)
                 design_file_name = f'{uni_hex_name}{" " if len(language_specifics) > 0 else ""}{",".join(language_specifics)}.png'
                 design_file_to_path = os.path.join(design_file_to_dir, design_file_name)
+                assert not os.path.exists(design_file_to_path), design_file_from_path
                 shutil.move(design_file_from_path, design_file_to_path)
                 logger.info(f'classify design file: {design_file_to_path}')
         shutil.rmtree(design_flavor_tmp_dir)
