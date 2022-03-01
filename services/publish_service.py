@@ -9,7 +9,7 @@ from configs import workspace_define
 logger = logging.getLogger('publish-service')
 
 
-def make_release_zips(font_config):
+def make_px_release_zips(font_config):
     for font_format in ['otf', 'woff2', 'ttf']:
         zip_file_output_path = os.path.join(workspace_define.releases_dir, font_config.get_release_zip_file_name(font_format))
         with zipfile.ZipFile(zip_file_output_path, 'w') as zip_file:
@@ -21,35 +21,42 @@ def make_release_zips(font_config):
         logger.info(f'make {zip_file_output_path}')
 
 
-def copy_font_related_files(font_config):
-    for language_specific in configs.language_specifics:
-        file_name = font_config.get_output_font_file_name(language_specific, 'woff2')
-        file_path = os.path.join(workspace_define.outputs_dir, file_name)
-        file_docs_path = os.path.join(workspace_define.docs_dir, file_name)
-        shutil.copy(file_path, file_docs_path)
-        logger.info(f'copy from {file_path} to {file_docs_path}')
+def _copy_file(file_name, from_dir, to_dir):
+    from_path = os.path.join(from_dir, file_name)
+    to_path = os.path.join(to_dir, file_name)
+    shutil.copy(from_path, to_path)
+    logger.info(f'copy from {from_path} to {to_path}')
 
-    docs_ext_file_names = [
+
+def copy_px_docs_files(font_config):
+    file_names = [
         font_config.info_file_name,
         font_config.preview_image_file_name,
+    ]
+    for file_name in file_names:
+        _copy_file(file_name, workspace_define.outputs_dir, workspace_define.docs_dir)
+
+
+def copy_px_www_files(font_config):
+    for language_specific in configs.language_specifics:
+        file_name = font_config.get_output_font_file_name(language_specific, 'woff2')
+        _copy_file(file_name, workspace_define.outputs_dir, workspace_define.www_dir)
+    file_names = [
         font_config.alphabet_html_file_name,
         font_config.demo_html_file_name,
     ]
-    for file_name in docs_ext_file_names:
-        file_path = os.path.join(workspace_define.outputs_dir, file_name)
-        file_docs_path = os.path.join(workspace_define.docs_dir, file_name)
-        shutil.copy(file_path, file_docs_path)
-        logger.info(f'copy from {file_path} to {file_docs_path}')
+    for file_name in file_names:
+        _copy_file(file_name, workspace_define.outputs_dir, workspace_define.www_dir)
 
 
-def copy_other_files():
-    docs_ext_file_names = [
+def copy_docs_files():
+    _copy_file('itch-io-banner.png', workspace_define.outputs_dir, workspace_define.docs_dir)
+
+
+def copy_www_files():
+    file_names = [
         'index.html',
         'playground.html',
-        'itch-io-banner.png',
     ]
-    for file_name in docs_ext_file_names:
-        file_path = os.path.join(workspace_define.outputs_dir, file_name)
-        file_docs_path = os.path.join(workspace_define.docs_dir, file_name)
-        shutil.copy(file_path, file_docs_path)
-        logger.info(f'copy from {file_path} to {file_docs_path}')
+    for file_name in file_names:
+        _copy_file(file_name, workspace_define.outputs_dir, workspace_define.www_dir)

@@ -93,7 +93,7 @@ def _create_font_builder(name_strings, units_per_em, ascent, descent, glyph_orde
     return builder
 
 
-def make_fonts(font_config, alphabet, design_file_paths_map):
+def make_px_fonts(font_config, alphabet, design_file_paths_map):
     units_per_em, ascent, descent = font_config.get_metrics()
     glyph_order = ['.notdef']
     character_map = {}

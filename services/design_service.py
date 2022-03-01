@@ -4,7 +4,7 @@ import shutil
 import unicodedata
 
 import configs
-from utils import fs_util, glyph_util, unicode_util
+from utils import glyph_util, unicode_util
 
 logger = logging.getLogger('design-service')
 
@@ -27,7 +27,7 @@ def _parse_design_file_name(design_file_name):
     return uni_hex_name, language_specifics
 
 
-def classify_design_files(font_config):
+def classify_px_design_files(font_config):
     """
     按照 Unicode 区块分类设计文件
     """
@@ -53,7 +53,8 @@ def classify_design_files(font_config):
                     design_file_to_dir = os.path.join(design_flavor_dir, block_dir_name)
                     if unicode_block.name == 'CJK Unified Ideographs':
                         design_file_to_dir = os.path.join(design_file_to_dir, f'{uni_hex_name[0:-2]}-')
-                    fs_util.make_dirs_if_not_exists(design_file_to_dir)
+                    if not os.path.exists(design_file_to_dir):
+                        os.makedirs(design_file_to_dir)
                 design_file_name = f'{uni_hex_name}{" " if len(language_specifics) > 0 else ""}{",".join(language_specifics)}.png'
                 design_file_to_path = os.path.join(design_file_to_dir, design_file_name)
                 assert not os.path.exists(design_file_to_path), design_file_from_path
@@ -62,7 +63,7 @@ def classify_design_files(font_config):
         shutil.rmtree(design_flavor_tmp_dir)
 
 
-def verify_design_files(font_config):
+def verify_px_design_files(font_config):
     """
     校验并格式化设计文件
     """
@@ -108,7 +109,7 @@ def verify_design_files(font_config):
                 logger.info(f'format design file: {design_file_path}')
 
 
-def collect_designs(font_config):
+def collect_px_designs(font_config):
     """
     收集可用字母表，生成设计文件映射表
     """
