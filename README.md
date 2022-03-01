@@ -15,65 +15,53 @@
 
 ## 预览
 
-本字体为等宽字体。字形自带 1 像素边距，因此即使将文字紧凑排列，视觉上仍然可以区分每个字符。
+可以通过 [Playground](https://ark-pixel-font.takwolf.com/playground.html) 在线实时预览字体样式。
 
 ### 10 像素
 
 ![preview-10px.png](docs/preview-10px.png)
 
-[更多示例](https://ark-pixel-font.takwolf.com/demo-10px.html)
+[示例文本](https://ark-pixel-font.takwolf.com/demo-10px.html)
+
+[字符表](https://ark-pixel-font.takwolf.com/alphabet-10px.html)
+
+[字符统计](docs/font-info-10px.md)
 
 ### 12 像素
 
 ![preview-12px.png](docs/preview-12px.png)
 
-[更多示例](https://ark-pixel-font.takwolf.com/demo-12px.html)
+[示例文本](https://ark-pixel-font.takwolf.com/demo-12px.html)
+
+[字符表](https://ark-pixel-font.takwolf.com/alphabet-12px.html)
+
+[字符统计](docs/font-info-12px.md)
 
 ### 16 像素
 
 ![preview-16px.png](docs/preview-16px.png)
 
-[更多示例](https://ark-pixel-font.takwolf.com/demo-16px.html)
-
-## 字符覆盖
-
-### 10 像素
-
-[字符统计](docs/font-info-10px.md)
-
-[字符表](https://ark-pixel-font.takwolf.com/alphabet-10px.html)
-
-### 12 像素
-
-[字符统计](docs/font-info-12px.md)
-
-[字符表](https://ark-pixel-font.takwolf.com/alphabet-12px.html)
-
-### 16 像素
-
-[字符统计](docs/font-info-16px.md)
+[示例文本](https://ark-pixel-font.takwolf.com/demo-16px.html)
 
 [字符表](https://ark-pixel-font.takwolf.com/alphabet-16px.html)
 
-## 语言特殊字形
+[字符统计](docs/font-info-16px.md)
+
+## 特定语言字形
 
 不同国家或地区，由于规范或书写习惯不同，同一个字符，字形可能存在差别。
 
-本字体目前支持以下语言特殊字形，分别为：
+字体目前支持以下特定语言字形，分别为：
 
-| 标识 | 含义 |
-|---|---|
-| latin | 拉丁语 |
-| zh_cn | 中文-中国大陆 |
-| zh_hk | 中文-香港特别行政区 |
-| zh_tw | 中文-台湾地区 |
-| zh_tr | 中文-传统印刷 |
-| ja | 日语 |
-| ko | 朝鲜语 |
-
-「拉丁语」版本在非中日韩环境下使用，标点符号采用英语或欧洲语言习惯。
-
-「中文-传统印刷」版本中，繁体中文大多采用了传统印刷体的写法（也称 [舊字形](https://zh.wikipedia.org/wiki/%E8%88%8A%E5%AD%97%E5%BD%A2) ），以符合香港和台湾地区日常生活中的使用习惯。  
+| 标识 | 含义 | 备注 |
+|---|---|---|
+| latin | 拉丁语 | 在非中日韩环境下使用，标点符号采用英语或欧洲语言习惯。 |
+| zh_cn | 中文-中国大陆 | |
+| zh_hk | 中文-香港特别行政区 | |
+| zh_tw | 中文-台湾地区 | |
+| zh_tr | 中文-传统印刷 | 字形采用了传统印刷体的写法（也称 [舊字形](https://zh.wikipedia.org/wiki/%E8%88%8A%E5%AD%97%E5%BD%A2) ），以符合香港和台湾地区传统使用习惯。 |
+| ja | 日语 | |
+| ko | 朝鲜语 | |
 
 ## 下载和使用
 
@@ -87,7 +75,7 @@
 | `.ttf` | 在 `.otf` 出现之前的主流字体格式，理论上可以被 `.otf` 完全取代。如果你的软件不支持 `.otf` 格式，请使用这个格式。 |
 | `.woff2` | 压缩后的 `.otf` 格式，体积更小，适用于网络传输，但并非所有软件都支持。如果你需要通过网页在线引用字体，请优先使用这个格式。 |
 
-## 工作流程
+## 开发流程
 
 本字体采用程序的方式来构建。这要得益于 [FontTools](https://github.com/fonttools/fonttools) 提供了强大的字体处理工具。
 
@@ -130,6 +118,10 @@ python ./build.py
 
 等待执行完毕后，可在 `outputs` 目录下找到生成的字体文件。
 
+## 参与改进
+
+任何有关字体和程序上的建议，都欢迎创建 [Issues](https://github.com/TakWolf/ark-pixel-font/issues) 来反馈，也可以通过 [Discussions](https://github.com/TakWolf/ark-pixel-font/discussions) 来讨论。
+
 ## 授权信息
 
 本项目包含「字体」和「构建程序」两个部分。
@@ -149,22 +141,38 @@ python ./build.py
 
 使用 [MIT 许可证](LICENSE-MIT) 授权。
 
-## 参与改进
+## 程序依赖
 
-任何有关字体和程序上的建议，都欢迎创建 [Issues](https://github.com/TakWolf/ark-pixel-font/issues) 来反馈，也可以通过 [Discussions](https://github.com/TakWolf/ark-pixel-font/discussions) 来讨论。
+- [FontTools](https://github.com/fonttools/fonttools)
+- [Brotli](https://github.com/google/brotli)
+- [PyPNG](https://github.com/drj11/pypng)
+- [Pillow](https://github.com/python-pillow/Pillow)
+- [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/)
+- [Soup Sieve](https://github.com/facelessuser/soupsieve)
+- [Jinja](https://github.com/pallets/jinja)
+- [MarkupSafe](https://github.com/pallets/markupsafe)
+- [minify-html](https://github.com/wilsonzlin/minify-html)
+
+## 外部工具
+
+- [Aseprite](https://github.com/aseprite/aseprite)
+- [Unicode 字符百科](https://unicode-table.com/)
+- [部件查字工具](http://www.guoxuedashi.net/zidian/bujian/)
+
+## 参考资料
+
+- [Font Development Best Practices](https://silnrsi.github.io/FDBP/)
+- [Microsoft - OpenType font documentation](https://docs.microsoft.com/en-us/typography/opentype/)
 
 ## 赞助
 
-如果您使用了「方舟像素字体」，请考虑赞助来支持开发工作。
+如果「方舟像素字体」对您有帮助，请考虑赞助来支持开发工作。
 
 - [收款码](https://github.com/TakWolf/TakWolf/blob/master/payment-qr-codes.md)
 - [爱发电](https://afdian.net/@takwolf)
 
-## 参考资料
+请务必备注「方舟像素字体」，这样才会被统计到该项目的赞助商列表中。
 
-- [FontTools](https://github.com/fonttools/fonttools)
-- [Aseprite](https://github.com/aseprite/aseprite)
-- [Font Development Best Practices](https://silnrsi.github.io/FDBP/)
-- [Microsoft - OpenType font documentation](https://docs.microsoft.com/en-us/typography/opentype/)
-- [Unicode 字符百科](https://unicode-table.com/)
-- [部件查字工具](http://www.guoxuedashi.net/zidian/bujian/)
+可以在下面的链接中查看该项目收到的具体赞助情况：
+
+[方舟像素字体 - 赞助](https://github.com/TakWolf/TakWolf/blob/master/sponsors/ark-pixel-font.md)
