@@ -27,6 +27,7 @@ def main():
         publish_service.copy_px_www_files(font_config)
     publish_service.copy_docs_files()
     publish_service.copy_www_files()
+    publish_service.deploy_www()
 
 
 if __name__ == '__main__':

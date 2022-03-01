@@ -152,6 +152,9 @@ python ./build.py
 - [Jinja](https://github.com/pallets/jinja)
 - [MarkupSafe](https://github.com/pallets/markupsafe)
 - [minify-html](https://github.com/wilsonzlin/minify-html)
+- [GitPython](https://github.com/gitpython-developers/GitPython)
+- [GitDB](https://github.com/gitpython-developers/gitdb)
+- [Smmap](https://github.com/gitpython-developers/smmap)
 
 ## 外部工具
 

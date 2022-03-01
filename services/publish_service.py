@@ -1,7 +1,10 @@
 import logging
 import os.path
 import shutil
+import time
 import zipfile
+
+import git
 
 import configs
 from configs import workspace_define
@@ -60,3 +63,13 @@ def copy_www_files():
     ]
     for file_name in file_names:
         _copy_file(file_name, workspace_define.outputs_dir, workspace_define.www_dir)
+
+
+def deploy_www():
+    repo = git.Repo.init(workspace_define.www_dir)
+    repo.git.add(all=True)
+    repo.git.commit(m=f'deployed at {time.strftime("%Y-%m-%d %H-%M-%S")}')
+    current_branch_name = repo.git.branch(show_current=True)
+    for git_deploy_config in configs.git_deploy_configs:
+        repo.git.remote('add', git_deploy_config.remote_name, git_deploy_config.url)
+        repo.git.push(git_deploy_config.remote_name, f'{current_branch_name}:{git_deploy_config.branch_name}', '-f')

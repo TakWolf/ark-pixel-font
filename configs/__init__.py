@@ -4,6 +4,7 @@ from jinja2 import Environment, FileSystemLoader
 
 from configs import workspace_define
 from configs.font_define import FontConfig
+from configs.git_deploy_config import GitDeployConfig
 from utils import unicode_util
 
 font_configs = [
@@ -29,3 +30,9 @@ design_dirs = [workspace_define.design_dir]
 unicode_blocks = unicode_util.load_blocks_db(os.path.join(workspace_define.unidata_dir, 'blocks.txt'))
 
 template_env = Environment(loader=FileSystemLoader(workspace_define.templates_dir))
+
+git_deploy_configs = [GitDeployConfig(
+    'git@github.com:TakWolf/ark-pixel-font.git',
+    'github',
+    'gh-pages',
+)]
