@@ -46,7 +46,7 @@ def _get_gb2312_char_count_infos(alphabet):
         ('一级汉字', count_map.get('level-1', 0), gb2312_util.alphabet_level_1_count),
         ('二级汉字', count_map.get('level-2', 0), gb2312_util.alphabet_level_2_count),
         ('其他字符', count_map.get('other', 0), gb2312_util.alphabet_other_count),
-        ('总计', count_map.get('total', 0), gb2312_util.alphabet_count)
+        ('总计', count_map.get('total', 0), gb2312_util.alphabet_count),
     ]
 
 
@@ -56,7 +56,7 @@ def _get_big5_char_count_infos(alphabet):
         ('常用汉字', count_map.get('level-1', 0), big5_util.alphabet_level_1_count),
         ('次常用汉字', count_map.get('level-2', 0), big5_util.alphabet_level_2_count),
         ('标点符号、希腊字母、特殊符号，九个计量用汉字', count_map.get('other', 0), big5_util.alphabet_other_count),
-        ('总计', count_map.get('total', 0), big5_util.alphabet_count)
+        ('总计', count_map.get('total', 0), big5_util.alphabet_count),
     ]
 
 
@@ -67,7 +67,7 @@ def _get_shift_jis_char_count_infos(alphabet):
         ('单字节-半角标点和片假名', count_map.get('single-other', 0), shift_jis_util.alphabet_single_other_count),
         ('双字节-假名和其他字符', count_map.get('double-basic', 0), shift_jis_util.alphabet_double_basic_count),
         ('双字节-汉字', count_map.get('double-word', 0), shift_jis_util.alphabet_double_word_count),
-        ('总计', count_map.get('total', 0), shift_jis_util.alphabet_count)
+        ('总计', count_map.get('total', 0), shift_jis_util.alphabet_count),
     ]
 
 
@@ -77,7 +77,7 @@ def _get_ks_x_1001_char_count_infos(alphabet):
         ('谚文音节', count_map.get('syllable', 0), ks_x_1001_util.alphabet_syllable_count),
         ('汉字', count_map.get('word', 0), ks_x_1001_util.alphabet_word_count),
         ('其他字符', count_map.get('other', 0), ks_x_1001_util.alphabet_other_count),
-        ('总计', count_map.get('total', 0), ks_x_1001_util.alphabet_count)
+        ('总计', count_map.get('total', 0), ks_x_1001_util.alphabet_count),
     ]
 
 
@@ -180,7 +180,7 @@ def make_alphabet_html_file(font_config, alphabet):
     html = template.render(
         font_config=font_config,
         language_specifics=configs.language_specifics,
-        alphabet=''.join([c for c in alphabet if ord(c) >= 128])
+        alphabet=''.join([c for c in alphabet if ord(c) >= 128]),
     )
     html = minify_html.minify(html, minify_css=True, minify_js=True)
     file_output_path = os.path.join(workspace_define.outputs_dir, font_config.alphabet_html_file_name)
@@ -229,7 +229,7 @@ def make_demo_html_file(font_config, alphabet):
     template = configs.template_env.get_template('demo.html')
     html = template.render(
         font_config=font_config,
-        language_specifics=configs.language_specifics
+        language_specifics=configs.language_specifics,
     )
     soup = bs4.BeautifulSoup(html, 'html.parser')
     elements = soup.select('.page')
@@ -247,7 +247,7 @@ def make_index_html_file():
     template = configs.template_env.get_template('index.html')
     html = template.render(
         font_configs=configs.font_configs,
-        language_specifics=configs.language_specifics
+        language_specifics=configs.language_specifics,
     )
     html = minify_html.minify(html, minify_css=True, minify_js=True)
     file_output_path = os.path.join(workspace_define.outputs_dir, 'index.html')
@@ -260,7 +260,7 @@ def make_playground_html_file():
     template = configs.template_env.get_template('playground.html')
     html = template.render(
         font_configs=configs.font_configs,
-        language_specifics=configs.language_specifics
+        language_specifics=configs.language_specifics,
     )
     html = minify_html.minify(html, minify_css=True, minify_js=True)
     file_output_path = os.path.join(workspace_define.outputs_dir, 'playground.html')

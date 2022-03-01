@@ -67,7 +67,7 @@ def get_outlines_from_design_data(design_data, dot_size):
                 (x * dot_size, y * dot_size),
                 ((x + 1) * dot_size, y * dot_size),
                 ((x + 1) * dot_size, (y + 1) * dot_size),
-                (x * dot_size, (y + 1) * dot_size)
+                (x * dot_size, (y + 1) * dot_size),
             ]
             # 一个像素有左右上下四个边，如果该边没有相邻像素，则该边线段有效
             if x <= 0 or design_data[y][x - 1] <= 0:  # 左

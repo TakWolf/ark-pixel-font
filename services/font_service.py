@@ -120,7 +120,7 @@ def make_fonts(font_config, alphabet, design_file_paths_map):
             'vendorURL': font_define.vendor_url,
             'designerURL': font_define.designer_url,
             'licenseDescription': font_define.license_description,
-            'licenseInfoURL': font_define.license_info_url
+            'licenseInfoURL': font_define.license_info_url,
         }
         design_file_paths = design_file_paths_map[language_specific]
 

@@ -33,7 +33,7 @@ def copy_font_related_files(font_config):
         font_config.info_file_name,
         font_config.preview_image_file_name,
         font_config.alphabet_html_file_name,
-        font_config.demo_html_file_name
+        font_config.demo_html_file_name,
     ]
     for file_name in docs_ext_file_names:
         file_path = os.path.join(workspace_define.outputs_dir, file_name)
@@ -46,7 +46,7 @@ def copy_other_files():
     docs_ext_file_names = [
         'index.html',
         'playground.html',
-        'itch-io-banner.png'
+        'itch-io-banner.png',
     ]
     for file_name in docs_ext_file_names:
         file_path = os.path.join(workspace_define.outputs_dir, file_name)

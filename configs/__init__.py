@@ -9,7 +9,7 @@ from utils import unicode_util
 font_configs = [
     FontConfig(10, 9),
     FontConfig(12, 10),
-    FontConfig(16, 13)
+    FontConfig(16, 13),
 ]
 
 font_config_map = {font_config.px: font_config for font_config in font_configs}
@@ -21,12 +21,10 @@ language_specifics = [
     'zh_tw',  # 中文-台湾地区
     'zh_tr',  # 中文-传统印刷
     'ja',     # 日语
-    'ko'      # 朝鲜语
+    'ko',     # 朝鲜语
 ]
 
-design_dirs = [
-    workspace_define.design_dir
-]
+design_dirs = [workspace_define.design_dir]
 
 unicode_blocks = unicode_util.load_blocks_db(os.path.join(workspace_define.unidata_dir, 'blocks.txt'))
 
