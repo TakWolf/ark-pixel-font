@@ -1,4 +1,5 @@
-# 赞助按钮的配置文件，参考文档：
-# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/displaying-a-sponsor-button-in-your-repository
 
-custom: ['https://afdian.net/@takwolf']
+custom: [
+    'https://github.com/TakWolf/TakWolf/blob/master/payment-qr-codes.md',
+    'https://afdian.net/@takwolf',
+]
