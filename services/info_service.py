@@ -200,7 +200,7 @@ def _handle_demo_html_element(soup, element, alphabet):
         current_status = True
         text_buffer = ''
         for c in text:
-            status = c in alphabet
+            status = c in alphabet or not c.isprintable()
             if current_status != status:
                 if text_buffer != '':
                     if current_status:
