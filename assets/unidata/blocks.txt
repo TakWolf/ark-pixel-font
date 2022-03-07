@@ -42,7 +42,7 @@
 0250..02AF; IPA Extensions; 国际音标扩展
 02B0..02FF; Spacing Modifier Letters; 占位修饰符号
 0300..036F; Combining Diacritical Marks; 组合附加符号
-0370..03FF; Greek and Coptic; 希腊字母及科普特字母
+0370..03FF; Greek and Coptic; 希腊字母和科普特字母
 0400..04FF; Cyrillic; 西里尔字母
 0500..052F; Cyrillic Supplement; 西里尔字母 补充
 0530..058F; Armenian; 亚美尼亚字母
