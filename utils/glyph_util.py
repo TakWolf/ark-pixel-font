@@ -3,7 +3,7 @@ import png
 
 def load_design_data_from_png(file_path):
     """
-    从本地加载字形设计数据，并转换为标准01二维点阵数组
+    从本地加载字形设计数据，并二值化
     """
     width, height, bitmap, info = png.Reader(filename=file_path).read()
     design_data = []
@@ -13,7 +13,7 @@ def load_design_data_from_png(file_path):
         pixel_step = int(bitmap_row_len / width)
         for x in range(pixel_step - 1, bitmap_row_len, pixel_step):
             alpha = bitmap_row[x]
-            if alpha > 0:
+            if alpha > 127:
                 design_data_row.append(1)
             else:
                 design_data_row.append(0)
