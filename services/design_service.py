@@ -109,7 +109,7 @@ def verify_px_design_files(font_config):
                 logger.info(f'format design file: {design_file_path}')
 
 
-def collect_px_designs(font_config):
+def collect_px_design_files(font_config):
     """
     收集可用字母表，生成设计文件映射表
     """
