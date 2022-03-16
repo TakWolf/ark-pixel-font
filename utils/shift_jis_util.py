@@ -45,8 +45,8 @@ def get_alphabet_single_ascii():
             alphabet.append(c)
         except UnicodeDecodeError:
             pass
-    alphabet.append('¥') # 0xA5
-    alphabet.append('‾') # 0x203E
+    alphabet.append('¥')  # 0xA5
+    alphabet.append('‾')  # 0x203E
     assert len(alphabet) == alphabet_single_ascii_count
     return alphabet
 
