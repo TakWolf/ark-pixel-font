@@ -22,18 +22,17 @@ def query_block(c):
         raw = c.encode('ksx1001')
     except UnicodeEncodeError:
         return None
-    if len(raw) == 1:
-        return None  # ascii
+    if len(raw) != 2:
+        return None
+    zone_1 = raw[0] - _block_offset
+    if 1 <= zone_1 <= 12:
+        return 'other'
+    elif 16 <= zone_1 <= 40:
+        return 'syllable'
+    elif 42 <= zone_1 <= 93:
+        return 'word'
     else:
-        zone_1 = raw[0] - _block_offset
-        if 1 <= zone_1 <= 12:
-            return 'other'
-        elif 16 <= zone_1 <= 40:
-            return 'syllable'
-        elif 42 <= zone_1 <= 93:
-            return 'word'
-        else:
-            raise Exception(f'impossible zone_1: {zone_1}')
+        raise Exception(f'impossible zone_1: {zone_1}')
 
 
 def _get_alphabet_by_range(zone_start, zone_end):
