@@ -48,7 +48,7 @@ def classify_px_design_files(font_config):
                     design_file_to_dir = design_flavor_dir
                 else:
                     code_point = int(uni_hex_name, 16)
-                    _, unicode_block = unicode_util.index_block_by_code_point(configs.unicode_blocks, code_point)
+                    unicode_block = unicode_util.index_block_by_code_point(configs.unicode_blocks, code_point)[1]
                     block_dir_name = f'{unicode_block.begin:04X}-{unicode_block.end:04X} {unicode_block.name}'
                     design_file_to_dir = os.path.join(design_flavor_dir, block_dir_name)
                     if unicode_block.name == 'CJK Unified Ideographs':
