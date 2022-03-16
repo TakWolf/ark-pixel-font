@@ -87,7 +87,7 @@ def _write_unicode_char_count_infos_table(file, infos):
     file.write('| 区块范围 | 区块名称 | 区块含义 | 覆盖数 | 覆盖率 |\n')
     file.write('|---|---|---|---:|---:|\n')
     for unicode_block, count in infos:
-        code_point_range = f'0x{unicode_block.begin:04X}~0x{unicode_block.end:04X}'
+        code_point_range = f'{unicode_block.begin:04X}~{unicode_block.end:04X}'
         progress = count / unicode_block.char_count
         finished_emoji = '🚩' if progress == 1 else '🚧'
         file.write(f'| {code_point_range} | {unicode_block.name} | {unicode_block.name_cn if unicode_block.name_cn else ""} | {count} / {unicode_block.char_count} | {progress:.2%} {finished_emoji} |\n')
