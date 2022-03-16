@@ -21,6 +21,8 @@ def query_block(c):
             return 'single-ascii'
         elif 0xA1 <= code <= 0xDF:
             return 'single-other'
+        elif not c.isprintable():
+            return None
         else:
             raise Exception(f'impossible code: {code}')
     else:
