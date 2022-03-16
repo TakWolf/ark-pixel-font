@@ -16,10 +16,10 @@ logger = logging.getLogger('info-service')
 def _get_unicode_char_count_infos(alphabet):
     count_map = {}
     for c in alphabet:
-        if not c.isprintable():
-            continue
         code_point = ord(c)
-        i = unicode_util.index_block_by_code_point(configs.unicode_blocks, code_point)[0]
+        i, unicode_block = unicode_util.index_block_by_code_point(configs.unicode_blocks, code_point)
+        if not c.isprintable() and unicode_block.char_count > 0:
+            continue
         count = count_map.get(i, 0)
         count += 1
         count_map[i] = count
@@ -88,7 +88,10 @@ def _write_unicode_char_count_infos_table(file, infos):
     file.write('|---|---|---|---:|---:|\n')
     for unicode_block, count in infos:
         code_point_range = f'{unicode_block.begin:04X}~{unicode_block.end:04X}'
-        progress = count / unicode_block.char_count
+        if unicode_block.char_count > 0:
+            progress = count / unicode_block.char_count
+        else:
+            progress = 1
         finished_emoji = '🚩' if progress == 1 else '🚧'
         file.write(f'| {code_point_range} | {unicode_block.name} | {unicode_block.name_cn if unicode_block.name_cn else ""} | {count} / {unicode_block.char_count} | {progress:.2%} {finished_emoji} |\n')
 
