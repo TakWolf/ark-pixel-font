@@ -157,7 +157,9 @@ python ./build.py
 
 - [Aseprite](https://github.com/aseprite/aseprite)
 - [Unicode 字符百科](https://unicode-table.com/)
-- [部件查字工具](http://www.guoxuedashi.net/zidian/bujian/)
+- [字統网 - 字形檢字](https://zi.tools/?secondary=search)
+- [字嗨 - 漢字部件檢索](https://zi-hi.com/sp/uni/CJKSeeker)
+- [国学大师 - 汉字部件查字](http://www.guoxuedashi.net/zidian/bujian/)
 
 ## 参考资料
 
