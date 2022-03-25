@@ -59,7 +59,7 @@ def classify_px_design_files(font_config):
                 design_file_to_path = os.path.join(design_file_to_dir, design_file_name)
                 assert not os.path.exists(design_file_to_path), design_file_from_path
                 shutil.move(design_file_from_path, design_file_to_path)
-                logger.info(f'classify design file: {design_file_to_path}')
+                logger.info(f'classify design file {design_file_to_path}')
         shutil.rmtree(design_flavor_tmp_dir)
 
 
@@ -106,7 +106,7 @@ def verify_px_design_files(font_config):
 
                 # 格式化设计文件
                 glyph_util.save_design_data_to_png(design_data, design_file_path)
-                logger.info(f'format design file: {design_file_path}')
+                logger.info(f'format design file {design_file_path}')
 
 
 def collect_px_design_files(font_config):
