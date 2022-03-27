@@ -15,6 +15,27 @@
 
 这个项目不仅提供了全部的字形设计源文件，也提供了构建字体所需要的完整程序。
 
+## 开发状态
+
+本字体目前还处于早期开发阶段，所有尺寸仍然缺少大量汉字。
+
+可以看看 [缝合怪像素字体](https://github.com/TakWolf/fusion-pixel-font)
+
+12 像素为主要开发目标。10、16 像素为实验性质。
+
+### 目前正在做
+
+- 12 像素
+- 谚文字符自动生成（程序待开源）
+
+### 当前目标
+
+- 完成 12 像素对 GB2312 的覆盖
+
+### 讨论中的问题
+
+- [比例字体](https://github.com/TakWolf/ark-pixel-font/discussions/4)
+
 ## 预览
 
 可以通过 [Playground](https://ark-pixel-font.takwolf.com/playground.html) 在线实时预览字体样式。
