@@ -36,6 +36,7 @@
             position: fixed;
             width: 48px;
             height: 48px;
+            cursor: pointer;
         }
         .page {
             padding: 64px 192px;
@@ -77,8 +78,8 @@
     </style>
 </head>
 <body class="theme-light">
-<div class="btn-apply-theme theme-light" style="top: 0; left: 0;" onclick="applyTheme('light')"></div>
-<div class="btn-apply-theme theme-dark" style="top: 0; right: 0;" onclick="applyTheme('dark')"></div>
+<div class="btn-apply-theme theme-light" style="top: 0; left: 0;" onclick="document.body.className = 'theme-light';"></div>
+<div class="btn-apply-theme theme-dark" style="top: 0; right: 0;" onclick="document.body.className = 'theme-dark';"></div>
 <div class="page">
     <div class="app-font-zh_cn">
         <h1 class="title">方舟像素字体 / Ark Pixel Font</h1>
@@ -241,10 +242,5 @@
         <p class="content">Nintendo has multiple subsidiaries in Japan and abroad, in addition to business partners such as The Pokémon Company and HAL Laboratory. Nintendo and its staff has received awards including Emmy Awards for Technology & Engineering, Game Awards, Game Developers Choice Awards and British Academy Games Awards. It is one of the wealthiest and most valuable companies in the Japanese market.</p>
     </div>
 </div>
-<script>
-    function applyTheme(theme) {
-        document.body.className = 'theme-' + theme;
-    }
-</script>
 </body>
 </html>
