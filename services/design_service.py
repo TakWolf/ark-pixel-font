@@ -32,35 +32,34 @@ def classify_px_design_files(font_config):
     按照 Unicode 区块分类设计文件
     """
     for design_dir in configs.design_dirs:
-        design_flavor_dir = os.path.join(design_dir, f'{font_config.px}')
-        if not os.path.isdir(design_flavor_dir):
+        design_px_dir = os.path.join(design_dir, f'{font_config.px}')
+        if not os.path.isdir(design_px_dir):
             continue
-        design_flavor_tmp_dir = os.path.join(design_dir, f'{font_config.px}.tmp')
-        os.rename(design_flavor_dir, design_flavor_tmp_dir)
-        os.mkdir(design_flavor_dir)
-        for design_file_parent_dir, _, design_file_names in os.walk(design_flavor_tmp_dir):
+        design_px_tmp_dir = os.path.join(design_dir, f'{font_config.px}.tmp')
+        os.rename(design_px_dir, design_px_tmp_dir)
+        for design_file_parent_dir, _, design_file_names in os.walk(design_px_tmp_dir):
             for design_file_name in design_file_names:
                 if not design_file_name.endswith('.png'):
                     continue
                 design_file_from_path = os.path.join(design_file_parent_dir, design_file_name)
                 uni_hex_name, language_specifics = _parse_design_file_name(design_file_name)
                 if uni_hex_name == 'notdef':
-                    design_file_to_dir = design_flavor_dir
+                    design_file_to_dir = design_px_dir
                 else:
                     code_point = int(uni_hex_name, 16)
                     unicode_block = unicode_util.index_block_by_code_point(configs.unicode_blocks, code_point)[1]
                     block_dir_name = f'{unicode_block.begin:04X}-{unicode_block.end:04X} {unicode_block.name}'
-                    design_file_to_dir = os.path.join(design_flavor_dir, block_dir_name)
+                    design_file_to_dir = os.path.join(design_px_dir, block_dir_name)
                     if unicode_block.name == 'CJK Unified Ideographs':
                         design_file_to_dir = os.path.join(design_file_to_dir, f'{uni_hex_name[0:-2]}-')
-                    if not os.path.exists(design_file_to_dir):
-                        os.makedirs(design_file_to_dir)
+                if not os.path.exists(design_file_to_dir):
+                    os.makedirs(design_file_to_dir)
                 design_file_name = f'{uni_hex_name}{" " if len(language_specifics) > 0 else ""}{",".join(language_specifics)}.png'
                 design_file_to_path = os.path.join(design_file_to_dir, design_file_name)
                 assert not os.path.exists(design_file_to_path), design_file_from_path
                 shutil.move(design_file_from_path, design_file_to_path)
                 logger.info(f'classify design file {design_file_to_path}')
-        shutil.rmtree(design_flavor_tmp_dir)
+        shutil.rmtree(design_px_tmp_dir)
 
 
 def verify_px_design_files(font_config):
