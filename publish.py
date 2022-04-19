@@ -1,5 +1,5 @@
 import logging
-import os.path
+import os
 import shutil
 
 import configs

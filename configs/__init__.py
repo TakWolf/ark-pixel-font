@@ -1,4 +1,4 @@
-import os.path
+import os
 
 from jinja2 import Environment, FileSystemLoader
 

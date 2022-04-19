@@ -1,5 +1,5 @@
 import logging
-import os.path
+import os
 
 from fontTools.fontBuilder import FontBuilder
 from fontTools.pens.t2CharStringPen import T2CharStringPen
