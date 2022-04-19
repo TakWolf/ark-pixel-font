@@ -1,6 +1,6 @@
-beautifulsoup4==4.10.0
+beautifulsoup4==4.11.1
 Brotli==1.0.9
-fonttools==4.31.2
+fonttools==4.32.0
 gitdb==4.0.9
 GitPython==3.1.27
 Jinja2==3.1.1
@@ -9,4 +9,4 @@ minify_html==0.8.0
 Pillow==9.1.0
 pypng==0.0.21
 smmap==5.0.0
-soupsieve==2.3.1
+soupsieve==2.3.2.post1
