@@ -6,7 +6,7 @@ GitPython==3.1.27
 Jinja2==3.1.2
 MarkupSafe==2.1.1
 minify_html==0.8.0
-Pillow==9.1.0
+Pillow==9.1.1
 pypng==0.0.21
 smmap==5.0.0
 soupsieve==2.3.2.post1
