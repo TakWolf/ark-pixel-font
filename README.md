@@ -5,11 +5,11 @@
 [![SIL Open Font License 1.1](https://img.shields.io/badge/license-OFL--1.1-orange)](https://scripts.sil.org/OFL)
 [![MIT License](https://img.shields.io/badge/license-MIT-green)](https://opensource.org/licenses/MIT)
 [![Releases](https://img.shields.io/github/v/release/TakWolf/ark-pixel-font)](https://github.com/TakWolf/ark-pixel-font/releases)
-[![Discord](https://img.shields.io/discord/949265373964947458?logo=discord)](https://discord.gg/XZkTuwuGpC)
+[![Discord](https://img.shields.io/discord/949265373964947458?logo=discord)](https://discord.gg/TPpab6vuTd)
 
 - [主页](https://ark-pixel-font.takwolf.com)
 - [itch.io](https://takwolf.itch.io/ark-pixel-font)
-- [Discord](https://discord.gg/XZkTuwuGpC)
+- [Discord](https://discord.gg/TPpab6vuTd)
 
 开源的泛中日韩像素字体。支持 10、12 和 16 像素。目标是为像素风格的游戏开发提供一套可用于正文的开箱即用的字体解决方案。
 
@@ -123,7 +123,7 @@ python ./build.py
 
 任何有关字体和程序上的建议，都欢迎创建 [Issues](https://github.com/TakWolf/ark-pixel-font/issues) 来反馈，也可以通过 [Discussions](https://github.com/TakWolf/ark-pixel-font/discussions) 来讨论。
 
-此外，我们也有一个 [Discord](https://discord.gg/XZkTuwuGpC) 频道。
+此外，我们也有一个 [Discord](https://discord.gg/TPpab6vuTd) 频道。
 
 ## 授权信息
 
