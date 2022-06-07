@@ -104,8 +104,10 @@ class _GlyphInfoPool:
         return glyph_info_map
 
 
-def _create_font_builder(name_strings, units_per_em, ascent, descent, glyph_order, character_map, glyph_info_map, is_ttf):
+def _create_font_builder(name_strings, vertical_metrics, glyph_order, character_map, glyph_info_map, is_ttf):
+    units_per_em, ascent, descent, x_height, cap_height = vertical_metrics
     builder = FontBuilder(units_per_em, isTTF=is_ttf)
+    builder.setupNameTable(name_strings)
     builder.setupGlyphOrder(glyph_order)
     builder.setupCharacterMap(character_map)
     glyphs = {}
@@ -114,14 +116,13 @@ def _create_font_builder(name_strings, units_per_em, ascent, descent, glyph_orde
         glyphs[glyph_name], advance_widths[glyph_name] = glyph_info_map[glyph_name]
     if is_ttf:
         builder.setupGlyf(glyphs)
-        metrics = {glyph_name: (advance_width, glyphs[glyph_name].xMin) for glyph_name, advance_width in advance_widths.items()}
+        horizontal_metrics = {glyph_name: (advance_width, glyphs[glyph_name].xMin) for glyph_name, advance_width in advance_widths.items()}
     else:
         builder.setupCFF(name_strings['psName'], {'FullName': name_strings['fullName']}, glyphs, {})
-        metrics = {glyph_name: (advance_width, glyphs[glyph_name].calcBounds(None)[0]) for glyph_name, advance_width in advance_widths.items()}
-    builder.setupHorizontalMetrics(metrics)
+        horizontal_metrics = {glyph_name: (advance_width, glyphs[glyph_name].calcBounds(None)[0]) for glyph_name, advance_width in advance_widths.items()}
+    builder.setupHorizontalMetrics(horizontal_metrics)
     builder.setupHorizontalHeader(ascent=ascent, descent=descent)
-    builder.setupNameTable(name_strings)
-    builder.setupOS2(sTypoAscender=ascent, usWinAscent=ascent, usWinDescent=-descent)
+    builder.setupOS2(sTypoAscender=ascent, sTypoDescender=descent, usWinAscent=ascent, usWinDescent=-descent, sxHeight=x_height, sCapHeight=cap_height)
     builder.setupPost()
     return builder
 
@@ -129,7 +130,7 @@ def _create_font_builder(name_strings, units_per_em, ascent, descent, glyph_orde
 def make_px_fonts(font_config, alphabet, design_file_paths_map, build_types=None):
     if build_types is None:
         build_types = ['otf', 'woff2', 'ttf']
-    units_per_em, ascent, descent = font_config.get_metrics()
+    vertical_metrics = font_config.get_vertical_metrics()
     glyph_order = ['.notdef']
     character_map = {}
     for c in alphabet:
@@ -160,7 +161,7 @@ def make_px_fonts(font_config, alphabet, design_file_paths_map, build_types=None
 
         if 'otf' in build_types or 'woff2' in build_types:
             otf_glyph_info_map = glyph_info_pool.build_glyph_info_map(design_file_paths, False)
-            otf_builder = _create_font_builder(name_strings, units_per_em, ascent, descent, glyph_order, character_map, otf_glyph_info_map, False)
+            otf_builder = _create_font_builder(name_strings, vertical_metrics, glyph_order, character_map, otf_glyph_info_map, False)
             if 'otf' in build_types:
                 otf_file_output_path = os.path.join(workspace_define.outputs_dir, font_config.get_output_font_file_name(language_specific, 'otf'))
                 otf_builder.save(otf_file_output_path)
@@ -172,7 +173,7 @@ def make_px_fonts(font_config, alphabet, design_file_paths_map, build_types=None
                 logger.info(f'make {woff2_file_output_path}')
         if 'ttf' in build_types:
             ttf_glyph_info_map = glyph_info_pool.build_glyph_info_map(design_file_paths, True)
-            ttf_builder = _create_font_builder(name_strings, units_per_em, ascent, descent, glyph_order, character_map, ttf_glyph_info_map, True)
+            ttf_builder = _create_font_builder(name_strings, vertical_metrics, glyph_order, character_map, ttf_glyph_info_map, True)
             ttf_file_output_path = os.path.join(workspace_define.outputs_dir, font_config.get_output_font_file_name(language_specific, 'ttf'))
             ttf_builder.save(ttf_file_output_path)
             logger.info(f'make {ttf_file_output_path}')

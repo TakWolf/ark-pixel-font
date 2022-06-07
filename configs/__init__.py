@@ -8,9 +8,9 @@ from configs.git_deploy_config import GitDeployConfig
 from utils import unicode_util
 
 font_configs = [
-    FontConfig(10, 9),
-    FontConfig(12, 10),
-    FontConfig(16, 13),
+    FontConfig(10, 9, 5, 7),
+    FontConfig(12, 10, 6, 8),
+    FontConfig(16, 13, 7, 10),
 ]
 
 font_config_map = {font_config.px: font_config for font_config in font_configs}
