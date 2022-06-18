@@ -5,11 +5,13 @@
 [![SIL Open Font License 1.1](https://img.shields.io/badge/license-OFL--1.1-orange)](https://scripts.sil.org/OFL)
 [![MIT License](https://img.shields.io/badge/license-MIT-green)](https://opensource.org/licenses/MIT)
 [![Releases](https://img.shields.io/github/v/release/TakWolf/ark-pixel-font)](https://github.com/TakWolf/ark-pixel-font/releases)
-[![Discord](https://img.shields.io/discord/949265373964947458?logo=discord)](https://discord.gg/TPpab6vuTd)
+[![Discord](https://img.shields.io/discord/949265373964947458?logo=discord&logoColor=white)](https://discord.gg/3GKtPKtjdU)
+[![QQ Group](https://img.shields.io/badge/chat-302383204-brightgreen?logo=tencentqq)](https://jq.qq.com/?_wv=1027&k=EXtKGHar)
 
 - [主页](https://ark-pixel-font.takwolf.com)
 - [itch.io](https://takwolf.itch.io/ark-pixel-font)
-- [Discord](https://discord.gg/TPpab6vuTd)
+- [Discord](https://discord.gg/3GKtPKtjdU)
+- [QQ 群](https://jq.qq.com/?_wv=1027&k=EXtKGHar)
 
 开源的泛中日韩像素字体。支持 10、12 和 16 像素。目标是为像素风格的游戏开发提供一套可用于正文的开箱即用的字体解决方案。
 
@@ -74,8 +76,28 @@
 | 格式 | 使用场景 |
 |---|---|
 | `.otf` | 新一代主流字体格式，可以直接用于操作系统、设计软件或游戏引擎。推荐优先使用这个格式。 |
-| `.ttf` | 在 `.otf` 出现之前的主流字体格式，理论上可以被 `.otf` 完全取代。如果你的软件不支持 `.otf` 格式，请使用这个格式。 |
+| `.ttf` | 在 `.otf` 出现之前的主流字体格式，一定程度上可以被 `.otf` 取代。如果你的软件不支持 `.otf` 格式，请使用这个格式。 |
 | `.woff2` | 压缩后的 `.otf` 格式，体积更小，适用于网络传输，但并非所有软件都支持。如果你需要通过网页在线引用字体，请优先使用这个格式。 |
+
+### macOS - Homebrew
+
+如果您使用 macOS 系统，也可以通过 [Homebrew](https://brew.sh) 来安装本字体。
+
+通过下面的命令来添加下载源：
+
+```commandline
+brew tap homebrew/cask-fonts
+```
+
+然后安装所需尺寸的字体：
+
+```commandline
+brew install font-ark-pixel-10px
+brew install font-ark-pixel-12px
+brew install font-ark-pixel-16px
+```
+
+详细信息请查看 [homebrew-cask-fonts](https://github.com/Homebrew/homebrew-cask-fonts) 的主页。
 
 ## 开发流程
 
@@ -123,7 +145,7 @@ python ./build.py
 
 任何有关字体和程序上的建议，都欢迎创建 [Issues](https://github.com/TakWolf/ark-pixel-font/issues) 来反馈，也可以通过 [Discussions](https://github.com/TakWolf/ark-pixel-font/discussions) 来讨论。
 
-此外，我们也有一个 [Discord](https://discord.gg/TPpab6vuTd) 频道。
+此外，我们有一个 [Discord](https://discord.gg/3GKtPKtjdU) 频道和一个 [QQ 群](https://jq.qq.com/?_wv=1027&k=EXtKGHar) 。
 
 ## 授权信息
 
