@@ -17,7 +17,7 @@ license_info_url = 'https://scripts.sil.org/OFL'
 
 
 class FontConfig:
-    def __init__(self, px, origin_y_px, x_height_px, cap_height_px, em_dot_size=100):
+    def __init__(self, px, origin_y_px, x_height_px, cap_height_px, dot_em_units=100):
         # 字体信息
         self.display_name = f'{display_name} {px}px'
         self.unique_name = f'{unique_name}-{px}px'
@@ -26,7 +26,7 @@ class FontConfig:
         self.origin_y_px = origin_y_px
         self.x_height_px = x_height_px
         self.cap_height_px = cap_height_px
-        self.em_dot_size = em_dot_size
+        self.dot_em_units = dot_em_units
         # 附加文件清单
         self.info_file_name = f'font-info-{px}px.md'
         self.preview_image_file_name = f'preview-{px}px.png'
@@ -35,11 +35,11 @@ class FontConfig:
         self.demo_html_file_name = f'demo-{px}px.html'
 
     def get_vertical_metrics(self):
-        units_per_em = self.px * self.em_dot_size
-        ascent = self.origin_y_px * self.em_dot_size
-        descent = (self.origin_y_px - self.px) * self.em_dot_size
-        x_height = self.x_height_px * self.em_dot_size
-        cap_height = self.cap_height_px * self.em_dot_size
+        units_per_em = self.px * self.dot_em_units
+        ascent = self.origin_y_px * self.dot_em_units
+        descent = (self.origin_y_px - self.px) * self.dot_em_units
+        x_height = self.x_height_px * self.dot_em_units
+        cap_height = self.cap_height_px * self.dot_em_units
         return units_per_em, ascent, descent, x_height, cap_height
 
     def get_output_display_name(self, language_specific):

@@ -28,15 +28,15 @@ def _convert_point_to_open_type(point, origin_y):
     return x, y
 
 
-def _draw_glyph(outlines, width_px, origin_y_px, em_dot_size, is_ttf):
+def _draw_glyph(outlines, width_px, origin_y_px, dot_em_units, is_ttf):
     if is_ttf:
         pen = TTGlyphPen(None)
     else:
-        pen = T2CharStringPen(width_px * em_dot_size, None)
+        pen = T2CharStringPen(width_px * dot_em_units, None)
     if len(outlines) > 0:
         for outline_index, outline in enumerate(outlines):
             for point_index, point in enumerate(outline):
-                point = _convert_point_to_open_type(point, origin_y_px * em_dot_size)
+                point = _convert_point_to_open_type(point, origin_y_px * dot_em_units)
                 if point_index == 0:
                     pen.moveTo(point)
                 else:
@@ -48,7 +48,7 @@ def _draw_glyph(outlines, width_px, origin_y_px, em_dot_size, is_ttf):
     else:
         pen.moveTo((0, 0))
         pen.closePath()
-    advance_width = width_px * em_dot_size
+    advance_width = width_px * dot_em_units
     if is_ttf:
         return pen.glyph(), advance_width
     else:
@@ -67,7 +67,7 @@ class _GlyphInfoPool:
             design_data_info = self.design_data_info_map[design_file_path]
         else:
             design_data, width, _ = glyph_util.load_design_data_from_png(design_file_path)
-            outlines = glyph_util.get_outlines_from_design_data(design_data, self.font_config.em_dot_size)
+            outlines = glyph_util.get_outlines_from_design_data(design_data, self.font_config.dot_em_units)
             design_data_info = outlines, width
             self.design_data_info_map[design_file_path] = design_data_info
         return design_data_info
@@ -77,7 +77,7 @@ class _GlyphInfoPool:
             glyph_info = self.otf_glyph_info_map[design_file_path]
         else:
             outlines, width_px = self._get_design_data_info(design_file_path)
-            glyph_info = _draw_glyph(outlines, width_px, self.font_config.origin_y_px, self.font_config.em_dot_size, False)
+            glyph_info = _draw_glyph(outlines, width_px, self.font_config.origin_y_px, self.font_config.dot_em_units, False)
             self.otf_glyph_info_map[design_file_path] = glyph_info
             logger.info(f'draw otf glyph {design_file_path}')
         return glyph_info
@@ -87,7 +87,7 @@ class _GlyphInfoPool:
             glyph_info = self.ttf_glyph_info_map[design_file_path]
         else:
             outlines, width_px = self._get_design_data_info(design_file_path)
-            glyph_info = _draw_glyph(outlines, width_px, self.font_config.origin_y_px, self.font_config.em_dot_size, True)
+            glyph_info = _draw_glyph(outlines, width_px, self.font_config.origin_y_px, self.font_config.dot_em_units, True)
             self.ttf_glyph_info_map[design_file_path] = glyph_info
             logger.info(f'draw ttf glyph {design_file_path}')
         return glyph_info
