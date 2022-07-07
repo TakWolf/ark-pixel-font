@@ -25,8 +25,6 @@ language_specifics = [
     'ko',     # 朝鲜语
 ]
 
-design_dirs = [workspace_define.design_dir]
-
 unicode_blocks = unicode_util.load_blocks_db(os.path.join(workspace_define.unidata_dir, 'blocks.txt'))
 
 template_env = Environment(loader=FileSystemLoader(workspace_define.templates_dir))
