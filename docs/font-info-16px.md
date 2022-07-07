@@ -6,7 +6,7 @@
 |---|---|
 | 字体名称 | Ark Pixel 16px |
 | 像素尺寸 | 16px |
-| 版本号 | 2022.07.05 |
+| 版本号 | 2022.07.08 |
 | 字符总数 | 1056 |
 
 ## Unicode 字符分布
@@ -36,7 +36,7 @@
 | 3000~303F | CJK Symbols and Punctuation | 中日韩符号和标点 | 19 / 63 | 30.16% 🚧 |
 | 30A0~30FF | Katakana | 片假名 | 2 / 96 | 2.08% 🚧 |
 | 3200~32FF | Enclosed CJK Letters and Months | 带圈或括号的中日韩字母和月份 | 39 / 255 | 15.29% 🚧 |
-| 4E00~9FFF | CJK Unified Ideographs | 中日韩统一表意文字 | 47 / 20976 | 0.22% 🚧 |
+| 4E00~9FFF | CJK Unified Ideographs | 中日韩统一表意文字 | 47 / 20989 | 0.22% 🚧 |
 | FF00~FFEF | Halfwidth and Fullwidth Forms | 半角和全角形式 | 80 / 225 | 35.56% 🚧 |
 | FFF0~FFFF | Specials | 特殊 | 2 / 2 | 100.00% 🚩 |
 

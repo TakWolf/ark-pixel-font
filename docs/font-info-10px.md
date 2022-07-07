@@ -6,7 +6,7 @@
 |---|---|
 | 字体名称 | Ark Pixel 10px |
 | 像素尺寸 | 10px |
-| 版本号 | 2022.07.05 |
+| 版本号 | 2022.07.08 |
 | 字符总数 | 1583 |
 
 ## Unicode 字符分布
@@ -35,7 +35,7 @@
 | 30A0~30FF | Katakana | 片假名 | 96 / 96 | 100.00% 🚩 |
 | 3100~312F | Bopomofo | 注音字母 | 43 / 43 | 100.00% 🚩 |
 | 3200~32FF | Enclosed CJK Letters and Months | 带圈或括号的中日韩字母和月份 | 1 / 255 | 0.39% 🚧 |
-| 4E00~9FFF | CJK Unified Ideographs | 中日韩统一表意文字 | 643 / 20976 | 3.07% 🚧 |
+| 4E00~9FFF | CJK Unified Ideographs | 中日韩统一表意文字 | 643 / 20989 | 3.06% 🚧 |
 | FF00~FFEF | Halfwidth and Fullwidth Forms | 半角和全角形式 | 15 / 225 | 6.67% 🚧 |
 | FFF0~FFFF | Specials | 特殊 | 2 / 2 | 100.00% 🚩 |
 
