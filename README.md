@@ -139,7 +139,7 @@ python -m pip install -r requirements.txt
 python ./build.py
 ```
 
-等待执行完毕后，可在 `outputs` 目录下找到生成的字体文件。
+等待执行完毕后，可在 `build/outputs` 目录下找到生成的字体文件。
 
 ## 参与改进
 
