@@ -8,7 +8,7 @@ from PIL import Image, ImageFont, ImageDraw
 
 import configs
 from configs import font_define, workspace_define
-from utils import unicode_util, gb2312_util, big5_util, shift_jis_util, ks_x_1001_util
+from utils import unidata_util, gb2312_util, big5_util, shift_jis_util, ks_x_1001_util
 
 logger = logging.getLogger('info-service')
 
@@ -17,15 +17,15 @@ def _get_unicode_char_count_infos(alphabet):
     count_map = {}
     for c in alphabet:
         code_point = ord(c)
-        i, unicode_block = unicode_util.index_block_by_code_point(configs.unicode_blocks, code_point)
+        unicode_block = configs.unidata_db.get_block_by_code_point(code_point)
         if not c.isprintable() and unicode_block.char_count > 0:
             continue
-        count = count_map.get(i, 0)
+        count = count_map.get(unicode_block.begin, 0)
         count += 1
-        count_map[i] = count
-    positions = list(count_map.keys())
-    positions.sort()
-    return [(configs.unicode_blocks[i], count_map[i]) for i in positions]
+        count_map[unicode_block.begin] = count
+    begins = list(count_map.keys())
+    begins.sort()
+    return [(configs.unidata_db.get_block_by_code_point(begin), count_map[begin]) for begin in begins]
 
 
 def _get_locale_char_count_map(alphabet, query_block_func):
@@ -121,7 +121,7 @@ def make_px_info_file(font_config, alphabet):
         file.write('\n')
         file.write('## Unicode 字符分布\n')
         file.write('\n')
-        file.write(f'区块定义参考：[{unicode_util.blocks_doc_url}]({unicode_util.blocks_doc_url})\n')
+        file.write(f'区块定义参考：[{unidata_util.blocks_doc_url}]({unidata_util.blocks_doc_url})\n')
         file.write('\n')
         _write_unicode_char_count_infos_table(file, _get_unicode_char_count_infos(alphabet))
         file.write('\n')

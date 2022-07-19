@@ -17,12 +17,14 @@ class UnicodeBlock:
                 self.char_count += 1
 
 
-def load_blocks_db(db_path):
-    unicode_blocks = []
-    with open(db_path, 'r', encoding='utf-8') as file:
-        for line in file.readlines():
-            line = line.split('#', 1)[0].strip()
-            if line != '':
+class UnidataDB:
+    def __init__(self, db_path):
+        self.blocks = []
+        with open(db_path, 'r', encoding='utf-8') as file:
+            for line in file.readlines():
+                line = line.split('#', 1)[0].strip()
+                if line == '':
+                    continue
                 arr = re.split(r'\.\.|;\s', line)
                 begin = int(arr[0], 16)
                 end = int(arr[1], 16)
@@ -31,12 +33,10 @@ def load_blocks_db(db_path):
                     name_cn = arr[3]
                 else:
                     name_cn = None
-                unicode_blocks.append(UnicodeBlock(name, name_cn, begin, end))
-    return unicode_blocks
+                self.blocks.append(UnicodeBlock(name, name_cn, begin, end))
 
-
-def index_block_by_code_point(unicode_blocks, code_point):
-    for i, unicode_block in enumerate(unicode_blocks):
-        if unicode_block.begin <= code_point <= unicode_block.end:
-            return i, unicode_block
-    return -1, None
+    def get_block_by_code_point(self, code_point):
+        for block in self.blocks:
+            if block.begin <= code_point <= block.end:
+                return block
+        return None

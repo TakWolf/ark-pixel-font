@@ -5,7 +5,7 @@ from jinja2 import Environment, FileSystemLoader
 from configs import workspace_define
 from configs.font_define import FontConfig
 from configs.git_deploy_config import GitDeployConfig
-from utils import unicode_util
+from utils.unidata_util import UnidataDB
 
 font_configs = [
     FontConfig(10, 9, 5, 7),
@@ -25,7 +25,7 @@ language_specifics = [
     'ko',     # 朝鲜语
 ]
 
-unicode_blocks = unicode_util.load_blocks_db(os.path.join(workspace_define.unidata_dir, 'blocks.txt'))
+unidata_db = UnidataDB(os.path.join(workspace_define.unidata_dir, 'Blocks.txt'))
 
 template_env = Environment(loader=FileSystemLoader(workspace_define.templates_dir))
 

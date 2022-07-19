@@ -5,7 +5,7 @@ import unicodedata
 
 import configs
 from configs import workspace_define
-from utils import glyph_util, unicode_util
+from utils import glyph_util
 
 logger = logging.getLogger('design-service')
 
@@ -45,7 +45,7 @@ def classify_px_design_files(font_config):
                 design_file_to_dir = px_dir
             else:
                 code_point = int(uni_hex_name, 16)
-                unicode_block = unicode_util.index_block_by_code_point(configs.unicode_blocks, code_point)[1]
+                unicode_block = configs.unidata_db.get_block_by_code_point(code_point)
                 block_dir_name = f'{unicode_block.begin:04X}-{unicode_block.end:04X} {unicode_block.name}'
                 design_file_to_dir = os.path.join(px_dir, block_dir_name)
                 if unicode_block.name == 'CJK Unified Ideographs':
