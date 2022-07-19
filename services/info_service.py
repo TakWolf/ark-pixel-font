@@ -318,7 +318,7 @@ def make_github_banner():
     image_font_12_zh_tr = _load_image_font_from_outputs(12, 'zh_tr', 12)
     image_font_12_ja = _load_image_font_from_outputs(12, 'ja', 12)
 
-    image_template = Image.open(os.path.join(workspace_define.images_dir, 'github-banner-template.png'))
+    image_template = Image.open(os.path.join(workspace_define.images_dir, 'github-banner-background.png'))
     image = Image.new('RGBA', (image_template.width, image_template.height), (255, 255, 255, 0))
     _image_draw_text_background(image, alphabet_12, 2, 14, (200, 200, 200), image_font_12_zh_cn)
     image.paste(image_template, mask=image_template)
@@ -345,7 +345,7 @@ def make_itch_io_banner():
     image_font_24_zh_cn = _load_image_font_from_outputs(12, 'zh_cn', 24)
     image_font_12_zh_cn = _load_image_font_from_outputs(12, 'zh_cn', 12)
 
-    image_template = Image.open(os.path.join(workspace_define.images_dir, 'itch-io-banner-template.png'))
+    image_template = Image.open(os.path.join(workspace_define.images_dir, 'itch-io-banner-background.png'))
     image = Image.new('RGBA', (image_template.width, image_template.height), (255, 255, 255, 0))
     _image_draw_text_background(image, alphabet_12, 5, 14, (200, 200, 200), image_font_12_zh_cn)
     image.paste(image_template, mask=image_template)
@@ -380,7 +380,7 @@ def make_itch_io_cover():
     image_font_12_zh_tr = _load_image_font_from_outputs(12, 'zh_tr', 12)
     image_font_12_ja = _load_image_font_from_outputs(12, 'ja', 12)
 
-    image = Image.open(os.path.join(workspace_define.images_dir, 'itch-io-cover-template.png'))
+    image = Image.open(os.path.join(workspace_define.images_dir, 'itch-io-cover-background.png'))
     text_color = (255, 255, 255)
     shadow_color = (80, 80, 80)
     _image_draw_text_with_shadow(image, ((image.width - 12 * 12) / 2, 12), '方舟像素字体', text_color, shadow_color, image_font_24_zh_cn)
@@ -403,7 +403,7 @@ def make_afdian_cover():
     image_font_12_zh_tr = _load_image_font_from_outputs(12, 'zh_tr', 12)
     image_font_12_ja = _load_image_font_from_outputs(12, 'ja', 12)
 
-    image = Image.open(os.path.join(workspace_define.images_dir, 'afdian-cover-template.png'))
+    image = Image.open(os.path.join(workspace_define.images_dir, 'afdian-cover-background.png'))
     text_color = (255, 255, 255)
     shadow_color = (80, 80, 80)
     _image_draw_text_with_shadow(image, ((image.width - 12 * 12) / 2, 12), '方舟像素字体', text_color, shadow_color, image_font_24_zh_cn)
