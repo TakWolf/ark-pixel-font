@@ -33,21 +33,22 @@ def classify_px_design_files(font_config):
     按照 Unicode 区块分类设计文件
     """
     px_dir = os.path.join(workspace_define.design_dir, str(font_config.px))
-    px_tmp_dir = f'{px_dir}.tmp'
-    os.rename(px_dir, px_tmp_dir)
-    for design_file_from_dir, _, design_file_names in os.walk(px_tmp_dir):
+    px_tmp_dir = os.path.join(workspace_define.design_tmp_dir, str(font_config.px))
+    if os.path.exists(px_tmp_dir):
+        shutil.rmtree(px_tmp_dir)
+    for design_file_from_dir, _, design_file_names in os.walk(px_dir):
         for design_file_name in design_file_names:
             if not design_file_name.endswith('.png'):
                 continue
             design_file_from_path = os.path.join(design_file_from_dir, design_file_name)
             uni_hex_name, language_specifics = _parse_design_file_name(design_file_name)
             if uni_hex_name == 'notdef':
-                design_file_to_dir = px_dir
+                design_file_to_dir = px_tmp_dir
             else:
                 code_point = int(uni_hex_name, 16)
                 unicode_block = configs.unidata_db.get_block_by_code_point(code_point)
                 block_dir_name = f'{unicode_block.begin:04X}-{unicode_block.end:04X} {unicode_block.name}'
-                design_file_to_dir = os.path.join(px_dir, block_dir_name)
+                design_file_to_dir = os.path.join(px_tmp_dir, block_dir_name)
                 if unicode_block.name == 'CJK Unified Ideographs':
                     design_file_to_dir = os.path.join(design_file_to_dir, f'{uni_hex_name[0:-2]}-')
             if not os.path.exists(design_file_to_dir):
@@ -55,9 +56,10 @@ def classify_px_design_files(font_config):
             design_file_name = f'{uni_hex_name}{" " if len(language_specifics) > 0 else ""}{",".join(language_specifics)}.png'
             design_file_to_path = os.path.join(design_file_to_dir, design_file_name)
             assert not os.path.exists(design_file_to_path), design_file_from_path
-            shutil.move(design_file_from_path, design_file_to_path)
+            shutil.copyfile(design_file_from_path, design_file_to_path)
             logger.info(f'classify design file {design_file_to_path}')
-    shutil.rmtree(px_tmp_dir)
+    shutil.rmtree(px_dir)
+    os.rename(px_tmp_dir, px_dir)
 
 
 def verify_px_design_files(font_config):
