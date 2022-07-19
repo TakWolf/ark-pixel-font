@@ -27,7 +27,7 @@ def make_px_release_zips(font_config):
 def _copy_file(file_name, from_dir, to_dir):
     from_path = os.path.join(from_dir, file_name)
     to_path = os.path.join(to_dir, file_name)
-    shutil.copy(from_path, to_path)
+    shutil.copyfile(from_path, to_path)
     logger.info(f'copy from {from_path} to {to_path}')
 
 
