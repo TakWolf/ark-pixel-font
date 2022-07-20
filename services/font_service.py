@@ -58,47 +58,47 @@ def _draw_glyph(outlines, width_px, origin_y_px, dot_em_units, is_ttf):
 class _GlyphInfoPool:
     def __init__(self, font_config):
         self.font_config = font_config
-        self.design_data_info_map = {}
+        self.glyph_data_info_map = {}
         self.otf_glyph_info_map = {}
         self.ttf_glyph_info_map = {}
 
-    def _get_design_data_info(self, design_file_path):
-        if design_file_path in self.design_data_info_map:
-            design_data_info = self.design_data_info_map[design_file_path]
+    def _get_glyph_data_info(self, glyph_file_path):
+        if glyph_file_path in self.glyph_data_info_map:
+            glyph_data_info = self.glyph_data_info_map[glyph_file_path]
         else:
-            design_data, width, _ = glyph_util.load_design_data_from_png(design_file_path)
-            outlines = glyph_util.get_outlines_from_design_data(design_data, self.font_config.dot_em_units)
-            design_data_info = outlines, width
-            self.design_data_info_map[design_file_path] = design_data_info
-        return design_data_info
+            glyph_data, width, _ = glyph_util.load_glyph_data_from_png(glyph_file_path)
+            outlines = glyph_util.get_outlines_from_glyph_data(glyph_data, self.font_config.dot_em_units)
+            glyph_data_info = outlines, width
+            self.glyph_data_info_map[glyph_file_path] = glyph_data_info
+        return glyph_data_info
 
-    def _get_otf_glyph_info(self, design_file_path):
-        if design_file_path in self.otf_glyph_info_map:
-            glyph_info = self.otf_glyph_info_map[design_file_path]
+    def _get_otf_glyph_info(self, glyph_file_path):
+        if glyph_file_path in self.otf_glyph_info_map:
+            glyph_info = self.otf_glyph_info_map[glyph_file_path]
         else:
-            outlines, width_px = self._get_design_data_info(design_file_path)
+            outlines, width_px = self._get_glyph_data_info(glyph_file_path)
             glyph_info = _draw_glyph(outlines, width_px, self.font_config.origin_y_px, self.font_config.dot_em_units, False)
-            self.otf_glyph_info_map[design_file_path] = glyph_info
-            logger.info(f'draw otf glyph {design_file_path}')
+            self.otf_glyph_info_map[glyph_file_path] = glyph_info
+            logger.info(f'draw otf glyph {glyph_file_path}')
         return glyph_info
 
-    def _get_ttf_glyph_info(self, design_file_path):
-        if design_file_path in self.ttf_glyph_info_map:
-            glyph_info = self.ttf_glyph_info_map[design_file_path]
+    def _get_ttf_glyph_info(self, glyph_file_path):
+        if glyph_file_path in self.ttf_glyph_info_map:
+            glyph_info = self.ttf_glyph_info_map[glyph_file_path]
         else:
-            outlines, width_px = self._get_design_data_info(design_file_path)
+            outlines, width_px = self._get_glyph_data_info(glyph_file_path)
             glyph_info = _draw_glyph(outlines, width_px, self.font_config.origin_y_px, self.font_config.dot_em_units, True)
-            self.ttf_glyph_info_map[design_file_path] = glyph_info
-            logger.info(f'draw ttf glyph {design_file_path}')
+            self.ttf_glyph_info_map[glyph_file_path] = glyph_info
+            logger.info(f'draw ttf glyph {glyph_file_path}')
         return glyph_info
 
-    def build_glyph_info_map(self, design_file_paths, is_ttf):
+    def build_glyph_info_map(self, glyph_file_paths, is_ttf):
         glyph_info_map = {}
-        for code_point, design_file_path in design_file_paths.items():
+        for code_point, glyph_file_path in glyph_file_paths.items():
             if is_ttf:
-                glyph_info = self._get_ttf_glyph_info(design_file_path)
+                glyph_info = self._get_ttf_glyph_info(glyph_file_path)
             else:
-                glyph_info = self._get_otf_glyph_info(design_file_path)
+                glyph_info = self._get_otf_glyph_info(glyph_file_path)
             glyph_name = _get_glyph_name(code_point)
             glyph_info_map[glyph_name] = glyph_info
         return glyph_info_map
@@ -127,7 +127,7 @@ def _create_font_builder(name_strings, vertical_metrics, glyph_order, character_
     return builder
 
 
-def make_px_fonts(font_config, alphabet, design_file_paths_map, build_types=None):
+def make_px_fonts(font_config, alphabet, glyph_file_paths_map, build_types=None):
     if build_types is None:
         build_types = ['otf', 'woff2', 'ttf']
     vertical_metrics = font_config.get_vertical_metrics()
@@ -157,10 +157,10 @@ def make_px_fonts(font_config, alphabet, design_file_paths_map, build_types=None
             'licenseDescription': font_define.license_description,
             'licenseInfoURL': font_define.license_info_url,
         }
-        design_file_paths = design_file_paths_map[language_specific]
+        glyph_file_paths = glyph_file_paths_map[language_specific]
 
         if 'otf' in build_types or 'woff2' in build_types:
-            otf_glyph_info_map = glyph_info_pool.build_glyph_info_map(design_file_paths, False)
+            otf_glyph_info_map = glyph_info_pool.build_glyph_info_map(glyph_file_paths, False)
             otf_builder = _create_font_builder(name_strings, vertical_metrics, glyph_order, character_map, otf_glyph_info_map, False)
             if 'otf' in build_types:
                 otf_file_output_path = os.path.join(workspace_define.outputs_dir, font_config.get_output_font_file_name(language_specific, 'otf'))
@@ -172,7 +172,7 @@ def make_px_fonts(font_config, alphabet, design_file_paths_map, build_types=None
                 otf_builder.save(woff2_file_output_path)
                 logger.info(f'make {woff2_file_output_path}')
         if 'ttf' in build_types:
-            ttf_glyph_info_map = glyph_info_pool.build_glyph_info_map(design_file_paths, True)
+            ttf_glyph_info_map = glyph_info_pool.build_glyph_info_map(glyph_file_paths, True)
             ttf_builder = _create_font_builder(name_strings, vertical_metrics, glyph_order, character_map, ttf_glyph_info_map, True)
             ttf_file_output_path = os.path.join(workspace_define.outputs_dir, font_config.get_output_font_file_name(language_specific, 'ttf'))
             ttf_builder.save(ttf_file_output_path)

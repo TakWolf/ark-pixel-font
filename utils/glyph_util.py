@@ -1,34 +1,38 @@
 import png
 
 
-def load_design_data_from_png(file_path):
+def load_glyph_data_from_png(file_path):
     """
-    从本地加载字形设计数据，并二值化
+    从文件加载字形数据
+    字形源文件为 PNG 图片，读取后进行二值化处理
+    二值化仅使用颜色的 alpha 通道
     """
     width, height, bitmap, info = png.Reader(filename=file_path).read()
-    design_data = []
+    glyph_data = []
     for bitmap_row in bitmap:
-        design_data_row = []
+        glyph_data_row = []
         bitmap_row_len = len(bitmap_row)
         pixel_step = int(bitmap_row_len / width)
         for x in range(pixel_step - 1, bitmap_row_len, pixel_step):
             alpha = bitmap_row[x]
             if alpha > 127:
-                design_data_row.append(1)
+                glyph_data_row.append(1)
             else:
-                design_data_row.append(0)
-        design_data.append(design_data_row)
-    return design_data, width, height
+                glyph_data_row.append(0)
+        glyph_data.append(glyph_data_row)
+    return glyph_data, width, height
 
 
-def save_design_data_to_png(design_data, file_path):
+def save_glyph_data_to_png(glyph_data, file_path):
     """
-    保存字形设计数据，格式为 RGBA PNG 图片，颜色处为黑色
+    将字形数据保存到文件
+    字形源文件为 PNG 图片，格式为 RGBA
+    点阵位转换为不透明黑色，非点阵位转换为透明黑色
     """
     bitmap = []
-    for design_data_row in design_data:
+    for glyph_data_row in glyph_data:
         bitmap_row = []
-        for x in design_data_row:
+        for x in glyph_data_row:
             bitmap_row.append(0)
             bitmap_row.append(0)
             bitmap_row.append(0)
@@ -41,14 +45,14 @@ def save_design_data_to_png(design_data, file_path):
     image.save(file_path)
 
 
-def get_outlines_from_design_data(design_data, dot_size):
+def get_outlines_from_glyph_data(glyph_data, dot_size):
     """
-    轮廓算法，左上坐标系
+    将字形数据转换为轮廓数据，左上角原点坐标系
     """
     # 1. 相邻像素分组
     point_group_list = []
-    for y, design_data_row in enumerate(design_data):
-        for x, alpha in enumerate(design_data_row):
+    for y, glyph_data_row in enumerate(glyph_data):
+        for x, alpha in enumerate(glyph_data_row):
             if alpha > 0:
                 new_point_group = {(x, y)}
                 for i, point_group in enumerate(reversed(point_group_list)):
@@ -70,13 +74,13 @@ def get_outlines_from_design_data(design_data, dot_size):
                 (x * dot_size, (y + 1) * dot_size),
             ]
             # 一个像素有左右上下四个边，如果该边没有相邻像素，则该边线段有效
-            if x <= 0 or design_data[y][x - 1] <= 0:  # 左
+            if x <= 0 or glyph_data[y][x - 1] <= 0:  # 左
                 pending_line_segments.append([point_outline[3], point_outline[0]])
-            if x >= len(design_data[y]) - 1 or design_data[y][x + 1] <= 0:  # 右
+            if x >= len(glyph_data[y]) - 1 or glyph_data[y][x + 1] <= 0:  # 右
                 pending_line_segments.append([point_outline[1], point_outline[2]])
-            if y <= 0 or design_data[y - 1][x] <= 0:  # 上
+            if y <= 0 or glyph_data[y - 1][x] <= 0:  # 上
                 pending_line_segments.append([point_outline[0], point_outline[1]])
-            if y >= len(design_data) - 1 or design_data[y + 1][x] <= 0:  # 下
+            if y >= len(glyph_data) - 1 or glyph_data[y + 1][x] <= 0:  # 下
                 pending_line_segments.append([point_outline[2], point_outline[3]])
         # 连接所有的线段，注意绘制顺序
         solved_line_segments = []

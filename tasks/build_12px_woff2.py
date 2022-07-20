@@ -13,10 +13,10 @@ def main():
         os.makedirs(workspace_define.outputs_dir)
 
     font_config = configs.font_config_map[12]
-    design_service.classify_px_design_files(font_config)
-    design_service.verify_px_design_files(font_config)
-    alphabet, design_file_paths_map = design_service.collect_px_design_files(font_config)
-    font_service.make_px_fonts(font_config, alphabet, design_file_paths_map, ['woff2'])
+    design_service.classify_px_glyph_files(font_config)
+    design_service.verify_px_glyph_files(font_config)
+    alphabet, glyph_file_paths_map = design_service.collect_px_glyph_files(font_config)
+    font_service.make_px_fonts(font_config, alphabet, glyph_file_paths_map, ['woff2'])
     info_service.make_px_info_file(font_config, alphabet)
     info_service.make_px_alphabet_txt_file(font_config, alphabet)
 

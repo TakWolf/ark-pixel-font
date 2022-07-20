@@ -16,10 +16,10 @@ def main():
     os.makedirs(workspace_define.releases_dir)
 
     for font_config in configs.font_configs:
-        design_service.classify_px_design_files(font_config)
-        design_service.verify_px_design_files(font_config)
-        alphabet, design_file_paths_map = design_service.collect_px_design_files(font_config)
-        font_service.make_px_fonts(font_config, alphabet, design_file_paths_map)
+        design_service.classify_px_glyph_files(font_config)
+        design_service.verify_px_glyph_files(font_config)
+        alphabet, glyph_file_paths_map = design_service.collect_px_glyph_files(font_config)
+        font_service.make_px_fonts(font_config, alphabet, glyph_file_paths_map)
         publish_service.make_px_release_zips(font_config)
         info_service.make_px_info_file(font_config, alphabet)
         info_service.make_px_preview_image_file(font_config)
