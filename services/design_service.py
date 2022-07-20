@@ -64,7 +64,7 @@ def classify_px_glyph_files(font_config):
 
 def verify_px_glyph_files(font_config):
     """
-    校验并格式化设计文件
+    校验并格式化字形源文件
     """
     px_dir = os.path.join(workspace_define.glyphs_dir, str(font_config.px))
     for glyph_file_dir, _, glyph_file_names in os.walk(px_dir):
@@ -105,7 +105,7 @@ def verify_px_glyph_files(font_config):
 
 def collect_px_glyph_files(font_config):
     """
-    收集可用字母表，生成设计文件映射表
+    收集可用字母表，生成字形源文件映射表
     """
     # 遍历文件并分组
     alphabet = set()
@@ -136,7 +136,7 @@ def collect_px_glyph_files(font_config):
     # 字母表排序
     alphabet = list(alphabet)
     alphabet.sort(key=lambda c: ord(c))
-    # 合并设计文件路径组
+    # 合并字形源文件路径组
     glyph_file_paths_map = {}
     for language_specific in configs.language_specifics:
         glyph_file_paths = dict(default_glyph_file_paths)

@@ -21,7 +21,7 @@ def _get_glyph_name(code_point):
 
 def _convert_point_to_open_type(point, origin_y):
     """
-    转换左上角坐标系为 OpenType 坐标系
+    转换左上角原点坐标系为 OpenType 坐标系
     """
     x, y = point
     y = origin_y - y

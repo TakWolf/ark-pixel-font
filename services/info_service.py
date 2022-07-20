@@ -57,7 +57,7 @@ def _get_big5_char_count_infos(alphabet):
     return [
         ('常用汉字', count_map.get('level-1', 0), big5_util.alphabet_level_1_count),
         ('次常用汉字', count_map.get('level-2', 0), big5_util.alphabet_level_2_count),
-        ('标点符号、希腊字母、特殊符号，九个计量用汉字', count_map.get('other', 0), big5_util.alphabet_other_count),
+        ('其他字符', count_map.get('other', 0), big5_util.alphabet_other_count),
         ('总计', count_map.get('total', 0), big5_util.alphabet_count),
     ]
 
@@ -87,7 +87,7 @@ def _write_unicode_char_count_infos_table(file, infos):
     file.write('| 区块范围 | 区块名称 | 区块含义 | 覆盖数 | 覆盖率 |\n')
     file.write('|---|---|---|---:|---:|\n')
     for unicode_block, count in infos:
-        code_point_range = f'{unicode_block.begin:04X}~{unicode_block.end:04X}'
+        code_point_range = f'{unicode_block.begin:04X} ~ {unicode_block.end:04X}'
         if unicode_block.char_count > 0:
             progress = count / unicode_block.char_count
         else:
