@@ -81,26 +81,24 @@ def verify_px_glyph_files(font_config):
                 code_point = int(uni_hex_name, 16)
                 c = chr(code_point)
 
-            # 校验宽度
-            east_asian_width_status = unicodedata.east_asian_width(c) if c else 'N'
-            if east_asian_width_status == 'H' or east_asian_width_status == 'Na':
-                assert width == font_config.px / 2, glyph_file_path
-            elif east_asian_width_status == 'F' or east_asian_width_status == 'W':
-                assert width == font_config.px, glyph_file_path
-            else:  # 'A' or 'N'
-                assert width == font_config.px / 2 or width == font_config.px, glyph_file_path
-
-            # 校验高度
             assert height == font_config.px, glyph_file_path
 
-            # 校验间距
+            east_asian_width = unicodedata.east_asian_width(c) if c else 'F'
+            # Halfwidth or Narrow
+            if east_asian_width == 'H' or east_asian_width == 'Na':
+                assert width == font_config.px / 2, glyph_file_path
+            # Fullwidth or Wide
+            elif east_asian_width == 'F' or east_asian_width == 'W':
+                assert width == font_config.px, glyph_file_path
+            else:  # A/Ambiguous or N/Neutral
+                pass
+
             if 0x4E00 <= code_point <= 0x9FFF:
                 for alpha in glyph_data[0]:
                     assert alpha == 0, glyph_file_path
                 for i in range(0, len(glyph_data)):
                     assert glyph_data[i][-1] == 0, glyph_file_path
 
-            # 格式化设计文件
             glyph_util.save_glyph_data_to_png(glyph_data, glyph_file_path)
             logger.info(f'format glyph file {glyph_file_path}')
 
