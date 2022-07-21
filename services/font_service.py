@@ -6,7 +6,7 @@ from fontTools.pens.t2CharStringPen import T2CharStringPen
 from fontTools.pens.ttGlyphPen import TTGlyphPen
 
 import configs
-from configs import font_define, workspace_define
+from configs import workspace_define
 from utils import glyph_util
 
 logger = logging.getLogger('font-service')
@@ -56,8 +56,9 @@ def _draw_glyph(outlines, width_px, origin_y_px, dot_em_units, is_ttf):
 
 
 class _GlyphInfoPool:
-    def __init__(self, font_config):
-        self.font_config = font_config
+    def __init__(self, origin_y_px, dot_em_units):
+        self.origin_y_px = origin_y_px
+        self.dot_em_units = dot_em_units
         self.glyph_data_info_map = {}
         self.otf_glyph_info_map = {}
         self.ttf_glyph_info_map = {}
@@ -67,7 +68,7 @@ class _GlyphInfoPool:
             glyph_data_info = self.glyph_data_info_map[glyph_file_path]
         else:
             glyph_data, width, _ = glyph_util.load_glyph_data_from_png(glyph_file_path)
-            outlines = glyph_util.get_outlines_from_glyph_data(glyph_data, self.font_config.dot_em_units)
+            outlines = glyph_util.get_outlines_from_glyph_data(glyph_data, self.dot_em_units)
             glyph_data_info = outlines, width
             self.glyph_data_info_map[glyph_file_path] = glyph_data_info
         return glyph_data_info
@@ -77,7 +78,7 @@ class _GlyphInfoPool:
             glyph_info = self.otf_glyph_info_map[glyph_file_path]
         else:
             outlines, width_px = self._get_glyph_data_info(glyph_file_path)
-            glyph_info = _draw_glyph(outlines, width_px, self.font_config.origin_y_px, self.font_config.dot_em_units, False)
+            glyph_info = _draw_glyph(outlines, width_px, self.origin_y_px, self.dot_em_units, False)
             self.otf_glyph_info_map[glyph_file_path] = glyph_info
             logger.info(f'draw otf glyph {glyph_file_path}')
         return glyph_info
@@ -87,7 +88,7 @@ class _GlyphInfoPool:
             glyph_info = self.ttf_glyph_info_map[glyph_file_path]
         else:
             outlines, width_px = self._get_glyph_data_info(glyph_file_path)
-            glyph_info = _draw_glyph(outlines, width_px, self.font_config.origin_y_px, self.font_config.dot_em_units, True)
+            glyph_info = _draw_glyph(outlines, width_px, self.origin_y_px, self.dot_em_units, True)
             self.ttf_glyph_info_map[glyph_file_path] = glyph_info
             logger.info(f'draw ttf glyph {glyph_file_path}')
         return glyph_info
@@ -140,7 +141,7 @@ def make_px_fonts(font_config, alphabet, glyph_file_paths_map, font_formats=None
         glyph_name = _get_glyph_name(code_point)
         glyph_order.append(glyph_name)
         character_map[code_point] = glyph_name
-    glyph_info_pool = _GlyphInfoPool(font_config)
+    glyph_info_pool = _GlyphInfoPool(font_config.origin_y_px, font_config.dot_em_units)
     for language_specific in configs.language_specifics:
         name_strings = font_config.get_name_strings(language_specific)
         glyph_file_paths = glyph_file_paths_map[language_specific]
