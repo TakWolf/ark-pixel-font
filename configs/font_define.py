@@ -50,6 +50,9 @@ class FontConfig:
     def get_units_per_em(self):
         return self.px * self.dot_em_units
 
+    def get_origin_y(self):
+        return self.origin_y_px * self.dot_em_units
+
     def get_vertical_metrics(self):
         ascent = self.origin_y_px * self.dot_em_units
         descent = (self.origin_y_px - self.px) * self.dot_em_units
