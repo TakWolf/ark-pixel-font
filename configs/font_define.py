@@ -51,13 +51,15 @@ class FontConfig:
             'licenseInfoURL': license_info_url,
         }
 
+    def get_units_per_em(self):
+        return self.px * self.dot_em_units
+
     def get_vertical_metrics(self):
-        units_per_em = self.px * self.dot_em_units
         ascent = self.origin_y_px * self.dot_em_units
         descent = (self.origin_y_px - self.px) * self.dot_em_units
         x_height = self.x_height_px * self.dot_em_units
         cap_height = self.cap_height_px * self.dot_em_units
-        return units_per_em, ascent, descent, x_height, cap_height
+        return ascent, descent, x_height, cap_height
 
     def get_font_file_name(self, language_specific, font_format):
         return f'{output_name}-{self.px}px-{language_specific}.{font_format}'
