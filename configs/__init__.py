@@ -25,6 +25,8 @@ language_specifics = [
     'ko',     # 朝鲜语
 ]
 
+font_formats = ['otf', 'woff2', 'ttf']
+
 unidata_db = UnidataDB(os.path.join(workspace_define.unidata_dir, 'Blocks.txt'))
 
 template_env = Environment(loader=FileSystemLoader(workspace_define.templates_dir))

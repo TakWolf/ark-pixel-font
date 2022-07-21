@@ -13,7 +13,7 @@ logger = logging.getLogger('publish-service')
 
 
 def make_px_release_zips(font_config):
-    for font_format in ['otf', 'woff2', 'ttf']:
+    for font_format in configs.font_formats:
         zip_file_output_path = os.path.join(workspace_define.releases_dir, font_config.get_release_zip_file_name(font_format))
         with zipfile.ZipFile(zip_file_output_path, 'w') as zip_file:
             for language_specific in configs.language_specifics:
