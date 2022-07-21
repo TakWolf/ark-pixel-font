@@ -14,14 +14,14 @@ logger = logging.getLogger('publish-service')
 
 def make_px_release_zips(font_config):
     for font_format in configs.font_formats:
-        zip_file_output_path = os.path.join(workspace_define.releases_dir, font_config.get_release_zip_file_name(font_format))
-        with zipfile.ZipFile(zip_file_output_path, 'w') as zip_file:
+        zip_file_path = os.path.join(workspace_define.releases_dir, font_config.get_release_zip_file_name(font_format))
+        with zipfile.ZipFile(zip_file_path, 'w') as zip_file:
             for language_specific in configs.language_specifics:
                 font_file_name = font_config.get_font_file_name(language_specific, font_format)
                 font_file_path = os.path.join(workspace_define.outputs_dir, font_file_name)
                 zip_file.write(font_file_path, font_file_name)
             zip_file.write('LICENSE-OFL', 'OFL.txt')
-        logger.info(f'make {zip_file_output_path}')
+        logger.info(f'make {zip_file_path}')
 
 
 def _copy_file(file_name, from_dir, to_dir):

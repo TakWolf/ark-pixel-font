@@ -106,8 +106,8 @@ def _write_locale_char_count_infos_table(file, infos):
 
 
 def make_px_info_file(font_config, alphabet):
-    file_output_path = os.path.join(workspace_define.outputs_dir, font_config.info_file_name)
-    with open(file_output_path, 'w', encoding='utf-8') as file:
+    info_file_path = os.path.join(workspace_define.outputs_dir, font_config.info_file_name)
+    with open(info_file_path, 'w', encoding='utf-8') as file:
         file.write(f'# Ark Pixel {font_config.px}px\n')
         file.write('\n')
         file.write('## 基本信息\n')
@@ -147,14 +147,14 @@ def make_px_info_file(font_config, alphabet):
         file.write('韩语参考字符集。统计范围不包含 ASCII。\n')
         file.write('\n')
         _write_locale_char_count_infos_table(file, _get_ks_x_1001_char_count_infos(alphabet))
-    logger.info(f'make {file_output_path}')
+    logger.info(f'make {info_file_path}')
 
 
 def make_px_preview_image_file(font_config):
     image_fonts = {}
     for language_specific in configs.language_specifics:
-        otf_file_path = os.path.join(workspace_define.outputs_dir, font_config.get_font_file_name(language_specific, 'otf'))
-        image_fonts[language_specific] = ImageFont.truetype(otf_file_path, font_config.px)
+        font_file_path = os.path.join(workspace_define.outputs_dir, font_config.get_font_file_name(language_specific, 'otf'))
+        image_fonts[language_specific] = ImageFont.truetype(font_file_path, font_config.px)
 
     image = Image.new('RGBA', (font_config.px * 35, font_config.px * 17), (255, 255, 255))
     ImageDraw.Draw(image).text((font_config.px, font_config.px), '方舟像素字体 / Ark Pixel Font', fill=(0, 0, 0), font=image_fonts['zh_cn'])
@@ -167,16 +167,16 @@ def make_px_preview_image_file(font_config):
     ImageDraw.Draw(image).text((font_config.px, font_config.px * 15), '★☆☺☹♠♡♢♣♤♥♦♧☀☼♩♪♫♬☂☁⚓✈⚔☯', fill=(0, 0, 0), font=image_fonts['latin'])
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
-    file_output_path = os.path.join(workspace_define.outputs_dir, font_config.preview_image_file_name)
-    image.save(file_output_path)
-    logger.info(f'make {file_output_path}')
+    image_file_path = os.path.join(workspace_define.outputs_dir, font_config.preview_image_file_name)
+    image.save(image_file_path)
+    logger.info(f'make {image_file_path}')
 
 
 def make_px_alphabet_txt_file(font_config, alphabet):
-    file_output_path = os.path.join(workspace_define.outputs_dir, font_config.alphabet_txt_file_name)
-    with open(file_output_path, 'w', encoding='utf-8') as file:
+    txt_file_path = os.path.join(workspace_define.outputs_dir, font_config.alphabet_txt_file_name)
+    with open(txt_file_path, 'w', encoding='utf-8') as file:
         file.write(''.join(alphabet))
-    logger.info(f'make {file_output_path}')
+    logger.info(f'make {txt_file_path}')
 
 
 def make_px_alphabet_html_file(font_config, alphabet):
@@ -187,10 +187,10 @@ def make_px_alphabet_html_file(font_config, alphabet):
         alphabet=''.join([c for c in alphabet if ord(c) >= 128]),
     )
     html = minify_html.minify(html, minify_css=True, minify_js=True)
-    file_output_path = os.path.join(workspace_define.outputs_dir, font_config.alphabet_html_file_name)
-    with open(file_output_path, 'w', encoding='utf-8') as file:
+    html_file_path = os.path.join(workspace_define.outputs_dir, font_config.alphabet_html_file_name)
+    with open(html_file_path, 'w', encoding='utf-8') as file:
         file.write(html)
-    logger.info(f'make {file_output_path}')
+    logger.info(f'make {html_file_path}')
 
 
 def _handle_demo_html_element(soup, element, alphabet):
@@ -241,10 +241,10 @@ def make_px_demo_html_file(font_config, alphabet):
         _handle_demo_html_element(soup, element, alphabet)
     html = str(soup)
     html = minify_html.minify(html, minify_css=True, minify_js=True)
-    file_output_path = os.path.join(workspace_define.outputs_dir, font_config.demo_html_file_name)
-    with open(file_output_path, 'w', encoding='utf-8') as file:
+    html_file_path = os.path.join(workspace_define.outputs_dir, font_config.demo_html_file_name)
+    with open(html_file_path, 'w', encoding='utf-8') as file:
         file.write(html)
-    logger.info(f'make {file_output_path}')
+    logger.info(f'make {html_file_path}')
 
 
 def make_index_html_file():
@@ -254,10 +254,10 @@ def make_index_html_file():
         language_specifics=configs.language_specifics,
     )
     html = minify_html.minify(html, minify_css=True, minify_js=True)
-    file_output_path = os.path.join(workspace_define.outputs_dir, 'index.html')
-    with open(file_output_path, 'w', encoding='utf-8') as file:
+    html_file_path = os.path.join(workspace_define.outputs_dir, 'index.html')
+    with open(html_file_path, 'w', encoding='utf-8') as file:
         file.write(html)
-    logger.info(f'make {file_output_path}')
+    logger.info(f'make {html_file_path}')
 
 
 def make_playground_html_file():
@@ -267,23 +267,23 @@ def make_playground_html_file():
         language_specifics=configs.language_specifics,
     )
     html = minify_html.minify(html, minify_css=True, minify_js=True)
-    file_output_path = os.path.join(workspace_define.outputs_dir, 'playground.html')
-    with open(file_output_path, 'w', encoding='utf-8') as file:
+    html_file_path = os.path.join(workspace_define.outputs_dir, 'playground.html')
+    with open(html_file_path, 'w', encoding='utf-8') as file:
         file.write(html)
-    logger.info(f'make {file_output_path}')
+    logger.info(f'make {html_file_path}')
 
 
 def _load_alphabet_from_outputs(px):
-    alphabet_txt_file_path = os.path.join(workspace_define.outputs_dir, configs.font_config_map[px].alphabet_txt_file_name)
-    with open(alphabet_txt_file_path, 'r', encoding='utf-8') as file:
+    txt_file_path = os.path.join(workspace_define.outputs_dir, configs.font_config_map[px].alphabet_txt_file_name)
+    with open(txt_file_path, 'r', encoding='utf-8') as file:
         text = file.read()
     alphabet = list(text)
     return alphabet
 
 
 def _load_image_font_from_outputs(px, language_specific, size):
-    otf_file_path = os.path.join(workspace_define.outputs_dir, configs.font_config_map[px].get_font_file_name(language_specific, 'otf'))
-    return ImageFont.truetype(otf_file_path, size)
+    font_file_path = os.path.join(workspace_define.outputs_dir, configs.font_config_map[px].get_font_file_name(language_specific, 'otf'))
+    return ImageFont.truetype(font_file_path, size)
 
 
 def _image_draw_text_background(image, alphabet, step, box_size, text_color, font):
@@ -334,9 +334,9 @@ def make_github_banner():
     _image_draw_text_with_shadow(image, ((image.width - 6 * 48) / 2, 40 + 18 * 11), '★☆☺☹♠♡♢♣♤♥♦♧☀☼♩♪♫♬☂☁⚓✈⚔☯', text_color, shadow_color, image_font_12_latin)
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
-    file_output_path = os.path.join(workspace_define.outputs_dir, 'github-banner.png')
-    image.save(file_output_path)
-    logger.info(f'make {file_output_path}')
+    image_file_path = os.path.join(workspace_define.outputs_dir, 'github-banner.png')
+    image.save(image_file_path)
+    logger.info(f'make {image_file_path}')
 
 
 def make_itch_io_banner():
@@ -354,9 +354,9 @@ def make_itch_io_banner():
     _image_draw_text_with_shadow(image, ((image.width - 12 * 29) / 2, 16 + 12 * 5), '★ 开源的泛中日韩像素字体 ★', text_color, shadow_color, image_font_12_zh_cn)
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
-    file_output_path = os.path.join(workspace_define.outputs_dir, 'itch-io-banner.png')
-    image.save(file_output_path)
-    logger.info(f'make {file_output_path}')
+    image_file_path = os.path.join(workspace_define.outputs_dir, 'itch-io-banner.png')
+    image.save(image_file_path)
+    logger.info(f'make {image_file_path}')
 
 
 def make_itch_io_background():
@@ -367,9 +367,9 @@ def make_itch_io_background():
     _image_draw_text_background(image, alphabet_12, 1, 14, (30, 30, 30), image_font_12_zh_cn)
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
-    file_output_path = os.path.join(workspace_define.outputs_dir, 'itch-io-background.png')
-    image.save(file_output_path)
-    logger.info(f'make {file_output_path}')
+    image_file_path = os.path.join(workspace_define.outputs_dir, 'itch-io-background.png')
+    image.save(image_file_path)
+    logger.info(f'make {image_file_path}')
 
 
 def make_itch_io_cover():
@@ -390,9 +390,9 @@ def make_itch_io_cover():
     _image_draw_text_with_shadow(image, ((image.width - 6 * 24) / 2, 12 * 17), '★☆☺☹♠♡♢♣♤♥♦♧\n☀☼♩♪♫♬☂☁⚓✈⚔☯', text_color, shadow_color, image_font_12_latin)
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
-    file_output_path = os.path.join(workspace_define.outputs_dir, 'itch-io-cover.png')
-    image.save(file_output_path)
-    logger.info(f'make {file_output_path}')
+    image_file_path = os.path.join(workspace_define.outputs_dir, 'itch-io-cover.png')
+    image.save(image_file_path)
+    logger.info(f'make {image_file_path}')
 
 
 def make_afdian_cover():
@@ -415,6 +415,6 @@ def make_afdian_cover():
     _image_draw_text_with_shadow(image, ((image.width - 6 * 24) / 2, 12 * 23), '★☆☺☹♠♡♢♣♤♥♦♧\n☀☼♩♪♫♬☂☁⚓✈⚔☯', text_color, shadow_color, image_font_12_latin)
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
-    file_output_path = os.path.join(workspace_define.outputs_dir, 'afdian-cover.png')
-    image.save(file_output_path)
-    logger.info(f'make {file_output_path}')
+    image_file_path = os.path.join(workspace_define.outputs_dir, 'afdian-cover.png')
+    image.save(image_file_path)
+    logger.info(f'make {image_file_path}')
