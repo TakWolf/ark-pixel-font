@@ -114,7 +114,9 @@ def _create_font_builder(name_strings, units_per_em, vertical_metrics, glyph_ord
     return builder
 
 
-def make_px_fonts(font_config, alphabet, glyph_file_paths_map, font_formats=None):
+def make_px_fonts(font_config, alphabet, glyph_file_paths_map, language_specifics=None, font_formats=None):
+    if language_specifics is None:
+        language_specifics = configs.language_specifics
     if font_formats is None:
         font_formats = configs.font_formats
 
@@ -129,7 +131,7 @@ def make_px_fonts(font_config, alphabet, glyph_file_paths_map, font_formats=None
         character_map[code_point] = glyph_name
     glyph_info_builder = GlyphInfoBuilder(font_config.get_origin_y(), font_config.dot_em_units)
 
-    for language_specific in configs.language_specifics:
+    for language_specific in language_specifics:
         name_strings = font_config.get_name_strings(language_specific)
         glyph_file_paths = glyph_file_paths_map[language_specific]
 
