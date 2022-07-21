@@ -107,10 +107,11 @@ def collect_px_glyph_files(font_config):
     """
     收集可用字母表，生成字形源文件映射表
     """
-    # 遍历文件并分组
-    alphabet = set()
-    default_glyph_file_paths = {}
-    special_glyph_file_paths_map = {}
+    cellar_alphabet = set()
+    cellar_glyph_file_paths_map = {'default': {}}
+    for language_specific in configs.language_specifics:
+        cellar_glyph_file_paths_map[language_specific] = {}
+
     px_dir = os.path.join(workspace_define.glyphs_dir, str(font_config.px))
     for glyph_file_dir, _, glyph_file_names in os.walk(px_dir):
         for glyph_file_name in glyph_file_names:
@@ -119,28 +120,23 @@ def collect_px_glyph_files(font_config):
             glyph_file_path = os.path.join(glyph_file_dir, glyph_file_name)
             uni_hex_name, language_specifics = _parse_glyph_file_name(glyph_file_name)
             if uni_hex_name == 'notdef':
-                default_glyph_file_paths['.notdef'] = glyph_file_path
+                cellar_glyph_file_paths_map['default']['.notdef'] = glyph_file_path
             else:
                 code_point = int(uni_hex_name, 16)
                 if len(language_specifics) > 0:
                     for language_specific in language_specifics:
-                        if language_specific in special_glyph_file_paths_map:
-                            special_glyph_file_paths = special_glyph_file_paths_map[language_specific]
-                        else:
-                            special_glyph_file_paths = {}
-                            special_glyph_file_paths_map[language_specific] = special_glyph_file_paths
-                        special_glyph_file_paths[code_point] = glyph_file_path
+                        cellar_glyph_file_paths_map[language_specific][code_point] = glyph_file_path
                 else:
-                    default_glyph_file_paths[code_point] = glyph_file_path
-                    alphabet.add(chr(code_point))
-    # 字母表排序
-    alphabet = list(alphabet)
+                    cellar_glyph_file_paths_map['default'][code_point] = glyph_file_path
+                    cellar_alphabet.add(chr(code_point))
+
+    alphabet = list(cellar_alphabet)
     alphabet.sort(key=lambda c: ord(c))
-    # 合并字形源文件路径组
+
     glyph_file_paths_map = {}
     for language_specific in configs.language_specifics:
-        glyph_file_paths = dict(default_glyph_file_paths)
-        if language_specific in special_glyph_file_paths_map:
-            glyph_file_paths.update(special_glyph_file_paths_map[language_specific])
+        glyph_file_paths = dict(cellar_glyph_file_paths_map['default'])
+        glyph_file_paths.update(cellar_glyph_file_paths_map[language_specific])
         glyph_file_paths_map[language_specific] = glyph_file_paths
+
     return alphabet, glyph_file_paths_map
