@@ -108,13 +108,12 @@ def _write_locale_char_count_infos_table(file, infos):
 def make_px_info_file(font_config, alphabet):
     file_output_path = os.path.join(workspace_define.outputs_dir, font_config.info_file_name)
     with open(file_output_path, 'w', encoding='utf-8') as file:
-        file.write(f'# {font_config.display_name}\n')
+        file.write(f'# Ark Pixel {font_config.px}px\n')
         file.write('\n')
         file.write('## 基本信息\n')
         file.write('\n')
         file.write('| 属性 | 值 |\n')
         file.write('|---|---|\n')
-        file.write(f'| 字体名称 | {font_config.display_name} |\n')
         file.write(f'| 像素尺寸 | {font_config.px}px |\n')
         file.write(f'| 版本号 | {font_define.version} |\n')
         file.write(f'| 字符总数 | {len(alphabet)} |\n')
