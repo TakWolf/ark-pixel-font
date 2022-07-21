@@ -154,7 +154,7 @@ def make_px_info_file(font_config, alphabet):
 def make_px_preview_image_file(font_config):
     image_fonts = {}
     for language_specific in configs.language_specifics:
-        otf_file_path = os.path.join(workspace_define.outputs_dir, font_config.get_output_font_file_name(language_specific, 'otf'))
+        otf_file_path = os.path.join(workspace_define.outputs_dir, font_config.get_font_file_name(language_specific, 'otf'))
         image_fonts[language_specific] = ImageFont.truetype(otf_file_path, font_config.px)
 
     image = Image.new('RGBA', (font_config.px * 35, font_config.px * 17), (255, 255, 255))
@@ -283,7 +283,7 @@ def _load_alphabet_from_outputs(px):
 
 
 def _load_image_font_from_outputs(px, language_specific, size):
-    otf_file_path = os.path.join(workspace_define.outputs_dir, configs.font_config_map[px].get_output_font_file_name(language_specific, 'otf'))
+    otf_file_path = os.path.join(workspace_define.outputs_dir, configs.font_config_map[px].get_font_file_name(language_specific, 'otf'))
     return ImageFont.truetype(otf_file_path, size)
 
 

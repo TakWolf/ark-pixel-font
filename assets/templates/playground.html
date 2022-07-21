@@ -13,7 +13,7 @@
             {% for language_specific in language_specifics %}
                 @font-face {
                     font-family: {{ font_config.get_output_unique_name(language_specific) }};
-                    src: url("{{ font_config.get_output_font_file_name(language_specific, 'woff2') }}");
+                    src: url("{{ font_config.get_font_file_name(language_specific, 'woff2') }}");
                 }
             {% endfor %}
         {% endfor %}

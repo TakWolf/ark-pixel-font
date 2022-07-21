@@ -21,7 +21,7 @@
                 {% with font_family = font_config.get_output_unique_name(language_specific) %}
                     @font-face {
                         font-family: {{ font_family }};
-                        src: url("{{ font_config.get_output_font_file_name(language_specific, 'woff2') }}");
+                        src: url("{{ font_config.get_font_file_name(language_specific, 'woff2') }}");
                     }
                     .app-font-{{ font_config.px }}px .app-font-{{ language_specific }} {
                         font-family: {{ font_family }}, sans-serif;

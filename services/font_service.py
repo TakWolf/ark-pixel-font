@@ -163,17 +163,17 @@ def make_px_fonts(font_config, alphabet, glyph_file_paths_map, font_formats=None
             otf_glyph_info_map = glyph_info_pool.build_glyph_info_map(glyph_file_paths, False)
             otf_builder = _create_font_builder(name_strings, vertical_metrics, glyph_order, character_map, otf_glyph_info_map, False)
             if 'otf' in font_formats:
-                otf_file_output_path = os.path.join(workspace_define.outputs_dir, font_config.get_output_font_file_name(language_specific, 'otf'))
+                otf_file_output_path = os.path.join(workspace_define.outputs_dir, font_config.get_font_file_name(language_specific, 'otf'))
                 otf_builder.save(otf_file_output_path)
                 logger.info(f'make {otf_file_output_path}')
             if 'woff2' in font_formats:
                 otf_builder.font.flavor = 'woff2'
-                woff2_file_output_path = os.path.join(workspace_define.outputs_dir, font_config.get_output_font_file_name(language_specific, 'woff2'))
+                woff2_file_output_path = os.path.join(workspace_define.outputs_dir, font_config.get_font_file_name(language_specific, 'woff2'))
                 otf_builder.save(woff2_file_output_path)
                 logger.info(f'make {woff2_file_output_path}')
         if 'ttf' in font_formats:
             ttf_glyph_info_map = glyph_info_pool.build_glyph_info_map(glyph_file_paths, True)
             ttf_builder = _create_font_builder(name_strings, vertical_metrics, glyph_order, character_map, ttf_glyph_info_map, True)
-            ttf_file_output_path = os.path.join(workspace_define.outputs_dir, font_config.get_output_font_file_name(language_specific, 'ttf'))
+            ttf_file_output_path = os.path.join(workspace_define.outputs_dir, font_config.get_font_file_name(language_specific, 'ttf'))
             ttf_builder.save(ttf_file_output_path)
             logger.info(f'make {ttf_file_output_path}')
