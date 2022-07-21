@@ -7,7 +7,7 @@ style_name = 'Regular'
 version = f'{time.strftime("%Y.%m.%d")}'
 copyright_string = "Copyright (c) 2021, TakWolf (https://ark-pixel-font.takwolf.com), with Reserved Font Name 'Ark Pixel'."
 designer = 'TakWolf'
-description = 'Ark pixel font.'
+description = 'Open source Pan-CJK pixel font.'
 vendor_url = 'https://ark-pixel-font.takwolf.com'
 designer_url = 'https://takwolf.com'
 license_description = 'This Font Software is licensed under the SIL Open Font License, Version 1.1.'
@@ -32,6 +32,25 @@ class FontConfig:
         self.alphabet_html_file_name = f'alphabet-{px}px.html'
         self.demo_html_file_name = f'demo-{px}px.html'
 
+    def get_name_strings(self, language_specific):
+        output_display_name = f'{self.display_name} {language_specific}'
+        output_unique_name = f'{self.unique_name}-{language_specific}-{style_name}'
+        return {
+            'copyright': copyright_string,
+            'familyName': output_display_name,
+            'styleName': style_name,
+            'uniqueFontIdentifier': f'{output_unique_name};{version}',
+            'fullName': output_display_name,
+            'version': version,
+            'psName': output_unique_name,
+            'designer': designer,
+            'description': description,
+            'vendorURL': vendor_url,
+            'designerURL': designer_url,
+            'licenseDescription': license_description,
+            'licenseInfoURL': license_info_url,
+        }
+
     def get_vertical_metrics(self):
         units_per_em = self.px * self.dot_em_units
         ascent = self.origin_y_px * self.dot_em_units
@@ -39,12 +58,6 @@ class FontConfig:
         x_height = self.x_height_px * self.dot_em_units
         cap_height = self.cap_height_px * self.dot_em_units
         return units_per_em, ascent, descent, x_height, cap_height
-
-    def get_output_display_name(self, language_specific):
-        return f'{self.display_name} {language_specific}'
-
-    def get_output_unique_name(self, language_specific):
-        return f'{self.unique_name}-{language_specific}'
 
     def get_font_file_name(self, language_specific, font_format):
         return f'{output_name}-{self.px}px-{language_specific}.{font_format}'

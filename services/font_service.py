@@ -140,23 +140,7 @@ def make_px_fonts(font_config, alphabet, glyph_file_paths_map, font_formats=None
         character_map[code_point] = glyph_name
     glyph_info_pool = _GlyphInfoPool(font_config)
     for language_specific in configs.language_specifics:
-        output_display_name = font_config.get_output_display_name(language_specific)
-        output_unique_name = font_config.get_output_unique_name(language_specific)
-        name_strings = {
-            'copyright': font_define.copyright_string,
-            'familyName': output_display_name,
-            'styleName': font_define.style_name,
-            'uniqueFontIdentifier': f'{output_unique_name}-{font_define.style_name};{font_define.version}',
-            'fullName': output_display_name,
-            'version': font_define.version,
-            'psName': f'{output_unique_name}-{font_define.style_name}',
-            'designer': font_define.designer,
-            'description': font_define.description,
-            'vendorURL': font_define.vendor_url,
-            'designerURL': font_define.designer_url,
-            'licenseDescription': font_define.license_description,
-            'licenseInfoURL': font_define.license_info_url,
-        }
+        name_strings = font_config.get_name_strings(language_specific)
         glyph_file_paths = glyph_file_paths_map[language_specific]
 
         if 'otf' in font_formats or 'woff2' in font_formats:
