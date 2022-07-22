@@ -157,28 +157,6 @@ def make_alphabet_txt_file(font_config, alphabet):
     logger.info(f'make {txt_file_path}')
 
 
-def make_preview_image_file(font_config):
-    image_fonts = {}
-    for language_specific in configs.language_specifics:
-        font_file_path = os.path.join(workspace_define.outputs_dir, font_config.get_font_file_name(language_specific, 'otf'))
-        image_fonts[language_specific] = ImageFont.truetype(font_file_path, font_config.px)
-
-    image = Image.new('RGBA', (font_config.px * 35, font_config.px * 17), (255, 255, 255))
-    ImageDraw.Draw(image).text((font_config.px, font_config.px), '方舟像素字体 / Ark Pixel Font', fill=(0, 0, 0), font=image_fonts['zh_cn'])
-    ImageDraw.Draw(image).text((font_config.px, font_config.px * 3), '我们每天度过的称之为日常的生活，其实是一个个奇迹的连续也说不定。', fill=(0, 0, 0), font=image_fonts['zh_cn'])
-    ImageDraw.Draw(image).text((font_config.px, font_config.px * 5), '我們每天度過的稱之為日常的生活，其實是一個個奇跡的連續也說不定。', fill=(0, 0, 0), font=image_fonts['zh_tr'])
-    ImageDraw.Draw(image).text((font_config.px, font_config.px * 7), '日々、私たちが過ごしている日常は、実は奇跡の連続なのかもしれない。', fill=(0, 0, 0), font=image_fonts['ja'])
-    ImageDraw.Draw(image).text((font_config.px, font_config.px * 9), 'THE QUICK BROWN FOX JUMPS OVER A LAZY DOG.', fill=(0, 0, 0), font=image_fonts['latin'])
-    ImageDraw.Draw(image).text((font_config.px, font_config.px * 11), 'the quick brown fox jumps over a lazy dog.', fill=(0, 0, 0), font=image_fonts['latin'])
-    ImageDraw.Draw(image).text((font_config.px, font_config.px * 13), '0123456789', fill=(0, 0, 0), font=image_fonts['latin'])
-    ImageDraw.Draw(image).text((font_config.px, font_config.px * 15), '★☆☺☹♠♡♢♣♤♥♦♧☀☼♩♪♫♬☂☁⚓✈⚔☯', fill=(0, 0, 0), font=image_fonts['latin'])
-    image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
-
-    image_file_path = os.path.join(workspace_define.outputs_dir, font_config.preview_image_file_name)
-    image.save(image_file_path)
-    logger.info(f'make {image_file_path}')
-
-
 def make_alphabet_html_file(font_config, alphabet):
     template = configs.template_env.get_template('alphabet.html')
     html = template.render(
@@ -271,6 +249,28 @@ def make_playground_html_file():
     with open(html_file_path, 'w', encoding='utf-8') as file:
         file.write(html)
     logger.info(f'make {html_file_path}')
+
+
+def make_preview_image_file(font_config):
+    image_fonts = {}
+    for language_specific in configs.language_specifics:
+        font_file_path = os.path.join(workspace_define.outputs_dir, font_config.get_font_file_name(language_specific, 'otf'))
+        image_fonts[language_specific] = ImageFont.truetype(font_file_path, font_config.px)
+
+    image = Image.new('RGBA', (font_config.px * 35, font_config.px * 17), (255, 255, 255))
+    ImageDraw.Draw(image).text((font_config.px, font_config.px), '方舟像素字体 / Ark Pixel Font', fill=(0, 0, 0), font=image_fonts['zh_cn'])
+    ImageDraw.Draw(image).text((font_config.px, font_config.px * 3), '我们每天度过的称之为日常的生活，其实是一个个奇迹的连续也说不定。', fill=(0, 0, 0), font=image_fonts['zh_cn'])
+    ImageDraw.Draw(image).text((font_config.px, font_config.px * 5), '我們每天度過的稱之為日常的生活，其實是一個個奇跡的連續也說不定。', fill=(0, 0, 0), font=image_fonts['zh_tr'])
+    ImageDraw.Draw(image).text((font_config.px, font_config.px * 7), '日々、私たちが過ごしている日常は、実は奇跡の連続なのかもしれない。', fill=(0, 0, 0), font=image_fonts['ja'])
+    ImageDraw.Draw(image).text((font_config.px, font_config.px * 9), 'THE QUICK BROWN FOX JUMPS OVER A LAZY DOG.', fill=(0, 0, 0), font=image_fonts['latin'])
+    ImageDraw.Draw(image).text((font_config.px, font_config.px * 11), 'the quick brown fox jumps over a lazy dog.', fill=(0, 0, 0), font=image_fonts['latin'])
+    ImageDraw.Draw(image).text((font_config.px, font_config.px * 13), '0123456789', fill=(0, 0, 0), font=image_fonts['latin'])
+    ImageDraw.Draw(image).text((font_config.px, font_config.px * 15), '★☆☺☹♠♡♢♣♤♥♦♧☀☼♩♪♫♬☂☁⚓✈⚔☯', fill=(0, 0, 0), font=image_fonts['latin'])
+    image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
+
+    image_file_path = os.path.join(workspace_define.outputs_dir, font_config.preview_image_file_name)
+    image.save(image_file_path)
+    logger.info(f'make {image_file_path}')
 
 
 def _load_alphabet_from_outputs(px):

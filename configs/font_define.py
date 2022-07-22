@@ -23,10 +23,10 @@ class FontConfig:
         self.dot_em_units = dot_em_units
 
         self.info_file_name = f'font-info-{px}px.md'
-        self.preview_image_file_name = f'preview-{px}px.png'
         self.alphabet_txt_file_name = f'alphabet-{px}px.txt'
         self.alphabet_html_file_name = f'alphabet-{px}px.html'
         self.demo_html_file_name = f'demo-{px}px.html'
+        self.preview_image_file_name = f'preview-{px}px.png'
 
     def get_name_strings(self, language_specific):
         display_name = f'{display_name_prefix} {self.px}px {language_specific}'
