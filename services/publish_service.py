@@ -12,8 +12,11 @@ from configs import workspace_define
 logger = logging.getLogger('publish-service')
 
 
-def make_px_release_zips(font_config):
-    for font_format in configs.font_formats:
+def make_release_zips(font_config, font_formats=None):
+    if font_formats is None:
+        font_formats = configs.font_formats
+
+    for font_format in font_formats:
         zip_file_path = os.path.join(workspace_define.releases_dir, font_config.get_release_zip_file_name(font_format))
         with zipfile.ZipFile(zip_file_path, 'w') as zip_file:
             for language_specific in configs.language_specifics:
@@ -31,32 +34,28 @@ def _copy_file(file_name, from_dir, to_dir):
     logger.info(f'copy from {from_path} to {to_path}')
 
 
-def copy_px_docs_files(font_config):
-    file_names = [
-        font_config.info_file_name,
-        font_config.preview_image_file_name,
-    ]
-    for file_name in file_names:
-        _copy_file(file_name, workspace_define.outputs_dir, workspace_define.docs_dir)
-
-
-def copy_px_www_files(font_config):
-    for language_specific in configs.language_specifics:
-        file_name = font_config.get_font_file_name(language_specific, 'woff2')
-        _copy_file(file_name, workspace_define.outputs_dir, workspace_define.www_dir)
-    file_names = [
-        font_config.alphabet_html_file_name,
-        font_config.demo_html_file_name,
-    ]
-    for file_name in file_names:
-        _copy_file(file_name, workspace_define.outputs_dir, workspace_define.www_dir)
-
-
-def copy_docs_files():
+def update_docs():
+    for font_config in configs.font_configs:
+        file_names = [
+            font_config.info_file_name,
+            font_config.preview_image_file_name,
+        ]
+        for file_name in file_names:
+            _copy_file(file_name, workspace_define.outputs_dir, workspace_define.docs_dir)
     _copy_file('itch-io-banner.png', workspace_define.outputs_dir, workspace_define.docs_dir)
 
 
-def copy_www_files():
+def update_www():
+    for font_config in configs.font_configs:
+        for language_specific in configs.language_specifics:
+            file_name = font_config.get_font_file_name(language_specific, 'woff2')
+            _copy_file(file_name, workspace_define.outputs_dir, workspace_define.www_dir)
+        file_names = [
+            font_config.alphabet_html_file_name,
+            font_config.demo_html_file_name,
+        ]
+        for file_name in file_names:
+            _copy_file(file_name, workspace_define.outputs_dir, workspace_define.www_dir)
     file_names = [
         'index.html',
         'playground.html',

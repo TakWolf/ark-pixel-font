@@ -114,7 +114,7 @@ def _create_font_builder(name_strings, units_per_em, vertical_metrics, glyph_ord
     return builder
 
 
-def make_px_fonts(font_config, alphabet, glyph_file_paths_map, language_specifics=None, font_formats=None):
+def make_fonts(font_config, alphabet, glyph_file_paths_map, language_specifics=None, font_formats=None):
     if language_specifics is None:
         language_specifics = configs.language_specifics
     if font_formats is None:

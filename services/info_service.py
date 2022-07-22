@@ -105,7 +105,7 @@ def _write_locale_char_count_infos_table(file, infos):
         file.write(f'| {title} | {count} / {total} | {progress:.2%} {finished_emoji} |\n')
 
 
-def make_px_info_file(font_config, alphabet):
+def make_info_file(font_config, alphabet):
     info_file_path = os.path.join(workspace_define.outputs_dir, font_config.info_file_name)
     with open(info_file_path, 'w', encoding='utf-8') as file:
         file.write(f'# Ark Pixel {font_config.px}px\n')
@@ -150,7 +150,14 @@ def make_px_info_file(font_config, alphabet):
     logger.info(f'make {info_file_path}')
 
 
-def make_px_preview_image_file(font_config):
+def make_alphabet_txt_file(font_config, alphabet):
+    txt_file_path = os.path.join(workspace_define.outputs_dir, font_config.alphabet_txt_file_name)
+    with open(txt_file_path, 'w', encoding='utf-8') as file:
+        file.write(''.join(alphabet))
+    logger.info(f'make {txt_file_path}')
+
+
+def make_preview_image_file(font_config):
     image_fonts = {}
     for language_specific in configs.language_specifics:
         font_file_path = os.path.join(workspace_define.outputs_dir, font_config.get_font_file_name(language_specific, 'otf'))
@@ -172,14 +179,7 @@ def make_px_preview_image_file(font_config):
     logger.info(f'make {image_file_path}')
 
 
-def make_px_alphabet_txt_file(font_config, alphabet):
-    txt_file_path = os.path.join(workspace_define.outputs_dir, font_config.alphabet_txt_file_name)
-    with open(txt_file_path, 'w', encoding='utf-8') as file:
-        file.write(''.join(alphabet))
-    logger.info(f'make {txt_file_path}')
-
-
-def make_px_alphabet_html_file(font_config, alphabet):
+def make_alphabet_html_file(font_config, alphabet):
     template = configs.template_env.get_template('alphabet.html')
     html = template.render(
         font_config=font_config,
@@ -229,7 +229,7 @@ def _handle_demo_html_element(soup, element, alphabet):
         temp_parent.unwrap()
 
 
-def make_px_demo_html_file(font_config, alphabet):
+def make_demo_html_file(font_config, alphabet):
     template = configs.template_env.get_template('demo.html')
     html = template.render(
         font_config=font_config,

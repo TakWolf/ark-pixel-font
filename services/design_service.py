@@ -28,7 +28,7 @@ def _parse_glyph_file_name(glyph_file_name):
     return uni_hex_name, language_specifics
 
 
-def classify_px_glyph_files(font_config):
+def classify_glyph_files(font_config):
     """
     按照 Unicode 区块分类字形源文件
     """
@@ -62,7 +62,7 @@ def classify_px_glyph_files(font_config):
     os.rename(px_tmp_dir, px_dir)
 
 
-def verify_px_glyph_files(font_config):
+def verify_glyph_files(font_config):
     """
     校验并格式化字形源文件
     """
@@ -103,7 +103,7 @@ def verify_px_glyph_files(font_config):
             logger.info(f'format glyph file {glyph_file_path}')
 
 
-def collect_px_glyph_files(font_config):
+def collect_glyph_files(font_config):
     """
     收集可用字母表，生成字形源文件映射表
     """
