@@ -114,7 +114,6 @@ def make_info_file(font_config, alphabet):
         file.write('\n')
         file.write('| 属性 | 值 |\n')
         file.write('|---|---|\n')
-        file.write(f'| 像素尺寸 | {font_config.px}px |\n')
         file.write(f'| 版本号 | {configs.font_version} |\n')
         file.write(f'| 字符总数 | {len(alphabet)} |\n')
         file.write('\n')
