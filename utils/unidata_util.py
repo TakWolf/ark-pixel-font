@@ -36,7 +36,8 @@ class UnidataDB:
                 self.blocks.append(UnicodeBlock(name, name_cn, begin, end))
 
     def get_block_by_code_point(self, code_point):
-        for block in self.blocks:
-            if block.begin <= code_point <= block.end:
-                return block
+        if code_point >= 0:
+            for block in self.blocks:
+                if block.begin <= code_point <= block.end:
+                    return block
         return None

@@ -49,7 +49,7 @@ def classify_glyph_files(font_config):
                 unicode_block = configs.unidata_db.get_block_by_code_point(code_point)
                 block_dir_name = f'{unicode_block.begin:04X}-{unicode_block.end:04X} {unicode_block.name}'
                 glyph_file_to_dir = os.path.join(px_tmp_dir, block_dir_name)
-                if unicode_block.name == 'CJK Unified Ideographs':
+                if unicode_block.begin == 0x4E00:  # CJK Unified Ideographs
                     glyph_file_to_dir = os.path.join(glyph_file_to_dir, f'{uni_hex_name[0:-2]}-')
             if not os.path.exists(glyph_file_to_dir):
                 os.makedirs(glyph_file_to_dir)
@@ -93,11 +93,13 @@ def verify_glyph_files(font_config):
             else:  # A/Ambiguous or N/Neutral
                 pass
 
-            if 0x4E00 <= code_point <= 0x9FFF:
-                for alpha in glyph_data[0]:
-                    assert alpha == 0, glyph_file_path
-                for i in range(0, len(glyph_data)):
-                    assert glyph_data[i][-1] == 0, glyph_file_path
+            unicode_block = configs.unidata_db.get_block_by_code_point(code_point)
+            if unicode_block:
+                if unicode_block.begin == 0x4E00:  # CJK Unified Ideographs
+                    for alpha in glyph_data[0]:
+                        assert alpha == 0, glyph_file_path
+                    for i in range(0, len(glyph_data)):
+                        assert glyph_data[i][-1] == 0, glyph_file_path
 
             glyph_util.save_glyph_data_to_png(glyph_data, glyph_file_path)
             logger.info(f'format glyph file {glyph_file_path}')
