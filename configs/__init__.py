@@ -3,16 +3,18 @@ import os
 from jinja2 import Environment, FileSystemLoader
 
 from configs import path_define
-from configs.font_define import FontConfig
+from configs.font_config import FontConfig
 from configs.git_deploy_config import GitDeployConfig
 from utils.unidata_util import UnidataDB
+
+font_name = font_config.display_name_prefix
+font_version = font_config.version
 
 font_configs = [
     FontConfig(10, 9, 5, 7),
     FontConfig(12, 10, 6, 8),
     FontConfig(16, 13, 7, 10),
 ]
-
 font_config_map = {font_config.px: font_config for font_config in font_configs}
 
 language_specifics = [

@@ -7,7 +7,7 @@ import minify_html
 from PIL import Image, ImageFont, ImageDraw
 
 import configs
-from configs import font_define, path_define
+from configs import path_define
 from utils import unidata_util, gb2312_util, big5_util, shift_jis_util, ks_x_1001_util
 
 logger = logging.getLogger('info-service')
@@ -108,14 +108,14 @@ def _write_locale_char_count_infos_table(file, infos):
 def make_info_file(font_config, alphabet):
     info_file_path = os.path.join(path_define.outputs_dir, font_config.info_file_name)
     with open(info_file_path, 'w', encoding='utf-8') as file:
-        file.write(f'# Ark Pixel {font_config.px}px\n')
+        file.write(f'# {configs.font_name} {font_config.px}px\n')
         file.write('\n')
         file.write('## 基本信息\n')
         file.write('\n')
         file.write('| 属性 | 值 |\n')
         file.write('|---|---|\n')
         file.write(f'| 像素尺寸 | {font_config.px}px |\n')
-        file.write(f'| 版本号 | {font_define.version} |\n')
+        file.write(f'| 版本号 | {configs.font_version} |\n')
         file.write(f'| 字符总数 | {len(alphabet)} |\n')
         file.write('\n')
         file.write('## Unicode 字符分布\n')
