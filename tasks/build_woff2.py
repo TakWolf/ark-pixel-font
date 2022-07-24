@@ -2,15 +2,15 @@ import logging
 import os
 
 import configs
-from configs import workspace_define
+from configs import path_define
 from services import design_service, font_service, info_service
 
 logging.basicConfig(level=logging.DEBUG)
 
 
 def main():
-    if not os.path.exists(workspace_define.outputs_dir):
-        os.makedirs(workspace_define.outputs_dir)
+    if not os.path.exists(path_define.outputs_dir):
+        os.makedirs(path_define.outputs_dir)
 
     for font_config in configs.font_configs:
         design_service.classify_glyph_files(font_config)

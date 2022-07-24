@@ -6,7 +6,7 @@ from fontTools.pens.t2CharStringPen import T2CharStringPen
 from fontTools.pens.ttGlyphPen import TTGlyphPen
 
 import configs
-from configs import workspace_define
+from configs import path_define
 from utils import glyph_util
 
 logger = logging.getLogger('font-service')
@@ -139,17 +139,17 @@ def make_fonts(font_config, alphabet, glyph_file_paths_map, language_specifics=N
             glyph_info_map = glyph_info_builder.build_glyph_info_map(glyph_file_paths, False)
             font_builder = _create_font_builder(name_strings, units_per_em, vertical_metrics, glyph_order, character_map, glyph_info_map, False)
             if 'otf' in font_formats:
-                font_file_path = os.path.join(workspace_define.outputs_dir, font_config.get_font_file_name(language_specific, 'otf'))
+                font_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name(language_specific, 'otf'))
                 font_builder.save(font_file_path)
                 logger.info(f'make {font_file_path}')
             if 'woff2' in font_formats:
                 font_builder.font.flavor = 'woff2'
-                font_file_path = os.path.join(workspace_define.outputs_dir, font_config.get_font_file_name(language_specific, 'woff2'))
+                font_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name(language_specific, 'woff2'))
                 font_builder.save(font_file_path)
                 logger.info(f'make {font_file_path}')
         if 'ttf' in font_formats:
             glyph_info_map = glyph_info_builder.build_glyph_info_map(glyph_file_paths, True)
             font_builder = _create_font_builder(name_strings, units_per_em, vertical_metrics, glyph_order, character_map, glyph_info_map, True)
-            font_file_path = os.path.join(workspace_define.outputs_dir, font_config.get_font_file_name(language_specific, 'ttf'))
+            font_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name(language_specific, 'ttf'))
             font_builder.save(font_file_path)
             logger.info(f'make {font_file_path}')

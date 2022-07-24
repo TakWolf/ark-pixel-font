@@ -7,7 +7,7 @@ import minify_html
 from PIL import Image, ImageFont, ImageDraw
 
 import configs
-from configs import font_define, workspace_define
+from configs import font_define, path_define
 from utils import unidata_util, gb2312_util, big5_util, shift_jis_util, ks_x_1001_util
 
 logger = logging.getLogger('info-service')
@@ -106,7 +106,7 @@ def _write_locale_char_count_infos_table(file, infos):
 
 
 def make_info_file(font_config, alphabet):
-    info_file_path = os.path.join(workspace_define.outputs_dir, font_config.info_file_name)
+    info_file_path = os.path.join(path_define.outputs_dir, font_config.info_file_name)
     with open(info_file_path, 'w', encoding='utf-8') as file:
         file.write(f'# Ark Pixel {font_config.px}px\n')
         file.write('\n')
@@ -151,7 +151,7 @@ def make_info_file(font_config, alphabet):
 
 
 def make_alphabet_txt_file(font_config, alphabet):
-    txt_file_path = os.path.join(workspace_define.outputs_dir, font_config.alphabet_txt_file_name)
+    txt_file_path = os.path.join(path_define.outputs_dir, font_config.alphabet_txt_file_name)
     with open(txt_file_path, 'w', encoding='utf-8') as file:
         file.write(''.join(alphabet))
     logger.info(f'make {txt_file_path}')
@@ -165,7 +165,7 @@ def make_alphabet_html_file(font_config, alphabet):
         alphabet=''.join([c for c in alphabet if ord(c) >= 128]),
     )
     html = minify_html.minify(html, minify_css=True, minify_js=True)
-    html_file_path = os.path.join(workspace_define.outputs_dir, font_config.alphabet_html_file_name)
+    html_file_path = os.path.join(path_define.outputs_dir, font_config.alphabet_html_file_name)
     with open(html_file_path, 'w', encoding='utf-8') as file:
         file.write(html)
     logger.info(f'make {html_file_path}')
@@ -219,7 +219,7 @@ def make_demo_html_file(font_config, alphabet):
         _handle_demo_html_element(soup, element, alphabet)
     html = str(soup)
     html = minify_html.minify(html, minify_css=True, minify_js=True)
-    html_file_path = os.path.join(workspace_define.outputs_dir, font_config.demo_html_file_name)
+    html_file_path = os.path.join(path_define.outputs_dir, font_config.demo_html_file_name)
     with open(html_file_path, 'w', encoding='utf-8') as file:
         file.write(html)
     logger.info(f'make {html_file_path}')
@@ -232,7 +232,7 @@ def make_index_html_file():
         language_specifics=configs.language_specifics,
     )
     html = minify_html.minify(html, minify_css=True, minify_js=True)
-    html_file_path = os.path.join(workspace_define.outputs_dir, 'index.html')
+    html_file_path = os.path.join(path_define.outputs_dir, 'index.html')
     with open(html_file_path, 'w', encoding='utf-8') as file:
         file.write(html)
     logger.info(f'make {html_file_path}')
@@ -245,7 +245,7 @@ def make_playground_html_file():
         language_specifics=configs.language_specifics,
     )
     html = minify_html.minify(html, minify_css=True, minify_js=True)
-    html_file_path = os.path.join(workspace_define.outputs_dir, 'playground.html')
+    html_file_path = os.path.join(path_define.outputs_dir, 'playground.html')
     with open(html_file_path, 'w', encoding='utf-8') as file:
         file.write(html)
     logger.info(f'make {html_file_path}')
@@ -254,7 +254,7 @@ def make_playground_html_file():
 def make_preview_image_file(font_config):
     image_fonts = {}
     for language_specific in configs.language_specifics:
-        font_file_path = os.path.join(workspace_define.outputs_dir, font_config.get_font_file_name(language_specific, 'otf'))
+        font_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name(language_specific, 'otf'))
         image_fonts[language_specific] = ImageFont.truetype(font_file_path, font_config.px)
 
     image = Image.new('RGBA', (font_config.px * 35, font_config.px * 17), (255, 255, 255))
@@ -268,13 +268,13 @@ def make_preview_image_file(font_config):
     ImageDraw.Draw(image).text((font_config.px, font_config.px * 15), '★☆☺☹♠♡♢♣♤♥♦♧☀☼♩♪♫♬☂☁⚓✈⚔☯', fill=(0, 0, 0), font=image_fonts['latin'])
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
-    image_file_path = os.path.join(workspace_define.outputs_dir, font_config.preview_image_file_name)
+    image_file_path = os.path.join(path_define.outputs_dir, font_config.preview_image_file_name)
     image.save(image_file_path)
     logger.info(f'make {image_file_path}')
 
 
 def _load_alphabet_from_outputs(px):
-    txt_file_path = os.path.join(workspace_define.outputs_dir, configs.font_config_map[px].alphabet_txt_file_name)
+    txt_file_path = os.path.join(path_define.outputs_dir, configs.font_config_map[px].alphabet_txt_file_name)
     with open(txt_file_path, 'r', encoding='utf-8') as file:
         text = file.read()
     alphabet = list(text)
@@ -282,7 +282,7 @@ def _load_alphabet_from_outputs(px):
 
 
 def _load_image_font_from_outputs(px, language_specific, size):
-    font_file_path = os.path.join(workspace_define.outputs_dir, configs.font_config_map[px].get_font_file_name(language_specific, 'otf'))
+    font_file_path = os.path.join(path_define.outputs_dir, configs.font_config_map[px].get_font_file_name(language_specific, 'otf'))
     return ImageFont.truetype(font_file_path, size)
 
 
@@ -317,7 +317,7 @@ def make_github_banner():
     image_font_12_zh_tr = _load_image_font_from_outputs(12, 'zh_tr', 12)
     image_font_12_ja = _load_image_font_from_outputs(12, 'ja', 12)
 
-    image_template = Image.open(os.path.join(workspace_define.images_dir, 'github-banner-background.png'))
+    image_template = Image.open(os.path.join(path_define.images_dir, 'github-banner-background.png'))
     image = Image.new('RGBA', (image_template.width, image_template.height), (255, 255, 255, 0))
     _image_draw_text_background(image, alphabet_12, 2, 14, (200, 200, 200), image_font_12_zh_cn)
     image.paste(image_template, mask=image_template)
@@ -334,7 +334,7 @@ def make_github_banner():
     _image_draw_text_with_shadow(image, ((image.width - 6 * 48) / 2, 40 + 18 * 11), '★☆☺☹♠♡♢♣♤♥♦♧☀☼♩♪♫♬☂☁⚓✈⚔☯', text_color, shadow_color, image_font_12_latin)
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
-    image_file_path = os.path.join(workspace_define.outputs_dir, 'github-banner.png')
+    image_file_path = os.path.join(path_define.outputs_dir, 'github-banner.png')
     image.save(image_file_path)
     logger.info(f'make {image_file_path}')
 
@@ -344,7 +344,7 @@ def make_itch_io_banner():
     image_font_24_zh_cn = _load_image_font_from_outputs(12, 'zh_cn', 24)
     image_font_12_zh_cn = _load_image_font_from_outputs(12, 'zh_cn', 12)
 
-    image_template = Image.open(os.path.join(workspace_define.images_dir, 'itch-io-banner-background.png'))
+    image_template = Image.open(os.path.join(path_define.images_dir, 'itch-io-banner-background.png'))
     image = Image.new('RGBA', (image_template.width, image_template.height), (255, 255, 255, 0))
     _image_draw_text_background(image, alphabet_12, 5, 14, (200, 200, 200), image_font_12_zh_cn)
     image.paste(image_template, mask=image_template)
@@ -354,7 +354,7 @@ def make_itch_io_banner():
     _image_draw_text_with_shadow(image, ((image.width - 12 * 29) / 2, 16 + 12 * 5), '★ 开源的泛中日韩像素字体 ★', text_color, shadow_color, image_font_12_zh_cn)
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
-    image_file_path = os.path.join(workspace_define.outputs_dir, 'itch-io-banner.png')
+    image_file_path = os.path.join(path_define.outputs_dir, 'itch-io-banner.png')
     image.save(image_file_path)
     logger.info(f'make {image_file_path}')
 
@@ -367,7 +367,7 @@ def make_itch_io_background():
     _image_draw_text_background(image, alphabet_12, 1, 14, (30, 30, 30), image_font_12_zh_cn)
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
-    image_file_path = os.path.join(workspace_define.outputs_dir, 'itch-io-background.png')
+    image_file_path = os.path.join(path_define.outputs_dir, 'itch-io-background.png')
     image.save(image_file_path)
     logger.info(f'make {image_file_path}')
 
@@ -379,7 +379,7 @@ def make_itch_io_cover():
     image_font_12_zh_tr = _load_image_font_from_outputs(12, 'zh_tr', 12)
     image_font_12_ja = _load_image_font_from_outputs(12, 'ja', 12)
 
-    image = Image.open(os.path.join(workspace_define.images_dir, 'itch-io-cover-background.png'))
+    image = Image.open(os.path.join(path_define.images_dir, 'itch-io-cover-background.png'))
     text_color = (255, 255, 255)
     shadow_color = (80, 80, 80)
     _image_draw_text_with_shadow(image, ((image.width - 12 * 12) / 2, 12), '方舟像素字体', text_color, shadow_color, image_font_24_zh_cn)
@@ -390,7 +390,7 @@ def make_itch_io_cover():
     _image_draw_text_with_shadow(image, ((image.width - 6 * 24) / 2, 12 * 17), '★☆☺☹♠♡♢♣♤♥♦♧\n☀☼♩♪♫♬☂☁⚓✈⚔☯', text_color, shadow_color, image_font_12_latin)
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
-    image_file_path = os.path.join(workspace_define.outputs_dir, 'itch-io-cover.png')
+    image_file_path = os.path.join(path_define.outputs_dir, 'itch-io-cover.png')
     image.save(image_file_path)
     logger.info(f'make {image_file_path}')
 
@@ -402,7 +402,7 @@ def make_afdian_cover():
     image_font_12_zh_tr = _load_image_font_from_outputs(12, 'zh_tr', 12)
     image_font_12_ja = _load_image_font_from_outputs(12, 'ja', 12)
 
-    image = Image.open(os.path.join(workspace_define.images_dir, 'afdian-cover-background.png'))
+    image = Image.open(os.path.join(path_define.images_dir, 'afdian-cover-background.png'))
     text_color = (255, 255, 255)
     shadow_color = (80, 80, 80)
     _image_draw_text_with_shadow(image, ((image.width - 12 * 12) / 2, 12), '方舟像素字体', text_color, shadow_color, image_font_24_zh_cn)
@@ -415,6 +415,6 @@ def make_afdian_cover():
     _image_draw_text_with_shadow(image, ((image.width - 6 * 24) / 2, 12 * 23), '★☆☺☹♠♡♢♣♤♥♦♧\n☀☼♩♪♫♬☂☁⚓✈⚔☯', text_color, shadow_color, image_font_12_latin)
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
-    image_file_path = os.path.join(workspace_define.outputs_dir, 'afdian-cover.png')
+    image_file_path = os.path.join(path_define.outputs_dir, 'afdian-cover.png')
     image.save(image_file_path)
     logger.info(f'make {image_file_path}')

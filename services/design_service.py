@@ -4,7 +4,7 @@ import shutil
 import unicodedata
 
 import configs
-from configs import workspace_define
+from configs import path_define
 from utils import glyph_util
 
 logger = logging.getLogger('design-service')
@@ -32,8 +32,8 @@ def classify_glyph_files(font_config):
     """
     按照 Unicode 区块分类字形源文件
     """
-    px_dir = os.path.join(workspace_define.glyphs_dir, str(font_config.px))
-    px_tmp_dir = os.path.join(workspace_define.glyphs_tmp_dir, str(font_config.px))
+    px_dir = os.path.join(path_define.glyphs_dir, str(font_config.px))
+    px_tmp_dir = os.path.join(path_define.glyphs_tmp_dir, str(font_config.px))
     if os.path.exists(px_tmp_dir):
         shutil.rmtree(px_tmp_dir)
     for glyph_file_from_dir, _, glyph_file_names in os.walk(px_dir):
@@ -66,7 +66,7 @@ def verify_glyph_files(font_config):
     """
     校验并格式化字形源文件
     """
-    px_dir = os.path.join(workspace_define.glyphs_dir, str(font_config.px))
+    px_dir = os.path.join(path_define.glyphs_dir, str(font_config.px))
     for glyph_file_dir, _, glyph_file_names in os.walk(px_dir):
         for glyph_file_name in glyph_file_names:
             if not glyph_file_name.endswith('.png'):
@@ -112,7 +112,7 @@ def collect_glyph_files(font_config):
     for language_specific in configs.language_specifics:
         cellar_glyph_file_paths_map[language_specific] = {}
 
-    px_dir = os.path.join(workspace_define.glyphs_dir, str(font_config.px))
+    px_dir = os.path.join(path_define.glyphs_dir, str(font_config.px))
     for glyph_file_dir, _, glyph_file_names in os.walk(px_dir):
         for glyph_file_name in glyph_file_names:
             if not glyph_file_name.endswith('.png'):
