@@ -8,6 +8,7 @@ import git
 
 import configs
 from configs import path_define
+from utils import fs_util
 
 logger = logging.getLogger('publish-service')
 
@@ -16,6 +17,7 @@ def make_release_zips(font_config, font_formats=None):
     if font_formats is None:
         font_formats = configs.font_formats
 
+    fs_util.make_dirs_if_not_exists(path_define.releases_dir)
     for font_format in font_formats:
         zip_file_path = os.path.join(path_define.releases_dir, font_config.get_release_zip_file_name(font_format))
         with zipfile.ZipFile(zip_file_path, 'w') as zip_file:
@@ -35,6 +37,7 @@ def _copy_file(file_name, from_dir, to_dir):
 
 
 def update_docs():
+    fs_util.make_dirs_if_not_exists(path_define.docs_dir)
     for font_config in configs.font_configs:
         file_names = [
             font_config.info_file_name,
@@ -46,6 +49,8 @@ def update_docs():
 
 
 def update_www():
+    fs_util.delete_dir(path_define.www_dir)
+    shutil.copytree(path_define.www_static_dir, path_define.www_dir)
     for font_config in configs.font_configs:
         for language_specific in configs.language_specifics:
             file_name = font_config.get_font_file_name(language_specific, 'woff2')

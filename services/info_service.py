@@ -8,7 +8,7 @@ from PIL import Image, ImageFont, ImageDraw
 
 import configs
 from configs import path_define
-from utils import unidata_util, gb2312_util, big5_util, shift_jis_util, ks_x_1001_util
+from utils import unidata_util, gb2312_util, big5_util, shift_jis_util, ks_x_1001_util, fs_util
 
 logger = logging.getLogger('info-service')
 
@@ -106,6 +106,7 @@ def _write_locale_char_count_infos_table(file, infos):
 
 
 def make_info_file(font_config, alphabet):
+    fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
     info_file_path = os.path.join(path_define.outputs_dir, font_config.info_file_name)
     with open(info_file_path, 'w', encoding='utf-8') as file:
         file.write(f'# {configs.font_name} {font_config.px}px\n')
@@ -150,6 +151,7 @@ def make_info_file(font_config, alphabet):
 
 
 def make_alphabet_txt_file(font_config, alphabet):
+    fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
     txt_file_path = os.path.join(path_define.outputs_dir, font_config.alphabet_txt_file_name)
     with open(txt_file_path, 'w', encoding='utf-8') as file:
         file.write(''.join(alphabet))
@@ -164,6 +166,7 @@ def make_alphabet_html_file(font_config, alphabet):
         alphabet=''.join([c for c in alphabet if ord(c) >= 128]),
     )
     html = minify_html.minify(html, minify_css=True, minify_js=True)
+    fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
     html_file_path = os.path.join(path_define.outputs_dir, font_config.alphabet_html_file_name)
     with open(html_file_path, 'w', encoding='utf-8') as file:
         file.write(html)
@@ -218,6 +221,7 @@ def make_demo_html_file(font_config, alphabet):
         _handle_demo_html_element(soup, element, alphabet)
     html = str(soup)
     html = minify_html.minify(html, minify_css=True, minify_js=True)
+    fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
     html_file_path = os.path.join(path_define.outputs_dir, font_config.demo_html_file_name)
     with open(html_file_path, 'w', encoding='utf-8') as file:
         file.write(html)
@@ -231,6 +235,7 @@ def make_index_html_file():
         language_specifics=configs.language_specifics,
     )
     html = minify_html.minify(html, minify_css=True, minify_js=True)
+    fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
     html_file_path = os.path.join(path_define.outputs_dir, 'index.html')
     with open(html_file_path, 'w', encoding='utf-8') as file:
         file.write(html)
@@ -244,6 +249,7 @@ def make_playground_html_file():
         language_specifics=configs.language_specifics,
     )
     html = minify_html.minify(html, minify_css=True, minify_js=True)
+    fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
     html_file_path = os.path.join(path_define.outputs_dir, 'playground.html')
     with open(html_file_path, 'w', encoding='utf-8') as file:
         file.write(html)
@@ -267,6 +273,7 @@ def make_preview_image_file(font_config):
     ImageDraw.Draw(image).text((font_config.px, font_config.px * 15), '★☆☺☹♠♡♢♣♤♥♦♧☀☼♩♪♫♬☂☁⚓✈⚔☯', fill=(0, 0, 0), font=image_fonts['latin'])
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
+    fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
     image_file_path = os.path.join(path_define.outputs_dir, font_config.preview_image_file_name)
     image.save(image_file_path)
     logger.info(f'make {image_file_path}')
@@ -333,6 +340,7 @@ def make_github_banner():
     _image_draw_text_with_shadow(image, ((image.width - 6 * 48) / 2, 40 + 18 * 11), '★☆☺☹♠♡♢♣♤♥♦♧☀☼♩♪♫♬☂☁⚓✈⚔☯', text_color, shadow_color, image_font_12_latin)
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
+    fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
     image_file_path = os.path.join(path_define.outputs_dir, 'github-banner.png')
     image.save(image_file_path)
     logger.info(f'make {image_file_path}')
@@ -353,6 +361,7 @@ def make_itch_io_banner():
     _image_draw_text_with_shadow(image, ((image.width - 12 * 29) / 2, 16 + 12 * 5), '★ 开源的泛中日韩像素字体 ★', text_color, shadow_color, image_font_12_zh_cn)
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
+    fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
     image_file_path = os.path.join(path_define.outputs_dir, 'itch-io-banner.png')
     image.save(image_file_path)
     logger.info(f'make {image_file_path}')
@@ -366,6 +375,7 @@ def make_itch_io_background():
     _image_draw_text_background(image, alphabet_12, 1, 14, (30, 30, 30), image_font_12_zh_cn)
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
+    fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
     image_file_path = os.path.join(path_define.outputs_dir, 'itch-io-background.png')
     image.save(image_file_path)
     logger.info(f'make {image_file_path}')
@@ -389,6 +399,7 @@ def make_itch_io_cover():
     _image_draw_text_with_shadow(image, ((image.width - 6 * 24) / 2, 12 * 17), '★☆☺☹♠♡♢♣♤♥♦♧\n☀☼♩♪♫♬☂☁⚓✈⚔☯', text_color, shadow_color, image_font_12_latin)
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
+    fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
     image_file_path = os.path.join(path_define.outputs_dir, 'itch-io-cover.png')
     image.save(image_file_path)
     logger.info(f'make {image_file_path}')
@@ -414,6 +425,7 @@ def make_afdian_cover():
     _image_draw_text_with_shadow(image, ((image.width - 6 * 24) / 2, 12 * 23), '★☆☺☹♠♡♢♣♤♥♦♧\n☀☼♩♪♫♬☂☁⚓✈⚔☯', text_color, shadow_color, image_font_12_latin)
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
+    fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
     image_file_path = os.path.join(path_define.outputs_dir, 'afdian-cover.png')
     image.save(image_file_path)
     logger.info(f'make {image_file_path}')

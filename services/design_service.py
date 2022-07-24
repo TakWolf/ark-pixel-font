@@ -5,7 +5,7 @@ import unicodedata
 
 import configs
 from configs import path_define
-from utils import glyph_util
+from utils import glyph_util, fs_util
 
 logger = logging.getLogger('design-service')
 
@@ -34,8 +34,7 @@ def classify_glyph_files(font_config):
     """
     px_dir = os.path.join(path_define.glyphs_dir, str(font_config.px))
     px_tmp_dir = os.path.join(path_define.glyphs_tmp_dir, str(font_config.px))
-    if os.path.exists(px_tmp_dir):
-        shutil.rmtree(px_tmp_dir)
+    fs_util.delete_dir(px_tmp_dir)
     for glyph_file_from_dir, _, glyph_file_names in os.walk(px_dir):
         for glyph_file_name in glyph_file_names:
             if not glyph_file_name.endswith('.png'):
@@ -51,11 +50,10 @@ def classify_glyph_files(font_config):
                 glyph_file_to_dir = os.path.join(px_tmp_dir, block_dir_name)
                 if unicode_block.begin == 0x4E00:  # CJK Unified Ideographs
                     glyph_file_to_dir = os.path.join(glyph_file_to_dir, f'{uni_hex_name[0:-2]}-')
-            if not os.path.exists(glyph_file_to_dir):
-                os.makedirs(glyph_file_to_dir)
             glyph_file_name = f'{uni_hex_name}{" " if len(language_specifics) > 0 else ""}{",".join(language_specifics)}.png'
             glyph_file_to_path = os.path.join(glyph_file_to_dir, glyph_file_name)
             assert not os.path.exists(glyph_file_to_path), glyph_file_from_path
+            fs_util.make_dirs_if_not_exists(glyph_file_to_dir)
             shutil.copyfile(glyph_file_from_path, glyph_file_to_path)
             logger.info(f'classify glyph file {glyph_file_to_path}')
     shutil.rmtree(px_dir)
