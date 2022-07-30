@@ -39,12 +39,8 @@ def _copy_file(file_name, from_dir, to_dir):
 def update_docs():
     fs_util.make_dirs_if_not_exists(path_define.docs_dir)
     for font_config in configs.font_configs:
-        file_names = [
-            font_config.info_file_name,
-            font_config.preview_image_file_name,
-        ]
-        for file_name in file_names:
-            _copy_file(file_name, path_define.outputs_dir, path_define.docs_dir)
+        _copy_file(font_config.info_file_name, path_define.outputs_dir, path_define.docs_dir)
+        _copy_file(font_config.preview_image_file_name, path_define.outputs_dir, path_define.docs_dir)
     _copy_file('itch-io-banner.png', path_define.outputs_dir, path_define.docs_dir)
 
 
@@ -53,20 +49,11 @@ def update_www():
     shutil.copytree(path_define.www_static_dir, path_define.www_dir)
     for font_config in configs.font_configs:
         for language_specific in configs.language_specifics:
-            file_name = font_config.get_font_file_name(language_specific, 'woff2')
-            _copy_file(file_name, path_define.outputs_dir, path_define.www_dir)
-        file_names = [
-            font_config.alphabet_html_file_name,
-            font_config.demo_html_file_name,
-        ]
-        for file_name in file_names:
-            _copy_file(file_name, path_define.outputs_dir, path_define.www_dir)
-    file_names = [
-        'index.html',
-        'playground.html',
-    ]
-    for file_name in file_names:
-        _copy_file(file_name, path_define.outputs_dir, path_define.www_dir)
+            _copy_file(font_config.get_font_file_name(language_specific, 'woff2'), path_define.outputs_dir, path_define.www_dir)
+        _copy_file(font_config.alphabet_html_file_name, path_define.outputs_dir, path_define.www_dir)
+        _copy_file(font_config.demo_html_file_name, path_define.outputs_dir, path_define.www_dir)
+    _copy_file('index.html', path_define.outputs_dir, path_define.www_dir)
+    _copy_file('playground.html', path_define.outputs_dir, path_define.www_dir)
 
 
 def deploy_www():
