@@ -100,11 +100,18 @@ def _write_locale_char_count_infos_table(file, infos):
         file.write(f'| {title} | {count} / {total} | {progress:.2%} {finished_emoji} |\n')
 
 
-def make_info_file(font_config, alphabet):
+def _get_width_mode_display_name(width_mode):
+    if width_mode == 'monospaced':
+        return '等宽模式'
+    else:  # proportional
+        return '比例模式'
+
+
+def make_info_file(font_config, width_mode, alphabet):
     fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
-    info_file_path = os.path.join(path_define.outputs_dir, font_config.info_file_name)
+    info_file_path = os.path.join(path_define.outputs_dir, font_config.get_info_file_name(width_mode))
     with open(info_file_path, 'w', encoding='utf-8') as file:
-        file.write(f'# {configs.font_name} {font_config.px}px\n')
+        file.write(f'# {configs.font_name} {font_config.px}px {_get_width_mode_display_name(width_mode)}\n')
         file.write('\n')
         file.write('## 基本信息\n')
         file.write('\n')
@@ -145,9 +152,9 @@ def make_info_file(font_config, alphabet):
     logger.info(f'make {info_file_path}')
 
 
-def make_alphabet_txt_file(font_config, alphabet):
+def make_alphabet_txt_file(font_config, width_mode, alphabet):
     fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
-    txt_file_path = os.path.join(path_define.outputs_dir, font_config.alphabet_txt_file_name)
+    txt_file_path = os.path.join(path_define.outputs_dir, font_config.get_alphabet_txt_file_name(width_mode))
     with open(txt_file_path, 'w', encoding='utf-8') as file:
         file.write(''.join(alphabet))
     logger.info(f'make {txt_file_path}')

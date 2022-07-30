@@ -51,6 +51,10 @@
 
 [字符统计](docs/font-info-16px.md)
 
+## 宽度模式
+
+TODO
+
 ## 特定语言字形
 
 不同国家或地区，由于规范或书写习惯不同，同一个字符，字形可能存在差别。
@@ -89,12 +93,22 @@
 brew tap homebrew/cask-fonts
 ```
 
-然后安装所需尺寸的字体：
+然后根据需要安装对应的字体：
+
+- 等宽模式
 
 ```commandline
-brew install font-ark-pixel-10px
-brew install font-ark-pixel-12px
-brew install font-ark-pixel-16px
+brew install font-ark-pixel-10px-monospaced
+brew install font-ark-pixel-12px-monospaced
+brew install font-ark-pixel-16px-monospaced
+```
+
+- 比例模式
+
+```commandline
+brew install font-ark-pixel-10px-proportional
+brew install font-ark-pixel-12px-proportional
+brew install font-ark-pixel-16px-proportional
 ```
 
 详细信息请查看 [homebrew-cask-fonts](https://github.com/Homebrew/homebrew-cask-fonts) 的主页。
@@ -103,7 +117,7 @@ brew install font-ark-pixel-16px
 
 本字体使用程序进行构建。
 
-字形源文件是 PNG 格式的图片，它们位于 [assets/design](assets/design) 目录下，按照 16 进制 Unicode 编号来命名。
+字形源文件是 PNG 格式的图片，它们位于 [assets/glyphs](assets/glyphs) 目录下，按照 16 进制 Unicode 编号来命名。
 
 程序读取这些图片，根据透明度值进行二值化，转化为二维点阵数据。然后生成轮廓数据，绘制字形并生成字体文件。
 

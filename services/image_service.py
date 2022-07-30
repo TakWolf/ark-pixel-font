@@ -14,7 +14,7 @@ logger = logging.getLogger('image-service')
 def make_preview_image_file(font_config):
     image_fonts = {}
     for language_specific in configs.language_specifics:
-        font_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name(language_specific, 'otf'))
+        font_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name('proportional', language_specific, 'otf'))
         image_fonts[language_specific] = ImageFont.truetype(font_file_path, font_config.px)
 
     image = Image.new('RGBA', (font_config.px * 35, font_config.px * 17), (255, 255, 255))
@@ -34,16 +34,16 @@ def make_preview_image_file(font_config):
     logger.info(f'make {image_file_path}')
 
 
-def _load_alphabet_from_outputs(px):
-    txt_file_path = os.path.join(path_define.outputs_dir, configs.font_config_map[px].alphabet_txt_file_name)
+def _load_alphabet_from_outputs(px, width_mode):
+    txt_file_path = os.path.join(path_define.outputs_dir, configs.font_config_map[px].get_alphabet_txt_file_name(width_mode))
     with open(txt_file_path, 'r', encoding='utf-8') as file:
         text = file.read()
     alphabet = list(text)
     return alphabet
 
 
-def _load_image_font_from_outputs(px, language_specific, size):
-    font_file_path = os.path.join(path_define.outputs_dir, configs.font_config_map[px].get_font_file_name(language_specific, 'otf'))
+def _load_image_font_from_outputs(px, width_mode, language_specific, size):
+    font_file_path = os.path.join(path_define.outputs_dir, configs.font_config_map[px].get_font_file_name(width_mode, language_specific, 'otf'))
     return ImageFont.truetype(font_file_path, size)
 
 
@@ -71,12 +71,12 @@ def _image_draw_text_with_shadow(image, xy, text, text_color, shadow_color, font
 
 
 def make_github_banner():
-    alphabet_12 = _load_alphabet_from_outputs(12)
-    image_font_24_zh_cn = _load_image_font_from_outputs(12, 'zh_cn', 24)
-    image_font_12_latin = _load_image_font_from_outputs(12, 'latin', 12)
-    image_font_12_zh_cn = _load_image_font_from_outputs(12, 'zh_cn', 12)
-    image_font_12_zh_tr = _load_image_font_from_outputs(12, 'zh_tr', 12)
-    image_font_12_ja = _load_image_font_from_outputs(12, 'ja', 12)
+    alphabet_12 = _load_alphabet_from_outputs(12, 'proportional')
+    image_font_24_zh_cn = _load_image_font_from_outputs(12, 'proportional', 'zh_cn', 24)
+    image_font_12_latin = _load_image_font_from_outputs(12, 'proportional', 'latin', 12)
+    image_font_12_zh_cn = _load_image_font_from_outputs(12, 'proportional', 'zh_cn', 12)
+    image_font_12_zh_tr = _load_image_font_from_outputs(12, 'proportional', 'zh_tr', 12)
+    image_font_12_ja = _load_image_font_from_outputs(12, 'proportional', 'ja', 12)
 
     image_background = Image.open(os.path.join(path_define.images_dir, 'github-banner-background.png'))
     image = Image.new('RGBA', (image_background.width, image_background.height), (255, 255, 255, 0))
@@ -102,9 +102,9 @@ def make_github_banner():
 
 
 def make_itch_io_banner():
-    alphabet_12 = _load_alphabet_from_outputs(12)
-    image_font_24_zh_cn = _load_image_font_from_outputs(12, 'zh_cn', 24)
-    image_font_12_zh_cn = _load_image_font_from_outputs(12, 'zh_cn', 12)
+    alphabet_12 = _load_alphabet_from_outputs(12, 'proportional')
+    image_font_24_zh_cn = _load_image_font_from_outputs(12, 'proportional', 'zh_cn', 24)
+    image_font_12_zh_cn = _load_image_font_from_outputs(12, 'proportional', 'zh_cn', 12)
 
     image_background = Image.open(os.path.join(path_define.images_dir, 'itch-io-banner-background.png'))
     image = Image.new('RGBA', (image_background.width, image_background.height), (255, 255, 255, 0))
@@ -123,8 +123,8 @@ def make_itch_io_banner():
 
 
 def make_itch_io_background():
-    alphabet_12 = _load_alphabet_from_outputs(12)
-    image_font_12_zh_cn = _load_image_font_from_outputs(12, 'zh_cn', 12)
+    alphabet_12 = _load_alphabet_from_outputs(12, 'proportional')
+    image_font_12_zh_cn = _load_image_font_from_outputs(12, 'proportional', 'zh_cn', 12)
 
     image = Image.new('RGBA', (14 * 50, 14 * 50), (255, 255, 255, 0))
     _image_draw_text_background(image, alphabet_12, 1, 14, (30, 30, 30), image_font_12_zh_cn)
@@ -137,11 +137,11 @@ def make_itch_io_background():
 
 
 def make_itch_io_cover():
-    image_font_24_zh_cn = _load_image_font_from_outputs(12, 'zh_cn', 24)
-    image_font_12_latin = _load_image_font_from_outputs(12, 'latin', 12)
-    image_font_12_zh_cn = _load_image_font_from_outputs(12, 'zh_cn', 12)
-    image_font_12_zh_tr = _load_image_font_from_outputs(12, 'zh_tr', 12)
-    image_font_12_ja = _load_image_font_from_outputs(12, 'ja', 12)
+    image_font_24_zh_cn = _load_image_font_from_outputs(12, 'proportional', 'zh_cn', 24)
+    image_font_12_latin = _load_image_font_from_outputs(12, 'proportional', 'latin', 12)
+    image_font_12_zh_cn = _load_image_font_from_outputs(12, 'proportional', 'zh_cn', 12)
+    image_font_12_zh_tr = _load_image_font_from_outputs(12, 'proportional', 'zh_tr', 12)
+    image_font_12_ja = _load_image_font_from_outputs(12, 'proportional', 'ja', 12)
 
     image = Image.open(os.path.join(path_define.images_dir, 'itch-io-cover-background.png'))
     text_color = (255, 255, 255)
@@ -161,11 +161,11 @@ def make_itch_io_cover():
 
 
 def make_afdian_cover():
-    image_font_24_zh_cn = _load_image_font_from_outputs(12, 'zh_cn', 24)
-    image_font_12_latin = _load_image_font_from_outputs(12, 'latin', 12)
-    image_font_12_zh_cn = _load_image_font_from_outputs(12, 'zh_cn', 12)
-    image_font_12_zh_tr = _load_image_font_from_outputs(12, 'zh_tr', 12)
-    image_font_12_ja = _load_image_font_from_outputs(12, 'ja', 12)
+    image_font_24_zh_cn = _load_image_font_from_outputs(12, 'proportional', 'zh_cn', 24)
+    image_font_12_latin = _load_image_font_from_outputs(12, 'proportional', 'latin', 12)
+    image_font_12_zh_cn = _load_image_font_from_outputs(12, 'proportional', 'zh_cn', 12)
+    image_font_12_zh_tr = _load_image_font_from_outputs(12, 'proportional', 'zh_tr', 12)
+    image_font_12_ja = _load_image_font_from_outputs(12, 'proportional', 'ja', 12)
 
     image = Image.open(os.path.join(path_define.images_dir, 'afdian-cover-background.png'))
     text_color = (255, 255, 255)
