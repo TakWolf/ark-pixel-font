@@ -107,10 +107,10 @@ def collect_glyph_files(font_config):
     """
     收集可用字母表，生成字形源文件映射表
     """
-    cellar_alphabet = set()
-    cellar_glyph_file_paths_map = {'default': {}}
+    alphabet_cellar = set()
+    glyph_file_paths_cellar = {'default': {}}
     for language_specific in configs.language_specifics:
-        cellar_glyph_file_paths_map[language_specific] = {}
+        glyph_file_paths_cellar[language_specific] = {}
 
     px_dir = os.path.join(path_define.glyphs_dir, str(font_config.px))
     for glyph_file_dir, _, glyph_file_names in os.walk(px_dir):
@@ -120,23 +120,23 @@ def collect_glyph_files(font_config):
             glyph_file_path = os.path.join(glyph_file_dir, glyph_file_name)
             uni_hex_name, language_specifics = _parse_glyph_file_name(glyph_file_name)
             if uni_hex_name == 'notdef':
-                cellar_glyph_file_paths_map['default']['.notdef'] = glyph_file_path
+                glyph_file_paths_cellar['default']['.notdef'] = glyph_file_path
             else:
                 code_point = int(uni_hex_name, 16)
                 if len(language_specifics) > 0:
                     for language_specific in language_specifics:
-                        cellar_glyph_file_paths_map[language_specific][code_point] = glyph_file_path
+                        glyph_file_paths_cellar[language_specific][code_point] = glyph_file_path
                 else:
-                    cellar_glyph_file_paths_map['default'][code_point] = glyph_file_path
-                    cellar_alphabet.add(chr(code_point))
+                    glyph_file_paths_cellar['default'][code_point] = glyph_file_path
+                    alphabet_cellar.add(chr(code_point))
 
-    alphabet = list(cellar_alphabet)
+    alphabet = list(alphabet_cellar)
     alphabet.sort(key=lambda c: ord(c))
 
     glyph_file_paths_map = {}
     for language_specific in configs.language_specifics:
-        glyph_file_paths = dict(cellar_glyph_file_paths_map['default'])
-        glyph_file_paths.update(cellar_glyph_file_paths_map[language_specific])
+        glyph_file_paths = dict(glyph_file_paths_cellar['default'])
+        glyph_file_paths.update(glyph_file_paths_cellar[language_specific])
         glyph_file_paths_map[language_specific] = glyph_file_paths
 
     return alphabet, glyph_file_paths_map
