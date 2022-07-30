@@ -27,6 +27,16 @@ language_specifics = [
     'ko',     # 朝鲜语
 ]
 
+locale_map = {
+    'en': 'latin',
+    'zh-cn': 'zh_cn',
+    'zh-hk': 'zh_hk',
+    'zh-tw': 'zh_tw',
+    'zh-tr': 'zh_tr',
+    'ja': 'ja',
+    'ko': 'ko',
+}
+
 font_formats = ['otf', 'woff2', 'ttf']
 
 unidata_db = UnidataDB(os.path.join(path_define.unidata_dir, 'Blocks.txt'))

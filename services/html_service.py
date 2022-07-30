@@ -14,8 +14,8 @@ logger = logging.getLogger('html-service')
 def make_alphabet_html_file(font_config, alphabet):
     template = configs.template_env.get_template('alphabet.html')
     html = template.render(
+        configs=configs,
         font_config=font_config,
-        language_specifics=configs.language_specifics,
         alphabet=''.join([c for c in alphabet if ord(c) >= 128]),
     )
     html = minify_html.minify(html, minify_css=True, minify_js=True)
@@ -65,8 +65,8 @@ def _handle_demo_html_element(soup, element, alphabet):
 def make_demo_html_file(font_config, alphabet):
     template = configs.template_env.get_template('demo.html')
     html = template.render(
+        configs=configs,
         font_config=font_config,
-        language_specifics=configs.language_specifics,
     )
     soup = bs4.BeautifulSoup(html, 'html.parser')
     elements = soup.select('.page')
@@ -83,10 +83,7 @@ def make_demo_html_file(font_config, alphabet):
 
 def make_index_html_file():
     template = configs.template_env.get_template('index.html')
-    html = template.render(
-        font_configs=configs.font_configs,
-        language_specifics=configs.language_specifics,
-    )
+    html = template.render(configs=configs)
     html = minify_html.minify(html, minify_css=True, minify_js=True)
     fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
     html_file_path = os.path.join(path_define.outputs_dir, 'index.html')
@@ -97,10 +94,7 @@ def make_index_html_file():
 
 def make_playground_html_file():
     template = configs.template_env.get_template('playground.html')
-    html = template.render(
-        font_configs=configs.font_configs,
-        language_specifics=configs.language_specifics,
-    )
+    html = template.render(configs=configs)
     html = minify_html.minify(html, minify_css=True, minify_js=True)
     fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
     html_file_path = os.path.join(path_define.outputs_dir, 'playground.html')
