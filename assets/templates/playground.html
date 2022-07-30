@@ -10,20 +10,22 @@
             padding: 0;
         }
         {% for font_config in configs.font_configs  %}
-            .font-{{ font_config.px }}px {
-                font-size: {{ font_config.px * 2 }}px;
-                line-height: {{ font_config.px * 3 }}px;
-            }
-            {% for locale, language_specific in configs.locale_map.items() %}
-                {% with font_family = 'Ark-Pixel-' ~ font_config.px ~ 'px-' ~ language_specific %}
-                    @font-face {
-                        font-family: {{ font_family }};
-                        src: url("{{ font_config.get_font_file_name(language_specific, 'woff2') }}");
-                    }
-                    .font-{{ font_config.px }}px:lang({{ locale }}) {
-                        font-family: {{ font_family }}, serif;
-                    }
-                {% endwith %}
+            {% for width_mode in configs.width_modes %}
+                .font-{{ font_config.px }}px-{{ width_mode }} {
+                    font-size: {{ font_config.px * 2 }}px;
+                    line-height: {{ font_config.line_height_px * 2 }}px;
+                }
+                {% for locale, language_specific in configs.locale_map.items() %}
+                    {% with font_family = 'Ark-Pixel-' ~ font_config.px ~ 'px-' ~ width_mode ~ '-' ~ language_specific %}
+                        @font-face {
+                            font-family: {{ font_family }};
+                            src: url("{{ font_config.get_font_file_name(width_mode, language_specific, 'woff2') }}");
+                        }
+                        .font-{{ font_config.px }}px-{{ width_mode }}:lang({{ locale }}) {
+                            font-family: {{ font_family }}, serif;
+                        }
+                    {% endwith %}
+                {% endfor %}
             {% endfor %}
         {% endfor %}
         .toolbar {
@@ -46,7 +48,7 @@
             flex-direction: row;
             align-items: center;
             color: #4b4b4b;
-            font-family: Ark-Pixel-12px-latin, serif;
+            font-family: Ark-Pixel-12px-monospaced-latin, serif;
             font-size: 24px;
             line-height: 36px;
         }
@@ -67,7 +69,7 @@
         }
         .content {
             position: fixed;
-            top: 72px;
+            top: 108px;
             bottom: 0;
             left: 0;
             right: 0;
@@ -95,6 +97,15 @@
             </label>
         {% endfor %}
     </div>
+    <div class="options-group" style="background-color: #94e34a;">
+        {% for width_mode in configs.width_modes %}
+            <label class="option">
+                <input name="width_mode" type="radio" {{ 'checked' if width_mode == 'proportional' else '' }} onclick="applyWidthMode('{{ width_mode }}');">
+                <span></span>
+                {{ width_mode }}
+            </label>
+        {% endfor %}
+    </div>
     <div class="options-group" style="background-color: #6ebdff;">
         {% for locale, language_specific in configs.locale_map.items() %}
             <label class="option">
@@ -106,13 +117,24 @@
     </div>
 </form>
 <label class="content">
-    <textarea id="input-box" class="font-12px" lang="zh-cn" placeholder="请随便写点什么… / Please input something…"></textarea>
+    <textarea id="input-box" class="font-12px-proportional" lang="zh-cn" placeholder="请随便写点什么… / Please input something…"></textarea>
 </label>
 <script>
     var inputBox = document.getElementById('input-box');
 
+    var fontConfigs = {
+        px: 12,
+        widthMode: 'proportional',
+    };
+
     function applyFontSize(px) {
-        inputBox.className = 'font-' + px + 'px';
+        fontConfigs.px = px;
+        inputBox.className = 'font-' + fontConfigs.px + 'px-' + fontConfigs.widthMode;
+    }
+
+    function applyWidthMode(widthMode) {
+        fontConfigs.widthMode = widthMode;
+        inputBox.className = 'font-' + fontConfigs.px + 'px-' + fontConfigs.widthMode;
     }
 
     function applyLocale(locale) {
