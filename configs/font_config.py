@@ -50,6 +50,7 @@ class FontConfig:
         # 每个像素对应的 EM 单位数
         self.dot_em_units = dot_em_units
 
+        self.demo_html_file_name = f'demo-{px}px.html'
         self.preview_image_file_name = f'preview-{px}px.png'
 
     def get_name_strings(self, width_mode, language_specific):
@@ -109,6 +110,3 @@ class FontConfig:
 
     def get_alphabet_html_file_name(self, width_mode):
         return f'alphabet-{self.px}px-{width_mode}.html'
-
-    def get_demo_html_file_name(self, width_mode):
-        return f'demo-{self.px}px-{width_mode}.html'
