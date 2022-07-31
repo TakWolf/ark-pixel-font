@@ -53,7 +53,7 @@ def update_www():
             for language_specific in configs.language_specifics:
                 _copy_file(font_config.get_font_file_name(width_mode, language_specific, 'woff2'), path_define.outputs_dir, path_define.www_dir)
             _copy_file(font_config.get_alphabet_html_file_name(width_mode), path_define.outputs_dir, path_define.www_dir)
-            _copy_file(font_config.get_demo_html_file_name(width_mode), path_define.outputs_dir, path_define.www_dir)
+        _copy_file(font_config.demo_html_file_name, path_define.outputs_dir, path_define.www_dir)
     _copy_file('index.html', path_define.outputs_dir, path_define.www_dir)
     _copy_file('playground.html', path_define.outputs_dir, path_define.www_dir)
 
