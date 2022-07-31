@@ -22,7 +22,7 @@ def main():
             info_service.make_alphabet_txt_file(font_config, width_mode, alphabet)
             publish_service.make_release_zips(font_config, width_mode)
             html_service.make_alphabet_html_file(font_config, width_mode, alphabet)
-            html_service.make_demo_html_file(font_config, width_mode, alphabet)
+        html_service.make_demo_html_file(font_config, design_context)
         image_service.make_preview_image_file(font_config)
     html_service.make_index_html_file()
     html_service.make_playground_html_file()
