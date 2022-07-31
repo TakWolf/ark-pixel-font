@@ -70,7 +70,7 @@ def make_demo_html_file(font_config, design_context):
         font_config=font_config,
     )
     soup = bs4.BeautifulSoup(html, 'html.parser')
-    elements = soup.select('.page')
+    elements = soup.select('#page')
     for width_mode in configs.width_modes:
         alphabet = design_context[width_mode][0]
         for element in elements:
