@@ -27,7 +27,7 @@ def _get_locale_char_count_map(alphabet, query_block_func):
     count_map = {}
     for c in alphabet:
         block_name = query_block_func(c)
-        if block_name:
+        if block_name is not None:
             block_count = count_map.get(block_name, 0)
             block_count += 1
             count_map[block_name] = block_count
@@ -88,7 +88,7 @@ def _write_unicode_char_count_infos_table(file, infos):
         else:
             progress = 1
         finished_emoji = '🚩' if progress == 1 else '🚧'
-        file.write(f'| {code_point_range} | {unicode_block.name} | {unicode_block.name_cn if unicode_block.name_cn else ""} | {count} / {unicode_block.char_count} | {progress:.2%} {finished_emoji} |\n')
+        file.write(f'| {code_point_range} | {unicode_block.name} | {unicode_block.name_cn if unicode_block.name_cn is not None else ""} | {count} / {unicode_block.char_count} | {progress:.2%} {finished_emoji} |\n')
 
 
 def _write_locale_char_count_infos_table(file, infos):

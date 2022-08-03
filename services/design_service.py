@@ -81,7 +81,7 @@ def verify_glyph_files(font_config):
 
             assert height == font_config.px, glyph_file_path
 
-            east_asian_width = unicodedata.east_asian_width(c) if c else 'F'
+            east_asian_width = unicodedata.east_asian_width(c) if c is not None else 'F'
             # Halfwidth or Narrow
             if east_asian_width == 'H' or east_asian_width == 'Na':
                 assert width == font_config.px / 2, glyph_file_path
@@ -92,7 +92,7 @@ def verify_glyph_files(font_config):
                 pass
 
             unicode_block = configs.unidata_db.get_block_by_code_point(code_point)
-            if unicode_block:
+            if unicode_block is not None:
                 if unicode_block.begin == 0x4E00:  # CJK Unified Ideographs
                     for alpha in glyph_data[0]:
                         assert alpha == 0, glyph_file_path

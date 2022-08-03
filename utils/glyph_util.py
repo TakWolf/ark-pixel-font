@@ -105,7 +105,7 @@ def get_outlines_from_glyph_data(glyph_data, dot_size):
                     left_line_segment = solved_line_segment
                     right_line_segment = pending_line_segment
                 # 需要连接的情况
-                if left_line_segment and right_line_segment:
+                if left_line_segment is not None and right_line_segment is not None:
                     solved_line_segments.remove(solved_line_segment)
                     # 连接的两个点是重复的
                     right_line_segment.pop(0)
