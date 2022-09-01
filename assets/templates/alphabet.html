@@ -1,16 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-    <title>Ark Pixel - Alphabet</title>
+    <title>Ark Pixel - Alphabet {{ font_config.px }}px</title>
     <style>
         * {
             margin: 0;
             padding: 0;
         }
-        .configs-bar {
-            height: {{ font_config.px * 3 }}px;
+        {% for locale, language_specific in configs.locale_map.items() %}
+            {% with font_family = 'Ark-Pixel-' ~ font_config.px ~ 'px-' ~ language_specific %}
+                @font-face {
+                    font-family: {{ font_family }};
+                    src: url("{{ font_config.get_font_file_name(language_specific, 'woff2') }}");
+                }
+                :lang({{ locale }}) {
+                    font-family: {{ font_family }}, serif;
+                }
+            {% endwith %}
+        {% endfor %}
+        {% if font_config.px != 12 %}
+            @font-face {
+                font-family: Ark-Pixel-12px-latin;
+                src: url("{{ configs.font_config_map[12].get_font_file_name('latin', 'woff2') }}");
+            }
+        {% endif %}
+        .options-group {
+            height: 36px;
             position: fixed;
             top: 0;
             left: 0;
@@ -19,66 +36,56 @@
             flex-direction: row;
             background-color: #ffd339;
         }
-        .configs-bar input[type="radio"] {
-            display: none;
-        }
-        .configs-bar input[type="radio"] + span {
-            width: {{ font_config.px / 5 * 4 }}px;
-            height: {{ font_config.px / 5 * 4 }}px;
-            margin-left: {{ font_config.px }}px;
-            margin-right: {{ font_config.px }}px;
-            border-width: 2px;
-            border-color: #4b4b4b;
-            border-style: solid;
-        }
-        .configs-bar input[type="radio"]:checked + span {
-            background-color: #4b4b4b;
-        }
-        .btn-apply-config {
-            width: {{ font_config.px * 10 }}px;
+        .option {
             height: 100%;
-            margin-right: {{ font_config.px * 2 }}px;
+            margin-left: 24px;
+            margin-right: 24px;
             display: flex;
             flex-direction: row;
             align-items: center;
             color: #4b4b4b;
-            font-size: {{ font_config.px * 2 }}px;
-            line-height: {{ font_config.px * 3 }}px;
+            font-family: Ark-Pixel-12px-latin, serif;
+            font-size: 24px;
+            line-height: 36px;
         }
-        .content {
-            margin-top: {{ font_config.px * 3 }}px;
+        .option input[type="radio"] {
+            display: none;
+        }
+        .option input[type="radio"] + span {
+            width: 10px;
+            height: 10px;
+            margin-left: 12px;
+            margin-right: 12px;
+            border-width: 2px;
+            border-color: #4b4b4b;
+            border-style: solid;
+        }
+        .option input[type="radio"]:checked + span {
+            background-color: #4b4b4b;
+        }
+        #content {
+            margin-top: 36px;
             color: #4b4b4b;
             font-size: {{ font_config.px * 4 }}px;
             line-height: {{ font_config.px * 4 }}px;
             word-break: break-all;
-            background-image: linear-gradient(90deg, rgba(255, 0, 0, 0.1) 4%, rgba(0, 0, 0, 0) 4%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 255, 0.1) 50%, rgba(0, 0, 255, 0.1) 54%, rgba(0, 0, 0, 0) 54%), linear-gradient(180deg, rgba(255, 0, 0, 0.1) 4%, rgba(0, 0, 0, 0) 4%);
+            background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.1) 4%, rgba(0, 0, 0, 0) 4%, rgba(0, 0, 0, 0) 50%, rgba(255, 0, 0, 0.1) 50%, rgba(255, 0, 0, 0.1) 54%, rgba(0, 0, 0, 0) 54%), linear-gradient(180deg, rgba(0, 0, 0, 0.1) 4%, rgba(0, 0, 0, 0) 4%);
             background-size: {{ font_config.px * 4 }}px {{ font_config.px * 4 }}px;
         }
-        {% for language_specific in language_specifics %}
-            {% with font_family = 'Ark-Pixel-' ~ font_config.px ~ 'px-' ~ language_specific %}
-                @font-face {
-                    font-family: {{ font_family }};
-                    src: url("{{ font_config.get_font_file_name(language_specific, 'woff2') }}");
-                }
-                .app-font-{{ language_specific }} {
-                    font-family: {{ font_family }}, sans-serif;
-                }
-            {% endwith %}
-        {% endfor %}
     </style>
     {% include "common/analytics.html" %}
 </head>
-<body class="app-font-{{ language_specifics[0] }}">
-<form class="configs-bar">
-    {% for language_specific in language_specifics %}
-        <label class="btn-apply-config app-font-latin">
-            <input name="language_specific" type="radio" {{ 'checked' if loop.index == 1 else '' }} onclick="applyLanguageSpecific('{{ language_specific }}')">
+<body>
+<form class="options-group">
+    {% for locale, language_specific in configs.locale_map.items() %}
+        <label class="option">
+            <input name="language_specific" type="radio" {{ 'checked' if language_specific == 'latin' else '' }} onclick="applyLocale('{{ locale }}');">
             <span></span>
             {{ language_specific.replace('_', '-') }}
         </label>
     {% endfor %}
 </form>
-<div class="content">
+<div id="content" lang="en">
     ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789
     <br>
     abcdefghijklmnopqrstuvwxyz!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
@@ -86,8 +93,10 @@
     {{ alphabet }}
 </div>
 <script>
-    function applyLanguageSpecific(language_specific) {
-        document.body.className = 'app-font-' + language_specific;
+    var content = document.getElementById('content');
+
+    function applyLocale(locale) {
+        content.setAttribute('lang', locale);
     }
 </script>
 </body>
