@@ -131,7 +131,7 @@ def collect_glyph_files(font_config):
                     alphabet_cellar.add(chr(code_point))
 
     alphabet = list(alphabet_cellar)
-    alphabet.sort(key=lambda c: ord(c))
+    alphabet.sort()
 
     glyph_file_paths_map = {}
     for language_specific in configs.language_specifics:
