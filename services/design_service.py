@@ -33,6 +33,8 @@ def classify_glyph_files(font_config):
     按照 Unicode 区块分类字形源文件
     """
     px_dir = os.path.join(path_define.glyphs_dir, str(font_config.px))
+    px_old_dir = os.path.join(path_define.glyphs_dir, f'{font_config.px}.old')
+    assert not os.path.exists(px_old_dir), px_old_dir
     px_tmp_dir = os.path.join(path_define.glyphs_tmp_dir, str(font_config.px))
     fs_util.delete_dir(px_tmp_dir)
     for glyph_file_from_dir, _, glyph_file_names in os.walk(px_dir):
@@ -56,8 +58,9 @@ def classify_glyph_files(font_config):
             fs_util.make_dirs_if_not_exists(glyph_file_to_dir)
             shutil.copyfile(glyph_file_from_path, glyph_file_to_path)
             logger.info(f'classify glyph file {glyph_file_to_path}')
-    shutil.rmtree(px_dir)
+    os.rename(px_dir, px_old_dir)
     os.rename(px_tmp_dir, px_dir)
+    shutil.rmtree(px_old_dir)
 
 
 def verify_glyph_files(font_config):
