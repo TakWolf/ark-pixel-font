@@ -185,6 +185,7 @@ python ./build.py
 
 - [Font Development Best Practices](https://silnrsi.github.io/FDBP/)
 - [Microsoft - OpenType font documentation](https://docs.microsoft.com/en-us/typography/opentype/)
+- [Unicode 区块名翻译参考](https://github.com/Kushim-Jiang/Zhuanlan-Zhihu/tree/master/006)
 
 ## 赞助
 
