@@ -120,6 +120,8 @@ def make_fonts(font_config, alphabet, glyph_file_paths_map, language_specifics=N
     if font_formats is None:
         font_formats = configs.font_formats
 
+    fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
+
     units_per_em = font_config.get_units_per_em()
     vertical_metrics = font_config.get_vertical_metrics()
     glyph_order = ['.notdef']
@@ -135,7 +137,6 @@ def make_fonts(font_config, alphabet, glyph_file_paths_map, language_specifics=N
         name_strings = font_config.get_name_strings(language_specific)
         glyph_file_paths = glyph_file_paths_map[language_specific]
 
-        fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
         if 'otf' in font_formats or 'woff2' in font_formats:
             glyph_info_map = glyph_info_builder.build_glyph_info_map(glyph_file_paths, False)
             font_builder = _create_font_builder(name_strings, units_per_em, vertical_metrics, glyph_order, character_map, glyph_info_map, False)
