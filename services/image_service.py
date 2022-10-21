@@ -52,11 +52,11 @@ def _draw_text_background(image, alphabet, step, box_size, font, text_color):
     x_count = math.ceil(image.width / box_size)
     y_count = math.ceil(image.height / box_size)
     x_offset = (image.width - x_count * box_size) / 2 + (box_size - font.size) / 2
-    y_offset = (image.height - y_count * box_size) / 2 + (box_size - font.size) / 2
+    y_offset = (image.height - y_count * box_size) / 2 + (box_size - sum(font.getmetrics())) / 2
     for y in range(y_count):
         for x in range(x_count):
-            alphabet_index += step
             draw.text((x_offset + x * box_size, y_offset + y * box_size), alphabet[alphabet_index], fill=text_color, font=font)
+            alphabet_index += step
 
 
 def make_preview_image_file(font_config):
