@@ -38,7 +38,7 @@ def query_block(c):
 
 def get_alphabet_single_ascii():
     """
-    一个字节：ASCII 可打印字符，0x20 ~ 0x7E
+    单字节：ASCII 可打印字符，0x20 ~ 0x7E
     """
     alphabet = []
     for code in range(0x20, 0x7E + 1):
@@ -55,7 +55,7 @@ def get_alphabet_single_ascii():
 
 def get_alphabet_single_other():
     """
-    一个字节：JIS X 0201 标准内的半角标点及片假名，0xA1 ~ 0xDF
+    单字节：JIS-X-0201 标准内的半角标点及片假名，0xA1 ~ 0xDF
     """
     alphabet = []
     for code in range(0xA1, 0xDF + 1):
@@ -69,8 +69,8 @@ def get_alphabet_single_other():
 
 
 """
-两个字节：
-JIS X 0208 字集的所有字符
+双字节：
+JIS-X-0208 字集的所有字符
 第一位字节使用 0x81 ~ 0x9F、0xE0 ~ 0xEF（共47个）
 第二位字节使用 0x40 ~ 0x7E、0x80 ~ 0xFC（共188个）
 """
@@ -78,7 +78,7 @@ JIS X 0208 字集的所有字符
 
 def get_alphabet_double_basic():
     """
-    两个字节：
+    双字节：
     第一位字节使用 0x81 ~ 0x87，第二位字节使用 0x40 ~ 0x7E、0x80 ~ 0xFC
     第一位字节使用 0x88，第二位字节使用 0x40 ~ 0x7E、0x80 ~ 0x9E
     """
@@ -102,7 +102,7 @@ def get_alphabet_double_basic():
 
 def get_alphabet_double_word():
     """
-    两个字节：
+    双字节：
     第一位字节使用 0x88，第二位字节使用 0x9F ~ 0xFC
     第一位字节使用 0x89 ~ 0x9F、0xE0 ~ 0xEF，第二位字节使用 0x40 ~ 0x7E、0x80 ~ 0xFC
     """

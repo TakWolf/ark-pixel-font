@@ -9,7 +9,7 @@ alphabet_count = 8225
 
 def query_chr(zone_1, zone_2):
     """
-    按照 KS X 1001 分区规则查询字符串
+    按照 KS-X-1001 分区规则查询字符串
     """
     return bytes([zone_1 + _block_offset, zone_2 + _block_offset]).decode('ksx1001')
 
