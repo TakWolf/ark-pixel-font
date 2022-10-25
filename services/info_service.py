@@ -79,25 +79,25 @@ def _get_ks_x_1001_char_count_infos(alphabet):
 
 
 def _write_unicode_char_count_infos_table(file, infos):
-    file.write('| 区块范围 | 区块名称 | 区块含义 | 覆盖数 | 覆盖率 |\n')
-    file.write('|---|---|---|---:|---:|\n')
+    file.write('| 区块范围 | 区块名称 | 区块含义 | 完成数 | 缺失数 | 进度 |\n')
+    file.write('|---|---|---|---:|---:|---:|\n')
     for unicode_block, count in infos:
         code_point_range = f'{unicode_block.begin:04X} ~ {unicode_block.end:04X}'
-        if unicode_block.char_count > 0:
-            progress = count / unicode_block.char_count
-        else:
-            progress = 1
+        title = unicode_block.name
+        title_cn = unicode_block.name_cn if unicode_block.name_cn is not None else ''
+        total = unicode_block.char_count
+        progress = count / total if total > 0 else 1
         finished_emoji = '🚩' if progress == 1 else '🚧'
-        file.write(f'| {code_point_range} | {unicode_block.name} | {unicode_block.name_cn if unicode_block.name_cn is not None else ""} | {count} / {unicode_block.char_count} | {progress:.2%} {finished_emoji} |\n')
+        file.write(f'| {code_point_range} | {title} | {title_cn} | {count} / {total} | {total - count} | {progress:.2%} {finished_emoji} |\n')
 
 
 def _write_locale_char_count_infos_table(file, infos):
-    file.write('| 区块名称 | 覆盖数 | 覆盖率 |\n')
-    file.write('|---|---:|---:|\n')
+    file.write('| 区块名称 | 完成数 | 缺失数 | 进度 |\n')
+    file.write('|---|---:|---:|---:|\n')
     for title, count, total in infos:
         progress = count / total
         finished_emoji = '🚩' if progress == 1 else '🚧'
-        file.write(f'| {title} | {count} / {total} | {progress:.2%} {finished_emoji} |\n')
+        file.write(f'| {title} | {count} / {total} | {total - count} | {progress:.2%} {finished_emoji} |\n')
 
 
 def make_info_file(font_config, alphabet):
@@ -137,7 +137,7 @@ def make_info_file(font_config, alphabet):
         file.write('\n')
         _write_locale_char_count_infos_table(file, _get_shift_jis_char_count_infos(alphabet))
         file.write('\n')
-        file.write('## KS X 1001 字符分布\n')
+        file.write('## KS-X-1001 字符分布\n')
         file.write('\n')
         file.write('韩语参考字符集。统计范围不包含 ASCII。\n')
         file.write('\n')
