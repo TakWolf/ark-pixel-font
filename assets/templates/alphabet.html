@@ -3,27 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-    <title>Ark Pixel - Alphabet {{ font_config.px }}px</title>
+    <title>Ark Pixel - Alphabet {{ font_config.px }}px {{ width_mode }}</title>
     <style>
         * {
             margin: 0;
             padding: 0;
         }
         {% for locale, language_specific in configs.locale_map.items() %}
-            {% with font_family = 'Ark-Pixel-' ~ font_config.px ~ 'px-' ~ language_specific %}
+            {% with font_family = 'Ark-Pixel-' ~ font_config.px ~ 'px-' ~ width_mode ~ '-' ~ language_specific %}
                 @font-face {
                     font-family: {{ font_family }};
-                    src: url("{{ font_config.get_font_file_name(language_specific, 'woff2') }}");
+                    src: url("{{ font_config.get_font_file_name(width_mode, language_specific, 'woff2') }}");
                 }
                 :lang({{ locale }}) {
                     font-family: {{ font_family }}, serif;
                 }
             {% endwith %}
         {% endfor %}
-        {% if font_config.px != 12 %}
+        {% if font_config.px != 12 or width_mode != 'monospaced' %}
             @font-face {
-                font-family: Ark-Pixel-12px-latin;
-                src: url("{{ configs.font_config_map[12].get_font_file_name('latin', 'woff2') }}");
+                font-family: Ark-Pixel-12px-monospaced-latin;
+                src: url("{{ configs.font_config_map[12].get_font_file_name('monospaced', 'latin', 'woff2') }}");
             }
         {% endif %}
         .options-group {
@@ -44,7 +44,7 @@
             flex-direction: row;
             align-items: center;
             color: #4b4b4b;
-            font-family: Ark-Pixel-12px-latin, serif;
+            font-family: Ark-Pixel-12px-monospaced-latin, serif;
             font-size: 24px;
             line-height: 36px;
         }
@@ -63,15 +63,27 @@
         .option input[type="radio"]:checked + span {
             background-color: #4b4b4b;
         }
-        #content {
-            margin-top: 36px;
-            color: #4b4b4b;
-            font-size: {{ font_config.px * 4 }}px;
-            line-height: {{ font_config.px * 4 }}px;
-            word-break: break-all;
-            background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.1) 4%, rgba(0, 0, 0, 0) 4%, rgba(0, 0, 0, 0) 50%, rgba(255, 0, 0, 0.1) 50%, rgba(255, 0, 0, 0.1) 54%, rgba(0, 0, 0, 0) 54%), linear-gradient(180deg, rgba(0, 0, 0, 0.1) 4%, rgba(0, 0, 0, 0) 4%);
-            background-size: {{ font_config.px * 4 }}px {{ font_config.px * 4 }}px;
-        }
+        {% if width_mode == 'monospaced' %}
+            #content {
+                margin-top: 36px;
+                color: #4b4b4b;
+                font-size: {{ font_config.px * 4 }}px;
+                line-height: {{ font_config.px * 4 }}px;
+                word-break: break-all;
+                background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.1) 4%, rgba(0, 0, 0, 0) 4%, rgba(0, 0, 0, 0) 50%, rgba(255, 0, 0, 0.1) 50%, rgba(255, 0, 0, 0.1) 54%, rgba(0, 0, 0, 0) 54%), linear-gradient(180deg, rgba(0, 0, 0, 0.1) 4%, rgba(0, 0, 0, 0) 4%);
+                background-size: {{ font_config.px * 4 }}px {{ font_config.px * 4 }}px;
+            }
+        {% else %}
+            #content {
+                margin-top: 36px;
+                color: #4b4b4b;
+                font-size: {{ font_config.px * 4 }}px;
+                line-height: {{ font_config.line_height_px * 4 }}px;
+                word-break: break-all;
+                background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 4%, rgba(0, 0, 0, 0) 4%);
+                background-size: auto {{ font_config.line_height_px * 4 }}px;
+            }
+        {% endif %}
     </style>
     {% include "common/analytics.html" %}
 </head>

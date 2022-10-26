@@ -10,10 +10,12 @@ def main():
     for font_config in configs.font_configs:
         design_service.classify_glyph_files(font_config)
         design_service.verify_glyph_files(font_config)
-        alphabet, glyph_file_paths_map = design_service.collect_glyph_files(font_config)
-        font_service.make_fonts(font_config, alphabet, glyph_file_paths_map, font_formats=['woff2'])
-        info_service.make_info_file(font_config, alphabet)
-        info_service.make_alphabet_txt_file(font_config, alphabet)
+        design_context = design_service.collect_glyph_files(font_config)
+        for width_mode in configs.width_modes:
+            alphabet, glyph_file_paths_map = design_context[width_mode]
+            font_service.make_fonts(font_config, width_mode, alphabet, glyph_file_paths_map, font_formats=['woff2'])
+            info_service.make_info_file(font_config, width_mode, alphabet)
+            info_service.make_alphabet_txt_file(font_config, width_mode, alphabet)
 
 
 if __name__ == '__main__':

@@ -9,46 +9,50 @@
             margin: 0;
             padding: 0;
         }
+        @font-face {
+            font-family: Ark-Pixel-12px-monospaced-latin;
+            src: url("{{ configs.font_config_map[12].get_font_file_name('monospaced', 'latin', 'woff2') }}");
+        }
         {% for font_config in configs.font_configs  %}
             {% for locale, language_specific in configs.locale_map.items() %}
-                {% with font_family = 'Ark-Pixel-' ~ font_config.px ~ 'px-' ~ language_specific %}
+                {% with font_family = 'Ark-Pixel-' ~ font_config.px ~ 'px-proportional-' ~ language_specific %}
                     @font-face {
                         font-family: {{ font_family }};
-                        src: url("{{ font_config.get_font_file_name(language_specific, 'woff2') }}");
+                        src: url("{{ font_config.get_font_file_name('proportional', language_specific, 'woff2') }}");
                     }
-                    .font-{{ font_config.px }}px :lang({{ locale }}) {
+                    .font-{{ font_config.px }}px-proportional :lang({{ locale }}) {
                         font-family: {{ font_family }}, serif;
                     }
                 {% endwith %}
             {% endfor %}
-            .font-{{ font_config.px }}px .title {
+            .font-{{ font_config.px }}px-proportional .title {
                 color: #4b4b4b;
                 font-size: {{ font_config.px * 3 }}px;
                 font-weight: normal;
-                line-height: {{ font_config.px * 4 }}px;
+                line-height: {{ font_config.line_height_px * 3 }}px;
             }
-            .font-{{ font_config.px }}px .text {
+            .font-{{ font_config.px }}px-proportional .text {
                 color: #4b4b4b;
                 font-size: {{ font_config.px * 2 }}px;
-                line-height: {{ font_config.px * 3 }}px;
+                line-height: {{ font_config.line_height_px * 2 }}px;
             }
-            .font-{{ font_config.px }}px .copyright {
+            .font-{{ font_config.px }}px-proportional .copyright {
                 color: #808080;
                 font-size: {{ font_config.px }}px;
-                line-height: {{ font_config.px * 2 }}px;
+                line-height: {{ font_config.line_height_px }}px;
             }
-            .font-{{ font_config.px }}px .link-group {
+            .font-{{ font_config.px }}px-proportional .link-group {
                 margin-top: {{ font_config.px / 2 }}px;
                 margin-bottom: {{ font_config.px / 2 }}px;
                 display: flex;
                 flex-direction: row;
                 align-items: center;
             }
-            .font-{{ font_config.px }}px .link-tab {
+            .font-{{ font_config.px }}px-proportional .link-tab {
                 margin-left: {{ font_config.px }}px;
                 margin-right: {{ font_config.px }}px;
                 font-size: {{ font_config.px * 2 }}px;
-                line-height: {{ font_config.px * 3 }}px;
+                line-height: {{ font_config.line_height_px * 2 }}px;
             }
         {% endfor %}
         .options-group {
@@ -71,7 +75,7 @@
             flex-direction: row;
             align-items: center;
             color: #4b4b4b;
-            font-family: Ark-Pixel-12px-latin, serif;
+            font-family: Ark-Pixel-12px-monospaced-latin, serif;
             font-size: 24px;
             line-height: 36px;
         }
@@ -110,7 +114,7 @@
         </label>
     {% endfor %}
 </form>
-<div id="page" class="font-12px">
+<div id="page" class="font-12px-proportional">
     <h1 class="title" lang="zh-cn">方舟像素字体 / Ark Pixel Font</h1>
     <br>
     <div class="text" lang="zh-cn">★ 开源的泛中日韩像素字体 ★</div>
@@ -131,16 +135,15 @@
     <div class="link-group" lang="en">
         <a class="link-tab" href="playground.html" target="_blank">playground</a>
     </div>
-    <div class="link-group" lang="en">
-        {% for font_config in configs.font_configs %}
-            <a class="link-tab" href="demo-{{ font_config.px }}px.html" target="_blank">demo-{{ font_config.px }}px</a>
-        {% endfor %}
-    </div>
-    <div class="link-group" lang="en">
-        {% for font_config in configs.font_configs %}
-            <a class="link-tab" href="alphabet-{{ font_config.px }}px.html" target="_blank">alphabet-{{ font_config.px }}px</a>
-        {% endfor %}
-    </div>
+    {% for font_config in configs.font_configs %}
+        <div class="link-group" lang="en">
+            <span class="link-tab">{{ font_config.px }}px</span>
+            {% for width_mode in configs.width_modes %}
+                <a class="link-tab" href="alphabet-{{ font_config.px }}px-{{ width_mode }}.html" target="_blank">alphabet-{{ width_mode }}</a>
+            {% endfor %}
+            <a class="link-tab" href="demo-{{ font_config.px }}px.html" target="_blank">demo</a>
+        </div>
+    {% endfor %}
     <br>
     <div class="copyright" lang="en">© 2021 TakWolf</div>
 </div>
@@ -148,7 +151,7 @@
     var page = document.getElementById('page');
 
     function applyFontSize(px) {
-        page.className = 'font-' + px + 'px';
+        page.className = 'font-' + px + 'px-proportional';
     }
 </script>
 </body>

@@ -9,31 +9,41 @@
             margin: 0;
             padding: 0;
         }
-        {% for locale, language_specific in configs.locale_map.items() %}
-            {% with font_family = 'Ark-Pixel-' ~ font_config.px ~ 'px-' ~ language_specific %}
-                @font-face {
-                    font-family: {{ font_family }};
-                    src: url("{{ font_config.get_font_file_name(language_specific, 'woff2') }}");
-                }
-                :lang({{ locale }}) {
-                    font-family: {{ font_family }}, sans-serif;
-                }
-            {% endwith %}
+        {% for width_mode in configs.width_modes %}
+            {% for locale, language_specific in configs.locale_map.items() %}
+                {% with font_family = 'Ark-Pixel-' ~ font_config.px ~ 'px-' ~ width_mode ~ '-' ~ language_specific %}
+                    @font-face {
+                        font-family: {{ font_family }};
+                        src: url("{{ font_config.get_font_file_name(width_mode, language_specific, 'woff2') }}");
+                    }
+                    .font-{{ width_mode }} :lang({{ locale }}) {
+                        font-family: {{ font_family }}, sans-serif;
+                    }
+                {% endwith %}
+            {% endfor %}
         {% endfor %}
+        {% if font_config.px != 12 %}
+            @font-face {
+                font-family: Ark-Pixel-12px-monospaced-latin;
+                src: url("{{ configs.font_config_map[12].get_font_file_name('monospaced', 'latin', 'woff2') }}");
+            }
+        {% endif %}
         .theme-light {
             color: #4b4b4b;
             background-color: white;
-        }
-        .theme-light .char-notdef {
-            color: #f83737;
         }
         .theme-dark {
             color: white;
             background-color: #4b4b4b;
         }
-        .theme-dark .char-notdef {
-            color: #ffd339;
-        }
+        {% for width_mode in configs.width_modes %}
+            .theme-light .font-{{ width_mode }} .char-notdef-{{ width_mode }} {
+                color: #f83737;
+            }
+            .theme-dark .font-{{ width_mode }} .char-notdef-{{ width_mode }} {
+                color: #ffd339;
+            }
+        {% endfor %}
         a {
             word-break: break-all;
         }
@@ -43,22 +53,61 @@
         a:visited {
             color: cornflowerblue;
         }
+        .options-group {
+            height: 36px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffd339;
+        }
+        .option {
+            height: 100%;
+            margin-left: 24px;
+            margin-right: 24px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            color: #4b4b4b;
+            font-family: Ark-Pixel-12px-monospaced-latin, serif;
+            font-size: 24px;
+            line-height: 36px;
+        }
+        .option input[type="radio"] {
+            display: none;
+        }
+        .option input[type="radio"] + span {
+            width: 10px;
+            height: 10px;
+            margin-left: 12px;
+            margin-right: 12px;
+            border-width: 2px;
+            border-color: #4b4b4b;
+            border-style: solid;
+        }
+        .option input[type="radio"]:checked + span {
+            background-color: #4b4b4b;
+        }
         .btn-apply-theme {
             position: fixed;
             width: 48px;
             height: 48px;
             cursor: pointer;
         }
-        .page {
+        #page {
             padding: 64px 192px;
         }
         @media screen and (max-width: 1024px) {
-            .page {
+            #page {
                 padding: 64px 64px;
             }
         }
         @media screen and (max-width: 750px) {
-            .page {
+            #page {
                 padding: 64px 16px;
             }
         }
@@ -67,21 +116,30 @@
             margin-bottom: {{ font_config.px * 2 }}px;
             font-size: {{ font_config.px * 3 }}px;
             font-weight: normal;
-            line-height: {{ font_config.px * 4 }}px;
+            line-height: {{ font_config.line_height_px * 3 }}px;
         }
         .content {
             margin-top: {{ font_config.px * 2 }}px;
             margin-bottom: {{ font_config.px * 2 }}px;
             font-size: {{ font_config.px * 2 }}px;
-            line-height: {{ font_config.px * 3 }}px;
+            line-height: {{ font_config.line_height_px * 2 }}px;
         }
     </style>
     {% include "common/analytics.html" %}
 </head>
 <body class="theme-light">
-<div class="btn-apply-theme theme-light" style="top: 0; left: 0;" onclick="document.body.className = 'theme-light';"></div>
-<div class="btn-apply-theme theme-dark" style="top: 0; right: 0;" onclick="document.body.className = 'theme-dark';"></div>
-<div class="page">
+<form class="options-group">
+    {% for width_mode in configs.width_modes %}
+        <label class="option">
+            <input name="width_mode" type="radio" {{ 'checked' if width_mode == 'proportional' else '' }} onclick="applyWidthMode('{{ width_mode }}');">
+            <span></span>
+            {{ width_mode }}
+        </label>
+    {% endfor %}
+</form>
+<div class="btn-apply-theme theme-light" style="top: 36px; left: 0;" onclick="document.body.className = 'theme-light';"></div>
+<div class="btn-apply-theme theme-dark" style="top: 36px; right: 0;" onclick="document.body.className = 'theme-dark';"></div>
+<div id="page" class="font-proportional">
     <div lang="zh-cn">
         <h1 class="title">方舟像素字体 / Ark Pixel Font</h1>
         <p class="content">★ 开源的泛中日韩像素字体 ★</p>
@@ -274,5 +332,12 @@
         <p class="content">Nintendo имеет множество дочерних компаний в Японии и за рубежом, а также таких деловых партнеров, как The Pokémon Company и HAL Laboratory. Компания Nintendo и ее сотрудники были удостоены таких наград, как Technology & Engineering Emmy Awards[en], Game Awards, Game Developers Choice Awards и «Премия Британской Академии в области видеоигр». Это одна из самых богатых и ценных компаний на японском рынке.</p>
     </div>
 </div>
+<script>
+    var page = document.getElementById('page');
+
+    function applyWidthMode(widthMode) {
+        page.className = 'font-' + widthMode;
+    }
+</script>
 </body>
 </html>
