@@ -42,7 +42,7 @@ def update_docs():
         for width_mode in configs.width_modes:
             _copy_file(font_config.get_info_file_name(width_mode), path_define.outputs_dir, path_define.docs_dir)
         _copy_file(font_config.preview_image_file_name, path_define.outputs_dir, path_define.docs_dir)
-    _copy_file('itch-io-banner.png', path_define.outputs_dir, path_define.docs_dir)
+    _copy_file('readme-banner.png', path_define.outputs_dir, path_define.docs_dir)
 
 
 def update_www():

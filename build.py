@@ -26,6 +26,7 @@ def main():
         image_service.make_preview_image_file(font_config)
     html_service.make_index_html_file()
     html_service.make_playground_html_file()
+    image_service.make_readme_banner()
     image_service.make_github_banner()
     image_service.make_itch_io_banner()
     image_service.make_itch_io_background()

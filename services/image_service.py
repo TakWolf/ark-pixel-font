@@ -82,6 +82,30 @@ def make_preview_image_file(font_config):
     logger.info(f'make {image_file_path}')
 
 
+def make_readme_banner():
+    alphabet_12 = _load_alphabet(12, 'proportional')
+    font_24_zh_cn = _load_font(12, 'proportional', 'zh_cn', 24)
+    font_12_zh_cn = _load_font(12, 'proportional', 'zh_cn', 12)
+
+    box_size = 14
+    line_height = configs.font_config_map[12].line_height_px
+    text_color = (255, 255, 255)
+    shadow_color = (80, 80, 80)
+
+    image_background = Image.open(os.path.join(path_define.images_dir, 'readme-banner-background.png'))
+    image = Image.new('RGBA', (image_background.width, image_background.height), (255, 255, 255, 0))
+    _draw_text_background(image, alphabet_12, 12, box_size, font_12_zh_cn, (200, 200, 200))
+    image.paste(image_background, mask=image_background)
+    _draw_text(image, (image.width / 2, 28), '方舟像素字体', font_24_zh_cn, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
+    _draw_text(image, (image.width / 2, 28 + line_height * 2 + 4), '★ 开源的泛中日韩像素字体 ★', font_12_zh_cn, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
+    image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
+
+    fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
+    image_file_path = os.path.join(path_define.outputs_dir, 'readme-banner.png')
+    image.save(image_file_path)
+    logger.info(f'make {image_file_path}')
+
+
 def make_github_banner():
     alphabet_12 = _load_alphabet(12, 'proportional')
     font_24_zh_cn = _load_font(12, 'proportional', 'zh_cn', 24)

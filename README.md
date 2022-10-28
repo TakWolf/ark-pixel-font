@@ -1,4 +1,4 @@
-![banner](docs/itch-io-banner.png)
+![banner](docs/readme-banner.png)
 
 # 方舟像素字体 / Ark Pixel Font
 
