@@ -168,10 +168,12 @@ def collect_glyph_files(font_config):
                         if width_mode_dir_name == 'common' or width_mode_dir_name == 'proportional':
                             alphabet_cellar['proportional'].add(c)
 
-    design_context = {}
+    alphabet_group = {}
+    glyph_file_paths_map_group = {}
     for width_mode in configs.width_modes:
         alphabet = list(alphabet_cellar[width_mode])
         alphabet.sort()
+        alphabet_group[width_mode] = alphabet
 
         glyph_file_paths_map = {}
         for language_specific in configs.language_specifics:
@@ -180,7 +182,6 @@ def collect_glyph_files(font_config):
             glyph_file_paths.update(glyph_file_paths_cellar[width_mode]['default'])
             glyph_file_paths.update(glyph_file_paths_cellar[width_mode][language_specific])
             glyph_file_paths_map[language_specific] = glyph_file_paths
+        glyph_file_paths_map_group[width_mode] = glyph_file_paths_map
 
-        design_context[width_mode] = alphabet, glyph_file_paths_map
-
-    return design_context
+    return alphabet_group, glyph_file_paths_map_group

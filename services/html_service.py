@@ -63,7 +63,7 @@ def _handle_demo_html_element(soup, element, alphabet, width_mode):
         temp_parent.unwrap()
 
 
-def make_demo_html_file(font_config, design_context):
+def make_demo_html_file(font_config, alphabet_group):
     template = configs.template_env.get_template('demo.html')
     html = template.render(
         configs=configs,
@@ -72,7 +72,7 @@ def make_demo_html_file(font_config, design_context):
     soup = bs4.BeautifulSoup(html, 'html.parser')
     elements = soup.select('#page')
     for width_mode in configs.width_modes:
-        alphabet = design_context[width_mode][0]
+        alphabet = alphabet_group[width_mode]
         for element in elements:
             _handle_demo_html_element(soup, element, alphabet, width_mode)
     html = str(soup)
