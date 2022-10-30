@@ -159,3 +159,12 @@ def make_alphabet_txt_file(font_config, width_mode, alphabet):
     with open(txt_file_path, 'w', encoding='utf-8') as file:
         file.write(''.join(alphabet))
     logger.info(f'make {txt_file_path}')
+
+
+def read_alphabet_txt_file(font_config, width_mode):
+    txt_file_path = os.path.join(path_define.outputs_dir, font_config.get_alphabet_txt_file_name(width_mode))
+    with open(txt_file_path, 'r', encoding='utf-8') as file:
+        text = file.read()
+    alphabet = list(text)
+    alphabet.sort()
+    return alphabet
