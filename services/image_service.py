@@ -20,7 +20,7 @@ def _load_alphabet(px, width_mode):
 
 
 def _load_font(px, width_mode, language_specific, size):
-    font_file_path = os.path.join(path_define.outputs_dir, configs.font_config_map[px].get_font_file_name(width_mode, language_specific, 'otf'))
+    font_file_path = os.path.join(path_define.outputs_dir, configs.font_config_map[px].get_font_file_name(width_mode, language_specific, 'woff2'))
     return ImageFont.truetype(font_file_path, size)
 
 
