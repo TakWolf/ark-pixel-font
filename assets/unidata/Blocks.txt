@@ -244,7 +244,7 @@ FFF0..FFFF; Specials; 特殊
 10D00..10D3F; Hanifi Rohingya; 哈尼菲罗兴亚
 10E60..10E7F; Rumi Numeral Symbols; 鲁米数字符号
 10E80..10EBF; Yezidi; 耶西迪
-10EC0..10EFF; Arabic Extended-C; Arabic Extended-C
+10EC0..10EFF; Arabic Extended-C; 阿拉伯扩充-C
 10F00..10F2F; Old Sogdian; 古粟特
 10F30..10F6F; Sogdian; 粟特
 10F70..10FAF; Old Uyghur; 回鹘
