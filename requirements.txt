@@ -2,11 +2,11 @@ beautifulsoup4==4.11.1
 Brotli==1.0.9
 fonttools==4.38.0
 gitdb==4.0.10
-GitPython==3.1.29
+GitPython==3.1.30
 Jinja2==3.1.2
 MarkupSafe==2.1.1
 minify_html==0.10.3
-Pillow==9.3.0
+Pillow==9.4.0
 pypng==0.20220715.0
 smmap==5.0.0
 soupsieve==2.3.2.post1
