@@ -137,7 +137,7 @@
 
 通过下面的命令来添加下载源：
 
-```commandline
+```shell
 brew tap homebrew/cask-fonts
 ```
 
@@ -145,7 +145,7 @@ brew tap homebrew/cask-fonts
 
 - 等宽模式
 
-```commandline
+```shell
 brew install font-ark-pixel-10px-monospaced
 brew install font-ark-pixel-12px-monospaced
 brew install font-ark-pixel-16px-monospaced
@@ -153,7 +153,7 @@ brew install font-ark-pixel-16px-monospaced
 
 - 比例模式
 
-```commandline
+```shell
 brew install font-ark-pixel-10px-proportional
 brew install font-ark-pixel-12px-proportional
 brew install font-ark-pixel-16px-proportional
@@ -175,13 +175,13 @@ brew install font-ark-pixel-16px-proportional
 
 打开终端，通过 `git` 命令克隆项目：
 
-```commandline
+```shell
 git clone https://github.com/TakWolf/ark-pixel-font.git
 ```
 
 进入项目文件夹，并创建虚拟环境：
 
-```commandline
+```shell
 cd ark-pixel-font
 virtualenv venv
 source ./venv/bin/activate
@@ -189,13 +189,13 @@ source ./venv/bin/activate
 
 安装所需依赖：
 
-```commandline
+```shell
 python -m pip install -r requirements.txt
 ```
 
 执行构建脚本：
 
-```
+```shell
 python ./build.py
 ```
 
