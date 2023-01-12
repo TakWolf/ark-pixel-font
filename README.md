@@ -177,6 +177,10 @@ brew install font-ark-pixel-16px-proportional
 
 详细信息请查看 [homebrew-cask-fonts](https://github.com/Homebrew/homebrew-cask-fonts) 的主页。
 
+### Windows
+
+Windows安装方法可查看微软官方教程：[如何在 Windows 中安装或删除字体](https://support.microsoft.com/zh-cn/windows/如何在-windows-中安装或删除字体-f12d0657-2fc8-7613-c76f-88d043b334b8)。
+
 ## 开发流程
 
 本字体使用程序进行构建。
