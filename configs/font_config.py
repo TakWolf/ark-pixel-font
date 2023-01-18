@@ -1,4 +1,8 @@
+import os
 import time
+import tomllib
+
+from configs import path_define
 
 display_name_prefix = 'Ark Pixel'
 unique_name_prefix = 'Ark-Pixel'
@@ -15,13 +19,13 @@ license_info_url = 'https://scripts.sil.org/OFL'
 
 
 class FontAttrs:
-    def __init__(self, box_origin_y_px, x_height_px, cap_height_px):
+    def __init__(self, config_data):
         # 盒子中基准线像素位置，即以字面框左上角原点计算，基线所处的像素位置
-        self.box_origin_y_px = box_origin_y_px
+        self.box_origin_y_px = config_data['box_origin_y_px']
         # 小写字母像素高度
-        self.x_height_px = x_height_px
+        self.x_height_px = config_data['x_height_px']
         # 大写字母像素高度
-        self.cap_height_px = cap_height_px
+        self.cap_height_px = config_data['cap_height_px']
 
 
 class VerticalMetrics:
@@ -38,15 +42,20 @@ class VerticalMetrics:
 
 
 class FontConfig:
-    def __init__(self, px, line_height_px, monospaced_attrs, proportional_attrs, dot_em_units=100):
+    def __init__(self, px, dot_em_units=100):
+        config_file_path = os.path.join(path_define.glyphs_dir, str(px), 'config.toml')
+        with open(config_file_path, 'rb') as config_file:
+            config_data = tomllib.load(config_file)['font']
+        assert px == config_data['px'], config_file_path
+
         # 字体像素尺寸，也是等宽模式的像素行高
         self.px = px
         # 比例模式的像素行高
-        self.line_height_px = line_height_px
+        self.line_height_px = config_data['line_height_px']
         # 等宽模式属性
-        self.monospaced_attrs = monospaced_attrs
+        self.monospaced_attrs = FontAttrs(config_data['monospaced'])
         # 比例模式属性
-        self.proportional_attrs = proportional_attrs
+        self.proportional_attrs = FontAttrs(config_data['proportional'])
         # 每个像素对应的 EM 单位数
         self.dot_em_units = dot_em_units
 

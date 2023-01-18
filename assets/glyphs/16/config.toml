@@ -1,0 +1,13 @@
+[font]
+px = 16
+line_height_px = 24
+
+[font.monospaced]
+box_origin_y_px = 13
+x_height_px = 7
+cap_height_px = 10
+
+[font.proportional]
+box_origin_y_px = 14
+x_height_px = 8
+cap_height_px = 11
