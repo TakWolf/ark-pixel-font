@@ -33,11 +33,9 @@ def classify_glyph_files(font_config):
     按照 Unicode 区块分类字形源文件
     """
     px_dir = os.path.join(path_define.glyphs_dir, str(font_config.px))
-    px_old_dir = os.path.join(path_define.glyphs_dir, f'{font_config.px}.old')
-    assert not os.path.exists(px_old_dir), px_old_dir
     px_tmp_dir = os.path.join(path_define.glyphs_tmp_dir, str(font_config.px))
     fs_util.delete_dir(px_tmp_dir)
-    for width_mode_dir_name in os.listdir(px_dir):
+    for width_mode_dir_name in configs.width_mode_dir_names:
         width_mode_dir = os.path.join(px_dir, width_mode_dir_name)
         if not os.path.isdir(width_mode_dir):
             continue
@@ -63,9 +61,10 @@ def classify_glyph_files(font_config):
                 fs_util.make_dirs_if_not_exists(glyph_file_to_dir)
                 shutil.copyfile(glyph_file_from_path, glyph_file_to_path)
                 logger.info(f'classify glyph file {glyph_file_to_path}')
-    os.rename(px_dir, px_old_dir)
-    os.rename(px_tmp_dir, px_dir)
-    shutil.rmtree(px_old_dir)
+        width_mode_old_dir = os.path.join(px_tmp_dir, f'{width_mode_dir_name}.old')
+        os.rename(width_mode_dir, width_mode_old_dir)
+        os.rename(width_mode_tmp_dir, width_mode_dir)
+        shutil.rmtree(width_mode_old_dir)
 
 
 def verify_glyph_files(font_config):
