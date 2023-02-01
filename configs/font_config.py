@@ -33,8 +33,7 @@ class VerticalMetrics:
     竖向量度值
     可以参考：https://glyphsapp.com/zh/learn/vertical-metrics
     """
-    def __init__(self, line_height, ascent, descent, x_height, cap_height):
-        self.line_height = line_height
+    def __init__(self, ascent, descent, x_height, cap_height):
         self.ascent = ascent
         self.descent = descent
         self.x_height = x_height
@@ -98,12 +97,11 @@ class FontConfig:
         else:  # proportional
             line_height_px = self.line_height_px
             attrs = self.proportional_attrs
-        line_height = line_height_px * self.dot_em_units
         ascent = (attrs.box_origin_y_px + int((line_height_px - self.px) / 2)) * self.dot_em_units
-        descent = ascent - line_height
+        descent = ascent - line_height_px * self.dot_em_units
         x_height = attrs.x_height_px * self.dot_em_units
         cap_height = attrs.cap_height_px * self.dot_em_units
-        return VerticalMetrics(line_height, ascent, descent, x_height, cap_height)
+        return VerticalMetrics(ascent, descent, x_height, cap_height)
 
     def get_font_file_name(self, width_mode, language_specific, font_format):
         return f'{output_name_prefix}-{self.px}px-{width_mode}-{language_specific}.{font_format}'
