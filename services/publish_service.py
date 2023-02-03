@@ -21,11 +21,11 @@ def make_release_zips(font_config, width_mode, font_formats=None):
     for font_format in font_formats:
         zip_file_path = os.path.join(path_define.releases_dir, font_config.get_release_zip_file_name(width_mode, font_format))
         with zipfile.ZipFile(zip_file_path, 'w') as zip_file:
+            zip_file.write('LICENSE-OFL', 'OFL.txt')
             for language_specific in configs.language_specifics:
                 font_file_name = font_config.get_font_file_name(width_mode, language_specific, font_format)
                 font_file_path = os.path.join(path_define.outputs_dir, font_file_name)
                 zip_file.write(font_file_path, font_file_name)
-            zip_file.write('LICENSE-OFL', 'OFL.txt')
         logger.info(f'make {zip_file_path}')
 
 
@@ -38,24 +38,24 @@ def _copy_file(file_name, from_dir, to_dir):
 
 def update_docs():
     fs_util.make_dirs_if_not_exists(path_define.docs_dir)
+    _copy_file('readme-banner.png', path_define.outputs_dir, path_define.docs_dir)
     for font_config in configs.font_configs:
+        _copy_file(font_config.preview_image_file_name, path_define.outputs_dir, path_define.docs_dir)
         for width_mode in configs.width_modes:
             _copy_file(font_config.get_info_file_name(width_mode), path_define.outputs_dir, path_define.docs_dir)
-        _copy_file(font_config.preview_image_file_name, path_define.outputs_dir, path_define.docs_dir)
-    _copy_file('readme-banner.png', path_define.outputs_dir, path_define.docs_dir)
 
 
 def update_www():
     fs_util.delete_dir(path_define.www_dir)
     shutil.copytree(path_define.www_static_dir, path_define.www_dir)
-    for font_config in configs.font_configs:
-        for width_mode in configs.width_modes:
-            for language_specific in configs.language_specifics:
-                _copy_file(font_config.get_font_file_name(width_mode, language_specific, 'woff2'), path_define.outputs_dir, path_define.www_dir)
-            _copy_file(font_config.get_alphabet_html_file_name(width_mode), path_define.outputs_dir, path_define.www_dir)
-        _copy_file(font_config.demo_html_file_name, path_define.outputs_dir, path_define.www_dir)
     _copy_file('index.html', path_define.outputs_dir, path_define.www_dir)
     _copy_file('playground.html', path_define.outputs_dir, path_define.www_dir)
+    for font_config in configs.font_configs:
+        _copy_file(font_config.demo_html_file_name, path_define.outputs_dir, path_define.www_dir)
+        for width_mode in configs.width_modes:
+            _copy_file(font_config.get_alphabet_html_file_name(width_mode), path_define.outputs_dir, path_define.www_dir)
+            for language_specific in configs.language_specifics:
+                _copy_file(font_config.get_font_file_name(width_mode, language_specific, 'woff2'), path_define.outputs_dir, path_define.www_dir)
 
 
 def deploy_www():
