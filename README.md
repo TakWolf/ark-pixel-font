@@ -23,7 +23,7 @@
 
 ### 10 像素
 
-![preview-10px.png](docs/preview-10px.png)
+![preview-10px](docs/preview-10px.png)
 
 [示例文本](https://ark-pixel-font.takwolf.com/demo-10px.html)
 
@@ -33,7 +33,7 @@
 
 ### 12 像素
 
-![preview-12px.png](docs/preview-12px.png)
+![preview-12px](docs/preview-12px.png)
 
 [示例文本](https://ark-pixel-font.takwolf.com/demo-12px.html)
 
@@ -43,7 +43,7 @@
 
 ### 16 像素
 
-![preview-16px.png](docs/preview-16px.png)
+![preview-16px](docs/preview-16px.png)
 
 [示例文本](https://ark-pixel-font.takwolf.com/demo-16px.html)
 
@@ -117,8 +117,6 @@
 | ja | 日语 | 字形采用日本参考规范 [《常用汉字表》](https://zh.wikipedia.org/wiki/%E5%B8%B8%E7%94%A8%E6%BC%A2%E5%AD%97) 中的写法。 |
 | ko | 朝鲜语 | |
 
-由于字符数量巨大，绘制过程中难免出现错误。如果发现任何有关字形的问题，请在 [Issues](https://github.com/TakWolf/ark-pixel-font/issues) 中报告。
-
 ## 下载和使用
 
 可在 [Releases](https://github.com/TakWolf/ark-pixel-font/releases) 下载最新的版本。
@@ -161,59 +159,21 @@ brew install font-ark-pixel-16px-proportional
 
 详细信息请查看 [homebrew-cask-fonts](https://github.com/Homebrew/homebrew-cask-fonts) 的主页。
 
-## 开发流程
-
-本字体使用程序进行构建。
-
-字形源文件是 PNG 格式的图片，它们位于 [assets/glyphs](assets/glyphs) 目录下，按照 16 进制 Unicode 编号来命名。
-
-程序读取这些图片，根据透明度值进行二值化，转化为二维点阵数据。然后生成轮廓数据，绘制字形并生成字体文件。
-
 ## 本地构建
 
-计算机中需要安装 [Python3](https://www.python.org/) 和 [virtualenv](https://github.com/pypa/virtualenv) 环境。
+这是一个标准的 [Python3](https://www.python.org) 项目。
 
-打开终端，通过 `git` 命令克隆项目：
+当您配置好运行环境后，执行 `python ./build.py` 命令来开始构建。
 
-```shell
-git clone https://github.com/TakWolf/ark-pixel-font.git
-```
-
-进入项目文件夹，并创建虚拟环境：
-
-```shell
-cd ark-pixel-font
-virtualenv venv
-source ./venv/bin/activate
-```
-
-安装所需依赖：
-
-```shell
-python -m pip install -r requirements.txt
-```
-
-执行构建脚本：
-
-```shell
-python ./build.py
-```
-
-等待执行完毕后，可在 `build/outputs` 目录下找到生成的字体文件。
-
-## 参与改进
-
-任何有关字体和程序上的建议，都欢迎创建 [Issues](https://github.com/TakWolf/ark-pixel-font/issues) 来反馈，也可以通过 [Discussions](https://github.com/TakWolf/ark-pixel-font/discussions) 来讨论。
-
-此外，我们有一个 [Discord 频道](https://discord.gg/3GKtPKtjdU) 和一个 [QQ 群](https://jq.qq.com/?_wv=1027&k=EXtKGHar) 。
+等待任务完成后，可在 `build/outputs` 目录下找到生成的字体文件。
 
 ## 授权信息
 
-本项目包含「字体」和「构建程序」两个部分。
+分为「字体」和「构建程序」两个部分。
 
 ### 字体
 
-使用 [SIL 开放字体许可证 第1.1版（SIL Open Font License 1.1）](LICENSE-OFL) 授权，保留字体名称「方舟像素 / Ark Pixel」。
+使用 [SIL 开放字体许可证第 1.1 版](LICENSE-OFL) 授权，保留字体名称「方舟像素 / Ark Pixel」。
 
 ### 构建程序
 
@@ -249,7 +209,7 @@ python ./build.py
 
 ## 赞助
 
-如果「方舟像素字体」对您有帮助，请考虑赞助来支持开发工作。
+如果这个项目对您有帮助，请考虑赞助来支持开发工作。
 
 - [收款码](https://github.com/TakWolf/TakWolf/blob/master/payment-qr-codes.md)
 - [爱发电](https://afdian.net/@takwolf)
