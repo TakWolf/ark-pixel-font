@@ -1,4 +1,5 @@
 import os
+import random
 
 from jinja2 import Environment, FileSystemLoader
 
@@ -6,6 +7,8 @@ from configs import path_define
 from configs.font_config import FontConfig
 from configs.git_deploy_config import GitDeployConfig
 from utils.unidata_util import UnidataDB
+
+build_random_key = random.random()
 
 font_name = font_config.display_name_prefix
 font_version = font_config.version

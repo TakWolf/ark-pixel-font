@@ -8,38 +8,39 @@
         * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
         @font-face {
             font-family: Ark-Pixel-12px-monospaced-latin;
-            src: url("{{ configs.font_config_map[12].get_font_file_name('monospaced', 'latin', 'woff2') }}");
+            src: url("{{ configs.font_config_map[12].get_font_file_name('monospaced', 'latin', 'woff2') }}?r={{ configs.build_random_key }}");
         }
         {% for font_config in configs.font_configs  %}
             {% for locale, language_specific in configs.locale_map.items() %}
                 {% with font_family = 'Ark-Pixel-' ~ font_config.px ~ 'px-proportional-' ~ language_specific %}
                     @font-face {
                         font-family: {{ font_family }};
-                        src: url("{{ font_config.get_font_file_name('proportional', language_specific, 'woff2') }}");
+                        src: url("{{ font_config.get_font_file_name('proportional', language_specific, 'woff2') }}?r={{ configs.build_random_key }}");
                     }
                     .font-{{ font_config.px }}px-proportional :lang({{ locale }}) {
-                        font-family: {{ font_family }}, serif;
+                        font-family: {{ font_family }}, sans-serif;
                     }
                 {% endwith %}
             {% endfor %}
             .font-{{ font_config.px }}px-proportional .title {
-                color: #4b4b4b;
-                font-size: {{ font_config.px * 3 }}px;
+                font-size: {{ font_config.px * 4 }}px;
                 font-weight: normal;
-                line-height: {{ font_config.line_height_px * 3 }}px;
+                line-height: {{ font_config.line_height_px * 4 }}px;
+                text-shadow: 2px 2px #4b4b4b;
             }
             .font-{{ font_config.px }}px-proportional .text {
-                color: #4b4b4b;
                 font-size: {{ font_config.px * 2 }}px;
                 line-height: {{ font_config.line_height_px * 2 }}px;
+                text-shadow: 2px 2px #4b4b4b;
             }
             .font-{{ font_config.px }}px-proportional .copyright {
-                color: #808080;
-                font-size: {{ font_config.px }}px;
-                line-height: {{ font_config.line_height_px }}px;
+                font-size: {{ font_config.px *2 }}px;
+                line-height: {{ font_config.line_height_px * 2 }}px;
+                text-shadow: 2px 2px #4b4b4b;
             }
             .font-{{ font_config.px }}px-proportional .link-group {
                 margin-top: {{ font_config.px / 2 }}px;
@@ -53,8 +54,25 @@
                 margin-right: {{ font_config.px }}px;
                 font-size: {{ font_config.px * 2 }}px;
                 line-height: {{ font_config.line_height_px * 2 }}px;
+                text-shadow: 2px 2px #4b4b4b;
             }
         {% endfor %}
+        @keyframes background-scrolling {
+            100% {
+                background-position: 128px 128px;
+            }
+        }
+        body {
+            color: white;
+            background-color: #1c82e5;
+            background-image: linear-gradient(45deg, dodgerblue 25%, transparent 25%, transparent 75%, dodgerblue 75%), linear-gradient(-45deg, dodgerblue 25%, transparent 25%, transparent 75%, dodgerblue 75%);
+            background-size: 128px 128px;
+            background-attachment: fixed;
+            animation: background-scrolling 4s infinite linear;
+        }
+        a {
+            color: white;
+        }
         .options-group {
             height: 36px;
             position: fixed;
@@ -65,7 +83,8 @@
             flex-direction: row;
             align-items: center;
             justify-content: center;
-            background-color: #ffd339;
+            background-color: royalblue;
+            box-shadow: 0 1px 8px rgba(75, 75, 75, 0.8);
         }
         .option {
             height: 100%;
@@ -74,8 +93,8 @@
             display: flex;
             flex-direction: row;
             align-items: center;
-            color: #4b4b4b;
-            font-family: Ark-Pixel-12px-monospaced-latin, serif;
+            color: white;
+            font-family: Ark-Pixel-12px-monospaced-latin, sans-serif;
             font-size: 24px;
             line-height: 36px;
         }
@@ -88,11 +107,11 @@
             margin-left: 12px;
             margin-right: 12px;
             border-width: 2px;
-            border-color: #4b4b4b;
+            border-color: white;
             border-style: solid;
         }
         .option input[type="radio"]:checked + span {
-            background-color: #4b4b4b;
+            background-color: white;
         }
         #page {
             margin-top: 64px;

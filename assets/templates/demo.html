@@ -8,13 +8,14 @@
         * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
         {% for width_mode in configs.width_modes %}
             {% for locale, language_specific in configs.locale_map.items() %}
                 {% with font_family = 'Ark-Pixel-' ~ font_config.px ~ 'px-' ~ width_mode ~ '-' ~ language_specific %}
                     @font-face {
                         font-family: {{ font_family }};
-                        src: url("{{ font_config.get_font_file_name(width_mode, language_specific, 'woff2') }}");
+                        src: url("{{ font_config.get_font_file_name(width_mode, language_specific, 'woff2') }}?r={{ configs.build_random_key }}");
                     }
                     .font-{{ width_mode }} :lang({{ locale }}) {
                         font-family: {{ font_family }}, sans-serif;
@@ -25,7 +26,7 @@
         {% if font_config.px != 12 %}
             @font-face {
                 font-family: Ark-Pixel-12px-monospaced-latin;
-                src: url("{{ configs.font_config_map[12].get_font_file_name('monospaced', 'latin', 'woff2') }}");
+                src: url("{{ configs.font_config_map[12].get_font_file_name('monospaced', 'latin', 'woff2') }}?r={{ configs.build_random_key }}");
             }
         {% endif %}
         .theme-light {
@@ -73,7 +74,7 @@
             flex-direction: row;
             align-items: center;
             color: #4b4b4b;
-            font-family: Ark-Pixel-12px-monospaced-latin, serif;
+            font-family: Ark-Pixel-12px-monospaced-latin, sans-serif;
             font-size: 24px;
             line-height: 36px;
         }
@@ -99,16 +100,23 @@
             cursor: pointer;
         }
         #page {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
             padding: 64px 192px;
         }
-        @media screen and (max-width: 1024px) {
+        @media screen and (max-width: 1006px) {
             #page {
-                padding: 64px 64px;
+                width: 750px;
+                padding-left: 64px;
+                padding-right: 64px;
             }
         }
         @media screen and (max-width: 750px) {
             #page {
-                padding: 64px 16px;
+                width: 100%;
+                padding-left: 64px;
+                padding-right: 64px;
             }
         }
         .title {

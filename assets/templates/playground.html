@@ -8,6 +8,7 @@
         * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
         {% for font_config in configs.font_configs  %}
             {% for width_mode in configs.width_modes %}
@@ -19,10 +20,10 @@
                     {% with font_family = 'Ark-Pixel-' ~ font_config.px ~ 'px-' ~ width_mode ~ '-' ~ language_specific %}
                         @font-face {
                             font-family: {{ font_family }};
-                            src: url("{{ font_config.get_font_file_name(width_mode, language_specific, 'woff2') }}");
+                            src: url("{{ font_config.get_font_file_name(width_mode, language_specific, 'woff2') }}?r={{ configs.build_random_key }}");
                         }
                         .font-{{ font_config.px }}px-{{ width_mode }}:lang({{ locale }}) {
-                            font-family: {{ font_family }}, serif;
+                            font-family: {{ font_family }}, sans-serif;
                         }
                     {% endwith %}
                 {% endfor %}
@@ -48,7 +49,7 @@
             flex-direction: row;
             align-items: center;
             color: #4b4b4b;
-            font-family: Ark-Pixel-12px-monospaced-latin, serif;
+            font-family: Ark-Pixel-12px-monospaced-latin, sans-serif;
             font-size: 24px;
             line-height: 36px;
         }
@@ -73,11 +74,11 @@
             bottom: 0;
             left: 0;
             right: 0;
-            display: flex;
         }
         .content textarea {
+            width: 100%;
+            height: 100%;
             padding: 24px;
-            flex: 1;
             color: #4b4b4b;
             outline: none;
             border: none;

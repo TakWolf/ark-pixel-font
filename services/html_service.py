@@ -87,7 +87,8 @@ def make_demo_html_file(font_config, alphabet_group):
 def make_index_html_file():
     template = configs.template_env.get_template('index.html')
     html = template.render(configs=configs)
-    html = minify_html.minify(html, minify_css=True, minify_js=True)
+    # FIXME 这里样式压缩会造成背景动画闪烁
+    html = minify_html.minify(html, minify_css=False, minify_js=True)
     fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
     html_file_path = os.path.join(path_define.outputs_dir, 'index.html')
     with open(html_file_path, 'w', encoding='utf-8') as file:
