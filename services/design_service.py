@@ -113,7 +113,7 @@ def verify_glyph_files(font_config):
 
                 if width_mode_dir_name == 'proportional':
                     assert height >= font_config.px, glyph_file_path
-                    assert height % 2 == 0, glyph_file_path
+                    assert (height - font_config.px) % 2 == 0, glyph_file_path
 
                     if height > font_config.line_height_px:
                         for i in range(int((height - font_config.line_height_px) / 2)):

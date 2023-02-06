@@ -51,6 +51,7 @@ class FontConfig:
         self.px = px
         # 比例模式的像素行高
         self.line_height_px = config_data['line_height_px']
+        assert (self.line_height_px - px) % 2 == 0, f'font_config {px}px with incorrect line_height_px {self.line_height_px}px'
         # 等宽模式属性
         self.monospaced_attrs = FontAttrs(config_data['monospaced'])
         # 比例模式属性
