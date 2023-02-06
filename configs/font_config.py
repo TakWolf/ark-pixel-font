@@ -41,7 +41,7 @@ class VerticalMetrics:
 
 
 class FontConfig:
-    def __init__(self, px, dot_em_units=100):
+    def __init__(self, px, px_units=100):
         config_file_path = os.path.join(path_define.glyphs_dir, str(px), 'config.toml')
         with open(config_file_path, 'rb') as config_file:
             config_data = tomllib.load(config_file)['font']
@@ -56,8 +56,8 @@ class FontConfig:
         self.monospaced_attrs = FontAttrs(config_data['monospaced'])
         # 比例模式属性
         self.proportional_attrs = FontAttrs(config_data['proportional'])
-        # 每个像素对应的 EM 单位数
-        self.dot_em_units = dot_em_units
+        # 每个像素转换为设计单位的数量
+        self.px_units = px_units
 
         self.demo_html_file_name = f'demo-{px}px.html'
         self.preview_image_file_name = f'preview-{px}px.png'
@@ -82,14 +82,14 @@ class FontConfig:
         }
 
     def get_units_per_em(self):
-        return self.px * self.dot_em_units
+        return self.px * self.px_units
 
     def get_box_origin_y(self, width_mode):
         if width_mode == 'monospaced':
             attrs = self.monospaced_attrs
         else:  # proportional
             attrs = self.proportional_attrs
-        return attrs.box_origin_y_px * self.dot_em_units
+        return attrs.box_origin_y_px * self.px_units
 
     def get_vertical_metrics(self, width_mode):
         if width_mode == 'monospaced':
@@ -98,10 +98,10 @@ class FontConfig:
         else:  # proportional
             line_height_px = self.line_height_px
             attrs = self.proportional_attrs
-        ascent = (attrs.box_origin_y_px + int((line_height_px - self.px) / 2)) * self.dot_em_units
-        descent = ascent - line_height_px * self.dot_em_units
-        x_height = attrs.x_height_px * self.dot_em_units
-        cap_height = attrs.cap_height_px * self.dot_em_units
+        ascent = (attrs.box_origin_y_px + int((line_height_px - self.px) / 2)) * self.px_units
+        descent = ascent - line_height_px * self.px_units
+        x_height = attrs.x_height_px * self.px_units
+        cap_height = attrs.cap_height_px * self.px_units
         return VerticalMetrics(ascent, descent, x_height, cap_height)
 
     def get_font_file_name(self, width_mode, language_specific, font_format):

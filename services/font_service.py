@@ -20,10 +20,10 @@ def _get_glyph_name(code_point):
 
 
 class GlyphInfoBuilder:
-    def __init__(self, units_per_em, box_origin_y, dot_em_units):
+    def __init__(self, units_per_em, box_origin_y, px_units):
         self.units_per_em = units_per_em
         self.box_origin_y = box_origin_y
-        self.dot_em_units = dot_em_units
+        self.px_units = px_units
         self.glyph_data_info_map = {}
         self.otf_glyph_info_map = {}
         self.ttf_glyph_info_map = {}
@@ -33,8 +33,8 @@ class GlyphInfoBuilder:
             glyph_data_info = self.glyph_data_info_map[glyph_file_path]
         else:
             glyph_data, width_px, height_px = glyph_util.load_glyph_data_from_png(glyph_file_path)
-            outlines = glyph_util.get_outlines_from_glyph_data(glyph_data, self.dot_em_units)
-            glyph_data_info = outlines, width_px * self.dot_em_units, height_px * self.dot_em_units
+            outlines = glyph_util.get_outlines_from_glyph_data(glyph_data, self.px_units)
+            glyph_data_info = outlines, width_px * self.px_units, height_px * self.px_units
             self.glyph_data_info_map[glyph_file_path] = glyph_data_info
         return glyph_data_info
 
@@ -141,7 +141,7 @@ def make_fonts(font_config, width_mode, alphabet, glyph_file_paths_map, language
         glyph_name = _get_glyph_name(code_point)
         glyph_order.append(glyph_name)
         character_map[code_point] = glyph_name
-    glyph_info_builder = GlyphInfoBuilder(units_per_em, font_config.get_box_origin_y(width_mode), font_config.dot_em_units)
+    glyph_info_builder = GlyphInfoBuilder(units_per_em, font_config.get_box_origin_y(width_mode), font_config.px_units)
 
     for language_specific in language_specifics:
         name_strings = font_config.get_name_strings(width_mode, language_specific)
