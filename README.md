@@ -23,33 +23,21 @@
 
 ### 10 像素
 
+[示例文本](https://ark-pixel-font.takwolf.com/demo-10px.html) · [等宽模式-字母表](https://ark-pixel-font.takwolf.com/alphabet-10px-monospaced.html) · [比例模式-字母表](https://ark-pixel-font.takwolf.com/alphabet-10px-proportional.html)
+
 ![preview-10px](docs/preview-10px.png)
-
-[示例文本](https://ark-pixel-font.takwolf.com/demo-10px.html)
-
-[等宽模式-字母表](https://ark-pixel-font.takwolf.com/alphabet-10px-monospaced.html)
-
-[比例模式-字母表](https://ark-pixel-font.takwolf.com/alphabet-10px-proportional.html)
 
 ### 12 像素
 
+[示例文本](https://ark-pixel-font.takwolf.com/demo-12px.html) · [等宽模式-字母表](https://ark-pixel-font.takwolf.com/alphabet-12px-monospaced.html) · [比例模式-字母表](https://ark-pixel-font.takwolf.com/alphabet-12px-proportional.html)
+
 ![preview-12px](docs/preview-12px.png)
-
-[示例文本](https://ark-pixel-font.takwolf.com/demo-12px.html)
-
-[等宽模式-字母表](https://ark-pixel-font.takwolf.com/alphabet-12px-monospaced.html)
-
-[比例模式-字母表](https://ark-pixel-font.takwolf.com/alphabet-12px-proportional.html)
 
 ### 16 像素
 
+[示例文本](https://ark-pixel-font.takwolf.com/demo-16px.html) · [等宽模式-字母表](https://ark-pixel-font.takwolf.com/alphabet-16px-monospaced.html) · [比例模式-字母表](https://ark-pixel-font.takwolf.com/alphabet-16px-proportional.html)
+
 ![preview-16px](docs/preview-16px.png)
-
-[示例文本](https://ark-pixel-font.takwolf.com/demo-16px.html)
-
-[等宽模式-字母表](https://ark-pixel-font.takwolf.com/alphabet-16px-monospaced.html)
-
-[比例模式-字母表](https://ark-pixel-font.takwolf.com/alphabet-16px-proportional.html)
 
 ## 字符统计
 
