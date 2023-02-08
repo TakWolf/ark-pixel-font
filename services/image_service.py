@@ -6,17 +6,10 @@ from PIL import Image, ImageFont, ImageDraw
 
 import configs
 from configs import path_define
+from services import info_service
 from utils import fs_util
 
 logger = logging.getLogger('image-service')
-
-
-def _load_alphabet(px, width_mode):
-    txt_file_path = os.path.join(path_define.outputs_dir, configs.font_config_map[px].get_alphabet_txt_file_name(width_mode))
-    with open(txt_file_path, 'r', encoding='utf-8') as file:
-        text = file.read()
-    alphabet = list(text)
-    return alphabet
 
 
 def _load_font(px, width_mode, language_specific, size):
@@ -83,7 +76,7 @@ def make_preview_image_file(font_config):
 
 
 def make_readme_banner():
-    alphabet_12 = _load_alphabet(12, 'proportional')
+    alphabet = info_service.read_alphabet_txt_file(configs.font_config_map[12], 'proportional')
     font_24_zh_cn = _load_font(12, 'proportional', 'zh_cn', 24)
     font_12_zh_cn = _load_font(12, 'proportional', 'zh_cn', 12)
 
@@ -94,7 +87,7 @@ def make_readme_banner():
 
     image_background = Image.open(os.path.join(path_define.images_dir, 'readme-banner-background.png'))
     image = Image.new('RGBA', (image_background.width, image_background.height), (255, 255, 255, 0))
-    _draw_text_background(image, alphabet_12, 12, box_size, font_12_zh_cn, (200, 200, 200))
+    _draw_text_background(image, alphabet, 12, box_size, font_12_zh_cn, (200, 200, 200))
     image.paste(image_background, mask=image_background)
     _draw_text(image, (image.width / 2, 28), '方舟像素字体', font_24_zh_cn, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     _draw_text(image, (image.width / 2, 28 + line_height * 2 + 4), '★ 开源的泛中日韩像素字体 ★', font_12_zh_cn, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
@@ -107,7 +100,7 @@ def make_readme_banner():
 
 
 def make_github_banner():
-    alphabet_12 = _load_alphabet(12, 'proportional')
+    alphabet = info_service.read_alphabet_txt_file(configs.font_config_map[12], 'proportional')
     font_24_zh_cn = _load_font(12, 'proportional', 'zh_cn', 24)
     font_12_latin = _load_font(12, 'proportional', 'latin', 12)
     font_12_zh_cn = _load_font(12, 'proportional', 'zh_cn', 12)
@@ -121,7 +114,7 @@ def make_github_banner():
 
     image_background = Image.open(os.path.join(path_define.images_dir, 'github-banner-background.png'))
     image = Image.new('RGBA', (image_background.width, image_background.height), (255, 255, 255, 0))
-    _draw_text_background(image, alphabet_12, 6, box_size, font_12_zh_cn, (200, 200, 200))
+    _draw_text_background(image, alphabet, 6, box_size, font_12_zh_cn, (200, 200, 200))
     image.paste(image_background, mask=image_background)
     _draw_text(image, (image.width / 2, 40 + line_height), '方舟像素字体 / Ark Pixel Font', font_24_zh_cn, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     _draw_text(image, (image.width / 2, 40 + line_height * 3), '★ 开源的泛中日韩像素字体 ★', font_12_zh_cn, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
@@ -141,7 +134,7 @@ def make_github_banner():
 
 
 def make_itch_io_banner():
-    alphabet_12 = _load_alphabet(12, 'proportional')
+    alphabet = info_service.read_alphabet_txt_file(configs.font_config_map[12], 'proportional')
     font_24_zh_cn = _load_font(12, 'proportional', 'zh_cn', 24)
     font_12_zh_cn = _load_font(12, 'proportional', 'zh_cn', 12)
 
@@ -152,7 +145,7 @@ def make_itch_io_banner():
 
     image_background = Image.open(os.path.join(path_define.images_dir, 'itch-io-banner-background.png'))
     image = Image.new('RGBA', (image_background.width, image_background.height), (255, 255, 255, 0))
-    _draw_text_background(image, alphabet_12, 12, box_size, font_12_zh_cn, (200, 200, 200))
+    _draw_text_background(image, alphabet, 12, box_size, font_12_zh_cn, (200, 200, 200))
     image.paste(image_background, mask=image_background)
     _draw_text(image, (image.width / 2, 32), '方舟像素字体 / Ark Pixel Font', font_24_zh_cn, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     _draw_text(image, (image.width / 2, 32 + line_height * 2 + 4), '★ 开源的泛中日韩像素字体 ★', font_12_zh_cn, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
@@ -165,13 +158,13 @@ def make_itch_io_banner():
 
 
 def make_itch_io_background():
-    alphabet_12 = _load_alphabet(12, 'proportional')
+    alphabet = info_service.read_alphabet_txt_file(configs.font_config_map[12], 'proportional')
     font_12_zh_cn = _load_font(12, 'proportional', 'zh_cn', 12)
 
     box_size = 14
 
     image = Image.new('RGBA', (box_size * 50, box_size * 50), (255, 255, 255, 0))
-    _draw_text_background(image, alphabet_12, 2, box_size, font_12_zh_cn, (30, 30, 30))
+    _draw_text_background(image, alphabet, 2, box_size, font_12_zh_cn, (30, 30, 30))
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
     fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
