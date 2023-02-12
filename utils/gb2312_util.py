@@ -4,7 +4,7 @@ _block_offset = 0xA0
 alphabet_other_count = 682
 alphabet_level_1_count = 3755
 alphabet_level_2_count = 3008
-alphabet_count = 682 + 6763
+alphabet_count = alphabet_other_count + alphabet_level_1_count + alphabet_level_2_count
 
 
 def query_chr(zone_1, zone_2):
