@@ -20,19 +20,12 @@ license_info_url = 'https://scripts.sil.org/OFL'
 
 class FontAttrs:
     def __init__(self, config_data):
-        # 盒子中基准线像素位置，即以字面框左上角原点计算，基线所处的像素位置
         self.box_origin_y_px = config_data['box_origin_y_px']
-        # 小写字母像素高度
         self.x_height_px = config_data['x_height_px']
-        # 大写字母像素高度
         self.cap_height_px = config_data['cap_height_px']
 
 
 class VerticalMetrics:
-    """
-    竖向量度值
-    可以参考：https://glyphsapp.com/zh/learn/vertical-metrics
-    """
     def __init__(self, ascent, descent, x_height, cap_height):
         self.ascent = ascent
         self.descent = descent
@@ -47,16 +40,11 @@ class FontConfig:
             config_data = tomllib.load(config_file)['font']
         assert px == config_data['px'], config_file_path
 
-        # 字体像素尺寸，也是等宽模式的像素行高
         self.px = px
-        # 比例模式的像素行高
-        self.line_height_px = config_data['line_height_px']
-        assert (self.line_height_px - px) % 2 == 0, f'font_config {px}px with incorrect line_height_px {self.line_height_px}px'
-        # 等宽模式属性
+        self.display_line_height_px = config_data['display_line_height_px']
+        assert (self.display_line_height_px - px) % 2 == 0, f'font_config {px}px with incorrect display_line_height_px {self.display_line_height_px}px'
         self.monospaced_attrs = FontAttrs(config_data['monospaced'])
-        # 比例模式属性
         self.proportional_attrs = FontAttrs(config_data['proportional'])
-        # 每个像素转换为设计单位的数量
         self.px_units = px_units
 
         self.demo_html_file_name = f'demo-{px}px.html'
@@ -96,7 +84,7 @@ class FontConfig:
             line_height_px = self.px
             attrs = self.monospaced_attrs
         else:  # proportional
-            line_height_px = self.line_height_px
+            line_height_px = self.display_line_height_px
             attrs = self.proportional_attrs
         ascent = (attrs.box_origin_y_px + int((line_height_px - self.px) / 2)) * self.px_units
         descent = ascent - line_height_px * self.px_units

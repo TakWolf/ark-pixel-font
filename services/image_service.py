@@ -57,16 +57,17 @@ def make_preview_image_file(font_config):
     font_zh_cn = _load_font(font_config.px, 'proportional', 'zh_cn')
     font_zh_tr = _load_font(font_config.px, 'proportional', 'zh_tr')
     font_ja = _load_font(font_config.px, 'proportional', 'ja')
+    line_height = font_config.display_line_height_px
 
-    image = Image.new('RGBA', (font_config.px * 35, font_config.px * 2 + font_config.line_height_px * 8), (255, 255, 255))
+    image = Image.new('RGBA', (font_config.px * 35, font_config.px * 2 + line_height * 8), (255, 255, 255))
     _draw_text(image, (font_config.px, font_config.px), '方舟像素字体 / Ark Pixel Font', font_zh_cn)
-    _draw_text(image, (font_config.px, font_config.px + font_config.line_height_px), '我们每天度过的称之为日常的生活，其实是一个个奇迹的连续也说不定。', font_zh_cn)
-    _draw_text(image, (font_config.px, font_config.px + font_config.line_height_px * 2), '我們每天度過的稱之為日常的生活，其實是一個個奇跡的連續也說不定。', font_zh_tr)
-    _draw_text(image, (font_config.px, font_config.px + font_config.line_height_px * 3), '日々、私たちが過ごしている日常は、実は奇跡の連続なのかもしれない。', font_ja)
-    _draw_text(image, (font_config.px, font_config.px + font_config.line_height_px * 4), 'THE QUICK BROWN FOX JUMPS OVER A LAZY DOG.', font_latin)
-    _draw_text(image, (font_config.px, font_config.px + font_config.line_height_px * 5), 'the quick brown fox jumps over a lazy dog.', font_latin)
-    _draw_text(image, (font_config.px, font_config.px + font_config.line_height_px * 6), '0123456789', font_latin)
-    _draw_text(image, (font_config.px, font_config.px + font_config.line_height_px * 7), '★☆☺☹♠♡♢♣♤♥♦♧☀☼♩♪♫♬☂☁⚓✈⚔☯', font_latin)
+    _draw_text(image, (font_config.px, font_config.px + line_height), '我们每天度过的称之为日常的生活，其实是一个个奇迹的连续也说不定。', font_zh_cn)
+    _draw_text(image, (font_config.px, font_config.px + line_height * 2), '我們每天度過的稱之為日常的生活，其實是一個個奇跡的連續也說不定。', font_zh_tr)
+    _draw_text(image, (font_config.px, font_config.px + line_height * 3), '日々、私たちが過ごしている日常は、実は奇跡の連続なのかもしれない。', font_ja)
+    _draw_text(image, (font_config.px, font_config.px + line_height * 4), 'THE QUICK BROWN FOX JUMPS OVER A LAZY DOG.', font_latin)
+    _draw_text(image, (font_config.px, font_config.px + line_height * 5), 'the quick brown fox jumps over a lazy dog.', font_latin)
+    _draw_text(image, (font_config.px, font_config.px + line_height * 6), '0123456789', font_latin)
+    _draw_text(image, (font_config.px, font_config.px + line_height * 7), '★☆☺☹♠♡♢♣♤♥♦♧☀☼♩♪♫♬☂☁⚓✈⚔☯', font_latin)
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
     fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
@@ -80,7 +81,7 @@ def make_readme_banner():
     font_x1 = _load_font(12, 'proportional', 'zh_cn')
     font_x2 = _load_font(12, 'proportional', 'zh_cn', 2)
     box_size = 14
-    line_height = configs.font_config_map[12].line_height_px
+    line_height = configs.font_config_map[12].display_line_height_px
     text_color = (255, 255, 255)
     shadow_color = (80, 80, 80)
 
@@ -106,7 +107,7 @@ def make_github_banner():
     font_zh_tr = _load_font(12, 'proportional', 'zh_tr')
     font_ja = _load_font(12, 'proportional', 'ja')
     box_size = 14
-    line_height = configs.font_config_map[12].line_height_px
+    line_height = configs.font_config_map[12].display_line_height_px
     text_color = (255, 255, 255)
     shadow_color = (80, 80, 80)
 
@@ -136,7 +137,7 @@ def make_itch_io_banner():
     font_x1 = _load_font(12, 'proportional', 'zh_cn')
     font_x2 = _load_font(12, 'proportional', 'zh_cn', 2)
     box_size = 14
-    line_height = configs.font_config_map[12].line_height_px
+    line_height = configs.font_config_map[12].display_line_height_px
     text_color = (255, 255, 255)
     shadow_color = (80, 80, 80)
 
@@ -175,7 +176,7 @@ def make_itch_io_cover():
     font_zh_cn = _load_font(12, 'proportional', 'zh_cn')
     font_zh_tr = _load_font(12, 'proportional', 'zh_tr')
     font_ja = _load_font(12, 'proportional', 'ja')
-    line_height = configs.font_config_map[12].line_height_px
+    line_height = configs.font_config_map[12].display_line_height_px
     text_color = (255, 255, 255)
     shadow_color = (80, 80, 80)
 
@@ -206,7 +207,7 @@ def make_afdian_cover():
     font_zh_cn = _load_font(12, 'proportional', 'zh_cn')
     font_zh_tr = _load_font(12, 'proportional', 'zh_tr')
     font_ja = _load_font(12, 'proportional', 'ja')
-    line_height = configs.font_config_map[12].line_height_px
+    line_height = configs.font_config_map[12].display_line_height_px
     text_color = (255, 255, 255)
     shadow_color = (80, 80, 80)
 

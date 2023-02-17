@@ -14,7 +14,7 @@
             {% for width_mode in configs.width_modes %}
                 .font-{{ font_config.px }}px-{{ width_mode }} {
                     font-size: {{ font_config.px * 2 }}px;
-                    line-height: {{ font_config.line_height_px * 2 }}px;
+                    line-height: {{ font_config.display_line_height_px * 2 }}px;
                 }
                 {% for locale, language_specific in configs.locale_map.items() %}
                     {% with font_family = 'Ark-Pixel-' ~ font_config.px ~ 'px-' ~ width_mode ~ '-' ~ language_specific %}

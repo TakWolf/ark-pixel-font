@@ -115,12 +115,12 @@ def verify_glyph_files(font_config):
                     assert height >= font_config.px, glyph_file_path
                     assert (height - font_config.px) % 2 == 0, glyph_file_path
 
-                    if height > font_config.line_height_px:
-                        for i in range(int((height - font_config.line_height_px) / 2)):
+                    if height > font_config.display_line_height_px:
+                        for i in range(int((height - font_config.display_line_height_px) / 2)):
                             glyph_data.pop(0)
                             glyph_data.pop()
-                    elif height < font_config.line_height_px:
-                        for i in range(int((font_config.line_height_px - height) / 2)):
+                    elif height < font_config.display_line_height_px:
+                        for i in range(int((font_config.display_line_height_px - height) / 2)):
                             glyph_data.insert(0, [0 for _ in range(width)])
                             glyph_data.append([0 for _ in range(width)])
 
