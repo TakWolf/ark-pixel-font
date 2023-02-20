@@ -17,24 +17,24 @@ font_configs = [FontConfig(px) for px in [10, 12, 16]]
 font_config_map = {font_config.px: font_config for font_config in font_configs}
 
 width_modes = [
-    'monospaced',    # 等宽
-    'proportional',  # 比例
+    'monospaced',
+    'proportional',
 ]
 
 width_mode_dir_names = [
-    'common',        # 共用
-    'monospaced',    # 等宽
-    'proportional',  # 比例
+    'common',
+    'monospaced',
+    'proportional',
 ]
 
 language_specifics = [
-    'latin',  # 拉丁语
-    'zh_cn',  # 中文-中国大陆
-    'zh_hk',  # 中文-香港特别行政区
-    'zh_tw',  # 中文-台湾地区
-    'zh_tr',  # 中文-传统印刷
-    'ja',     # 日语
-    'ko',     # 朝鲜语
+    'latin',
+    'zh_cn',
+    'zh_hk',
+    'zh_tw',
+    'zh_tr',
+    'ja',
+    'ko',
 ]
 
 locale_map = {

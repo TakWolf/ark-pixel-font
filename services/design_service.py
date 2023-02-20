@@ -11,10 +11,6 @@ logger = logging.getLogger('design-service')
 
 
 def _parse_glyph_file_name(glyph_file_name):
-    """
-    解析字形源文件名称
-    例子：'0030 zh_cn,ja.png'
-    """
     params = glyph_file_name.removesuffix('.png').split(' ')
     assert 1 <= len(params) <= 2, glyph_file_name
     uni_hex_name = params[0].upper()
@@ -29,9 +25,6 @@ def _parse_glyph_file_name(glyph_file_name):
 
 
 def classify_glyph_files(font_config):
-    """
-    按照 Unicode 区块分类字形源文件
-    """
     px_dir = os.path.join(path_define.glyphs_dir, str(font_config.px))
     px_tmp_dir = os.path.join(path_define.glyphs_tmp_dir, str(font_config.px))
     fs_util.delete_dir(px_tmp_dir)
@@ -68,9 +61,6 @@ def classify_glyph_files(font_config):
 
 
 def verify_glyph_files(font_config):
-    """
-    校验并格式化字形源文件
-    """
     px_dir = os.path.join(path_define.glyphs_dir, str(font_config.px))
     for width_mode_dir_name in configs.width_mode_dir_names:
         width_mode_dir = os.path.join(px_dir, width_mode_dir_name)
@@ -100,7 +90,8 @@ def verify_glyph_files(font_config):
                     # F/Fullwidth or W/Wide
                     elif east_asian_width == 'F' or east_asian_width == 'W':
                         assert width == font_config.px, glyph_file_path
-                    else:  # A/Ambiguous or N/Neutral
+                    # A/Ambiguous or N/Neutral
+                    else:
                         assert width == font_config.px / 2 or width == font_config.px, glyph_file_path
 
                     unicode_block = configs.unidata_db.get_block_by_code_point(code_point)
@@ -129,9 +120,6 @@ def verify_glyph_files(font_config):
 
 
 def collect_glyph_files(font_config):
-    """
-    收集可用字母表，生成字形源文件映射表
-    """
     alphabet_cellar = {}
     for width_mode in configs.width_modes:
         alphabet_cellar[width_mode] = set()
