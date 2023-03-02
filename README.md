@@ -185,7 +185,7 @@ brew install font-ark-pixel-16px-proportional
 ## 外部工具
 
 - [Aseprite](https://github.com/aseprite/aseprite)
-- [Unicode 字符百科](https://unicode-table.com/)
+- [SYMBL - 字符查询工具](https://symbl.cc)
 - [字統网 - 字形檢字](https://zi.tools/?secondary=search)
 - [国学大师 - 汉字部件查字](http://www.guoxuedashi.net/zidian/bujian/)
 
@@ -193,6 +193,7 @@ brew install font-ark-pixel-16px-proportional
 
 - [Font Development Best Practices](https://silnrsi.github.io/FDBP/)
 - [Microsoft - OpenType font documentation](https://docs.microsoft.com/en-us/typography/opentype/)
+- [Glyphs 软件教程 - 纵向量度值](https://glyphsapp.com/zh/learn/vertical-metrics)
 - [Unicode 区块名翻译参考](https://github.com/Kushim-Jiang/Zhuanlan-Zhihu/tree/master/006)
 
 ## 赞助
