@@ -23,7 +23,7 @@
                             src: url("{{ font_config.get_font_file_name(width_mode, language_specific, 'woff2') }}?r={{ configs.build_random_key }}");
                         }
                         .font-{{ font_config.px }}px-{{ width_mode }}:lang({{ locale }}) {
-                            font-family: {{ font_family }}, sans-serif;
+                            font-family: {{ font_family }}, serif;
                         }
                     {% endwith %}
                 {% endfor %}
