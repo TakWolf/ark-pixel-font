@@ -76,7 +76,8 @@ def make_demo_html_file(font_config, alphabet_group):
         for element in elements:
             _handle_demo_html_element(soup, element, alphabet, width_mode)
     html = str(soup)
-    html = minify_html.minify(html, minify_css=True, minify_js=True)
+    # FIXME 这里样式压缩会造成语言标签失效
+    html = minify_html.minify(html, minify_css=False, minify_js=True)
     fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
     html_file_path = os.path.join(path_define.outputs_dir, font_config.demo_html_file_name)
     with open(html_file_path, 'w', encoding='utf-8') as file:
