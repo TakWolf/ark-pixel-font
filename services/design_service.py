@@ -146,8 +146,10 @@ def collect_glyph_files(font_config):
                     code_point = int(uni_hex_name, 16)
                     if len(language_specifics) > 0:
                         for language_specific in language_specifics:
+                            assert code_point not in glyph_file_paths_cellar[width_mode_dir_name][language_specific], glyph_file_path
                             glyph_file_paths_cellar[width_mode_dir_name][language_specific][code_point] = glyph_file_path
                     else:
+                        assert code_point not in glyph_file_paths_cellar[width_mode_dir_name]['default'], glyph_file_path
                         glyph_file_paths_cellar[width_mode_dir_name]['default'][code_point] = glyph_file_path
                         c = chr(code_point)
                         if width_mode_dir_name == 'common' or width_mode_dir_name == 'monospaced':
