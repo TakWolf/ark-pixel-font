@@ -1,7 +1,7 @@
 
 _block_offset = 0xA0
 
-alphabet_other_count = 987
+alphabet_other_count = 988
 alphabet_syllable_count = 2350
 alphabet_word_count = 4888
 alphabet_count = alphabet_other_count + alphabet_syllable_count + alphabet_word_count
@@ -48,6 +48,9 @@ def _get_alphabet_by_range(zone_start, zone_end):
 
 def get_alphabet_other():
     alphabet = _get_alphabet_by_range(1, 12)
+    # 'euc_kr' 编码器对字符 'Hangul Filler (0x3164)' 的处理不正确，但是官方开发者竟然认为这不是一个错误
+    # 问题详情见： https://github.com/python/cpython/issues/101863
+    alphabet.append(chr(0x3164))
     assert len(alphabet) == alphabet_other_count
     return alphabet
 
