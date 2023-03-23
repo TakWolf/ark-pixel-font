@@ -54,7 +54,7 @@ unidata_db = UnidataDB(os.path.join(path_define.unidata_dir, 'Blocks.txt'))
 template_env = Environment(loader=FileSystemLoader(path_define.templates_dir))
 
 git_deploy_configs = [GitDeployConfig(
-    'git@github.com:TakWolf/ark-pixel-font.git',
-    'github',
-    'gh-pages',
+    url='git@github.com:TakWolf/ark-pixel-font.git',
+    remote_name='github',
+    branch_name='gh-pages',
 )]
