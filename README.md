@@ -177,7 +177,6 @@ brew install font-ark-pixel-16px-proportional
 - [Soup Sieve](https://github.com/facelessuser/soupsieve)
 - [Jinja](https://github.com/pallets/jinja)
 - [MarkupSafe](https://github.com/pallets/markupsafe)
-- [minify-html](https://github.com/wilsonzlin/minify-html)
 - [GitPython](https://github.com/gitpython-developers/GitPython)
 - [GitDB](https://github.com/gitpython-developers/gitdb)
 - [Smmap](https://github.com/gitpython-developers/smmap)

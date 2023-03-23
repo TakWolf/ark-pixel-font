@@ -2,7 +2,6 @@ import logging
 import os
 
 import bs4
-import minify_html
 
 import configs
 from configs import path_define
@@ -19,7 +18,6 @@ def make_alphabet_html_file(font_config, width_mode, alphabet):
         width_mode=width_mode,
         alphabet=''.join([c for c in alphabet if ord(c) >= 128]),
     )
-    html = minify_html.minify(html, minify_css=True, minify_js=True)
     fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
     html_file_path = os.path.join(path_define.outputs_dir, font_config.get_alphabet_html_file_name(width_mode))
     with open(html_file_path, 'w', encoding='utf-8') as file:
@@ -76,8 +74,6 @@ def make_demo_html_file(font_config, alphabet_group):
         for element in elements:
             _handle_demo_html_element(soup, element, alphabet, width_mode)
     html = str(soup)
-    # FIXME 这里样式压缩会造成语言标签失效
-    html = minify_html.minify(html, minify_css=False, minify_js=True)
     fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
     html_file_path = os.path.join(path_define.outputs_dir, font_config.demo_html_file_name)
     with open(html_file_path, 'w', encoding='utf-8') as file:
@@ -88,8 +84,6 @@ def make_demo_html_file(font_config, alphabet_group):
 def make_index_html_file():
     template = configs.template_env.get_template('index.html')
     html = template.render(configs=configs)
-    # FIXME 这里样式压缩会造成背景动画闪烁
-    html = minify_html.minify(html, minify_css=False, minify_js=True)
     fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
     html_file_path = os.path.join(path_define.outputs_dir, 'index.html')
     with open(html_file_path, 'w', encoding='utf-8') as file:
@@ -100,7 +94,6 @@ def make_index_html_file():
 def make_playground_html_file():
     template = configs.template_env.get_template('playground.html')
     html = template.render(configs=configs)
-    html = minify_html.minify(html, minify_css=True, minify_js=True)
     fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
     html_file_path = os.path.join(path_define.outputs_dir, 'playground.html')
     with open(html_file_path, 'w', encoding='utf-8') as file:

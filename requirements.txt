@@ -5,7 +5,6 @@ gitdb==4.0.10
 GitPython==3.1.31
 Jinja2==3.1.2
 MarkupSafe==2.1.2
-minify_html==0.10.8
 Pillow==9.4.0
 pypng==0.20220715.0
 smmap==5.0.0
