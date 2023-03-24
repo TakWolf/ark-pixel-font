@@ -62,18 +62,23 @@ def _handle_demo_html_element(soup, element, alphabet, width_mode):
 
 
 def make_demo_html_file(font_config, alphabet_group):
+    content_html_file_path = os.path.join(path_define.templates_dir, 'demo-content.html')
+    with open(content_html_file_path, 'r', encoding='utf-8') as file:
+        content_html = file.read()
+        content_html = ''.join(line.strip() for line in content_html.split('\n'))
+    soup = bs4.BeautifulSoup(content_html, 'html.parser')
+    for width_mode in configs.width_modes:
+        alphabet = alphabet_group[width_mode]
+        for element in soup.contents:
+            _handle_demo_html_element(soup, element, alphabet, width_mode)
+    content_html = str(soup)
+
     template = configs.template_env.get_template('demo.html')
     html = template.render(
         configs=configs,
         font_config=font_config,
+        content_html=content_html,
     )
-    soup = bs4.BeautifulSoup(html, 'html.parser')
-    elements = soup.select('#page')
-    for width_mode in configs.width_modes:
-        alphabet = alphabet_group[width_mode]
-        for element in elements:
-            _handle_demo_html_element(soup, element, alphabet, width_mode)
-    html = str(soup)
     fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
     html_file_path = os.path.join(path_define.outputs_dir, font_config.demo_html_file_name)
     with open(html_file_path, 'w', encoding='utf-8') as file:
