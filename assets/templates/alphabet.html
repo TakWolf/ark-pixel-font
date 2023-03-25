@@ -88,13 +88,13 @@
     <form class="options-group">
         {% for locale, language_specific in configs.locale_map.items() %}
         <label class="option">
-            <input name="language_specific" type="radio" {{ 'checked' if language_specific == 'latin' else '' }} onclick="applyLocale('{{ locale }}');">
+            <input id="radio-locale-{{ locale }}" name="locale" type="radio" onchange="onLocaleChange('{{ locale }}');">
             <span></span>
             {{ language_specific.replace('_', '-') }}
         </label>
         {% endfor %}
     </form>
-    <div id="content" lang="en">
+    <div id="content">
         ABCDEFGHIJKLMNOPQRSTUVWXYZ
         <br>
         abcdefghijklmnopqrstuvwxyz
@@ -104,10 +104,29 @@
         {{ alphabet }}
     </div>
     <script>
-        var content = document.getElementById('content');
+        let content = document.getElementById('content');
 
-        function applyLocale(locale) {
-            content.setAttribute('lang', locale);
+        let configs = {
+            locale: 'zh-cn',
+        };
+
+        function applyConfigs() {
+            localStorage.setItem('configs:alphabet-{{ font_config.px }}px-{{ width_mode }}', JSON.stringify(configs));
+            content.setAttribute('lang', configs.locale);
         }
+
+        function onLocaleChange(locale) {
+            configs.locale = locale;
+            applyConfigs();
+        }
+
+        (function () {
+            let json = localStorage.getItem('configs:alphabet-{{ font_config.px }}px-{{ width_mode }}');
+            if (json) {
+                Object.assign(configs, JSON.parse(json));
+            }
+            document.getElementById('radio-locale-' + configs.locale).checked = true;
+            applyConfigs();
+        })();
     </script>
 {% endblock %}

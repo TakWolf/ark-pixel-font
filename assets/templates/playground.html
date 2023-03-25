@@ -88,7 +88,7 @@
         <div class="options-group">
             {% for font_config in configs.font_configs %}
             <label class="option">
-                <input name="font_size" type="radio" {{ 'checked' if font_config.px == 12 else '' }} onclick="applyFontSize('{{ font_config.px }}');">
+                <input id="radio-font-size-{{ font_config.px }}" name="font_size" type="radio" onchange="onFontSizeChange('{{ font_config.px }}');">
                 <span></span>
                 {{ font_config.px }}px
             </label>
@@ -97,7 +97,7 @@
         <div class="options-group" style="background-color: #94e34a;">
             {% for width_mode in configs.width_modes %}
             <label class="option">
-                <input name="width_mode" type="radio" {{ 'checked' if width_mode == 'proportional' else '' }} onclick="applyWidthMode('{{ width_mode }}');">
+                <input id="radio-width-mode-{{ width_mode }}" name="width_mode" type="radio" onchange="onWidthModeChange('{{ width_mode }}');">
                 <span></span>
                 {{ width_mode }}
             </label>
@@ -106,7 +106,7 @@
         <div class="options-group" style="background-color: #6ebdff;">
             {% for locale, language_specific in configs.locale_map.items() %}
             <label class="option">
-                <input name="language_specific" type="radio" {{ 'checked' if language_specific == 'zh_cn' else '' }} onclick="applyLocale('{{ locale }}');">
+                <input id="radio-locale-{{ locale }}" name="locale" type="radio" onchange="onLocaleChange('{{ locale }}');">
                 <span></span>
                 {{ language_specific.replace('_', '-') }}
             </label>
@@ -114,28 +114,47 @@
         </div>
     </form>
     <label class="content">
-        <textarea id="input-box" class="font-12px-proportional" lang="zh-cn" placeholder="请随便写点什么… / Please input something…"></textarea>
+        <textarea id="input-box" placeholder="请随便写点什么… / Please input something…"></textarea>
     </label>
     <script>
-        var inputBox = document.getElementById('input-box');
+        let inputBox = document.getElementById('input-box');
 
-        var fontConfigs = {
-            px: 12,
+        let configs = {
+            fontSize: 12,
             widthMode: 'proportional',
+            locale: 'zh-cn',
         };
 
-        function applyFontSize(px) {
-            fontConfigs.px = px;
-            inputBox.className = 'font-' + fontConfigs.px + 'px-' + fontConfigs.widthMode;
+        function applyConfigs() {
+            localStorage.setItem('configs:playground', JSON.stringify(configs));
+            inputBox.className = 'font-' + configs.fontSize + 'px-' + configs.widthMode;
+            inputBox.setAttribute('lang', configs.locale);
         }
 
-        function applyWidthMode(widthMode) {
-            fontConfigs.widthMode = widthMode;
-            inputBox.className = 'font-' + fontConfigs.px + 'px-' + fontConfigs.widthMode;
+        function onFontSizeChange(fontSize) {
+            configs.fontSize = fontSize;
+            applyConfigs();
         }
 
-        function applyLocale(locale) {
-            inputBox.setAttribute('lang', locale);
+        function onWidthModeChange(widthMode) {
+            configs.widthMode = widthMode;
+            applyConfigs();
         }
+
+        function onLocaleChange(locale) {
+            configs.locale = locale;
+            applyConfigs();
+        }
+
+        (function () {
+            let json = localStorage.getItem('configs:playground');
+            if (json) {
+                Object.assign(configs, JSON.parse(json));
+            }
+            document.getElementById('radio-font-size-' + configs.fontSize).checked = true;
+            document.getElementById('radio-width-mode-' + configs.widthMode).checked = true;
+            document.getElementById('radio-locale-' + configs.locale).checked = true;
+            applyConfigs();
+        })();
     </script>
 {% endblock %}

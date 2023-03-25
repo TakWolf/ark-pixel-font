@@ -123,13 +123,13 @@
     <form class="options-group">
         {% for font_config in configs.font_configs %}
         <label class="option">
-            <input name="font_size" type="radio" {{ 'checked' if font_config.px == 12 else '' }} onclick="applyFontSize('{{ font_config.px }}');">
+            <input id="radio-font-size-{{ font_config.px }}" name="font_size" type="radio" onchange="onFontSizeChange('{{ font_config.px }}');">
             <span></span>
             {{ font_config.px }}px
         </label>
         {% endfor %}
     </form>
-    <div id="page" class="font-12px-proportional">
+    <div id="page">
         <h1 class="title" lang="zh-cn">方舟像素字体 / Ark Pixel Font</h1>
         <br>
         <div class="text" lang="zh-cn">★ 开源的泛中日韩像素字体 ★</div>
@@ -163,10 +163,29 @@
         <div class="copyright" lang="en">© 2021 TakWolf</div>
     </div>
     <script>
-        var page = document.getElementById('page');
+        let page = document.getElementById('page');
 
-        function applyFontSize(px) {
-            page.className = 'font-' + px + 'px-proportional';
+        let configs = {
+            fontSize: 12,
+        };
+
+        function applyConfigs() {
+            localStorage.setItem('configs:index', JSON.stringify(configs));
+            page.className = 'font-' + configs.fontSize + 'px-proportional';
         }
+
+        function onFontSizeChange(fontSize) {
+            configs.fontSize = fontSize;
+            applyConfigs();
+        }
+
+        (function () {
+            let json = localStorage.getItem('configs:index');
+            if (json) {
+                Object.assign(configs, JSON.parse(json));
+            }
+            document.getElementById('radio-font-size-' + configs.fontSize).checked = true;
+            applyConfigs();
+        })();
     </script>
 {% endblock %}
