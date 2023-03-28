@@ -126,7 +126,7 @@
 2700..27BF; Dingbats; 杂锦
 27C0..27EF; Miscellaneous Mathematical Symbols-A; 各式数学符号-A
 27F0..27FF; Supplemental Arrows-A; 增补箭头-A
-2800..28FF; Braille Patterns; 布莱叶图案
+2800..28FF; Braille Patterns; 盲文图案
 2900..297F; Supplemental Arrows-B; 增补箭头-B
 2980..29FF; Miscellaneous Mathematical Symbols-B; 各式数学符号-B
 2A00..2AFF; Supplemental Mathematical Operators; 增补数学运算符
