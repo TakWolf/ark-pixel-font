@@ -83,21 +83,23 @@ def _write_unicode_char_count_infos_table(file, infos):
     file.write('|---|---|---|---:|---:|---:|\n')
     for unicode_block, count in infos:
         code_point_range = f'{unicode_block.begin:04X} ~ {unicode_block.end:04X}'
-        title = unicode_block.name
-        title_cn = unicode_block.name_cn if unicode_block.name_cn is not None else ''
+        name = unicode_block.name
+        name_cn = unicode_block.name_cn if unicode_block.name_cn is not None else ''
         total = unicode_block.char_count
+        lack = total - count if total > 0 else 0
         progress = count / total if total > 0 else 1
         finished_emoji = '🚩' if progress == 1 else '🚧'
-        file.write(f'| {code_point_range} | {title} | {title_cn} | {count} / {total} | {total - count} | {progress:.2%} {finished_emoji} |\n')
+        file.write(f'| {code_point_range} | {name} | {name_cn} | {count} / {total} | {lack} | {progress:.2%} {finished_emoji} |\n')
 
 
 def _write_locale_char_count_infos_table(file, infos):
     file.write('| 区块名称 | 完成数 | 缺失数 | 进度 |\n')
     file.write('|---|---:|---:|---:|\n')
-    for title, count, total in infos:
+    for name, count, total in infos:
+        lack = total - count
         progress = count / total
         finished_emoji = '🚩' if progress == 1 else '🚧'
-        file.write(f'| {title} | {count} / {total} | {total - count} | {progress:.2%} {finished_emoji} |\n')
+        file.write(f'| {name} | {count} / {total} | {lack} | {progress:.2%} {finished_emoji} |\n')
 
 
 def _get_width_mode_display_name(width_mode):
