@@ -10,8 +10,6 @@
 
 ## Unicode 字符分布
 
-区块定义参考：[https://www.unicode.org/Public/UNIDATA/Blocks.txt](https://www.unicode.org/Public/UNIDATA/Blocks.txt)
-
 | 区块范围 | 区块名称 | 区块含义 | 完成数 | 缺失数 | 进度 |
 |---|---|---|---:|---:|---:|
 | 0000 ~ 007F | Basic Latin | 基本拉丁 | 95 / 95 | 0 | 100.00% 🚩 |
