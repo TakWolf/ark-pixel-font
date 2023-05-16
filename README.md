@@ -174,12 +174,8 @@ brew install font-ark-pixel-16px-proportional
 - [PyPNG](https://gitlab.com/drj11/pypng)
 - [Pillow](https://github.com/python-pillow/Pillow)
 - [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/)
-- [Soup Sieve](https://github.com/facelessuser/soupsieve)
 - [Jinja](https://github.com/pallets/jinja)
-- [MarkupSafe](https://github.com/pallets/markupsafe)
 - [GitPython](https://github.com/gitpython-developers/GitPython)
-- [GitDB](https://github.com/gitpython-developers/gitdb)
-- [Smmap](https://github.com/gitpython-developers/smmap)
 
 ## 外部工具
 
