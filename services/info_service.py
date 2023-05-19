@@ -1,9 +1,11 @@
 import logging
 import os
 
+import unidata_blocks
+
 import configs
 from configs import path_define
-from utils import unidata_util, gb2312_util, big5_util, shift_jis_util, ks_x_1001_util, fs_util
+from utils import gb2312_util, big5_util, shift_jis_util, ks_x_1001_util, fs_util
 
 logger = logging.getLogger('info-service')
 
@@ -12,15 +14,15 @@ def _get_unicode_char_count_infos(alphabet):
     count_map = {}
     for c in alphabet:
         code_point = ord(c)
-        unicode_block = configs.unidata_db.get_block_by_code_point(code_point)
-        if not c.isprintable() and unicode_block.char_count > 0:
+        block = unidata_blocks.get_block_by_code_point(code_point)
+        if not c.isprintable() and block.printable_count > 0:
             continue
-        count = count_map.get(unicode_block.begin, 0)
+        count = count_map.get(block.code_start, 0)
         count += 1
-        count_map[unicode_block.begin] = count
-    begins = list(count_map.keys())
-    begins.sort()
-    return [(configs.unidata_db.get_block_by_code_point(begin), count_map[begin]) for begin in begins]
+        count_map[block.code_start] = count
+    code_starts = list(count_map.keys())
+    code_starts.sort()
+    return [(unidata_blocks.get_block_by_code_point(code_start), count_map[code_start]) for code_start in code_starts]
 
 
 def _get_locale_char_count_map(alphabet, query_block_func):
@@ -81,15 +83,15 @@ def _get_ks_x_1001_char_count_infos(alphabet):
 def _write_unicode_char_count_infos_table(file, infos):
     file.write('| 区块范围 | 区块名称 | 区块含义 | 完成数 | 缺失数 | 进度 |\n')
     file.write('|---|---|---|---:|---:|---:|\n')
-    for unicode_block, count in infos:
-        code_point_range = f'{unicode_block.begin:04X} ~ {unicode_block.end:04X}'
-        name = unicode_block.name
-        name_cn = unicode_block.name_cn if unicode_block.name_cn is not None else ''
-        total = unicode_block.char_count
+    for block, count in infos:
+        code_point_range = f'{block.code_start:04X} ~ {block.code_end:04X}'
+        name = block.name
+        name_zh_cn = block.name_localized('zh-cn') or ''
+        total = block.printable_count
         lack = total - count if total > 0 else 0
         progress = count / total if total > 0 else 1
         finished_emoji = '🚩' if progress == 1 else '🚧'
-        file.write(f'| {code_point_range} | {name} | {name_cn} | {count} / {total} | {lack} | {progress:.2%} {finished_emoji} |\n')
+        file.write(f'| {code_point_range} | {name} | {name_zh_cn} | {count} / {total} | {lack} | {progress:.2%} {finished_emoji} |\n')
 
 
 def _write_locale_char_count_infos_table(file, infos):
@@ -124,8 +126,6 @@ def make_info_file(font_config, width_mode, alphabet):
         file.write(f'| 字符总数 | {len(alphabet)} |\n')
         file.write('\n')
         file.write('## Unicode 字符分布\n')
-        file.write('\n')
-        file.write(f'区块定义参考：[{unidata_util.blocks_doc_url}]({unidata_util.blocks_doc_url})\n')
         file.write('\n')
         _write_unicode_char_count_infos_table(file, _get_unicode_char_count_infos(alphabet))
         file.write('\n')

@@ -3,7 +3,6 @@ import os
 project_root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 assets_dir = os.path.join(project_root_dir, 'assets')
-unidata_dir = os.path.join(assets_dir, 'unidata')
 glyphs_dir = os.path.join(assets_dir, 'glyphs')
 templates_dir = os.path.join(assets_dir, 'templates')
 images_dir = os.path.join(assets_dir, 'images')

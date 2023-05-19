@@ -3,6 +3,8 @@ import os
 import shutil
 import unicodedata
 
+import unidata_blocks
+
 import configs
 from configs import path_define
 from utils import glyph_util, fs_util
@@ -43,10 +45,10 @@ def classify_glyph_files(font_config):
                 else:
                     uni_hex_name, language_specifics = _parse_glyph_file_name(glyph_file_name)
                     code_point = int(uni_hex_name, 16)
-                    unicode_block = configs.unidata_db.get_block_by_code_point(code_point)
-                    block_dir_name = f'{unicode_block.begin:04X}-{unicode_block.end:04X} {unicode_block.name}'
+                    block = unidata_blocks.get_block_by_code_point(code_point)
+                    block_dir_name = f'{block.code_start:04X}-{block.code_end:04X} {block.name}'
                     glyph_file_to_dir = os.path.join(width_mode_tmp_dir, block_dir_name)
-                    if unicode_block.begin == 0x4E00:  # CJK Unified Ideographs
+                    if block.code_start == 0x4E00:  # CJK Unified Ideographs
                         glyph_file_to_dir = os.path.join(glyph_file_to_dir, f'{uni_hex_name[0:-2]}-')
                     glyph_file_name = f'{uni_hex_name}{" " if len(language_specifics) > 0 else ""}{",".join(language_specifics)}.png'
                 glyph_file_to_path = os.path.join(glyph_file_to_dir, glyph_file_name)
@@ -94,9 +96,9 @@ def verify_glyph_files(font_config):
                     else:
                         assert width == font_config.px / 2 or width == font_config.px, glyph_file_path
 
-                    unicode_block = configs.unidata_db.get_block_by_code_point(code_point)
-                    if unicode_block is not None:
-                        if unicode_block.begin == 0x4E00:  # CJK Unified Ideographs
+                    block = unidata_blocks.get_block_by_code_point(code_point)
+                    if block is not None:
+                        if block.code_start == 0x4E00:  # CJK Unified Ideographs
                             for alpha in glyph_data[0]:
                                 assert alpha == 0, glyph_file_path
                             for i in range(0, len(glyph_data)):

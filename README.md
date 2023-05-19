@@ -171,6 +171,7 @@ brew install font-ark-pixel-16px-proportional
 
 - [FontTools](https://github.com/fonttools/fonttools)
 - [Brotli](https://github.com/google/brotli)
+- [Unidata Blocks](https://github.com/TakWolf/unidata-blocks)
 - [PyPNG](https://gitlab.com/drj11/pypng)
 - [Pillow](https://github.com/python-pillow/Pillow)
 - [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/)
@@ -189,7 +190,6 @@ brew install font-ark-pixel-16px-proportional
 - [Font Development Best Practices](https://silnrsi.github.io/FDBP/)
 - [Microsoft - OpenType font documentation](https://docs.microsoft.com/en-us/typography/opentype/)
 - [Glyphs 软件教程 - 纵向量度值](https://glyphsapp.com/zh/learn/vertical-metrics)
-- [Unicode 区块名翻译参考](https://github.com/Kushim-Jiang/Zhihu/blob/master/article/006_script_block_translation.md)
 
 ## 赞助
 
