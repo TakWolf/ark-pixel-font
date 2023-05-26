@@ -2,10 +2,11 @@ import logging
 import os
 
 import unidata_blocks
+from character_encoding_utils import gb2312, big5, shiftjis, ksx1001
 
 import configs
 from configs import path_define
-from utils import gb2312_util, big5_util, shift_jis_util, ks_x_1001_util, fs_util
+from utils import fs_util
 
 logger = logging.getLogger('info-service')
 
@@ -25,14 +26,14 @@ def _get_unicode_char_count_infos(alphabet):
     return [(unidata_blocks.get_block_by_code_point(code_start), count_map[code_start]) for code_start in code_starts]
 
 
-def _get_locale_char_count_map(alphabet, query_block_func):
+def _get_locale_char_count_map(alphabet, query_category_func):
     count_map = {}
     for c in alphabet:
-        block_name = query_block_func(c)
-        if block_name is not None:
-            block_count = count_map.get(block_name, 0)
-            block_count += 1
-            count_map[block_name] = block_count
+        category = query_category_func(c)
+        if category is not None:
+            category_count = count_map.get(category, 0)
+            category_count += 1
+            count_map[category] = category_count
             total_count = count_map.get('total', 0)
             total_count += 1
             count_map['total'] = total_count
@@ -40,43 +41,43 @@ def _get_locale_char_count_map(alphabet, query_block_func):
 
 
 def _get_gb2312_char_count_infos(alphabet):
-    count_map = _get_locale_char_count_map(alphabet, gb2312_util.query_block)
+    count_map = _get_locale_char_count_map(alphabet, gb2312.query_category)
     return [
-        ('一级汉字', count_map.get('level-1', 0), gb2312_util.alphabet_level_1_count),
-        ('二级汉字', count_map.get('level-2', 0), gb2312_util.alphabet_level_2_count),
-        ('其他字符', count_map.get('other', 0), gb2312_util.alphabet_other_count),
-        ('总计', count_map.get('total', 0), gb2312_util.alphabet_count),
+        ('一级汉字', count_map.get('level-1', 0), gb2312.get_level_1_count()),
+        ('二级汉字', count_map.get('level-2', 0), gb2312.get_level_2_count()),
+        ('其他字符', count_map.get('other', 0), gb2312.get_other_count()),
+        ('总计', count_map.get('total', 0), gb2312.get_count()),
     ]
 
 
 def _get_big5_char_count_infos(alphabet):
-    count_map = _get_locale_char_count_map(alphabet, big5_util.query_block)
+    count_map = _get_locale_char_count_map(alphabet, big5.query_category)
     return [
-        ('常用汉字', count_map.get('level-1', 0), big5_util.alphabet_level_1_count),
-        ('次常用汉字', count_map.get('level-2', 0), big5_util.alphabet_level_2_count),
-        ('其他字符', count_map.get('other', 0), big5_util.alphabet_other_count),
-        ('总计', count_map.get('total', 0), big5_util.alphabet_count),
+        ('常用汉字', count_map.get('level-1', 0), big5.get_level_1_count()),
+        ('次常用汉字', count_map.get('level-2', 0), big5.get_level_2_count()),
+        ('其他字符', count_map.get('other', 0), big5.get_other_count()),
+        ('总计', count_map.get('total', 0), big5.get_count()),
     ]
 
 
-def _get_shift_jis_char_count_infos(alphabet):
-    count_map = _get_locale_char_count_map(alphabet, shift_jis_util.query_block)
+def _get_shiftjis_char_count_infos(alphabet):
+    count_map = _get_locale_char_count_map(alphabet, shiftjis.query_category)
     return [
-        ('单字节-ASCII字符', count_map.get('single-ascii', 0), shift_jis_util.alphabet_single_ascii_count),
-        ('单字节-半角标点和片假名', count_map.get('single-other', 0), shift_jis_util.alphabet_single_other_count),
-        ('双字节-假名和其他字符', count_map.get('double-basic', 0), shift_jis_util.alphabet_double_basic_count),
-        ('双字节-汉字', count_map.get('double-word', 0), shift_jis_util.alphabet_double_word_count),
-        ('总计', count_map.get('total', 0), shift_jis_util.alphabet_count),
+        ('单字节-ASCII可打印字符', count_map.get('single-byte-ascii-printable', 0), shiftjis.get_single_byte_ascii_printable_count()),
+        ('单字节-半角片假名', count_map.get('single-byte-half-width-katakana', 0), shiftjis.get_single_byte_half_width_katakana_count()),
+        ('双字节-其他字符', count_map.get('double-byte-other', 0), shiftjis.get_double_byte_other_count()),
+        ('双字节-汉字', count_map.get('double-byte-kanji', 0), shiftjis.get_double_byte_kanji_count()),
+        ('总计', count_map.get('total', 0) - count_map.get('single-byte-ascii-control', 0), shiftjis.get_count() - shiftjis.get_single_byte_ascii_control_count()),
     ]
 
 
-def _get_ks_x_1001_char_count_infos(alphabet):
-    count_map = _get_locale_char_count_map(alphabet, ks_x_1001_util.query_block)
+def _get_ksx1001_char_count_infos(alphabet):
+    count_map = _get_locale_char_count_map(alphabet, ksx1001.query_category)
     return [
-        ('谚文音节', count_map.get('syllable', 0), ks_x_1001_util.alphabet_syllable_count),
-        ('汉字', count_map.get('word', 0), ks_x_1001_util.alphabet_word_count),
-        ('其他字符', count_map.get('other', 0), ks_x_1001_util.alphabet_other_count),
-        ('总计', count_map.get('total', 0), ks_x_1001_util.alphabet_count),
+        ('谚文音节', count_map.get('syllable', 0), ksx1001.get_syllable_count()),
+        ('汉字', count_map.get('hanja', 0), ksx1001.get_hanja_count()),
+        ('其他字符', count_map.get('other', 0), ksx1001.get_other_count()),
+        ('总计', count_map.get('total', 0), ksx1001.get_count()),
     ]
 
 
@@ -145,13 +146,13 @@ def make_info_file(font_config, width_mode, alphabet):
         file.write('\n')
         file.write('日语参考字符集。\n')
         file.write('\n')
-        _write_locale_char_count_infos_table(file, _get_shift_jis_char_count_infos(alphabet))
+        _write_locale_char_count_infos_table(file, _get_shiftjis_char_count_infos(alphabet))
         file.write('\n')
         file.write('## KS-X-1001 字符分布\n')
         file.write('\n')
         file.write('韩语参考字符集。统计范围不包含 ASCII。\n')
         file.write('\n')
-        _write_locale_char_count_infos_table(file, _get_ks_x_1001_char_count_infos(alphabet))
+        _write_locale_char_count_infos_table(file, _get_ksx1001_char_count_infos(alphabet))
     logger.info(f'make {info_file_path}')
 
 

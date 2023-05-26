@@ -1,6 +1,7 @@
 fonttools==4.39.4
 Brotli==1.0.9
 unidata-blocks==0.0.2
+character-encoding-utils==0.0.4
 pypng==0.20220715.0
 Pillow==9.5.0
 beautifulsoup4==4.12.2
