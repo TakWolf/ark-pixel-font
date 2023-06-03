@@ -42,7 +42,7 @@ class GlyphInfoBuilder:
         if is_ttf:
             pen = TTGlyphPen(None)
         else:
-            pen = T2CharStringPen(width, None)
+            pen = T2CharStringPen(0, None)
         if len(outlines) > 0:
             for outline_index, outline in enumerate(outlines):
                 for point_index, point in enumerate(outline):
