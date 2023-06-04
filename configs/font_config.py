@@ -19,8 +19,10 @@ license_info_url = 'https://scripts.sil.org/OFL'
 
 
 class FontAttrs:
-    def __init__(self, config_data):
+    def __init__(self, config_data, px, line_height_px):
         self.box_origin_y_px = config_data['box_origin_y']
+        self.ascent_px = self.box_origin_y_px + int((line_height_px - px) / 2)
+        self.descent_px = self.ascent_px - line_height_px
         self.x_height_px = config_data['x_height']
         self.cap_height_px = config_data['cap_height']
 
@@ -35,16 +37,22 @@ class VerticalMetrics:
 
 class FontConfig:
     def __init__(self, px, px_units=100):
-        config_file_path = os.path.join(path_define.glyphs_dir, str(px), 'config.toml')
-        with open(config_file_path, 'rb') as config_file:
-            config_data = tomllib.load(config_file)['font']
-        assert px == config_data['size'], config_file_path
+        self.root_dir = os.path.join(path_define.glyphs_dir, str(px))
 
-        self.px = px
+        config_file_path = os.path.join(path_define.glyphs_dir, str(px), 'config.toml')
+        with open(config_file_path, 'rb') as file:
+            config_data = tomllib.load(file)['font']
+
+        self.px = config_data['size']
+        assert self.px == px, config_file_path
         self.line_height_px = config_data['line_height']
         assert (self.line_height_px - px) % 2 == 0, f'font_config {px}px with incorrect line_height_px {self.line_height_px}px'
-        self.monospaced_attrs = FontAttrs(config_data['monospaced'])
-        self.proportional_attrs = FontAttrs(config_data['proportional'])
+
+        self._attrs_group = {
+            'monospaced': FontAttrs(config_data['monospaced'], self.px, self.px),
+            'proportional': FontAttrs(config_data['proportional'], self.px, self.line_height_px),
+        }
+
         self.px_units = px_units
 
         self.demo_html_file_name = f'demo-{px}px.html'
@@ -73,21 +81,13 @@ class FontConfig:
         return self.px * self.px_units
 
     def get_box_origin_y(self, width_mode):
-        if width_mode == 'monospaced':
-            attrs = self.monospaced_attrs
-        else:  # proportional
-            attrs = self.proportional_attrs
+        attrs = self._attrs_group[width_mode]
         return attrs.box_origin_y_px * self.px_units
 
     def get_vertical_metrics(self, width_mode):
-        if width_mode == 'monospaced':
-            line_height_px = self.px
-            attrs = self.monospaced_attrs
-        else:  # proportional
-            line_height_px = self.line_height_px
-            attrs = self.proportional_attrs
-        ascent = (attrs.box_origin_y_px + int((line_height_px - self.px) / 2)) * self.px_units
-        descent = ascent - line_height_px * self.px_units
+        attrs = self._attrs_group[width_mode]
+        ascent = attrs.ascent_px * self.px_units
+        descent = attrs.descent_px * self.px_units
         x_height = attrs.x_height_px * self.px_units
         cap_height = attrs.cap_height_px * self.px_units
         return VerticalMetrics(ascent, descent, x_height, cap_height)
