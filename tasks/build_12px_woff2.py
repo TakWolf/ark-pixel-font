@@ -7,7 +7,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 def main():
-    font_config = configs.font_config_map[12]
+    font_config = configs.font_size_to_config[12]
     design_service.classify_glyph_files(font_config)
     design_service.verify_glyph_files(font_config)
     alphabet_group, glyph_file_paths_map_group = design_service.collect_glyph_files(font_config)

@@ -9,7 +9,7 @@
         }
         @font-face {
             font-family: Ark-Pixel-12px-monospaced-latin;
-            src: url("{{ configs.font_config_map[12].get_font_file_name('monospaced', 'latin', 'woff2') }}?r={{ configs.build_random_key }}");
+            src: url("{{ configs.font_size_to_config[12].get_font_file_name('monospaced', 'latin', 'woff2') }}?r={{ configs.build_random_key }}");
         }
         {% for font_config in configs.font_configs  %}
         {% for locale, language_flavor in configs.locale_to_language_flavor.items() %}

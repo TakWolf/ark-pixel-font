@@ -12,7 +12,7 @@ font_name = font_config.display_name_prefix
 font_version = font_config.version
 
 font_configs = [FontConfig(px) for px in [10, 12, 16]]
-font_config_map = {font_config.px: font_config for font_config in font_configs}
+font_size_to_config = {font_config.px: font_config for font_config in font_configs}
 
 width_modes = [
     'monospaced',

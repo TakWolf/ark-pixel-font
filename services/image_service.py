@@ -13,7 +13,7 @@ logger = logging.getLogger('image-service')
 
 
 def _load_font(px, width_mode, language_flavor, px_scale=1):
-    font_file_path = os.path.join(path_define.outputs_dir, configs.font_config_map[px].get_font_file_name(width_mode, language_flavor, 'woff2'))
+    font_file_path = os.path.join(path_define.outputs_dir, configs.font_size_to_config[px].get_font_file_name(width_mode, language_flavor, 'woff2'))
     return ImageFont.truetype(font_file_path, px * px_scale)
 
 
@@ -77,11 +77,11 @@ def make_preview_image_file(font_config):
 
 
 def make_readme_banner():
-    alphabet = info_service.read_alphabet_txt_file(configs.font_config_map[12], 'proportional')
+    alphabet = info_service.read_alphabet_txt_file(configs.font_size_to_config[12], 'proportional')
     font_x1 = _load_font(12, 'proportional', 'zh_cn')
     font_x2 = _load_font(12, 'proportional', 'zh_cn', 2)
     box_size = 14
-    line_height = configs.font_config_map[12].display_line_height_px
+    line_height = configs.font_size_to_config[12].display_line_height_px
     text_color = (255, 255, 255)
     shadow_color = (80, 80, 80)
 
@@ -100,14 +100,14 @@ def make_readme_banner():
 
 
 def make_github_banner():
-    alphabet = info_service.read_alphabet_txt_file(configs.font_config_map[12], 'proportional')
+    alphabet = info_service.read_alphabet_txt_file(configs.font_size_to_config[12], 'proportional')
     font_title = _load_font(12, 'proportional', 'zh_cn', 2)
     font_latin = _load_font(12, 'proportional', 'latin')
     font_zh_cn = _load_font(12, 'proportional', 'zh_cn')
     font_zh_tr = _load_font(12, 'proportional', 'zh_tr')
     font_ja = _load_font(12, 'proportional', 'ja')
     box_size = 14
-    line_height = configs.font_config_map[12].display_line_height_px
+    line_height = configs.font_size_to_config[12].display_line_height_px
     text_color = (255, 255, 255)
     shadow_color = (80, 80, 80)
 
@@ -133,11 +133,11 @@ def make_github_banner():
 
 
 def make_itch_io_banner():
-    alphabet = info_service.read_alphabet_txt_file(configs.font_config_map[12], 'proportional')
+    alphabet = info_service.read_alphabet_txt_file(configs.font_size_to_config[12], 'proportional')
     font_x1 = _load_font(12, 'proportional', 'zh_cn')
     font_x2 = _load_font(12, 'proportional', 'zh_cn', 2)
     box_size = 14
-    line_height = configs.font_config_map[12].display_line_height_px
+    line_height = configs.font_size_to_config[12].display_line_height_px
     text_color = (255, 255, 255)
     shadow_color = (80, 80, 80)
 
@@ -156,7 +156,7 @@ def make_itch_io_banner():
 
 
 def make_itch_io_background():
-    alphabet = info_service.read_alphabet_txt_file(configs.font_config_map[12], 'proportional')
+    alphabet = info_service.read_alphabet_txt_file(configs.font_size_to_config[12], 'proportional')
     font = _load_font(12, 'proportional', 'zh_cn')
     box_size = 14
 
@@ -176,7 +176,7 @@ def make_itch_io_cover():
     font_zh_cn = _load_font(12, 'proportional', 'zh_cn')
     font_zh_tr = _load_font(12, 'proportional', 'zh_tr')
     font_ja = _load_font(12, 'proportional', 'ja')
-    line_height = configs.font_config_map[12].display_line_height_px
+    line_height = configs.font_size_to_config[12].display_line_height_px
     text_color = (255, 255, 255)
     shadow_color = (80, 80, 80)
 
@@ -207,7 +207,7 @@ def make_afdian_cover():
     font_zh_cn = _load_font(12, 'proportional', 'zh_cn')
     font_zh_tr = _load_font(12, 'proportional', 'zh_tr')
     font_ja = _load_font(12, 'proportional', 'ja')
-    line_height = configs.font_config_map[12].display_line_height_px
+    line_height = configs.font_size_to_config[12].display_line_height_px
     text_color = (255, 255, 255)
     shadow_color = (80, 80, 80)
 
