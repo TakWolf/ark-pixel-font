@@ -90,7 +90,7 @@ def make_preview_image_file(font_config):
     fs_util.make_dirs(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, font_config.preview_image_file_name)
     image.save(file_path)
-    logger.info(f'make {file_path}')
+    logger.info(f"Made preview image file: '{file_path}'")
 
 
 def make_readme_banner():
@@ -113,7 +113,7 @@ def make_readme_banner():
     fs_util.make_dirs(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, 'readme-banner.png')
     image.save(file_path)
-    logger.info(f'make {file_path}')
+    logger.info(f"Made readme banner: '{file_path}'")
 
 
 def make_github_banner():
@@ -146,7 +146,7 @@ def make_github_banner():
     fs_util.make_dirs(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, 'github-banner.png')
     image.save(file_path)
-    logger.info(f'make {file_path}')
+    logger.info(f"Made github banner: '{file_path}'")
 
 
 def make_itch_io_banner():
@@ -169,7 +169,7 @@ def make_itch_io_banner():
     fs_util.make_dirs(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, 'itch-io-banner.png')
     image.save(file_path)
-    logger.info(f'make {file_path}')
+    logger.info(f"Made itch.io banner: '{file_path}'")
 
 
 def make_itch_io_background():
@@ -185,7 +185,7 @@ def make_itch_io_background():
     fs_util.make_dirs(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, 'itch-io-background.png')
     image.save(file_path)
-    logger.info(f'make {file_path}')
+    logger.info(f"Made itch.io background: '{file_path}'")
 
 
 def make_itch_io_cover():
@@ -216,7 +216,7 @@ def make_itch_io_cover():
     fs_util.make_dirs(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, 'itch-io-cover.png')
     image.save(file_path)
-    logger.info(f'make {file_path}')
+    logger.info(f"Made itch.io cover: '{file_path}'")
 
 
 def make_afdian_cover():
@@ -249,4 +249,4 @@ def make_afdian_cover():
     fs_util.make_dirs(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, 'afdian-cover.png')
     image.save(file_path)
-    logger.info(f'make {file_path}')
+    logger.info(f"Made afdian cover: '{file_path}'")

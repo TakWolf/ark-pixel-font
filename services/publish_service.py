@@ -23,14 +23,14 @@ def make_release_zips(font_config, width_mode):
                 font_file_name = font_config.get_font_file_name(width_mode, language_flavor, font_format)
                 font_file_path = os.path.join(path_define.outputs_dir, font_file_name)
                 file.write(font_file_path, font_file_name)
-        logger.info(f'make {file_path}')
+        logger.info(f"Made release zip: '{file_path}'")
 
 
 def _copy_file(file_name, from_dir, to_dir):
     from_path = os.path.join(from_dir, file_name)
     to_path = os.path.join(to_dir, file_name)
     shutil.copyfile(from_path, to_path)
-    logger.info(f'copy from {from_path} to {to_path}')
+    logger.info(f"Copy from '{from_path}' to '{to_path}'")
 
 
 def update_docs():

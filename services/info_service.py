@@ -155,7 +155,7 @@ def make_info_file(font_config, width_mode, alphabet):
         file.write('韩语参考字符集。统计范围不包含 ASCII。\n')
         file.write('\n')
         _write_locale_chr_count_infos_table(file, _get_ksx1001_chr_count_infos(alphabet))
-    logger.info(f'make {file_path}')
+    logger.info(f"Made info file: '{file_path}'")
 
 
 def make_alphabet_txt_file(font_config, width_mode, alphabet):
@@ -163,7 +163,7 @@ def make_alphabet_txt_file(font_config, width_mode, alphabet):
     file_path = os.path.join(path_define.outputs_dir, font_config.get_alphabet_txt_file_name(width_mode))
     with open(file_path, 'w', encoding='utf-8') as file:
         file.write(''.join(alphabet))
-    logger.info(f'make {file_path}')
+    logger.info(f"Made alphabet txt file: '{file_path}'")
 
 
 def read_alphabet_txt_file(font_config, width_mode):
