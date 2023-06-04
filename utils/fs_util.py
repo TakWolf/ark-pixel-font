@@ -7,7 +7,7 @@ def delete_dir(path):
         shutil.rmtree(path)
 
 
-def make_dirs_if_not_exists(path):
+def make_dirs(path):
     if os.path.exists(path):
         if not os.path.isdir(path):
             raise Exception(f"Path exists but not a directory: '{path}'")

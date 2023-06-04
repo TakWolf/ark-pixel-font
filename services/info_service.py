@@ -113,7 +113,7 @@ def _get_width_mode_display_name(width_mode):
 
 
 def make_info_file(font_config, width_mode, alphabet):
-    fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
+    fs_util.make_dirs(path_define.outputs_dir)
     info_file_path = os.path.join(path_define.outputs_dir, font_config.get_info_file_name(width_mode))
     with open(info_file_path, 'w', encoding='utf-8') as file:
         file.write(f'# {configs.font_name} {font_config.px}px {_get_width_mode_display_name(width_mode)}\n')
@@ -157,7 +157,7 @@ def make_info_file(font_config, width_mode, alphabet):
 
 
 def make_alphabet_txt_file(font_config, width_mode, alphabet):
-    fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
+    fs_util.make_dirs(path_define.outputs_dir)
     txt_file_path = os.path.join(path_define.outputs_dir, font_config.get_alphabet_txt_file_name(width_mode))
     with open(txt_file_path, 'w', encoding='utf-8') as file:
         file.write(''.join(alphabet))
