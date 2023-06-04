@@ -124,7 +124,7 @@ def _create_font_builder(name_strings, units_per_em, vertical_metrics, glyph_ord
     return builder
 
 
-def make_fonts(font_config, width_mode, alphabet, glyph_file_paths_map, language_flavors=None, font_formats=None):
+def make_font_files(font_config, width_mode, alphabet, glyph_file_paths_map, language_flavors=None, font_formats=None):
     if language_flavors is None:
         language_flavors = configs.language_flavors
     if font_formats is None:

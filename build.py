@@ -18,7 +18,7 @@ def main():
         for width_mode in configs.width_modes:
             alphabet = alphabet_group[width_mode]
             glyph_file_paths_map = glyph_file_paths_map_group[width_mode]
-            font_service.make_fonts(font_config, width_mode, alphabet, glyph_file_paths_map)
+            font_service.make_font_files(font_config, width_mode, alphabet, glyph_file_paths_map)
             publish_service.make_release_zips(font_config, width_mode)
             info_service.make_info_file(font_config, width_mode, alphabet)
             info_service.make_alphabet_txt_file(font_config, width_mode, alphabet)
