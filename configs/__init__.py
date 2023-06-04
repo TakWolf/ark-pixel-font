@@ -1,7 +1,5 @@
 import random
 
-from jinja2 import Environment, FileSystemLoader
-
 from configs import path_define
 from configs.font_config import FontConfig
 from configs.git_deploy_config import GitDeployConfig
@@ -46,12 +44,6 @@ locale_to_language_flavor = {
 }
 
 font_formats = ['otf', 'woff2', 'ttf']
-
-template_env = Environment(
-    trim_blocks=True,
-    lstrip_blocks=True,
-    loader=FileSystemLoader(path_define.templates_dir),
-)
 
 git_deploy_configs = [GitDeployConfig(
     url='git@github.com:TakWolf/ark-pixel-font.git',

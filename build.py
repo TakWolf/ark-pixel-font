@@ -2,7 +2,7 @@ import logging
 
 import configs
 from configs import path_define
-from services import design_service, font_service, info_service, publish_service, html_service, image_service
+from services import design_service, font_service, publish_service, info_service, template_service, image_service
 from utils import fs_util
 
 logging.basicConfig(level=logging.DEBUG)
@@ -19,14 +19,14 @@ def main():
             alphabet = alphabet_group[width_mode]
             glyph_file_paths_map = glyph_file_paths_map_group[width_mode]
             font_service.make_fonts(font_config, width_mode, alphabet, glyph_file_paths_map)
+            publish_service.make_release_zips(font_config, width_mode)
             info_service.make_info_file(font_config, width_mode, alphabet)
             info_service.make_alphabet_txt_file(font_config, width_mode, alphabet)
-            publish_service.make_release_zips(font_config, width_mode)
-            html_service.make_alphabet_html_file(font_config, width_mode, alphabet)
-        html_service.make_demo_html_file(font_config, alphabet_group)
+            template_service.make_alphabet_html_file(font_config, width_mode, alphabet)
+        template_service.make_demo_html_file(font_config, alphabet_group)
         image_service.make_preview_image_file(font_config)
-    html_service.make_index_html_file()
-    html_service.make_playground_html_file()
+    template_service.make_index_html_file()
+    template_service.make_playground_html_file()
     image_service.make_readme_banner()
     image_service.make_github_banner()
     image_service.make_itch_io_banner()

@@ -2,16 +2,23 @@ import logging
 import os
 
 import bs4
+from jinja2 import Environment, FileSystemLoader
 
 import configs
 from configs import path_define
 from utils import fs_util
 
-logger = logging.getLogger('html-service')
+logger = logging.getLogger('template-service')
+
+_environment = Environment(
+    trim_blocks=True,
+    lstrip_blocks=True,
+    loader=FileSystemLoader(path_define.templates_dir),
+)
 
 
 def make_alphabet_html_file(font_config, width_mode, alphabet):
-    template = configs.template_env.get_template('alphabet.html')
+    template = _environment.get_template('alphabet.html')
     html = template.render(
         configs=configs,
         font_config=font_config,
@@ -90,7 +97,7 @@ def make_demo_html_file(font_config, alphabet_group):
     _handle_demo_html_element(soup, soup, alphabet_group)
     content_html = str(soup)
 
-    template = configs.template_env.get_template('demo.html')
+    template = _environment.get_template('demo.html')
     html = template.render(
         configs=configs,
         font_config=font_config,
@@ -104,7 +111,7 @@ def make_demo_html_file(font_config, alphabet_group):
 
 
 def make_index_html_file():
-    template = configs.template_env.get_template('index.html')
+    template = _environment.get_template('index.html')
     html = template.render(configs=configs)
     fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
     html_file_path = os.path.join(path_define.outputs_dir, 'index.html')
@@ -114,7 +121,7 @@ def make_index_html_file():
 
 
 def make_playground_html_file():
-    template = configs.template_env.get_template('playground.html')
+    template = _environment.get_template('playground.html')
     html = template.render(configs=configs)
     fs_util.make_dirs_if_not_exists(path_define.outputs_dir)
     html_file_path = os.path.join(path_define.outputs_dir, 'playground.html')
