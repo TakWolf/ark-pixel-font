@@ -3,6 +3,7 @@ import os
 import shutil
 import unicodedata
 
+import png
 import unidata_blocks
 from fontTools.fontBuilder import FontBuilder
 from fontTools.pens.t2CharStringPen import T2CharStringPen
@@ -27,6 +28,37 @@ def _parse_glyph_file_name(glyph_file_name):
                 language_flavors.append(language_flavor)
         assert len(language_flavors) == len(language_flavor_tokens), glyph_file_name
     return hex_name, language_flavors
+
+
+def _load_glyph_data_from_png(file_path):
+    width, height, bitmap, _ = png.Reader(filename=file_path).read()
+    data = []
+    for bitmap_row in bitmap:
+        data_row = []
+        for x in range(0, width * 4, 4):
+            alpha = bitmap_row[x + 3]
+            if alpha > 127:
+                data_row.append(1)
+            else:
+                data_row.append(0)
+        data.append(data_row)
+    return data, width, height
+
+
+def _save_glyph_data_to_png(data, file_path):
+    bitmap = []
+    for data_row in data:
+        bitmap_row = []
+        for x in data_row:
+            bitmap_row.append(0)
+            bitmap_row.append(0)
+            bitmap_row.append(0)
+            if x == 0:
+                bitmap_row.append(0)
+            else:
+                bitmap_row.append(255)
+        bitmap.append(bitmap_row)
+    png.from_array(bitmap, 'RGBA').save(file_path)
 
 
 def classify_glyph_files(font_config):
@@ -76,7 +108,7 @@ def verify_glyph_files(font_config):
                 if not glyph_file_name.endswith('.png'):
                     continue
                 glyph_file_path = os.path.join(glyph_file_dir, glyph_file_name)
-                glyph_data, width, height = glyph_util.load_glyph_data_from_png(glyph_file_path)
+                glyph_data, width, height = _load_glyph_data_from_png(glyph_file_path)
                 if glyph_file_name == 'notdef.png':
                     code_point = -1
                     c = None
@@ -120,7 +152,7 @@ def verify_glyph_files(font_config):
                             glyph_data.insert(0, [0 for _ in range(width)])
                             glyph_data.append([0 for _ in range(width)])
 
-                glyph_util.save_glyph_data_to_png(glyph_data, glyph_file_path)
+                _save_glyph_data_to_png(glyph_data, glyph_file_path)
                 logger.info(f"Formatted glyph file: '{glyph_file_path}'")
 
 
@@ -201,7 +233,7 @@ class GlyphInfoBuilder:
         if glyph_file_path in self.glyph_data_info_map:
             glyph_data_info = self.glyph_data_info_map[glyph_file_path]
         else:
-            glyph_data, width_px, height_px = glyph_util.load_glyph_data_from_png(glyph_file_path)
+            glyph_data, width_px, height_px = _load_glyph_data_from_png(glyph_file_path)
             outlines = glyph_util.get_outlines_from_glyph_data(glyph_data, self.px_units)
             glyph_data_info = outlines, width_px * self.px_units, height_px * self.px_units
             self.glyph_data_info_map[glyph_file_path] = glyph_data_info
