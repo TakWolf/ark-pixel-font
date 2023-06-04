@@ -13,17 +13,17 @@ logger = logging.getLogger('design-service')
 
 
 def _parse_glyph_file_name(glyph_file_name):
-    params = glyph_file_name.removesuffix('.png').split(' ')
-    assert 1 <= len(params) <= 2, glyph_file_name
-    uni_hex_name = params[0].upper()
+    tokens = glyph_file_name.removesuffix('.png').split(' ')
+    assert 1 <= len(tokens) <= 2, glyph_file_name
+    hex_name = tokens[0].upper()
     language_flavors = []
-    if len(params) >= 2:
-        array = params[1].lower().split(',')
+    if len(tokens) == 2:
+        language_flavor_tokens = tokens[1].lower().split(',')
         for language_flavor in configs.language_flavors:
-            if language_flavor in array:
+            if language_flavor in language_flavor_tokens:
                 language_flavors.append(language_flavor)
-        assert len(language_flavors) == len(array), glyph_file_name
-    return uni_hex_name, language_flavors
+        assert len(language_flavors) == len(language_flavor_tokens), glyph_file_name
+    return hex_name, language_flavors
 
 
 def classify_glyph_files(font_config):
@@ -43,14 +43,14 @@ def classify_glyph_files(font_config):
                 if glyph_file_name == 'notdef.png':
                     glyph_file_to_dir = width_mode_tmp_dir
                 else:
-                    uni_hex_name, language_flavors = _parse_glyph_file_name(glyph_file_name)
-                    code_point = int(uni_hex_name, 16)
+                    hex_name, language_flavors = _parse_glyph_file_name(glyph_file_name)
+                    code_point = int(hex_name, 16)
                     block = unidata_blocks.get_block_by_code_point(code_point)
                     block_dir_name = f'{block.code_start:04X}-{block.code_end:04X} {block.name}'
                     glyph_file_to_dir = os.path.join(width_mode_tmp_dir, block_dir_name)
                     if block.code_start == 0x4E00:  # CJK Unified Ideographs
-                        glyph_file_to_dir = os.path.join(glyph_file_to_dir, f'{uni_hex_name[0:-2]}-')
-                    glyph_file_name = f'{uni_hex_name}{" " if len(language_flavors) > 0 else ""}{",".join(language_flavors)}.png'
+                        glyph_file_to_dir = os.path.join(glyph_file_to_dir, f'{hex_name[0:-2]}-')
+                    glyph_file_name = f'{hex_name}{" " if len(language_flavors) > 0 else ""}{",".join(language_flavors)}.png'
                 glyph_file_to_path = os.path.join(glyph_file_to_dir, glyph_file_name)
                 assert not os.path.exists(glyph_file_to_path), glyph_file_from_path
                 fs_util.make_dirs(glyph_file_to_dir)
@@ -78,8 +78,8 @@ def verify_glyph_files(font_config):
                     code_point = -1
                     c = None
                 else:
-                    uni_hex_name, _ = _parse_glyph_file_name(glyph_file_name)
-                    code_point = int(uni_hex_name, 16)
+                    hex_name, _ = _parse_glyph_file_name(glyph_file_name)
+                    code_point = int(hex_name, 16)
                     c = chr(code_point)
 
                 if width_mode_dir_name == 'common' or width_mode_dir_name == 'monospaced':
@@ -144,8 +144,8 @@ def collect_glyph_files(font_config):
                 if glyph_file_name == 'notdef.png':
                     glyph_file_paths_cellar[width_mode_dir_name]['default']['.notdef'] = glyph_file_path
                 else:
-                    uni_hex_name, language_flavors = _parse_glyph_file_name(glyph_file_name)
-                    code_point = int(uni_hex_name, 16)
+                    hex_name, language_flavors = _parse_glyph_file_name(glyph_file_name)
+                    code_point = int(hex_name, 16)
                     if len(language_flavors) > 0:
                         for language_flavor in language_flavors:
                             assert code_point not in glyph_file_paths_cellar[width_mode_dir_name][language_flavor], glyph_file_path

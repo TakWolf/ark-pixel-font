@@ -151,17 +151,17 @@ def make_fonts(font_config, width_mode, alphabet, glyph_file_paths_map, language
             glyph_info_map = glyph_info_builder.build_glyph_info_map(glyph_file_paths, False)
             font_builder = _create_font_builder(name_strings, units_per_em, vertical_metrics, glyph_order, character_map, glyph_info_map, False)
             if 'otf' in font_formats:
-                font_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name(width_mode, language_flavor, 'otf'))
-                font_builder.save(font_file_path)
-                logger.info(f'make {font_file_path}')
+                otf_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name(width_mode, language_flavor, 'otf'))
+                font_builder.save(otf_file_path)
+                logger.info(f'make {otf_file_path}')
             if 'woff2' in font_formats:
                 font_builder.font.flavor = 'woff2'
-                font_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name(width_mode, language_flavor, 'woff2'))
-                font_builder.save(font_file_path)
-                logger.info(f'make {font_file_path}')
+                woff2_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name(width_mode, language_flavor, 'woff2'))
+                font_builder.save(woff2_file_path)
+                logger.info(f'make {woff2_file_path}')
         if 'ttf' in font_formats:
             glyph_info_map = glyph_info_builder.build_glyph_info_map(glyph_file_paths, True)
             font_builder = _create_font_builder(name_strings, units_per_em, vertical_metrics, glyph_order, character_map, glyph_info_map, True)
-            font_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name(width_mode, language_flavor, 'ttf'))
-            font_builder.save(font_file_path)
-            logger.info(f'make {font_file_path}')
+            ttf_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name(width_mode, language_flavor, 'ttf'))
+            font_builder.save(ttf_file_path)
+            logger.info(f'make {ttf_file_path}')

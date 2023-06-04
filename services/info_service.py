@@ -114,8 +114,8 @@ def _get_width_mode_display_name(width_mode):
 
 def make_info_file(font_config, width_mode, alphabet):
     fs_util.make_dirs(path_define.outputs_dir)
-    info_file_path = os.path.join(path_define.outputs_dir, font_config.get_info_file_name(width_mode))
-    with open(info_file_path, 'w', encoding='utf-8') as file:
+    file_path = os.path.join(path_define.outputs_dir, font_config.get_info_file_name(width_mode))
+    with open(file_path, 'w', encoding='utf-8') as file:
         file.write(f'# {configs.font_name} {font_config.px}px {_get_width_mode_display_name(width_mode)}\n')
         file.write('\n')
         file.write('## 基本信息\n')
@@ -153,20 +153,20 @@ def make_info_file(font_config, width_mode, alphabet):
         file.write('韩语参考字符集。统计范围不包含 ASCII。\n')
         file.write('\n')
         _write_locale_char_count_infos_table(file, _get_ksx1001_char_count_infos(alphabet))
-    logger.info(f'make {info_file_path}')
+    logger.info(f'make {file_path}')
 
 
 def make_alphabet_txt_file(font_config, width_mode, alphabet):
     fs_util.make_dirs(path_define.outputs_dir)
-    txt_file_path = os.path.join(path_define.outputs_dir, font_config.get_alphabet_txt_file_name(width_mode))
-    with open(txt_file_path, 'w', encoding='utf-8') as file:
+    file_path = os.path.join(path_define.outputs_dir, font_config.get_alphabet_txt_file_name(width_mode))
+    with open(file_path, 'w', encoding='utf-8') as file:
         file.write(''.join(alphabet))
-    logger.info(f'make {txt_file_path}')
+    logger.info(f'make {file_path}')
 
 
 def read_alphabet_txt_file(font_config, width_mode):
-    txt_file_path = os.path.join(path_define.outputs_dir, font_config.get_alphabet_txt_file_name(width_mode))
-    with open(txt_file_path, 'r', encoding='utf-8') as file:
+    file_path = os.path.join(path_define.outputs_dir, font_config.get_alphabet_txt_file_name(width_mode))
+    with open(file_path, 'r', encoding='utf-8') as file:
         text = file.read()
     alphabet = list(text)
     alphabet.sort()

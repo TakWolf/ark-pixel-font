@@ -13,8 +13,8 @@ logger = logging.getLogger('image-service')
 
 
 def _load_font(px, width_mode, language_flavor, px_scale=1):
-    font_file_path = os.path.join(path_define.outputs_dir, configs.font_size_to_config[px].get_font_file_name(width_mode, language_flavor, 'woff2'))
-    return ImageFont.truetype(font_file_path, px * px_scale)
+    file_path = os.path.join(path_define.outputs_dir, configs.font_size_to_config[px].get_font_file_name(width_mode, language_flavor, 'woff2'))
+    return ImageFont.truetype(file_path, px * px_scale)
 
 
 def _draw_text(image, xy, text, font, text_color=(0, 0, 0), shadow_color=None, line_height=None, line_gap=0, is_horizontal_centered=False, is_vertical_centered=False):
@@ -71,9 +71,9 @@ def make_preview_image_file(font_config):
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
     fs_util.make_dirs(path_define.outputs_dir)
-    image_file_path = os.path.join(path_define.outputs_dir, font_config.preview_image_file_name)
-    image.save(image_file_path)
-    logger.info(f'make {image_file_path}')
+    file_path = os.path.join(path_define.outputs_dir, font_config.preview_image_file_name)
+    image.save(file_path)
+    logger.info(f'make {file_path}')
 
 
 def make_readme_banner():
@@ -94,9 +94,9 @@ def make_readme_banner():
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
     fs_util.make_dirs(path_define.outputs_dir)
-    image_file_path = os.path.join(path_define.outputs_dir, 'readme-banner.png')
-    image.save(image_file_path)
-    logger.info(f'make {image_file_path}')
+    file_path = os.path.join(path_define.outputs_dir, 'readme-banner.png')
+    image.save(file_path)
+    logger.info(f'make {file_path}')
 
 
 def make_github_banner():
@@ -127,9 +127,9 @@ def make_github_banner():
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
     fs_util.make_dirs(path_define.outputs_dir)
-    image_file_path = os.path.join(path_define.outputs_dir, 'github-banner.png')
-    image.save(image_file_path)
-    logger.info(f'make {image_file_path}')
+    file_path = os.path.join(path_define.outputs_dir, 'github-banner.png')
+    image.save(file_path)
+    logger.info(f'make {file_path}')
 
 
 def make_itch_io_banner():
@@ -150,9 +150,9 @@ def make_itch_io_banner():
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
     fs_util.make_dirs(path_define.outputs_dir)
-    image_file_path = os.path.join(path_define.outputs_dir, 'itch-io-banner.png')
-    image.save(image_file_path)
-    logger.info(f'make {image_file_path}')
+    file_path = os.path.join(path_define.outputs_dir, 'itch-io-banner.png')
+    image.save(file_path)
+    logger.info(f'make {file_path}')
 
 
 def make_itch_io_background():
@@ -165,9 +165,9 @@ def make_itch_io_background():
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
     fs_util.make_dirs(path_define.outputs_dir)
-    image_file_path = os.path.join(path_define.outputs_dir, 'itch-io-background.png')
-    image.save(image_file_path)
-    logger.info(f'make {image_file_path}')
+    file_path = os.path.join(path_define.outputs_dir, 'itch-io-background.png')
+    image.save(file_path)
+    logger.info(f'make {file_path}')
 
 
 def make_itch_io_cover():
@@ -196,9 +196,9 @@ def make_itch_io_cover():
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
     fs_util.make_dirs(path_define.outputs_dir)
-    image_file_path = os.path.join(path_define.outputs_dir, 'itch-io-cover.png')
-    image.save(image_file_path)
-    logger.info(f'make {image_file_path}')
+    file_path = os.path.join(path_define.outputs_dir, 'itch-io-cover.png')
+    image.save(file_path)
+    logger.info(f'make {file_path}')
 
 
 def make_afdian_cover():
@@ -229,6 +229,6 @@ def make_afdian_cover():
     image = image.resize((image.width * 2, image.height * 2), Image.NEAREST)
 
     fs_util.make_dirs(path_define.outputs_dir)
-    image_file_path = os.path.join(path_define.outputs_dir, 'afdian-cover.png')
-    image.save(image_file_path)
-    logger.info(f'make {image_file_path}')
+    file_path = os.path.join(path_define.outputs_dir, 'afdian-cover.png')
+    image.save(file_path)
+    logger.info(f'make {file_path}')

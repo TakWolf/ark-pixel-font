@@ -16,14 +16,14 @@ logger = logging.getLogger('publish-service')
 def make_release_zips(font_config, width_mode):
     fs_util.make_dirs(path_define.releases_dir)
     for font_format in configs.font_formats:
-        zip_file_path = os.path.join(path_define.releases_dir, font_config.get_release_zip_file_name(width_mode, font_format))
-        with zipfile.ZipFile(zip_file_path, 'w') as zip_file:
-            zip_file.write('LICENSE-OFL', 'OFL.txt')
+        file_path = os.path.join(path_define.releases_dir, font_config.get_release_zip_file_name(width_mode, font_format))
+        with zipfile.ZipFile(file_path, 'w') as file:
+            file.write('LICENSE-OFL', 'OFL.txt')
             for language_flavor in configs.language_flavors:
                 font_file_name = font_config.get_font_file_name(width_mode, language_flavor, font_format)
                 font_file_path = os.path.join(path_define.outputs_dir, font_file_name)
-                zip_file.write(font_file_path, font_file_name)
-        logger.info(f'make {zip_file_path}')
+                file.write(font_file_path, font_file_name)
+        logger.info(f'make {file_path}')
 
 
 def _copy_file(file_name, from_dir, to_dir):
