@@ -8,11 +8,11 @@
             box-sizing: border-box;
         }
         {% for width_mode in configs.width_modes %}
-        {% for locale, language_specific in configs.locale_map.items() %}
-        {% with font_family = 'Ark-Pixel-' ~ font_config.px ~ 'px-' ~ width_mode ~ '-' ~ language_specific %}
+        {% for locale, language_flavor in configs.locale_to_language_flavor.items() %}
+        {% with font_family = 'Ark-Pixel-' ~ font_config.px ~ 'px-' ~ width_mode ~ '-' ~ language_flavor %}
         @font-face {
             font-family: {{ font_family }};
-            src: url("{{ font_config.get_font_file_name(width_mode, language_specific, 'woff2') }}?r={{ configs.build_random_key }}");
+            src: url("{{ font_config.get_font_file_name(width_mode, language_flavor, 'woff2') }}?r={{ configs.build_random_key }}");
         }
         .font-{{ width_mode }} :lang({{ locale }}) {
             font-family: {{ font_family }}, sans-serif;

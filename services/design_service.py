@@ -16,14 +16,14 @@ def _parse_glyph_file_name(glyph_file_name):
     params = glyph_file_name.removesuffix('.png').split(' ')
     assert 1 <= len(params) <= 2, glyph_file_name
     uni_hex_name = params[0].upper()
-    language_specifics = []
+    language_flavors = []
     if len(params) >= 2:
         array = params[1].lower().split(',')
-        for language_specific in configs.language_specifics:
-            if language_specific in array:
-                language_specifics.append(language_specific)
-        assert len(language_specifics) == len(array), glyph_file_name
-    return uni_hex_name, language_specifics
+        for language_flavor in configs.language_flavors:
+            if language_flavor in array:
+                language_flavors.append(language_flavor)
+        assert len(language_flavors) == len(array), glyph_file_name
+    return uni_hex_name, language_flavors
 
 
 def classify_glyph_files(font_config):
@@ -43,14 +43,14 @@ def classify_glyph_files(font_config):
                 if glyph_file_name == 'notdef.png':
                     glyph_file_to_dir = width_mode_tmp_dir
                 else:
-                    uni_hex_name, language_specifics = _parse_glyph_file_name(glyph_file_name)
+                    uni_hex_name, language_flavors = _parse_glyph_file_name(glyph_file_name)
                     code_point = int(uni_hex_name, 16)
                     block = unidata_blocks.get_block_by_code_point(code_point)
                     block_dir_name = f'{block.code_start:04X}-{block.code_end:04X} {block.name}'
                     glyph_file_to_dir = os.path.join(width_mode_tmp_dir, block_dir_name)
                     if block.code_start == 0x4E00:  # CJK Unified Ideographs
                         glyph_file_to_dir = os.path.join(glyph_file_to_dir, f'{uni_hex_name[0:-2]}-')
-                    glyph_file_name = f'{uni_hex_name}{" " if len(language_specifics) > 0 else ""}{",".join(language_specifics)}.png'
+                    glyph_file_name = f'{uni_hex_name}{" " if len(language_flavors) > 0 else ""}{",".join(language_flavors)}.png'
                 glyph_file_to_path = os.path.join(glyph_file_to_dir, glyph_file_name)
                 assert not os.path.exists(glyph_file_to_path), glyph_file_from_path
                 fs_util.make_dirs_if_not_exists(glyph_file_to_dir)
@@ -128,8 +128,8 @@ def collect_glyph_files(font_config):
     glyph_file_paths_cellar = {}
     for width_mode_dir_name in configs.width_mode_dir_names:
         glyph_file_paths_cellar[width_mode_dir_name] = {'default': {}}
-        for language_specific in configs.language_specifics:
-            glyph_file_paths_cellar[width_mode_dir_name][language_specific] = {}
+        for language_flavor in configs.language_flavors:
+            glyph_file_paths_cellar[width_mode_dir_name][language_flavor] = {}
 
     px_dir = os.path.join(path_define.glyphs_dir, str(font_config.px))
     for width_mode_dir_name in configs.width_mode_dir_names:
@@ -144,12 +144,12 @@ def collect_glyph_files(font_config):
                 if glyph_file_name == 'notdef.png':
                     glyph_file_paths_cellar[width_mode_dir_name]['default']['.notdef'] = glyph_file_path
                 else:
-                    uni_hex_name, language_specifics = _parse_glyph_file_name(glyph_file_name)
+                    uni_hex_name, language_flavors = _parse_glyph_file_name(glyph_file_name)
                     code_point = int(uni_hex_name, 16)
-                    if len(language_specifics) > 0:
-                        for language_specific in language_specifics:
-                            assert code_point not in glyph_file_paths_cellar[width_mode_dir_name][language_specific], glyph_file_path
-                            glyph_file_paths_cellar[width_mode_dir_name][language_specific][code_point] = glyph_file_path
+                    if len(language_flavors) > 0:
+                        for language_flavor in language_flavors:
+                            assert code_point not in glyph_file_paths_cellar[width_mode_dir_name][language_flavor], glyph_file_path
+                            glyph_file_paths_cellar[width_mode_dir_name][language_flavor][code_point] = glyph_file_path
                     else:
                         assert code_point not in glyph_file_paths_cellar[width_mode_dir_name]['default'], glyph_file_path
                         glyph_file_paths_cellar[width_mode_dir_name]['default'][code_point] = glyph_file_path
@@ -167,12 +167,12 @@ def collect_glyph_files(font_config):
         alphabet_group[width_mode] = alphabet
 
         glyph_file_paths_map = {}
-        for language_specific in configs.language_specifics:
+        for language_flavor in configs.language_flavors:
             glyph_file_paths = dict(glyph_file_paths_cellar['common']['default'])
-            glyph_file_paths.update(glyph_file_paths_cellar['common'][language_specific])
+            glyph_file_paths.update(glyph_file_paths_cellar['common'][language_flavor])
             glyph_file_paths.update(glyph_file_paths_cellar[width_mode]['default'])
-            glyph_file_paths.update(glyph_file_paths_cellar[width_mode][language_specific])
-            glyph_file_paths_map[language_specific] = glyph_file_paths
+            glyph_file_paths.update(glyph_file_paths_cellar[width_mode][language_flavor])
+            glyph_file_paths_map[language_flavor] = glyph_file_paths
         glyph_file_paths_map_group[width_mode] = glyph_file_paths_map
 
     return alphabet_group, glyph_file_paths_map_group

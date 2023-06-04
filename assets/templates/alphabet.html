@@ -7,11 +7,11 @@
             padding: 0;
             box-sizing: border-box;
         }
-        {% for locale, language_specific in configs.locale_map.items() %}
-        {% with font_family = 'Ark-Pixel-' ~ font_config.px ~ 'px-' ~ width_mode ~ '-' ~ language_specific %}
+        {% for locale, language_flavor in configs.locale_to_language_flavor.items() %}
+        {% with font_family = 'Ark-Pixel-' ~ font_config.px ~ 'px-' ~ width_mode ~ '-' ~ language_flavor %}
         @font-face {
             font-family: {{ font_family }};
-            src: url("{{ font_config.get_font_file_name(width_mode, language_specific, 'woff2') }}?r={{ configs.build_random_key }}");
+            src: url("{{ font_config.get_font_file_name(width_mode, language_flavor, 'woff2') }}?r={{ configs.build_random_key }}");
         }
         :lang({{ locale }}) {
             font-family: {{ font_family }}, sans-serif;
@@ -86,11 +86,11 @@
 {% endblock %}
 {% block body %}
     <form class="options-group">
-        {% for locale, language_specific in configs.locale_map.items() %}
+        {% for locale, language_flavor in configs.locale_to_language_flavor.items() %}
         <label class="option">
             <input id="radio-locale-{{ locale }}" name="locale" type="radio" onchange="onLocaleChange('{{ locale }}');">
             <span></span>
-            {{ language_specific.replace('_', '-') }}
+            {{ language_flavor.replace('_', '-') }}
         </label>
         {% endfor %}
     </form>

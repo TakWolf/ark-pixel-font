@@ -22,8 +22,8 @@ def make_release_zips(font_config, width_mode, font_formats=None):
         zip_file_path = os.path.join(path_define.releases_dir, font_config.get_release_zip_file_name(width_mode, font_format))
         with zipfile.ZipFile(zip_file_path, 'w') as zip_file:
             zip_file.write('LICENSE-OFL', 'OFL.txt')
-            for language_specific in configs.language_specifics:
-                font_file_name = font_config.get_font_file_name(width_mode, language_specific, font_format)
+            for language_flavor in configs.language_flavors:
+                font_file_name = font_config.get_font_file_name(width_mode, language_flavor, font_format)
                 font_file_path = os.path.join(path_define.outputs_dir, font_file_name)
                 zip_file.write(font_file_path, font_file_name)
         logger.info(f'make {zip_file_path}')
@@ -54,8 +54,8 @@ def update_www():
         _copy_file(font_config.demo_html_file_name, path_define.outputs_dir, path_define.www_dir)
         for width_mode in configs.width_modes:
             _copy_file(font_config.get_alphabet_html_file_name(width_mode), path_define.outputs_dir, path_define.www_dir)
-            for language_specific in configs.language_specifics:
-                _copy_file(font_config.get_font_file_name(width_mode, language_specific, 'woff2'), path_define.outputs_dir, path_define.www_dir)
+            for language_flavor in configs.language_flavors:
+                _copy_file(font_config.get_font_file_name(width_mode, language_flavor, 'woff2'), path_define.outputs_dir, path_define.www_dir)
 
 
 def deploy_www():

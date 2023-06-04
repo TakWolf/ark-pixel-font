@@ -12,11 +12,11 @@
             src: url("{{ configs.font_config_map[12].get_font_file_name('monospaced', 'latin', 'woff2') }}?r={{ configs.build_random_key }}");
         }
         {% for font_config in configs.font_configs  %}
-        {% for locale, language_specific in configs.locale_map.items() %}
-        {% with font_family = 'Ark-Pixel-' ~ font_config.px ~ 'px-proportional-' ~ language_specific %}
+        {% for locale, language_flavor in configs.locale_to_language_flavor.items() %}
+        {% with font_family = 'Ark-Pixel-' ~ font_config.px ~ 'px-proportional-' ~ language_flavor %}
         @font-face {
             font-family: {{ font_family }};
-            src: url("{{ font_config.get_font_file_name('proportional', language_specific, 'woff2') }}?r={{ configs.build_random_key }}");
+            src: url("{{ font_config.get_font_file_name('proportional', language_flavor, 'woff2') }}?r={{ configs.build_random_key }}");
         }
         .font-{{ font_config.px }}px-proportional :lang({{ locale }}) {
             font-family: {{ font_family }}, sans-serif;

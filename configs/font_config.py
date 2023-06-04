@@ -50,9 +50,9 @@ class FontConfig:
         self.demo_html_file_name = f'demo-{px}px.html'
         self.preview_image_file_name = f'preview-{px}px.png'
 
-    def get_name_strings(self, width_mode, language_specific):
-        display_name = f'{display_name_prefix} {self.px}px {width_mode} {language_specific}'
-        unique_name = f'{unique_name_prefix}-{self.px}px-{width_mode}-{language_specific}-{style_name}'
+    def get_name_strings(self, width_mode, language_flavor):
+        display_name = f'{display_name_prefix} {self.px}px {width_mode} {language_flavor}'
+        unique_name = f'{unique_name_prefix}-{self.px}px-{width_mode}-{language_flavor}-{style_name}'
         return {
             'copyright': copyright_string,
             'familyName': display_name,
@@ -92,8 +92,8 @@ class FontConfig:
         cap_height = attrs.cap_height_px * self.px_units
         return VerticalMetrics(ascent, descent, x_height, cap_height)
 
-    def get_font_file_name(self, width_mode, language_specific, font_format):
-        return f'{output_name_prefix}-{self.px}px-{width_mode}-{language_specific}.{font_format}'
+    def get_font_file_name(self, width_mode, language_flavor, font_format):
+        return f'{output_name_prefix}-{self.px}px-{width_mode}-{language_flavor}.{font_format}'
 
     def get_info_file_name(self, width_mode):
         return f'font-info-{self.px}px-{width_mode}.md'

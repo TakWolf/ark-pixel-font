@@ -25,7 +25,7 @@ width_mode_dir_names = [
     'proportional',
 ]
 
-language_specifics = [
+language_flavors = [
     'latin',
     'zh_cn',
     'zh_hk',
@@ -35,7 +35,7 @@ language_specifics = [
     'ko',
 ]
 
-locale_map = {
+locale_to_language_flavor = {
     'en': 'latin',
     'zh-cn': 'zh_cn',
     'zh-hk': 'zh_hk',
