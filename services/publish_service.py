@@ -13,12 +13,9 @@ from utils import fs_util
 logger = logging.getLogger('publish-service')
 
 
-def make_release_zips(font_config, width_mode, font_formats=None):
-    if font_formats is None:
-        font_formats = configs.font_formats
-
+def make_release_zips(font_config, width_mode):
     fs_util.make_dirs(path_define.releases_dir)
-    for font_format in font_formats:
+    for font_format in configs.font_formats:
         zip_file_path = os.path.join(path_define.releases_dir, font_config.get_release_zip_file_name(width_mode, font_format))
         with zipfile.ZipFile(zip_file_path, 'w') as zip_file:
             zip_file.write('LICENSE-OFL', 'OFL.txt')
