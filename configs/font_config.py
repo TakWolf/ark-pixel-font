@@ -20,9 +20,9 @@ license_info_url = 'https://scripts.sil.org/OFL'
 
 class FontAttrs:
     def __init__(self, config_data):
-        self.box_origin_y_px = config_data['box_origin_y_px']
-        self.x_height_px = config_data['x_height_px']
-        self.cap_height_px = config_data['cap_height_px']
+        self.box_origin_y_px = config_data['box_origin_y']
+        self.x_height_px = config_data['x_height']
+        self.cap_height_px = config_data['cap_height']
 
 
 class VerticalMetrics:
@@ -38,10 +38,10 @@ class FontConfig:
         config_file_path = os.path.join(path_define.glyphs_dir, str(px), 'config.toml')
         with open(config_file_path, 'rb') as config_file:
             config_data = tomllib.load(config_file)['font']
-        assert px == config_data['px'], config_file_path
+        assert px == config_data['size'], config_file_path
 
         self.px = px
-        self.line_height_px = config_data['line_height_px']
+        self.line_height_px = config_data['line_height']
         assert (self.line_height_px - px) % 2 == 0, f'font_config {px}px with incorrect line_height_px {self.line_height_px}px'
         self.monospaced_attrs = FontAttrs(config_data['monospaced'])
         self.proportional_attrs = FontAttrs(config_data['proportional'])
