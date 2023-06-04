@@ -128,6 +128,8 @@ def make_info_file(font_config, width_mode, alphabet):
         file.write('\n')
         file.write('## Unicode 字符分布\n')
         file.write('\n')
+        file.write(f'Unicode 版本：{unidata_blocks.unicode_version}\n')
+        file.write('\n')
         _write_unicode_chr_count_infos_table(file, _get_unicode_chr_count_infos(alphabet))
         file.write('\n')
         file.write('## GB2312 字符分布\n')
