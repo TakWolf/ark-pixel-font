@@ -12,8 +12,7 @@ def main():
     fs_util.delete_dir(path_define.build_dir)
 
     for font_config in configs.font_configs:
-        font_service.classify_glyph_files(font_config)
-        font_service.verify_glyph_files(font_config)
+        font_service.format_glyph_files(font_config)
         alphabet_group, glyph_file_paths_map_group = font_service.collect_glyph_files(font_config)
         for width_mode in configs.width_modes:
             alphabet = alphabet_group[width_mode]
