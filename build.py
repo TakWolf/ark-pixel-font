@@ -2,7 +2,7 @@ import logging
 
 import configs
 from configs import path_define
-from services import design_service, font_service, publish_service, info_service, template_service, image_service
+from services import font_service, publish_service, info_service, template_service, image_service
 from utils import fs_util
 
 logging.basicConfig(level=logging.DEBUG)
@@ -12,9 +12,9 @@ def main():
     fs_util.delete_dir(path_define.build_dir)
 
     for font_config in configs.font_configs:
-        design_service.classify_glyph_files(font_config)
-        design_service.verify_glyph_files(font_config)
-        alphabet_group, glyph_file_paths_map_group = design_service.collect_glyph_files(font_config)
+        font_service.classify_glyph_files(font_config)
+        font_service.verify_glyph_files(font_config)
+        alphabet_group, glyph_file_paths_map_group = font_service.collect_glyph_files(font_config)
         for width_mode in configs.width_modes:
             alphabet = alphabet_group[width_mode]
             glyph_file_paths_map = glyph_file_paths_map_group[width_mode]
