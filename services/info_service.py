@@ -123,7 +123,7 @@ def make_info_file(font_config, width_mode, alphabet):
         file.write('| 属性 | 值 |\n')
         file.write('|---|---|\n')
         file.write(f'| 版本号 | {configs.font_version} |\n')
-        file.write(f'| 行高 | {font_config.px if width_mode == "monospaced" else font_config.display_line_height_px}px |\n')
+        file.write(f'| 行高 | {font_config.px if width_mode == "monospaced" else font_config.line_height_px}px |\n')
         file.write(f'| 字符总数 | {len(alphabet)} |\n')
         file.write('\n')
         file.write('## Unicode 字符分布\n')

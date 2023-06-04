@@ -26,17 +26,17 @@
         .font-{{ font_config.px }}px-proportional .title {
             font-size: {{ font_config.px * 4 }}px;
             font-weight: normal;
-            line-height: {{ font_config.display_line_height_px * 4 }}px;
+            line-height: {{ font_config.line_height_px * 4 }}px;
             text-shadow: 2px 2px #4b4b4b;
         }
         .font-{{ font_config.px }}px-proportional .text {
             font-size: {{ font_config.px * 2 }}px;
-            line-height: {{ font_config.display_line_height_px * 2 }}px;
+            line-height: {{ font_config.line_height_px * 2 }}px;
             text-shadow: 2px 2px #4b4b4b;
         }
         .font-{{ font_config.px }}px-proportional .copyright {
             font-size: {{ font_config.px *2 }}px;
-            line-height: {{ font_config.display_line_height_px * 2 }}px;
+            line-height: {{ font_config.line_height_px * 2 }}px;
             text-shadow: 2px 2px #4b4b4b;
         }
         .font-{{ font_config.px }}px-proportional .link-group {
@@ -50,7 +50,7 @@
             margin-left: {{ font_config.px }}px;
             margin-right: {{ font_config.px }}px;
             font-size: {{ font_config.px * 2 }}px;
-            line-height: {{ font_config.display_line_height_px * 2 }}px;
+            line-height: {{ font_config.line_height_px * 2 }}px;
             text-shadow: 2px 2px #4b4b4b;
         }
         {% endfor %}

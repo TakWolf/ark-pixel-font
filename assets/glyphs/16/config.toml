@@ -1,6 +1,6 @@
 [font]
 px = 16
-display_line_height_px = 24
+line_height_px = 24
 
 [font.monospaced]
 box_origin_y_px = 13

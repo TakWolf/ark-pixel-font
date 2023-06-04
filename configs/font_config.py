@@ -41,8 +41,8 @@ class FontConfig:
         assert px == config_data['px'], config_file_path
 
         self.px = px
-        self.display_line_height_px = config_data['display_line_height_px']
-        assert (self.display_line_height_px - px) % 2 == 0, f'font_config {px}px with incorrect display_line_height_px {self.display_line_height_px}px'
+        self.line_height_px = config_data['line_height_px']
+        assert (self.line_height_px - px) % 2 == 0, f'font_config {px}px with incorrect line_height_px {self.line_height_px}px'
         self.monospaced_attrs = FontAttrs(config_data['monospaced'])
         self.proportional_attrs = FontAttrs(config_data['proportional'])
         self.px_units = px_units
@@ -84,7 +84,7 @@ class FontConfig:
             line_height_px = self.px
             attrs = self.monospaced_attrs
         else:  # proportional
-            line_height_px = self.display_line_height_px
+            line_height_px = self.line_height_px
             attrs = self.proportional_attrs
         ascent = (attrs.box_origin_y_px + int((line_height_px - self.px) / 2)) * self.px_units
         descent = ascent - line_height_px * self.px_units

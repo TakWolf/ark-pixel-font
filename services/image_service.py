@@ -57,7 +57,7 @@ def make_preview_image_file(font_config):
     font_zh_cn = _load_font(font_config.px, 'proportional', 'zh_cn')
     font_zh_tr = _load_font(font_config.px, 'proportional', 'zh_tr')
     font_ja = _load_font(font_config.px, 'proportional', 'ja')
-    line_height = font_config.display_line_height_px
+    line_height = font_config.line_height_px
 
     image = Image.new('RGBA', (font_config.px * 35, font_config.px * 2 + line_height * 8), (255, 255, 255))
     _draw_text(image, (font_config.px, font_config.px), '方舟像素字体 / Ark Pixel Font', font_zh_cn)
@@ -81,7 +81,7 @@ def make_readme_banner():
     font_x1 = _load_font(12, 'proportional', 'zh_cn')
     font_x2 = _load_font(12, 'proportional', 'zh_cn', 2)
     box_size = 14
-    line_height = configs.font_size_to_config[12].display_line_height_px
+    line_height = configs.font_size_to_config[12].line_height_px
     text_color = (255, 255, 255)
     shadow_color = (80, 80, 80)
 
@@ -107,7 +107,7 @@ def make_github_banner():
     font_zh_tr = _load_font(12, 'proportional', 'zh_tr')
     font_ja = _load_font(12, 'proportional', 'ja')
     box_size = 14
-    line_height = configs.font_size_to_config[12].display_line_height_px
+    line_height = configs.font_size_to_config[12].line_height_px
     text_color = (255, 255, 255)
     shadow_color = (80, 80, 80)
 
@@ -137,7 +137,7 @@ def make_itch_io_banner():
     font_x1 = _load_font(12, 'proportional', 'zh_cn')
     font_x2 = _load_font(12, 'proportional', 'zh_cn', 2)
     box_size = 14
-    line_height = configs.font_size_to_config[12].display_line_height_px
+    line_height = configs.font_size_to_config[12].line_height_px
     text_color = (255, 255, 255)
     shadow_color = (80, 80, 80)
 
@@ -176,7 +176,7 @@ def make_itch_io_cover():
     font_zh_cn = _load_font(12, 'proportional', 'zh_cn')
     font_zh_tr = _load_font(12, 'proportional', 'zh_tr')
     font_ja = _load_font(12, 'proportional', 'ja')
-    line_height = configs.font_size_to_config[12].display_line_height_px
+    line_height = configs.font_size_to_config[12].line_height_px
     text_color = (255, 255, 255)
     shadow_color = (80, 80, 80)
 
@@ -207,7 +207,7 @@ def make_afdian_cover():
     font_zh_cn = _load_font(12, 'proportional', 'zh_cn')
     font_zh_tr = _load_font(12, 'proportional', 'zh_tr')
     font_ja = _load_font(12, 'proportional', 'ja')
-    line_height = configs.font_size_to_config[12].display_line_height_px
+    line_height = configs.font_size_to_config[12].line_height_px
     text_color = (255, 255, 255)
     shadow_color = (80, 80, 80)
 
