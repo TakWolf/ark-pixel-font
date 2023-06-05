@@ -28,7 +28,7 @@ class FontConfig:
     def __init__(self, size, px_to_units=100):
         self.root_dir = os.path.join(path_define.glyphs_dir, str(size))
 
-        config_file_path = os.path.join(path_define.glyphs_dir, str(size), 'config.toml')
+        config_file_path = os.path.join(self.root_dir, 'config.toml')
         with open(config_file_path, 'rb') as file:
             config_data = tomllib.load(file)['font']
 

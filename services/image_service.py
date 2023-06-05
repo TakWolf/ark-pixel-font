@@ -1,7 +1,7 @@
 import logging
+import math
 import os
 
-import math
 from PIL import Image, ImageFont, ImageDraw
 
 import configs

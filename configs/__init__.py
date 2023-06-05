@@ -1,7 +1,6 @@
 import random
 import time
 
-from configs import path_define
 from configs.font_config import FontConfig
 from configs.git_deploy_config import GitDeployConfig
 
