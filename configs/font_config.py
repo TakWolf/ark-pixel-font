@@ -33,9 +33,9 @@ class FontConfig:
             config_data = tomllib.load(file)['font']
 
         self.size = config_data['size']
-        assert self.size == size, config_file_path
+        assert self.size == size, f'Font config size not equals: expect {size} but actually {self.size}'
         self.line_height = config_data['line_height']
-        assert (self.line_height - size) % 2 == 0, f'font_config {size}px with incorrect line_height_px {self.line_height}px'
+        assert (self.line_height - size) % 2 == 0, f"Font config {self.size}: the difference between 'line_height' and 'size' must be a multiple of 2"
 
         self._attrs_group = {
             'monospaced': FontAttrs(config_data['monospaced'], self.size, self.size),
