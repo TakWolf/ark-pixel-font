@@ -62,7 +62,7 @@ def _save_glyph_data_to_png(data, file_path):
 
 
 def format_glyph_files(font_config):
-    tmp_dir = os.path.join(path_define.glyphs_tmp_dir, str(font_config.px))
+    tmp_dir = os.path.join(path_define.glyphs_tmp_dir, str(font_config.size))
     fs_util.delete_dir(tmp_dir)
     for width_mode_dir_name in configs.width_mode_dir_names:
         width_mode_dir = os.path.join(font_config.root_dir, width_mode_dir_name)
@@ -95,17 +95,17 @@ def format_glyph_files(font_config):
                 glyph_data, glyph_width, glyph_height = _load_glyph_data_from_png(glyph_file_from_path)
 
                 if width_mode_dir_name == 'common' or width_mode_dir_name == 'monospaced':
-                    assert glyph_height == font_config.px, glyph_file_from_path
+                    assert glyph_height == font_config.size, glyph_file_from_path
 
                     # H/Halfwidth or Na/Narrow
                     if east_asian_width == 'H' or east_asian_width == 'Na':
-                        assert glyph_width == font_config.px / 2, glyph_file_from_path
+                        assert glyph_width == font_config.size / 2, glyph_file_from_path
                     # F/Fullwidth or W/Wide
                     elif east_asian_width == 'F' or east_asian_width == 'W':
-                        assert glyph_width == font_config.px, glyph_file_from_path
+                        assert glyph_width == font_config.size, glyph_file_from_path
                     # A/Ambiguous or N/Neutral
                     else:
-                        assert glyph_width == font_config.px / 2 or glyph_width == font_config.px, glyph_file_from_path
+                        assert glyph_width == font_config.size / 2 or glyph_width == font_config.size, glyph_file_from_path
 
                     if block is not None:
                         if block.code_start == 0x4E00:  # CJK Unified Ideographs
@@ -115,15 +115,15 @@ def format_glyph_files(font_config):
                                 raise AssertionError(glyph_file_from_path)
 
                 if width_mode_dir_name == 'proportional':
-                    assert glyph_height >= font_config.px, glyph_file_from_path
-                    assert (glyph_height - font_config.px) % 2 == 0, glyph_file_from_path
+                    assert glyph_height >= font_config.size, glyph_file_from_path
+                    assert (glyph_height - font_config.size) % 2 == 0, glyph_file_from_path
 
-                    if glyph_height > font_config.line_height_px:
-                        for i in range(int((glyph_height - font_config.line_height_px) / 2)):
+                    if glyph_height > font_config.line_height:
+                        for i in range(int((glyph_height - font_config.line_height) / 2)):
                             glyph_data.pop(0)
                             glyph_data.pop()
-                    elif glyph_height < font_config.line_height_px:
-                        for i in range(int((font_config.line_height_px - glyph_height) / 2)):
+                    elif glyph_height < font_config.line_height:
+                        for i in range(int((font_config.line_height - glyph_height) / 2)):
                             glyph_data.insert(0, [0 for _ in range(glyph_width)])
                             glyph_data.append([0 for _ in range(glyph_width)])
 
@@ -219,7 +219,7 @@ def collect_glyph_files(font_config):
     return DesignContext(alphabet_group, character_mapping_group, glyph_file_paths_group)
 
 
-def _draw_glyph(outlines, width, height, box_origin_y, units_per_em, is_ttf):
+def _draw_glyph(outlines, units_per_em, box_origin_y, width, height, is_ttf):
     if is_ttf:
         pen = TTGlyphPen(None)
     else:
@@ -254,7 +254,7 @@ def _draw_glyph(outlines, width, height, box_origin_y, units_per_em, is_ttf):
 def _create_builder(font_config, context, width_mode, language_flavor, is_ttf):
     font_attrs = font_config.get_attrs(width_mode)
 
-    units_per_em = font_config.px * font_config.px_units
+    units_per_em = font_config.size * font_config.px_to_units
     builder = FontBuilder(units_per_em, isTTF=is_ttf)
 
     name_strings = font_config.get_name_strings(width_mode, language_flavor)
@@ -273,12 +273,16 @@ def _create_builder(font_config, context, width_mode, language_flavor, is_ttf):
     glyphs = {}
     advance_widths = {}
     for glyph_name in glyph_order:
-        glyph_data, glyph_width_px, glyph_height_px = context.get_glyph_data(width_mode, language_flavor, glyph_name)
-        outlines = glyph_util.get_outlines_from_glyph_data(glyph_data, font_config.px_units)
-        glyph_width = glyph_width_px * font_config.px_units
-        glyph_height = glyph_height_px * font_config.px_units
-        box_origin_y = font_attrs.box_origin_y_px * font_config.px_units
-        glyphs[glyph_name], advance_widths[glyph_name] = _draw_glyph(outlines, glyph_width, glyph_height, box_origin_y, units_per_em, is_ttf)
+        glyph_data, glyph_width, glyph_height = context.get_glyph_data(width_mode, language_flavor, glyph_name)
+        outlines = glyph_util.get_outlines_from_glyph_data(glyph_data, font_config.px_to_units)
+        glyphs[glyph_name], advance_widths[glyph_name] = _draw_glyph(
+            outlines,
+            units_per_em,
+            font_attrs.box_origin_y * font_config.px_to_units,
+            glyph_width * font_config.px_to_units,
+            glyph_height * font_config.px_to_units,
+            is_ttf,
+        )
     if is_ttf:
         builder.setupGlyf(glyphs)
         horizontal_metrics = {glyph_name: (advance_width, glyphs[glyph_name].xMin) for glyph_name, advance_width in advance_widths.items()}
@@ -287,10 +291,10 @@ def _create_builder(font_config, context, width_mode, language_flavor, is_ttf):
         horizontal_metrics = {glyph_name: (advance_width, glyphs[glyph_name].calcBounds(None)[0]) for glyph_name, advance_width in advance_widths.items()}
     builder.setupHorizontalMetrics(horizontal_metrics)
 
-    ascent = font_attrs.ascent_px * font_config.px_units
-    descent = font_attrs.descent_px * font_config.px_units
-    x_height = font_attrs.x_height_px * font_config.px_units
-    cap_height = font_attrs.cap_height_px * font_config.px_units
+    ascent = font_attrs.ascent * font_config.px_to_units
+    descent = font_attrs.descent * font_config.px_to_units
+    x_height = font_attrs.x_height * font_config.px_to_units
+    cap_height = font_attrs.cap_height * font_config.px_to_units
     builder.setupHorizontalHeader(
         ascent=ascent,
         descent=descent,

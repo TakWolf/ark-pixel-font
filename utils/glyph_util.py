@@ -1,5 +1,5 @@
 
-def get_outlines_from_glyph_data(glyph_data, dot_size):
+def get_outlines_from_glyph_data(glyph_data, px_to_units):
     """
     将字形数据转换为轮廓数据，左上角原点坐标系
     """
@@ -22,10 +22,10 @@ def get_outlines_from_glyph_data(glyph_data, dot_size):
         pending_line_segments = []
         for (x, y) in point_group:
             point_outline = [
-                (x * dot_size, y * dot_size),
-                ((x + 1) * dot_size, y * dot_size),
-                ((x + 1) * dot_size, (y + 1) * dot_size),
-                (x * dot_size, (y + 1) * dot_size),
+                (x * px_to_units, y * px_to_units),
+                ((x + 1) * px_to_units, y * px_to_units),
+                ((x + 1) * px_to_units, (y + 1) * px_to_units),
+                (x * px_to_units, (y + 1) * px_to_units),
             ]
             # 一个像素有左右上下四个边，如果该边没有相邻像素，则该边线段有效
             if x <= 0 or glyph_data[y][x - 1] <= 0:  # 左

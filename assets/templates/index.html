@@ -13,44 +13,44 @@
         }
         {% for font_config in configs.font_configs  %}
         {% for locale, language_flavor in configs.locale_to_language_flavor.items() %}
-        {% with font_family = 'Ark-Pixel-' ~ font_config.px ~ 'px-proportional-' ~ language_flavor %}
+        {% with font_family = 'Ark-Pixel-' ~ font_config.size ~ 'px-proportional-' ~ language_flavor %}
         @font-face {
             font-family: {{ font_family }};
             src: url("{{ font_config.get_font_file_name('proportional', language_flavor, 'woff2') }}?r={{ configs.build_random_key }}");
         }
-        .font-{{ font_config.px }}px-proportional :lang({{ locale }}) {
+        .font-{{ font_config.size }}px-proportional :lang({{ locale }}) {
             font-family: {{ font_family }}, sans-serif;
         }
         {% endwith %}
         {% endfor %}
-        .font-{{ font_config.px }}px-proportional .title {
-            font-size: {{ font_config.px * 4 }}px;
+        .font-{{ font_config.size }}px-proportional .title {
+            font-size: {{ font_config.size * 4 }}px;
             font-weight: normal;
-            line-height: {{ font_config.line_height_px * 4 }}px;
+            line-height: {{ font_config.line_height * 4 }}px;
             text-shadow: 2px 2px #4b4b4b;
         }
-        .font-{{ font_config.px }}px-proportional .text {
-            font-size: {{ font_config.px * 2 }}px;
-            line-height: {{ font_config.line_height_px * 2 }}px;
+        .font-{{ font_config.size }}px-proportional .text {
+            font-size: {{ font_config.size * 2 }}px;
+            line-height: {{ font_config.line_height * 2 }}px;
             text-shadow: 2px 2px #4b4b4b;
         }
-        .font-{{ font_config.px }}px-proportional .copyright {
-            font-size: {{ font_config.px *2 }}px;
-            line-height: {{ font_config.line_height_px * 2 }}px;
+        .font-{{ font_config.size }}px-proportional .copyright {
+            font-size: {{ font_config.size *2 }}px;
+            line-height: {{ font_config.line_height * 2 }}px;
             text-shadow: 2px 2px #4b4b4b;
         }
-        .font-{{ font_config.px }}px-proportional .link-group {
-            margin-top: {{ font_config.px / 2 }}px;
-            margin-bottom: {{ font_config.px / 2 }}px;
+        .font-{{ font_config.size }}px-proportional .link-group {
+            margin-top: {{ font_config.size / 2 }}px;
+            margin-bottom: {{ font_config.size / 2 }}px;
             display: flex;
             flex-direction: row;
             align-items: center;
         }
-        .font-{{ font_config.px }}px-proportional .link-tab {
-            margin-left: {{ font_config.px }}px;
-            margin-right: {{ font_config.px }}px;
-            font-size: {{ font_config.px * 2 }}px;
-            line-height: {{ font_config.line_height_px * 2 }}px;
+        .font-{{ font_config.size }}px-proportional .link-tab {
+            margin-left: {{ font_config.size }}px;
+            margin-right: {{ font_config.size }}px;
+            font-size: {{ font_config.size * 2 }}px;
+            line-height: {{ font_config.line_height * 2 }}px;
             text-shadow: 2px 2px #4b4b4b;
         }
         {% endfor %}
@@ -123,9 +123,9 @@
     <form class="options-group">
         {% for font_config in configs.font_configs %}
         <label class="option">
-            <input id="radio-font-size-{{ font_config.px }}" name="font_size" type="radio" onchange="onFontSizeChange('{{ font_config.px }}');">
+            <input id="radio-font-size-{{ font_config.size }}" name="font_size" type="radio" onchange="onFontSizeChange('{{ font_config.size }}');">
             <span></span>
-            {{ font_config.px }}px
+            {{ font_config.size }}px
         </label>
         {% endfor %}
     </form>
@@ -152,11 +152,11 @@
         </div>
         {% for font_config in configs.font_configs %}
         <div class="link-group" lang="en">
-            <span class="link-tab">{{ font_config.px }}px</span>
+            <span class="link-tab">{{ font_config.size }}px</span>
             {% for width_mode in configs.width_modes %}
-            <a class="link-tab" href="alphabet-{{ font_config.px }}px-{{ width_mode }}.html" target="_blank">alphabet-{{ width_mode }}</a>
+            <a class="link-tab" href="alphabet-{{ font_config.size }}px-{{ width_mode }}.html" target="_blank">alphabet-{{ width_mode }}</a>
             {% endfor %}
-            <a class="link-tab" href="demo-{{ font_config.px }}px.html" target="_blank">demo</a>
+            <a class="link-tab" href="demo-{{ font_config.size }}px.html" target="_blank">demo</a>
         </div>
         {% endfor %}
         <br>
