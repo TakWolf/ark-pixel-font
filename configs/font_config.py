@@ -35,15 +35,15 @@ class FontConfig:
         self.size = config_data['size']
         assert self.size == size, f'Font config size not equals: expect {size} but actually {self.size}'
         self.line_height = config_data['line_height']
-        assert (self.line_height - size) % 2 == 0, f"Font config {self.size}: the difference between 'line_height' and 'size' must be a multiple of 2"
+        assert (self.line_height - self.size) % 2 == 0, f"Font config {self.size}: the difference between 'line_height' and 'size' must be a multiple of 2"
 
         self._attrs_group = {
             'monospaced': FontAttrs(config_data['monospaced'], self.size, self.size),
             'proportional': FontAttrs(config_data['proportional'], self.size, self.line_height),
         }
 
-        self.demo_html_file_name = f'demo-{size}px.html'
-        self.preview_image_file_name = f'preview-{size}px.png'
+        self.demo_html_file_name = f'demo-{self.size}px.html'
+        self.preview_image_file_name = f'preview-{self.size}px.png'
 
     def get_attrs(self, width_mode):
         return self._attrs_group[width_mode]
