@@ -1,4 +1,5 @@
 import random
+import time
 
 from configs import path_define
 from configs.font_config import FontConfig
@@ -6,8 +7,7 @@ from configs.git_deploy_config import GitDeployConfig
 
 build_random_key = random.random()
 
-font_name = font_config.display_name_prefix
-font_version = font_config.version
+version = f'{time.strftime("%Y.%m.%d")}'
 
 font_configs = [FontConfig(size) for size in [10, 12, 16]]
 font_size_to_config = {font_config.size: font_config for font_config in font_configs}

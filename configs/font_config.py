@@ -1,21 +1,8 @@
 import os
-import time
 import tomllib
 
+import configs
 from configs import path_define
-
-display_name_prefix = 'Ark Pixel'
-unique_name_prefix = 'Ark-Pixel'
-output_name_prefix = 'ark-pixel'
-style_name = 'Regular'
-version = f'{time.strftime("%Y.%m.%d")}'
-copyright_string = "Copyright (c) 2021, TakWolf (https://takwolf.com), with Reserved Font Name 'Ark Pixel'."
-designer = 'TakWolf'
-description = 'Open source Pan-CJK pixel font.'
-vendor_url = 'https://ark-pixel-font.takwolf.com'
-designer_url = 'https://takwolf.com'
-license_description = 'This Font Software is licensed under the SIL Open Font License, Version 1.1.'
-license_info_url = 'https://scripts.sil.org/OFL'
 
 
 class FontAttrs:
@@ -28,6 +15,16 @@ class FontAttrs:
 
 
 class FontConfig:
+    FAMILY_NAME = 'Ark Pixel'
+    MANUFACTURER = 'TakWolf'
+    DESIGNER = 'TakWolf'
+    DESCRIPTION = 'Open source Pan-CJK pixel font.'
+    COPYRIGHT_INFO = "Copyright (c) 2021, TakWolf (https://takwolf.com), with Reserved Font Name 'Ark Pixel'."
+    LICENSE_INFO = 'This Font Software is licensed under the SIL Open Font License, Version 1.1.'
+    VENDOR_URL = 'https://ark-pixel-font.takwolf.com'
+    DESIGNER_URL = 'https://takwolf.com'
+    LICENSE_URL = 'https://scripts.sil.org/OFL'
+
     def __init__(self, size, px_to_units=100):
         self.root_dir = os.path.join(path_define.glyphs_dir, str(size))
 
@@ -51,29 +48,30 @@ class FontConfig:
         self.preview_image_file_name = f'preview-{size}px.png'
 
     def get_name_strings(self, width_mode, language_flavor):
-        display_name = f'{display_name_prefix} {self.size}px {width_mode} {language_flavor}'
-        unique_name = f'{unique_name_prefix}-{self.size}px-{width_mode}-{language_flavor}-{style_name}'
+        style_name = 'Regular'
+        display_name = f'{FontConfig.FAMILY_NAME} {self.size}px {width_mode.capitalize()} {language_flavor}'
+        unique_name = f'{FontConfig.FAMILY_NAME.replace(" ", "-")}-{self.size}px-{width_mode.capitalize()}-{language_flavor}-{style_name}'
         return {
-            'copyright': copyright_string,
+            'copyright': FontConfig.COPYRIGHT_INFO,
             'familyName': display_name,
             'styleName': style_name,
-            'uniqueFontIdentifier': f'{unique_name};{version}',
+            'uniqueFontIdentifier': f'{unique_name};{configs.version}',
             'fullName': display_name,
-            'version': version,
+            'version': configs.version,
             'psName': unique_name,
-            'designer': designer,
-            'description': description,
-            'vendorURL': vendor_url,
-            'designerURL': designer_url,
-            'licenseDescription': license_description,
-            'licenseInfoURL': license_info_url,
+            'designer': FontConfig.DESIGNER,
+            'description': FontConfig.DESCRIPTION,
+            'vendorURL': FontConfig.VENDOR_URL,
+            'designerURL': FontConfig.DESIGNER_URL,
+            'licenseDescription': FontConfig.LICENSE_INFO,
+            'licenseInfoURL': FontConfig.LICENSE_URL,
         }
 
     def get_attrs(self, width_mode):
         return self._attrs_group[width_mode]
 
     def get_font_file_name(self, width_mode, language_flavor, font_format):
-        return f'{output_name_prefix}-{self.size}px-{width_mode}-{language_flavor}.{font_format}'
+        return f'{FontConfig.FAMILY_NAME.lower().replace(" ", "-")}-{self.size}px-{width_mode}-{language_flavor}.{font_format}'
 
     def get_info_file_name(self, width_mode):
         return f'font-info-{self.size}px-{width_mode}.md'
@@ -82,7 +80,7 @@ class FontConfig:
         return f'alphabet-{self.size}px-{width_mode}.txt'
 
     def get_release_zip_file_name(self, width_mode, font_format):
-        return f'{output_name_prefix}-font-{self.size}px-{width_mode}-{font_format}-v{version}.zip'
+        return f'{FontConfig.FAMILY_NAME.lower().replace(" ", "-")}-font-{self.size}px-{width_mode}-{font_format}-v{configs.version}.zip'
 
     def get_alphabet_html_file_name(self, width_mode):
         return f'alphabet-{self.size}px-{width_mode}.html'

@@ -5,7 +5,7 @@ import unidata_blocks
 from character_encoding_utils import gb2312, big5, shiftjis, ksx1001
 
 import configs
-from configs import path_define
+from configs import path_define, FontConfig
 from utils import fs_util
 
 logger = logging.getLogger('info-service')
@@ -117,13 +117,13 @@ def make_info_file(font_config, context, width_mode):
     fs_util.make_dirs(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, font_config.get_info_file_name(width_mode))
     with open(file_path, 'w', encoding='utf-8') as file:
-        file.write(f'# {configs.font_name} {font_config.size}px {_get_width_mode_display_name(width_mode)}\n')
+        file.write(f'# {FontConfig.FAMILY_NAME} {font_config.size}px {_get_width_mode_display_name(width_mode)}\n')
         file.write('\n')
         file.write('## 基本信息\n')
         file.write('\n')
         file.write('| 属性 | 值 |\n')
         file.write('|---|---|\n')
-        file.write(f'| 版本号 | {configs.font_version} |\n')
+        file.write(f'| 版本号 | {configs.version} |\n')
         file.write(f'| 行高 | {font_config.size if width_mode == "monospaced" else font_config.line_height}px |\n')
         file.write(f'| 字符总数 | {len(alphabet)} |\n')
         file.write('\n')
