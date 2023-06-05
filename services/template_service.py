@@ -17,7 +17,8 @@ _environment = Environment(
 )
 
 
-def make_alphabet_html_file(font_config, width_mode, alphabet):
+def make_alphabet_html_file(font_config, context, width_mode):
+    alphabet = context.get_alphabet(width_mode)
     template = _environment.get_template('alphabet.html')
     html = template.render(
         configs=configs,
@@ -32,11 +33,13 @@ def make_alphabet_html_file(font_config, width_mode, alphabet):
     logger.info(f"Made alphabet html file: '{file_path}'")
 
 
-def _handle_demo_html_element(soup, element, alphabet_group):
+def _handle_demo_html_element(context, soup, element):
     if isinstance(element, bs4.element.Tag):
         for child_element in list(element.contents):
-            _handle_demo_html_element(soup, child_element, alphabet_group)
+            _handle_demo_html_element(context, soup, child_element)
     elif isinstance(element, bs4.element.NavigableString):
+        alphabet_monospaced = context.get_alphabet('monospaced')
+        alphabet_proportional = context.get_alphabet('proportional')
         text = str(element)
         tmp_parent = soup.new_tag('div')
         last_status = None
@@ -46,11 +49,11 @@ def _handle_demo_html_element(soup, element, alphabet_group):
                 status = last_status
             elif c == '\n':
                 status = 'all'
-            elif c in alphabet_group['monospaced'] and c in alphabet_group['proportional']:
+            elif c in alphabet_monospaced and c in alphabet_proportional:
                 status = 'all'
-            elif c in alphabet_group['monospaced']:
+            elif c in alphabet_monospaced:
                 status = 'monospaced'
-            elif c in alphabet_group['proportional']:
+            elif c in alphabet_proportional:
                 status = 'proportional'
             else:
                 status = None
@@ -88,13 +91,13 @@ def _handle_demo_html_element(soup, element, alphabet_group):
         tmp_parent.unwrap()
 
 
-def make_demo_html_file(font_config, alphabet_group):
+def make_demo_html_file(font_config, context):
     content_file_path = os.path.join(path_define.templates_dir, 'demo-content.html')
     with open(content_file_path, 'r', encoding='utf-8') as file:
         content_html = file.read()
         content_html = ''.join(line.strip() for line in content_html.split('\n'))
     soup = bs4.BeautifulSoup(content_html, 'html.parser')
-    _handle_demo_html_element(soup, soup, alphabet_group)
+    _handle_demo_html_element(context, soup, soup)
     content_html = str(soup)
 
     template = _environment.get_template('demo.html')

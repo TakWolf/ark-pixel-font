@@ -27,14 +27,6 @@ class FontAttrs:
         self.cap_height_px = config_data['cap_height']
 
 
-class VerticalMetrics:
-    def __init__(self, ascent, descent, x_height, cap_height):
-        self.ascent = ascent
-        self.descent = descent
-        self.x_height = x_height
-        self.cap_height = cap_height
-
-
 class FontConfig:
     def __init__(self, px, px_units=100):
         self.root_dir = os.path.join(path_define.glyphs_dir, str(px))
@@ -77,20 +69,8 @@ class FontConfig:
             'licenseInfoURL': license_info_url,
         }
 
-    def get_units_per_em(self):
-        return self.px * self.px_units
-
-    def get_box_origin_y(self, width_mode):
-        attrs = self._attrs_group[width_mode]
-        return attrs.box_origin_y_px * self.px_units
-
-    def get_vertical_metrics(self, width_mode):
-        attrs = self._attrs_group[width_mode]
-        ascent = attrs.ascent_px * self.px_units
-        descent = attrs.descent_px * self.px_units
-        x_height = attrs.x_height_px * self.px_units
-        cap_height = attrs.cap_height_px * self.px_units
-        return VerticalMetrics(ascent, descent, x_height, cap_height)
+    def get_attrs(self, width_mode):
+        return self._attrs_group[width_mode]
 
     def get_font_file_name(self, width_mode, language_flavor, font_format):
         return f'{output_name_prefix}-{self.px}px-{width_mode}-{language_flavor}.{font_format}'

@@ -112,7 +112,8 @@ def _write_locale_chr_count_infos_table(file, infos):
         file.write(f'| {name} | {count} / {total} | {lack} | {progress:.2%} {finished_emoji} |\n')
 
 
-def make_info_file(font_config, width_mode, alphabet):
+def make_info_file(font_config, context, width_mode):
+    alphabet = context.get_alphabet(width_mode)
     fs_util.make_dirs(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, font_config.get_info_file_name(width_mode))
     with open(file_path, 'w', encoding='utf-8') as file:
@@ -158,7 +159,8 @@ def make_info_file(font_config, width_mode, alphabet):
     logger.info(f"Made info file: '{file_path}'")
 
 
-def make_alphabet_txt_file(font_config, width_mode, alphabet):
+def make_alphabet_txt_file(font_config, context, width_mode):
+    alphabet = context.get_alphabet(width_mode)
     fs_util.make_dirs(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, font_config.get_alphabet_txt_file_name(width_mode))
     with open(file_path, 'w', encoding='utf-8') as file:
