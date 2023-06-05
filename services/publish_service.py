@@ -7,13 +7,13 @@ import zipfile
 import git
 
 import configs
-from configs import path_define
+from configs import path_define, FontConfig
 from utils import fs_util
 
 logger = logging.getLogger('publish-service')
 
 
-def make_release_zips(font_config, width_mode):
+def make_release_zips(font_config: FontConfig, width_mode: str):
     fs_util.make_dirs(path_define.releases_dir)
     for font_format in configs.font_formats:
         file_path = os.path.join(path_define.releases_dir, font_config.get_release_zip_file_name(width_mode, font_format))
@@ -26,7 +26,7 @@ def make_release_zips(font_config, width_mode):
         logger.info(f"Made release zip: '{file_path}'")
 
 
-def _copy_file(file_name, from_dir, to_dir):
+def _copy_file(file_name: str, from_dir: str, to_dir: str):
     from_path = os.path.join(from_dir, file_name)
     to_path = os.path.join(to_dir, file_name)
     shutil.copyfile(from_path, to_path)

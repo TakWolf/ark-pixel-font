@@ -14,7 +14,7 @@ from utils import fs_util
 logger = logging.getLogger('font-service')
 
 
-def _parse_glyph_file_name(glyph_file_name):
+def _parse_glyph_file_name(glyph_file_name: str) -> tuple[str, list[str]]:
     tokens = glyph_file_name.removesuffix('.png').split(' ')
     assert 1 <= len(tokens) <= 2, f"Glyph file name '{glyph_file_name}': illegal format"
     hex_name = tokens[0].upper()
@@ -28,7 +28,7 @@ def _parse_glyph_file_name(glyph_file_name):
     return hex_name, language_flavors
 
 
-def _load_glyph_data_from_png(file_path):
+def _load_glyph_data_from_png(file_path: str) -> tuple[list[list[int]], int, int]:
     width, height, bitmap, _ = png.Reader(filename=file_path).read()
     data = []
     for bitmap_row in bitmap:
@@ -43,7 +43,7 @@ def _load_glyph_data_from_png(file_path):
     return data, width, height
 
 
-def _save_glyph_data_to_png(data, file_path):
+def _save_glyph_data_to_png(data: list[list[int]], file_path: str):
     bitmap = []
     for data_row in data:
         bitmap_row = []
@@ -59,7 +59,7 @@ def _save_glyph_data_to_png(data, file_path):
     png.from_array(bitmap, 'RGBA').save(file_path)
 
 
-def format_glyph_files(font_config):
+def format_glyph_files(font_config: FontConfig):
     tmp_dir = os.path.join(path_define.glyphs_tmp_dir, str(font_config.size))
     fs_util.delete_dir(tmp_dir)
     for width_mode_dir_name in configs.width_mode_dir_names:
@@ -135,22 +135,27 @@ def format_glyph_files(font_config):
 
 
 class DesignContext:
-    def __init__(self, alphabet_group, character_mapping_group, glyph_file_paths_group):
+    def __init__(
+            self,
+            alphabet_group: dict[str, list[str]],
+            character_mapping_group: dict[str, dict[int, str]],
+            glyph_file_paths_group: dict[str, dict[str, dict[str, str]]],
+    ):
         self._alphabet_group = alphabet_group
         self._character_mapping_group = character_mapping_group
         self._glyph_file_paths_group = glyph_file_paths_group
-        self._glyph_data_pool = {}
+        self._glyph_data_pool = dict[str, tuple[list[list[int]], int, int]]()
 
-    def get_alphabet(self, width_mode):
+    def get_alphabet(self, width_mode: str) -> list[str]:
         return self._alphabet_group[width_mode]
 
-    def get_character_mapping(self, width_mode):
+    def get_character_mapping(self, width_mode: str) -> dict[int, str]:
         return self._character_mapping_group[width_mode]
 
-    def get_glyph_file_paths(self, width_mode, language_flavor):
+    def get_glyph_file_paths(self, width_mode: str, language_flavor: str) -> dict[str, str]:
         return self._glyph_file_paths_group[width_mode][language_flavor]
 
-    def load_glyph_data(self, glyph_file_path):
+    def load_glyph_data(self, glyph_file_path: str) -> tuple[list[list[int]], int, int]:
         if glyph_file_path in self._glyph_data_pool:
             glyph_data, glyph_width, glyph_height = self._glyph_data_pool[glyph_file_path]
         else:
@@ -159,15 +164,15 @@ class DesignContext:
         return glyph_data, glyph_width, glyph_height
 
 
-def collect_glyph_files(font_config):
+def collect_glyph_files(font_config: FontConfig) -> DesignContext:
     character_mapping_group = {}
     for width_mode in configs.width_modes:
-        character_mapping_group[width_mode] = {}
+        character_mapping_group[width_mode] = dict[int, str]()
     glyph_file_paths_cellar = {}
     for width_mode_dir_name in configs.width_mode_dir_names:
-        glyph_file_paths_cellar[width_mode_dir_name] = {'default': {}}
+        glyph_file_paths_cellar[width_mode_dir_name] = {'default': dict[str, str]()}
         for language_flavor in configs.language_flavors:
-            glyph_file_paths_cellar[width_mode_dir_name][language_flavor] = {}
+            glyph_file_paths_cellar[width_mode_dir_name][language_flavor] = dict[str, str]()
 
     for width_mode_dir_name in configs.width_mode_dir_names:
         width_mode_dir = os.path.join(font_config.root_dir, width_mode_dir_name)
@@ -203,7 +208,7 @@ def collect_glyph_files(font_config):
         alphabet.sort()
         alphabet_group[width_mode] = alphabet
 
-        glyph_file_paths_group[width_mode] = {}
+        glyph_file_paths_group[width_mode] = dict[str, dict[str, str]]()
         for language_flavor in configs.language_flavors:
             glyph_file_paths = dict(glyph_file_paths_cellar['common']['default'])
             glyph_file_paths.update(glyph_file_paths_cellar['common'][language_flavor])
@@ -214,7 +219,12 @@ def collect_glyph_files(font_config):
     return DesignContext(alphabet_group, character_mapping_group, glyph_file_paths_group)
 
 
-def _create_builder(font_config, context, width_mode, language_flavor):
+def _create_builder(
+        font_config: FontConfig,
+        context: DesignContext,
+        width_mode: str,
+        language_flavor: str,
+) -> FontBuilder:
     font_attrs = font_config.get_attrs(width_mode)
     builder = FontBuilder(
         font_config.size,
@@ -252,7 +262,13 @@ def _create_builder(font_config, context, width_mode, language_flavor):
     return builder
 
 
-def make_font_files(font_config, context, width_mode, language_flavors=None, font_formats=None):
+def make_font_files(
+        font_config: FontConfig,
+        context: DesignContext,
+        width_mode: str,
+        language_flavors: list[str] = None,
+        font_formats: list[str] = None,
+):
     if language_flavors is None:
         language_flavors = configs.language_flavors
     if font_formats is None:

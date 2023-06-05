@@ -1,25 +1,28 @@
 import logging
 import os
+from typing import Callable, IO
 
 import unidata_blocks
+from unidata_blocks import UnicodeBlock
 from character_encoding_utils import gb2312, big5, shiftjis, ksx1001
 
 import configs
 from configs import path_define, FontConfig
+from services.font_service import DesignContext
 from utils import fs_util
 
 logger = logging.getLogger('info-service')
 
 
-def _get_width_mode_display_name(width_mode):
+def _get_width_mode_display_name(width_mode: str) -> str:
     if width_mode == 'monospaced':
         return '等宽模式'
     else:  # proportional
         return '比例模式'
 
 
-def _get_unicode_chr_count_infos(alphabet):
-    count_infos = {}
+def _get_unicode_chr_count_infos(alphabet: list[str]) -> list[tuple[UnicodeBlock, int]]:
+    count_infos = dict[int, int]()
     for c in alphabet:
         code_point = ord(c)
         block = unidata_blocks.get_block_by_code_point(code_point)
@@ -33,8 +36,8 @@ def _get_unicode_chr_count_infos(alphabet):
     return [(unidata_blocks.get_block_by_code_point(code_start), count_infos[code_start]) for code_start in code_starts]
 
 
-def _get_locale_chr_count_infos(alphabet, query_category_func):
-    count_infos = {}
+def _get_locale_chr_count_infos(alphabet: list[str], query_category_func: Callable[[str], str | None]) -> dict[str, int]:
+    count_infos = dict[str, int]()
     for c in alphabet:
         category = query_category_func(c)
         if category is not None:
@@ -47,7 +50,7 @@ def _get_locale_chr_count_infos(alphabet, query_category_func):
     return count_infos
 
 
-def _get_gb2312_chr_count_infos(alphabet):
+def _get_gb2312_chr_count_infos(alphabet: list[str]) -> list[tuple[str, int, int]]:
     count_infos = _get_locale_chr_count_infos(alphabet, gb2312.query_category)
     return [
         ('一级汉字', count_infos.get('level-1', 0), gb2312.get_level_1_count()),
@@ -57,7 +60,7 @@ def _get_gb2312_chr_count_infos(alphabet):
     ]
 
 
-def _get_big5_chr_count_infos(alphabet):
+def _get_big5_chr_count_infos(alphabet: list[str]) -> list[tuple[str, int, int]]:
     count_infos = _get_locale_chr_count_infos(alphabet, big5.query_category)
     return [
         ('常用汉字', count_infos.get('level-1', 0), big5.get_level_1_count()),
@@ -67,7 +70,7 @@ def _get_big5_chr_count_infos(alphabet):
     ]
 
 
-def _get_shiftjis_chr_count_infos(alphabet):
+def _get_shiftjis_chr_count_infos(alphabet: list[str]) -> list[tuple[str, int, int]]:
     count_infos = _get_locale_chr_count_infos(alphabet, shiftjis.query_category)
     return [
         ('单字节-ASCII可打印字符', count_infos.get('single-byte-ascii-printable', 0), shiftjis.get_single_byte_ascii_printable_count()),
@@ -78,7 +81,7 @@ def _get_shiftjis_chr_count_infos(alphabet):
     ]
 
 
-def _get_ksx1001_chr_count_infos(alphabet):
+def _get_ksx1001_chr_count_infos(alphabet: list[str]) -> list[tuple[str, int, int]]:
     count_infos = _get_locale_chr_count_infos(alphabet, ksx1001.query_category)
     return [
         ('谚文音节', count_infos.get('syllable', 0), ksx1001.get_syllable_count()),
@@ -88,7 +91,7 @@ def _get_ksx1001_chr_count_infos(alphabet):
     ]
 
 
-def _write_unicode_chr_count_infos_table(file, infos):
+def _write_unicode_chr_count_infos_table(file: IO, infos: list[tuple[UnicodeBlock, int]]):
     file.write('| 区块范围 | 区块名称 | 区块含义 | 完成数 | 缺失数 | 进度 |\n')
     file.write('|---|---|---|---:|---:|---:|\n')
     for block, count in infos:
@@ -102,7 +105,7 @@ def _write_unicode_chr_count_infos_table(file, infos):
         file.write(f'| {code_point_range} | {name} | {name_zh_cn} | {count} / {total} | {lack} | {progress:.2%} {finished_emoji} |\n')
 
 
-def _write_locale_chr_count_infos_table(file, infos):
+def _write_locale_chr_count_infos_table(file: IO, infos: list[tuple[str, int, int]]):
     file.write('| 区块名称 | 完成数 | 缺失数 | 进度 |\n')
     file.write('|---|---:|---:|---:|\n')
     for name, count, total in infos:
@@ -112,7 +115,7 @@ def _write_locale_chr_count_infos_table(file, infos):
         file.write(f'| {name} | {count} / {total} | {lack} | {progress:.2%} {finished_emoji} |\n')
 
 
-def make_info_file(font_config, context, width_mode):
+def make_info_file(font_config: FontConfig, context: DesignContext, width_mode: str):
     alphabet = context.get_alphabet(width_mode)
     fs_util.make_dirs(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, font_config.get_info_file_name(width_mode))
@@ -159,7 +162,7 @@ def make_info_file(font_config, context, width_mode):
     logger.info(f"Made info file: '{file_path}'")
 
 
-def make_alphabet_txt_file(font_config, context, width_mode):
+def make_alphabet_txt_file(font_config: FontConfig, context: DesignContext, width_mode: str):
     alphabet = context.get_alphabet(width_mode)
     fs_util.make_dirs(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, font_config.get_alphabet_txt_file_name(width_mode))
@@ -168,7 +171,7 @@ def make_alphabet_txt_file(font_config, context, width_mode):
     logger.info(f"Made alphabet txt file: '{file_path}'")
 
 
-def read_alphabet_txt_file(font_config, width_mode):
+def read_alphabet_txt_file(font_config: FontConfig, width_mode: str) -> list[str]:
     file_path = os.path.join(path_define.outputs_dir, font_config.get_alphabet_txt_file_name(width_mode))
     with open(file_path, 'r', encoding='utf-8') as file:
         text = file.read()

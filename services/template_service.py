@@ -5,7 +5,8 @@ import bs4
 from jinja2 import Environment, FileSystemLoader
 
 import configs
-from configs import path_define
+from configs import path_define, FontConfig
+from services.font_service import DesignContext
 from utils import fs_util
 
 logger = logging.getLogger('template-service')
@@ -17,7 +18,7 @@ _environment = Environment(
 )
 
 
-def make_alphabet_html_file(font_config, context, width_mode):
+def make_alphabet_html_file(font_config: FontConfig, context: DesignContext, width_mode: str):
     alphabet = context.get_alphabet(width_mode)
     template = _environment.get_template('alphabet.html')
     html = template.render(
@@ -33,7 +34,7 @@ def make_alphabet_html_file(font_config, context, width_mode):
     logger.info(f"Made alphabet html file: '{file_path}'")
 
 
-def _handle_demo_html_element(context, soup, element):
+def _handle_demo_html_element(context: DesignContext, soup: bs4.BeautifulSoup, element: bs4.PageElement):
     if isinstance(element, bs4.element.Tag):
         for child_element in list(element.contents):
             _handle_demo_html_element(context, soup, child_element)
@@ -91,7 +92,7 @@ def _handle_demo_html_element(context, soup, element):
         tmp_parent.unwrap()
 
 
-def make_demo_html_file(font_config, context):
+def make_demo_html_file(font_config: FontConfig, context: DesignContext):
     content_file_path = os.path.join(path_define.templates_dir, 'demo-content.html')
     with open(content_file_path, 'r', encoding='utf-8') as file:
         content_html = file.read()
