@@ -42,7 +42,7 @@ locale_to_language_flavor = {
     'ko': 'ko',
 }
 
-font_formats = ['otf', 'woff2', 'ttf']
+font_formats = ['otf', 'woff2', 'ttf', 'bdf']
 
 git_deploy_configs = [GitDeployConfig(
     url='git@github.com:TakWolf/ark-pixel-font.git',

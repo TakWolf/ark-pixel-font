@@ -5,13 +5,11 @@ import unicodedata
 
 import png
 import unidata_blocks
-from fontTools.fontBuilder import FontBuilder
-from fontTools.pens.t2CharStringPen import T2CharStringPen
-from fontTools.pens.ttGlyphPen import TTGlyphPen
+from pixel_font_builder import FontBuilder, Glyph, StyleName, SerifMode
 
 import configs
-from configs import path_define
-from utils import glyph_util, fs_util
+from configs import path_define, FontConfig
+from utils import fs_util
 
 logger = logging.getLogger('font-service')
 
@@ -219,96 +217,43 @@ def collect_glyph_files(font_config):
     return DesignContext(alphabet_group, character_mapping_group, glyph_file_paths_group)
 
 
-def _draw_glyph(outlines, units_per_em, box_origin_y, width, height, is_ttf):
-    if is_ttf:
-        pen = TTGlyphPen(None)
-    else:
-        pen = T2CharStringPen(0, None)
-    if len(outlines) > 0:
-        for outline_index, outline in enumerate(outlines):
-            for point_index, point in enumerate(outline):
-
-                # 转换左上角原点坐标系为 OpenType 坐标系
-                x, y = point
-                y = box_origin_y + (height - units_per_em) / 2 - y
-                point = x, y
-
-                if point_index == 0:
-                    pen.moveTo(point)
-                else:
-                    pen.lineTo(point)
-            if outline_index < len(outlines) - 1:
-                pen.endPath()
-            else:
-                pen.closePath()
-    else:
-        pen.moveTo((0, 0))
-        pen.closePath()
-    advance_width = width
-    if is_ttf:
-        return pen.glyph(), advance_width
-    else:
-        return pen.getCharString(), advance_width
-
-
-def _create_builder(font_config, context, width_mode, language_flavor, is_ttf):
+def _create_builder(font_config, context, width_mode, language_flavor):
     font_attrs = font_config.get_attrs(width_mode)
+    builder = FontBuilder(
+        font_config.size,
+        font_attrs.ascent,
+        font_attrs.descent,
+        font_attrs.x_height,
+        font_attrs.cap_height,
+    )
 
-    units_per_em = font_config.size * font_config.px_to_units
-    builder = FontBuilder(units_per_em, isTTF=is_ttf)
-
-    name_strings = font_config.get_name_strings(width_mode, language_flavor)
-    builder.setupNameTable(name_strings)
-
-    glyph_order = ['.notdef']
     character_mapping = context.get_character_mapping(width_mode)
-    character_mapping_sequence = list(character_mapping.items())
-    character_mapping_sequence.sort()
-    for _, glyph_name in character_mapping_sequence:
-        if glyph_name not in glyph_order:
-            glyph_order.append(glyph_name)
-    builder.setupGlyphOrder(glyph_order)
-    builder.setupCharacterMap(character_mapping)
+    builder.character_mapping.update(character_mapping)
 
-    glyphs = {}
-    advance_widths = {}
-    for glyph_name in glyph_order:
+    glyph_names = context.get_glyph_names(width_mode)
+    for glyph_name in glyph_names:
         glyph_data, glyph_width, glyph_height = context.get_glyph_data(width_mode, language_flavor, glyph_name)
-        outlines = glyph_util.get_outlines_from_glyph_data(glyph_data, font_config.px_to_units)
-        glyphs[glyph_name], advance_widths[glyph_name] = _draw_glyph(
-            outlines,
-            units_per_em,
-            font_attrs.box_origin_y * font_config.px_to_units,
-            glyph_width * font_config.px_to_units,
-            glyph_height * font_config.px_to_units,
-            is_ttf,
-        )
-    if is_ttf:
-        builder.setupGlyf(glyphs)
-        horizontal_metrics = {glyph_name: (advance_width, glyphs[glyph_name].xMin) for glyph_name, advance_width in advance_widths.items()}
-    else:
-        builder.setupCFF(name_strings['psName'], {'FullName': name_strings['fullName']}, glyphs, {})
-        horizontal_metrics = {glyph_name: (advance_width, glyphs[glyph_name].calcBounds(None)[0]) for glyph_name, advance_width in advance_widths.items()}
-    builder.setupHorizontalMetrics(horizontal_metrics)
+        offset_y = font_attrs.box_origin_y + int((glyph_height - font_config.size) / 2) - glyph_height
+        builder.add_glyph(Glyph(
+            name=glyph_name,
+            advance_width=glyph_width,
+            offset=(0, offset_y),
+            data=glyph_data,
+        ))
 
-    ascent = font_attrs.ascent * font_config.px_to_units
-    descent = font_attrs.descent * font_config.px_to_units
-    x_height = font_attrs.x_height * font_config.px_to_units
-    cap_height = font_attrs.cap_height * font_config.px_to_units
-    builder.setupHorizontalHeader(
-        ascent=ascent,
-        descent=descent,
-    )
-    builder.setupOS2(
-        sTypoAscender=ascent,
-        sTypoDescender=descent,
-        usWinAscent=ascent,
-        usWinDescent=-descent,
-        sxHeight=x_height,
-        sCapHeight=cap_height,
-    )
-
-    builder.setupPost()
+    builder.meta_infos.version = configs.version
+    builder.meta_infos.family_name = f'{FontConfig.FAMILY_NAME} {font_config.size}px {width_mode.capitalize()} {language_flavor}'
+    builder.meta_infos.style_name = StyleName.REGULAR
+    builder.meta_infos.serif_mode = SerifMode.SANS_SERIF
+    builder.meta_infos.width_mode = width_mode.capitalize()
+    builder.meta_infos.manufacturer = FontConfig.MANUFACTURER
+    builder.meta_infos.designer = FontConfig.DESIGNER
+    builder.meta_infos.description = FontConfig.DESCRIPTION
+    builder.meta_infos.copyright_info = FontConfig.COPYRIGHT_INFO
+    builder.meta_infos.license_info = FontConfig.LICENSE_INFO
+    builder.meta_infos.vendor_url = FontConfig.VENDOR_URL
+    builder.meta_infos.designer_url = FontConfig.DESIGNER_URL
+    builder.meta_infos.license_url = FontConfig.LICENSE_URL
 
     return builder
 
@@ -322,19 +267,23 @@ def make_font_files(font_config, context, width_mode, language_flavors=None, fon
     fs_util.make_dirs(path_define.outputs_dir)
 
     for language_flavor in language_flavors:
+        builder = _create_builder(font_config, context, width_mode, language_flavor)
         if 'otf' in font_formats or 'woff2' in font_formats:
-            builder = _create_builder(font_config, context, width_mode, language_flavor, False)
+            otf_builder = builder.to_otf_builder()
             if 'otf' in font_formats:
                 otf_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name(width_mode, language_flavor, 'otf'))
-                builder.save(otf_file_path)
+                otf_builder.save(otf_file_path)
                 logger.info(f"Made font file: '{otf_file_path}'")
             if 'woff2' in font_formats:
-                builder.font.flavor = 'woff2'
+                otf_builder.font.flavor = 'woff2'
                 woff2_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name(width_mode, language_flavor, 'woff2'))
-                builder.save(woff2_file_path)
+                otf_builder.save(woff2_file_path)
                 logger.info(f"Made font file: '{woff2_file_path}'")
         if 'ttf' in font_formats:
-            builder = _create_builder(font_config, context, width_mode, language_flavor, True)
             ttf_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name(width_mode, language_flavor, 'ttf'))
-            builder.save(ttf_file_path)
+            builder.save_ttf(ttf_file_path)
             logger.info(f"Made font file: '{ttf_file_path}'")
+        if 'bdf' in font_formats:
+            bdf_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name(width_mode, language_flavor, 'bdf'))
+            builder.save_bdf(bdf_file_path)
+            logger.info(f"Made font file: '{bdf_file_path}'")

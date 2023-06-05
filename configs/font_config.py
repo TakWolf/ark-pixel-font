@@ -25,7 +25,7 @@ class FontConfig:
     DESIGNER_URL = 'https://takwolf.com'
     LICENSE_URL = 'https://scripts.sil.org/OFL'
 
-    def __init__(self, size, px_to_units=100):
+    def __init__(self, size):
         self.root_dir = os.path.join(path_define.glyphs_dir, str(size))
 
         config_file_path = os.path.join(self.root_dir, 'config.toml')
@@ -42,30 +42,8 @@ class FontConfig:
             'proportional': FontAttrs(config_data['proportional'], self.size, self.line_height),
         }
 
-        self.px_to_units = px_to_units
-
         self.demo_html_file_name = f'demo-{size}px.html'
         self.preview_image_file_name = f'preview-{size}px.png'
-
-    def get_name_strings(self, width_mode, language_flavor):
-        style_name = 'Regular'
-        display_name = f'{FontConfig.FAMILY_NAME} {self.size}px {width_mode.capitalize()} {language_flavor}'
-        unique_name = f'{FontConfig.FAMILY_NAME.replace(" ", "-")}-{self.size}px-{width_mode.capitalize()}-{language_flavor}-{style_name}'
-        return {
-            'copyright': FontConfig.COPYRIGHT_INFO,
-            'familyName': display_name,
-            'styleName': style_name,
-            'uniqueFontIdentifier': f'{unique_name};{configs.version}',
-            'fullName': display_name,
-            'version': configs.version,
-            'psName': unique_name,
-            'designer': FontConfig.DESIGNER,
-            'description': FontConfig.DESCRIPTION,
-            'vendorURL': FontConfig.VENDOR_URL,
-            'designerURL': FontConfig.DESIGNER_URL,
-            'licenseDescription': FontConfig.LICENSE_INFO,
-            'licenseInfoURL': FontConfig.LICENSE_URL,
-        }
 
     def get_attrs(self, width_mode):
         return self._attrs_group[width_mode]

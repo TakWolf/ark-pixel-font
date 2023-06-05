@@ -109,13 +109,7 @@
 
 可在 [Releases](https://github.com/TakWolf/ark-pixel-font/releases) 下载最新的版本。
 
-目前提供三种字体格式：
-
-| 格式 | 使用场景 |
-|---|---|
-| `.otf` | 新一代主流字体格式，可以直接用于操作系统、设计软件或游戏引擎。推荐优先使用这个格式。 |
-| `.ttf` | 在 `.otf` 出现之前的主流字体格式，一定程度上可以被 `.otf` 取代。如果你的软件不支持 `.otf` 格式，请使用这个格式。 |
-| `.woff2` | 压缩后的 `.otf` 格式，体积更小，适用于网络传输，但并非所有软件都支持。如果你需要通过网页在线引用字体，请优先使用这个格式。 |
+目前提供 `.otf`、`.ttf`、`.woff2`、`.bdf` 四种格式。
 
 ### macOS - Homebrew
 
@@ -169,8 +163,7 @@ brew install font-ark-pixel-16px-proportional
 
 ## 程序依赖
 
-- [FontTools](https://github.com/fonttools/fonttools)
-- [Brotli](https://github.com/google/brotli)
+- [Pixel Font Builder](https://github.com/TakWolf/pixel-font-builder)
 - [Unidata Blocks](https://github.com/TakWolf/unidata-blocks)
 - [Character Encoding Utils](https://github.com/TakWolf/character-encoding-utils)
 - [PyPNG](https://gitlab.com/drj11/pypng)
