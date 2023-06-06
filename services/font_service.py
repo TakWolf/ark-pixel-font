@@ -67,67 +67,66 @@ def format_glyph_files(font_config: FontConfig):
         if not os.path.isdir(width_mode_dir):
             continue
         width_mode_tmp_dir = os.path.join(tmp_dir, width_mode_dir_name)
-        for glyph_file_from_dir, _, glyph_file_names in os.walk(width_mode_dir):
-            for glyph_file_name in glyph_file_names:
-                if not glyph_file_name.endswith('.png'):
-                    continue
-                glyph_file_from_path = os.path.join(glyph_file_from_dir, glyph_file_name)
-                if glyph_file_name == 'notdef.png':
-                    east_asian_width = 'F'
-                    block = None
-                    glyph_file_to_dir = width_mode_tmp_dir
+        for glyph_file_from_dir, glyph_file_name in fs_util.walk_files(width_mode_dir):
+            if not glyph_file_name.endswith('.png'):
+                continue
+            glyph_file_from_path = os.path.join(glyph_file_from_dir, glyph_file_name)
+            if glyph_file_name == 'notdef.png':
+                east_asian_width = 'F'
+                block = None
+                glyph_file_to_dir = width_mode_tmp_dir
+            else:
+                hex_name, language_flavors = _parse_glyph_file_name(glyph_file_name)
+                code_point = int(hex_name, 16)
+                c = chr(code_point)
+                east_asian_width = unicodedata.east_asian_width(c)
+                glyph_file_name = f'{hex_name}{" " if len(language_flavors) > 0 else ""}{",".join(language_flavors)}.png'
+                block = unidata_blocks.get_block_by_code_point(code_point)
+                block_dir_name = f'{block.code_start:04X}-{block.code_end:04X} {block.name}'
+                glyph_file_to_dir = os.path.join(width_mode_tmp_dir, block_dir_name)
+                if block.code_start == 0x4E00:  # CJK Unified Ideographs
+                    glyph_file_to_dir = os.path.join(glyph_file_to_dir, f'{hex_name[0:-2]}-')
+            glyph_file_to_path = os.path.join(glyph_file_to_dir, glyph_file_name)
+            assert not os.path.exists(glyph_file_to_path), f"Glyph file already exists: '{glyph_file_to_path}'"
+
+            glyph_data, glyph_width, glyph_height = _load_glyph_data_from_png(glyph_file_from_path)
+
+            if width_mode_dir_name == 'common' or width_mode_dir_name == 'monospaced':
+                assert glyph_height == font_config.size, f"Incorrect glyph data: '{glyph_file_from_path}'"
+
+                # H/Halfwidth or Na/Narrow
+                if east_asian_width == 'H' or east_asian_width == 'Na':
+                    assert glyph_width == font_config.size / 2, f"Incorrect glyph data: '{glyph_file_from_path}'"
+                # F/Fullwidth or W/Wide
+                elif east_asian_width == 'F' or east_asian_width == 'W':
+                    assert glyph_width == font_config.size, f"Incorrect glyph data: '{glyph_file_from_path}'"
+                # A/Ambiguous or N/Neutral
                 else:
-                    hex_name, language_flavors = _parse_glyph_file_name(glyph_file_name)
-                    code_point = int(hex_name, 16)
-                    c = chr(code_point)
-                    east_asian_width = unicodedata.east_asian_width(c)
-                    glyph_file_name = f'{hex_name}{" " if len(language_flavors) > 0 else ""}{",".join(language_flavors)}.png'
-                    block = unidata_blocks.get_block_by_code_point(code_point)
-                    block_dir_name = f'{block.code_start:04X}-{block.code_end:04X} {block.name}'
-                    glyph_file_to_dir = os.path.join(width_mode_tmp_dir, block_dir_name)
+                    assert glyph_width == font_config.size / 2 or glyph_width == font_config.size, f"Incorrect glyph data: '{glyph_file_from_path}'"
+
+                if block is not None:
                     if block.code_start == 0x4E00:  # CJK Unified Ideographs
-                        glyph_file_to_dir = os.path.join(glyph_file_to_dir, f'{hex_name[0:-2]}-')
-                glyph_file_to_path = os.path.join(glyph_file_to_dir, glyph_file_name)
-                assert not os.path.exists(glyph_file_to_path), f"Glyph file already exists: '{glyph_file_to_path}'"
+                        if any(alpha != 0 for alpha in glyph_data[0]):
+                            raise AssertionError(f"Incorrect glyph data: '{glyph_file_from_path}'")
+                        if any(glyph_data[i][-1] != 0 for i in range(0, len(glyph_data))):
+                            raise AssertionError(f"Incorrect glyph data: '{glyph_file_from_path}'")
 
-                glyph_data, glyph_width, glyph_height = _load_glyph_data_from_png(glyph_file_from_path)
+            if width_mode_dir_name == 'proportional':
+                assert glyph_height >= font_config.size, f"Incorrect glyph data: '{glyph_file_from_path}'"
+                assert (glyph_height - font_config.size) % 2 == 0, f"Incorrect glyph data: '{glyph_file_from_path}'"
 
-                if width_mode_dir_name == 'common' or width_mode_dir_name == 'monospaced':
-                    assert glyph_height == font_config.size, f"Incorrect glyph data: '{glyph_file_from_path}'"
+                if glyph_height > font_config.line_height:
+                    for i in range(int((glyph_height - font_config.line_height) / 2)):
+                        glyph_data.pop(0)
+                        glyph_data.pop()
+                elif glyph_height < font_config.line_height:
+                    for i in range(int((font_config.line_height - glyph_height) / 2)):
+                        glyph_data.insert(0, [0 for _ in range(glyph_width)])
+                        glyph_data.append([0 for _ in range(glyph_width)])
 
-                    # H/Halfwidth or Na/Narrow
-                    if east_asian_width == 'H' or east_asian_width == 'Na':
-                        assert glyph_width == font_config.size / 2, f"Incorrect glyph data: '{glyph_file_from_path}'"
-                    # F/Fullwidth or W/Wide
-                    elif east_asian_width == 'F' or east_asian_width == 'W':
-                        assert glyph_width == font_config.size, f"Incorrect glyph data: '{glyph_file_from_path}'"
-                    # A/Ambiguous or N/Neutral
-                    else:
-                        assert glyph_width == font_config.size / 2 or glyph_width == font_config.size, f"Incorrect glyph data: '{glyph_file_from_path}'"
-
-                    if block is not None:
-                        if block.code_start == 0x4E00:  # CJK Unified Ideographs
-                            if any(alpha != 0 for alpha in glyph_data[0]):
-                                raise AssertionError(f"Incorrect glyph data: '{glyph_file_from_path}'")
-                            if any(glyph_data[i][-1] != 0 for i in range(0, len(glyph_data))):
-                                raise AssertionError(f"Incorrect glyph data: '{glyph_file_from_path}'")
-
-                if width_mode_dir_name == 'proportional':
-                    assert glyph_height >= font_config.size, f"Incorrect glyph data: '{glyph_file_from_path}'"
-                    assert (glyph_height - font_config.size) % 2 == 0, f"Incorrect glyph data: '{glyph_file_from_path}'"
-
-                    if glyph_height > font_config.line_height:
-                        for i in range(int((glyph_height - font_config.line_height) / 2)):
-                            glyph_data.pop(0)
-                            glyph_data.pop()
-                    elif glyph_height < font_config.line_height:
-                        for i in range(int((font_config.line_height - glyph_height) / 2)):
-                            glyph_data.insert(0, [0 for _ in range(glyph_width)])
-                            glyph_data.append([0 for _ in range(glyph_width)])
-
-                fs_util.make_dirs(glyph_file_to_dir)
-                _save_glyph_data_to_png(glyph_data, glyph_file_to_path)
-                logger.info(f"Formatted glyph file: '{glyph_file_to_path}'")
+            fs_util.make_dirs(glyph_file_to_dir)
+            _save_glyph_data_to_png(glyph_data, glyph_file_to_path)
+            logger.info(f"Formatted glyph file: '{glyph_file_to_path}'")
         width_mode_old_dir = os.path.join(tmp_dir, f'{width_mode_dir_name}.old')
         os.rename(width_mode_dir, width_mode_old_dir)
         os.rename(width_mode_tmp_dir, width_mode_dir)
@@ -178,28 +177,27 @@ def collect_glyph_files(font_config: FontConfig) -> DesignContext:
         width_mode_dir = os.path.join(font_config.root_dir, width_mode_dir_name)
         if not os.path.isdir(width_mode_dir):
             continue
-        for glyph_file_dir, _, glyph_file_names in os.walk(width_mode_dir):
-            for glyph_file_name in glyph_file_names:
-                if not glyph_file_name.endswith('.png'):
-                    continue
-                glyph_file_path = os.path.join(glyph_file_dir, glyph_file_name)
-                if glyph_file_name == 'notdef.png':
-                    glyph_file_paths_cellar[width_mode_dir_name]['default']['.notdef'] = glyph_file_path
+        for glyph_file_dir, glyph_file_name in fs_util.walk_files(width_mode_dir):
+            if not glyph_file_name.endswith('.png'):
+                continue
+            glyph_file_path = os.path.join(glyph_file_dir, glyph_file_name)
+            if glyph_file_name == 'notdef.png':
+                glyph_file_paths_cellar[width_mode_dir_name]['default']['.notdef'] = glyph_file_path
+            else:
+                hex_name, language_flavors = _parse_glyph_file_name(glyph_file_name)
+                code_point = int(hex_name, 16)
+                glyph_name = f'uni{code_point:04X}'
+                if len(language_flavors) > 0:
+                    for language_flavor in language_flavors:
+                        assert glyph_name not in glyph_file_paths_cellar[width_mode_dir_name][language_flavor], f"Glyph name '{glyph_name}' already exists in language flavor '{language_flavor}'"
+                        glyph_file_paths_cellar[width_mode_dir_name][language_flavor][glyph_name] = glyph_file_path
                 else:
-                    hex_name, language_flavors = _parse_glyph_file_name(glyph_file_name)
-                    code_point = int(hex_name, 16)
-                    glyph_name = f'uni{code_point:04X}'
-                    if len(language_flavors) > 0:
-                        for language_flavor in language_flavors:
-                            assert glyph_name not in glyph_file_paths_cellar[width_mode_dir_name][language_flavor], f"Glyph name '{glyph_name}' already exists in language flavor '{language_flavor}'"
-                            glyph_file_paths_cellar[width_mode_dir_name][language_flavor][glyph_name] = glyph_file_path
-                    else:
-                        if width_mode_dir_name == 'common' or width_mode_dir_name == 'monospaced':
-                            character_mapping_group['monospaced'][code_point] = glyph_name
-                        if width_mode_dir_name == 'common' or width_mode_dir_name == 'proportional':
-                            character_mapping_group['proportional'][code_point] = glyph_name
-                        assert glyph_name not in glyph_file_paths_cellar[width_mode_dir_name]['default'], f"Glyph name '{glyph_name}' already exists"
-                        glyph_file_paths_cellar[width_mode_dir_name]['default'][glyph_name] = glyph_file_path
+                    if width_mode_dir_name == 'common' or width_mode_dir_name == 'monospaced':
+                        character_mapping_group['monospaced'][code_point] = glyph_name
+                    if width_mode_dir_name == 'common' or width_mode_dir_name == 'proportional':
+                        character_mapping_group['proportional'][code_point] = glyph_name
+                    assert glyph_name not in glyph_file_paths_cellar[width_mode_dir_name]['default'], f"Glyph name '{glyph_name}' already exists"
+                    glyph_file_paths_cellar[width_mode_dir_name]['default'][glyph_name] = glyph_file_path
 
     alphabet_group = {}
     glyph_file_paths_group = {}
