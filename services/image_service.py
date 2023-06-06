@@ -27,7 +27,7 @@ def _load_font(font_config: FontConfig, width_mode: str, language_flavor: str, s
 
 
 def _draw_text(
-        image: Image,
+        image: Image.Image,
         xy: tuple[float, float],
         text: str,
         font: FreeTypeFont,
@@ -55,7 +55,7 @@ def _draw_text(
 
 
 def _draw_text_background(
-        image: Image,
+        image: Image.Image,
         alphabet: list[str],
         step: int,
         box_size: int,
