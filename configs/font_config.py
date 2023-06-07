@@ -27,9 +27,7 @@ class FontConfig:
     LICENSE_URL: Final[str] = 'https://scripts.sil.org/OFL'
 
     def __init__(self, size: int):
-        self.root_dir = os.path.join(path_define.glyphs_dir, str(size))
-
-        config_file_path = os.path.join(self.root_dir, 'config.toml')
+        config_file_path = os.path.join(path_define.glyphs_dir, str(size), 'config.toml')
         with open(config_file_path, 'rb') as file:
             config_data: dict = tomllib.load(file)['font']
 

@@ -60,10 +60,11 @@ def _save_glyph_data_to_png(data: list[list[int]], file_path: str):
 
 
 def format_glyph_files(font_config: FontConfig):
+    root_dir = os.path.join(path_define.glyphs_dir, str(font_config.size))
     tmp_dir = os.path.join(path_define.glyphs_tmp_dir, str(font_config.size))
     fs_util.delete_dir(tmp_dir)
     for width_mode_dir_name in configs.width_mode_dir_names:
-        width_mode_dir = os.path.join(font_config.root_dir, width_mode_dir_name)
+        width_mode_dir = os.path.join(root_dir, width_mode_dir_name)
         if not os.path.isdir(width_mode_dir):
             continue
         width_mode_tmp_dir = os.path.join(tmp_dir, width_mode_dir_name)
@@ -173,8 +174,9 @@ def collect_glyph_files(font_config: FontConfig) -> DesignContext:
         for language_flavor in configs.language_flavors:
             glyph_file_paths_cellar[width_mode_dir_name][language_flavor] = dict[str, str]()
 
+    root_dir = os.path.join(path_define.glyphs_dir, str(font_config.size))
     for width_mode_dir_name in configs.width_mode_dir_names:
-        width_mode_dir = os.path.join(font_config.root_dir, width_mode_dir_name)
+        width_mode_dir = os.path.join(root_dir, width_mode_dir_name)
         if not os.path.isdir(width_mode_dir):
             continue
         for glyph_file_dir, glyph_file_name in fs_util.walk_files(width_mode_dir):
