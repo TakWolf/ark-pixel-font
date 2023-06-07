@@ -69,13 +69,13 @@ def _draw_text_background(
         if code_point >= 0x4E00:
             alphabet_index = index
             break
-    x_count = math.ceil(image.width / box_size)
-    y_count = math.ceil(image.height / box_size)
-    x_offset = (image.width - x_count * box_size) / 2 + (box_size - font.size) / 2
-    y_offset = (image.height - y_count * box_size) / 2 + (box_size - sum(font.getmetrics())) / 2
-    for y in range(y_count):
-        for x in range(x_count):
-            draw.text((x_offset + x * box_size, y_offset + y * box_size), alphabet[alphabet_index], fill=text_color, font=font)
+    count_x = math.ceil(image.width / box_size)
+    count_y = math.ceil(image.height / box_size)
+    offset_x = (image.width - count_x * box_size) / 2 + (box_size - font.size) / 2
+    offset_y = (image.height - count_y * box_size) / 2 + (box_size - sum(font.getmetrics())) / 2
+    for y in range(count_y):
+        for x in range(count_x):
+            draw.text((offset_x + x * box_size, offset_y + y * box_size), alphabet[alphabet_index], fill=text_color, font=font)
             alphabet_index += step
 
 
