@@ -9,7 +9,7 @@
         }
         {% for width_mode in configs.width_modes %}
         {% for locale, language_flavor in configs.locale_to_language_flavor.items() %}
-        {% with font_family = 'Ark-Pixel-' ~ font_config.size ~ 'px-' ~ width_mode ~ '-' ~ language_flavor %}
+        {% with font_family = 'ark-pixel-' ~ font_config.size ~ 'px-' ~ width_mode ~ '-' ~ language_flavor %}
         @font-face {
             font-family: {{ font_family }};
             src: url("{{ font_config.get_font_file_name(width_mode, language_flavor, 'woff2') }}?r={{ configs.build_random_key }}");
@@ -22,7 +22,7 @@
         {% endfor %}
         {% if font_config.size != 12 %}
         @font-face {
-            font-family: Ark-Pixel-12px-monospaced-latin;
+            font-family: ark-pixel-12px-monospaced-latin;
             src: url("{{ configs.font_size_to_config[12].get_font_file_name('monospaced', 'latin', 'woff2') }}?r={{ configs.build_random_key }}");
         }
         {% endif %}
@@ -71,7 +71,7 @@
             flex-direction: row;
             align-items: center;
             color: #4b4b4b;
-            font-family: Ark-Pixel-12px-monospaced-latin, sans-serif;
+            font-family: ark-pixel-12px-monospaced-latin, sans-serif;
             font-size: 24px;
             line-height: 36px;
         }
