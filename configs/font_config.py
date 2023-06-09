@@ -9,7 +9,7 @@ from configs import path_define
 class FontAttrs:
     def __init__(self, config_data: dict, size: int, line_height: int):
         self.box_origin_y: int = config_data['box_origin_y']
-        self.ascent = self.box_origin_y + int((line_height - size) / 2)
+        self.ascent = self.box_origin_y + (line_height - size) // 2
         self.descent = self.ascent - line_height
         self.x_height: int = config_data['x_height']
         self.cap_height: int = config_data['cap_height']
