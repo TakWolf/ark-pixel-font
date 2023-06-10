@@ -245,7 +245,7 @@ def _create_builder(
             data=glyph_data,
         ))
 
-    builder.meta_infos.version = configs.version
+    builder.meta_infos.version = FontConfig.VERSION
     builder.meta_infos.family_name = f'{FontConfig.FAMILY_NAME} {font_config.size}px {width_mode.capitalize()} {language_flavor}'
     builder.meta_infos.style_name = StyleName.REGULAR
     builder.meta_infos.serif_mode = SerifMode.SANS_SERIF
