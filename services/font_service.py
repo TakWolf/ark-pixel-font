@@ -88,7 +88,7 @@ def format_glyph_files(font_config: FontConfig):
                 if block.code_start == 0x4E00:  # CJK Unified Ideographs
                     glyph_file_to_dir = os.path.join(glyph_file_to_dir, f'{hex_name[0:-2]}-')
             glyph_file_to_path = os.path.join(glyph_file_to_dir, glyph_file_name)
-            assert not os.path.exists(glyph_file_to_path), f"Glyph file already exists: '{glyph_file_to_path}'"
+            assert not os.path.exists(glyph_file_to_path), f"Glyph file duplication: '{glyph_file_from_path}'"
 
             glyph_data, glyph_width, glyph_height = _load_glyph_data_from_png(glyph_file_from_path)
 
