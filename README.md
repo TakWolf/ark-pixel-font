@@ -5,8 +5,8 @@
 [![SIL Open Font License 1.1](https://img.shields.io/badge/license-OFL--1.1-orange)](https://scripts.sil.org/OFL)
 [![MIT License](https://img.shields.io/badge/license-MIT-green)](https://opensource.org/licenses/MIT)
 [![Releases](https://img.shields.io/github/v/release/TakWolf/ark-pixel-font)](https://github.com/TakWolf/ark-pixel-font/releases)
-[![Discord](https://img.shields.io/discord/949265373964947458?logo=discord&logoColor=white)](https://discord.gg/3GKtPKtjdU)
-[![QQ Group](https://img.shields.io/badge/chat-302383204-brightgreen?logo=tencentqq)](https://jq.qq.com/?_wv=1027&k=EXtKGHar)
+[![Discord](https://img.shields.io/discord/949265373964947458?logo=discord&logoColor=white&label=discord)](https://discord.gg/3GKtPKtjdU)
+[![QQ Group](https://img.shields.io/badge/QQ群-302383204-brightgreen?logo=tencentqq)](https://jq.qq.com/?_wv=1027&k=EXtKGHar)
 
 开源的泛中日韩像素字体。支持 10、12 和 16 像素。目标是为游戏开发提供一套可用于正文的开箱即用的像素字体解决方案。
 
