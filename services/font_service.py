@@ -1,6 +1,5 @@
 import logging
 import os
-import shutil
 import unicodedata
 
 import png
@@ -65,8 +64,6 @@ def format_glyph_files(font_config: FontConfig):
     fs_util.delete_dir(tmp_dir)
     for width_mode_dir_name in configs.width_mode_dir_names:
         width_mode_dir = os.path.join(root_dir, width_mode_dir_name)
-        if not os.path.isdir(width_mode_dir):
-            continue
         width_mode_tmp_dir = os.path.join(tmp_dir, width_mode_dir_name)
         for glyph_file_from_dir, glyph_file_name in fs_util.walk_files(width_mode_dir):
             if not glyph_file_name.endswith('.png'):
@@ -128,10 +125,9 @@ def format_glyph_files(font_config: FontConfig):
             fs_util.make_dirs(glyph_file_to_dir)
             _save_glyph_data_to_png(glyph_data, glyph_file_to_path)
             logger.info(f"Format glyph file: '{glyph_file_to_path}'")
-        width_mode_old_dir = os.path.join(tmp_dir, f'{width_mode_dir_name}.old')
-        os.rename(width_mode_dir, width_mode_old_dir)
-        os.rename(width_mode_tmp_dir, width_mode_dir)
-        shutil.rmtree(width_mode_old_dir)
+        fs_util.delete_dir(width_mode_dir)
+        if os.path.exists(width_mode_tmp_dir):
+            os.rename(width_mode_tmp_dir, width_mode_dir)
 
 
 class DesignContext:
@@ -177,8 +173,6 @@ def collect_glyph_files(font_config: FontConfig) -> DesignContext:
     root_dir = os.path.join(path_define.glyphs_dir, str(font_config.size))
     for width_mode_dir_name in configs.width_mode_dir_names:
         width_mode_dir = os.path.join(root_dir, width_mode_dir_name)
-        if not os.path.isdir(width_mode_dir):
-            continue
         for glyph_file_dir, glyph_file_name in fs_util.walk_files(width_mode_dir):
             if not glyph_file_name.endswith('.png'):
                 continue

@@ -17,6 +17,7 @@ def make_dirs(path: str):
 
 
 def walk_files(top: str) -> Iterator[tuple[str, str]]:
-    for parent, _, names in os.walk(top):
-        for name in names:
-            yield parent, name
+    if os.path.isdir(top):
+        for parent, _, names in os.walk(top):
+            for name in names:
+                yield parent, name
