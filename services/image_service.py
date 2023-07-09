@@ -44,7 +44,7 @@ def _draw_text(
     if line_height is None:
         line_height = default_line_height
     y += (line_height - default_line_height) / 2
-    spacing = line_height + line_gap - font.getsize('A')[1]
+    spacing = line_height + line_gap - font.getbbox('A')[3]
     if is_horizontal_centered:
         x -= draw.textbbox((0, 0), text, font=font)[2] / 2
     if is_vertical_centered:
