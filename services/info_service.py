@@ -91,20 +91,20 @@ def _write_unicode_chr_count_infos_table(file: IO, infos: list[tuple[UnicodeBloc
         name = block.name
         name_zh_cn = block.name_localized('zh-cn') or ''
         total = block.printable_count
-        lack = total - count if total > 0 else 0
+        missing = total - count if total > 0 else 0
         progress = count / total if total > 0 else 1
         finished_emoji = '🚩' if progress == 1 else '🚧'
-        file.write(f'| {code_point_range} | {name} | {name_zh_cn} | {count} / {total} | {lack} | {progress:.2%} {finished_emoji} |\n')
+        file.write(f'| {code_point_range} | {name} | {name_zh_cn} | {count} / {total} | {missing} | {progress:.2%} {finished_emoji} |\n')
 
 
 def _write_locale_chr_count_infos_table(file: IO, infos: list[tuple[str, int, int]]):
     file.write('| 区块名称 | 完成数 | 缺失数 | 进度 |\n')
     file.write('|---|---:|---:|---:|\n')
     for name, count, total in infos:
-        lack = total - count
+        missing = total - count
         progress = count / total
         finished_emoji = '🚩' if progress == 1 else '🚧'
-        file.write(f'| {name} | {count} / {total} | {lack} | {progress:.2%} {finished_emoji} |\n')
+        file.write(f'| {name} | {count} / {total} | {missing} | {progress:.2%} {finished_emoji} |\n')
 
 
 def make_info_file(font_config: FontConfig, context: DesignContext, width_mode: str):
