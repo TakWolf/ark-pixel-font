@@ -182,7 +182,7 @@ brew install font-ark-pixel-16px-proportional
 ## 参考资料
 
 - [Font Development Best Practices](https://silnrsi.github.io/FDBP/)
-- [Microsoft - OpenType font documentation](https://docs.microsoft.com/en-us/typography/opentype/)
+- [Microsoft - OpenType font documentation](https://learn.microsoft.com/en-us/typography/opentype/)
 - [Glyphs 软件教程 - 纵向量度值](https://glyphsapp.com/zh/learn/vertical-metrics)
 
 ## 赞助
