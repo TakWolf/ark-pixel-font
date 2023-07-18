@@ -5,6 +5,8 @@ from typing import Iterator
 
 def delete_dir(path: str):
     if os.path.exists(path):
+        if not os.path.isdir(path):
+            raise Exception(f"Path not a directory: '{path}'")
         shutil.rmtree(path)
 
 
@@ -16,8 +18,10 @@ def make_dirs(path: str):
         os.makedirs(path)
 
 
-def walk_files(top: str) -> Iterator[tuple[str, str]]:
-    if os.path.isdir(top):
-        for parent, _, names in os.walk(top):
+def walk_files(path: str) -> Iterator[tuple[str, str]]:
+    if os.path.exists(path):
+        if not os.path.isdir(path):
+            raise Exception(f"Path not a directory: '{path}'")
+        for parent, _, names in os.walk(path):
             for name in names:
                 yield parent, name
