@@ -2,13 +2,12 @@ import logging
 import os
 import unicodedata
 
-import png
 import unidata_blocks
 from pixel_font_builder import FontBuilder, Glyph, StyleName, SerifMode
 
 import configs
 from configs import path_define, FontConfig
-from utils import fs_util
+from utils import fs_util, glyph_util
 
 logger = logging.getLogger('font-service')
 
@@ -25,37 +24,6 @@ def _parse_glyph_file_name(glyph_file_name: str) -> tuple[str, list[str]]:
                 language_flavors.append(language_flavor)
         assert len(language_flavors) == len(language_flavor_tokens), f"Glyph file name '{glyph_file_name}': unknown language flavors"
     return hex_name, language_flavors
-
-
-def _load_glyph_data_from_png(file_path: str) -> tuple[list[list[int]], int, int]:
-    width, height, bitmap, _ = png.Reader(filename=file_path).read()
-    data = []
-    for bitmap_row in bitmap:
-        data_row = []
-        for x in range(0, width * 4, 4):
-            alpha = bitmap_row[x + 3]
-            if alpha > 127:
-                data_row.append(1)
-            else:
-                data_row.append(0)
-        data.append(data_row)
-    return data, width, height
-
-
-def _save_glyph_data_to_png(data: list[list[int]], file_path: str):
-    bitmap = []
-    for data_row in data:
-        bitmap_row = []
-        for x in data_row:
-            bitmap_row.append(0)
-            bitmap_row.append(0)
-            bitmap_row.append(0)
-            if x == 0:
-                bitmap_row.append(0)
-            else:
-                bitmap_row.append(255)
-        bitmap.append(bitmap_row)
-    png.from_array(bitmap, 'RGBA').save(file_path)
 
 
 def format_glyph_files(font_config: FontConfig):
@@ -87,7 +55,7 @@ def format_glyph_files(font_config: FontConfig):
             glyph_file_to_path = os.path.join(glyph_file_to_dir, glyph_file_name)
             assert not os.path.exists(glyph_file_to_path), f"Glyph file duplication: '{glyph_file_from_path}'"
 
-            glyph_data, glyph_width, glyph_height = _load_glyph_data_from_png(glyph_file_from_path)
+            glyph_data, glyph_width, glyph_height = glyph_util.load_glyph_data_from_png(glyph_file_from_path)
 
             if width_mode_dir_name == 'common' or width_mode_dir_name == 'monospaced':
                 assert glyph_height == font_config.size, f"Incorrect glyph data: '{glyph_file_from_path}'"
@@ -123,7 +91,7 @@ def format_glyph_files(font_config: FontConfig):
                         glyph_data.append([0 for _ in range(glyph_width)])
 
             fs_util.make_dirs(glyph_file_to_dir)
-            _save_glyph_data_to_png(glyph_data, glyph_file_to_path)
+            glyph_util.save_glyph_data_to_png(glyph_data, glyph_file_to_path)
             logger.info(f"Format glyph file: '{glyph_file_to_path}'")
         fs_util.delete_dir(width_mode_dir)
         if os.path.exists(width_mode_tmp_dir):
@@ -155,7 +123,7 @@ class DesignContext:
         if glyph_file_path in self._glyph_data_pool:
             glyph_data, glyph_width, glyph_height = self._glyph_data_pool[glyph_file_path]
         else:
-            glyph_data, glyph_width, glyph_height = _load_glyph_data_from_png(glyph_file_path)
+            glyph_data, glyph_width, glyph_height = glyph_util.load_glyph_data_from_png(glyph_file_path)
             self._glyph_data_pool[glyph_file_path] = glyph_data, glyph_width, glyph_height
         return glyph_data, glyph_width, glyph_height
 
