@@ -126,6 +126,7 @@ class DesignContext:
         else:
             glyph_data, glyph_width, glyph_height = glyph_util.load_glyph_data_from_png(glyph_file_path)
             self._glyph_data_pool[glyph_file_path] = glyph_data, glyph_width, glyph_height
+            logger.info(f"Load glyph file: '{glyph_file_path}'")
         return glyph_data, glyph_width, glyph_height
 
 
@@ -181,6 +182,7 @@ def collect_glyph_files(font_config: FontConfig) -> DesignContext:
 def _create_builder(
         font_config: FontConfig,
         context: DesignContext,
+        glyph_cacher: dict[str, Glyph],
         width_mode: str,
         language_flavor: str,
 ) -> FontBuilder:
@@ -195,14 +197,19 @@ def _create_builder(
 
     builder.character_mapping.update(context.get_character_mapping(width_mode))
     for glyph_name, glyph_file_path in context.get_glyph_file_paths(width_mode, language_flavor).items():
-        glyph_data, glyph_width, glyph_height = context.load_glyph_data(glyph_file_path)
-        offset_y = font_attrs.box_origin_y + (glyph_height - font_config.size) // 2 - glyph_height
-        builder.add_glyph(Glyph(
-            name=glyph_name,
-            advance_width=glyph_width,
-            offset=(0, offset_y),
-            data=glyph_data,
-        ))
+        if glyph_file_path in glyph_cacher:
+            glyph = glyph_cacher[glyph_file_path]
+        else:
+            glyph_data, glyph_width, glyph_height = context.load_glyph_data(glyph_file_path)
+            offset_y = font_attrs.box_origin_y + (glyph_height - font_config.size) // 2 - glyph_height
+            glyph = Glyph(
+                name=glyph_name,
+                advance_width=glyph_width,
+                offset=(0, offset_y),
+                data=glyph_data,
+            )
+            glyph_cacher[glyph_file_path] = glyph
+        builder.add_glyph(glyph)
 
     builder.meta_infos.version = FontConfig.VERSION
     builder.meta_infos.family_name = f'{FontConfig.FAMILY_NAME} {font_config.size}px {width_mode.capitalize()} {language_flavor}'
@@ -235,8 +242,9 @@ def make_font_files(
 
     fs_util.make_dirs(path_define.outputs_dir)
 
+    glyph_cacher = {}
     for language_flavor in language_flavors:
-        builder = _create_builder(font_config, context, width_mode, language_flavor)
+        builder = _create_builder(font_config, context, glyph_cacher, width_mode, language_flavor)
         if 'otf' in font_formats or 'woff2' in font_formats:
             otf_builder = builder.to_otf_builder()
             if 'otf' in font_formats:
