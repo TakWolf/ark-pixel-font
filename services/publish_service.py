@@ -18,7 +18,7 @@ def make_release_zips(font_config: FontConfig, width_mode: str):
     for font_format in configs.font_formats:
         file_path = os.path.join(path_define.releases_dir, font_config.get_release_zip_file_name(width_mode, font_format))
         with zipfile.ZipFile(file_path, 'w') as file:
-            file.write('LICENSE-OFL', 'OFL.txt')
+            file.write(os.path.join(path_define.project_root_dir, 'LICENSE-OFL'), 'OFL.txt')
             for language_flavor in configs.language_flavors:
                 font_file_name = font_config.get_font_file_name(width_mode, language_flavor, font_format)
                 font_file_path = os.path.join(path_define.outputs_dir, font_file_name)
