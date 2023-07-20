@@ -31,7 +31,7 @@ def make_alphabet_html_file(font_config: FontConfig, context: DesignContext, wid
     file_path = os.path.join(path_define.outputs_dir, font_config.get_alphabet_html_file_name(width_mode))
     with open(file_path, 'w', encoding='utf-8') as file:
         file.write(html)
-    logger.info(f"Make alphabet html file: '{file_path}'")
+    logger.info("Make alphabet html file: '%s'", file_path)
 
 
 def _handle_demo_html_element(context: DesignContext, soup: bs4.BeautifulSoup, element: bs4.PageElement):
@@ -111,7 +111,7 @@ def make_demo_html_file(font_config: FontConfig, context: DesignContext):
     file_path = os.path.join(path_define.outputs_dir, font_config.demo_html_file_name)
     with open(file_path, 'w', encoding='utf-8') as file:
         file.write(html)
-    logger.info(f"Make demo html file: '{file_path}'")
+    logger.info("Make demo html file: '%s'", file_path)
 
 
 def make_index_html_file():
@@ -121,7 +121,7 @@ def make_index_html_file():
     file_path = os.path.join(path_define.outputs_dir, 'index.html')
     with open(file_path, 'w', encoding='utf-8') as file:
         file.write(html)
-    logger.info(f"Make index html file: '{file_path}'")
+    logger.info("Make index html file: '%s'", file_path)
 
 
 def make_playground_html_file():
@@ -131,4 +131,4 @@ def make_playground_html_file():
     file_path = os.path.join(path_define.outputs_dir, 'playground.html')
     with open(file_path, 'w', encoding='utf-8') as file:
         file.write(html)
-    logger.info(f"Make playground html file: '{file_path}'")
+    logger.info("Make playground html file: '%s'", file_path)

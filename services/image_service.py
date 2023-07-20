@@ -100,7 +100,7 @@ def make_preview_image_file(font_config: FontConfig):
     fs_util.make_dirs(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, font_config.preview_image_file_name)
     image.save(file_path)
-    logger.info(f"Make preview image file: '{file_path}'")
+    logger.info("Make preview image file: '%s'", file_path)
 
 
 def make_readme_banner():
@@ -123,7 +123,7 @@ def make_readme_banner():
     fs_util.make_dirs(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, 'readme-banner.png')
     image.save(file_path)
-    logger.info(f"Make readme banner: '{file_path}'")
+    logger.info("Make readme banner: '%s'", file_path)
 
 
 def make_github_banner():
@@ -156,7 +156,7 @@ def make_github_banner():
     fs_util.make_dirs(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, 'github-banner.png')
     image.save(file_path)
-    logger.info(f"Make github banner: '{file_path}'")
+    logger.info("Make github banner: '%s'", file_path)
 
 
 def make_itch_io_banner():
@@ -179,7 +179,7 @@ def make_itch_io_banner():
     fs_util.make_dirs(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, 'itch-io-banner.png')
     image.save(file_path)
-    logger.info(f"Make itch.io banner: '{file_path}'")
+    logger.info("Make itch.io banner: '%s'", file_path)
 
 
 def make_itch_io_background():
@@ -195,7 +195,7 @@ def make_itch_io_background():
     fs_util.make_dirs(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, 'itch-io-background.png')
     image.save(file_path)
-    logger.info(f"Make itch.io background: '{file_path}'")
+    logger.info("Make itch.io background: '%s'", file_path)
 
 
 def make_itch_io_cover():
@@ -225,7 +225,7 @@ def make_itch_io_cover():
     fs_util.make_dirs(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, 'itch-io-cover.png')
     image.save(file_path)
-    logger.info(f"Make itch.io cover: '{file_path}'")
+    logger.info("Make itch.io cover: '%s'", file_path)
 
 
 def make_afdian_cover():
@@ -256,4 +256,4 @@ def make_afdian_cover():
     fs_util.make_dirs(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, 'afdian-cover.png')
     image.save(file_path)
-    logger.info(f"Make afdian cover: '{file_path}'")
+    logger.info("Make afdian cover: '%s'", file_path)
