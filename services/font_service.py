@@ -131,13 +131,14 @@ class DesignContext:
 
 
 def collect_glyph_files(font_config: FontConfig) -> DesignContext:
+    root_dir = os.path.join(path_define.glyphs_dir, str(font_config.size))
+
     character_mapping_group = dict[str, dict[int, str]]()
     glyph_file_paths_group = dict[str, dict[str, dict[str, str]]]()
     for width_mode in configs.width_modes:
         character_mapping_group[width_mode] = {}
         glyph_file_paths_group[width_mode] = {}
 
-    root_dir = os.path.join(path_define.glyphs_dir, str(font_config.size))
     glyph_file_paths_cellar = dict[str, dict[str, dict[str, str]]]()
     for width_mode_dir_name in configs.width_mode_dir_names:
         glyph_file_paths_cellar[width_mode_dir_name] = {
@@ -168,6 +169,7 @@ def collect_glyph_files(font_config: FontConfig) -> DesignContext:
                     character_mapping_group['monospaced'][code_point] = glyph_name
                 if width_mode_dir_name == 'common' or width_mode_dir_name == 'proportional':
                     character_mapping_group['proportional'][code_point] = glyph_name
+
     for width_mode in configs.width_modes:
         for language_flavor in configs.language_flavors:
             glyph_file_paths = dict(glyph_file_paths_cellar['common']['default'])
