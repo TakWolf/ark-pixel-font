@@ -13,7 +13,7 @@ from utils import fs_util
 logger = logging.getLogger('info-service')
 
 
-def _get_unicode_chr_count_infos(alphabet: list[str]) -> list[tuple[UnicodeBlock, int]]:
+def _get_unicode_chr_count_infos(alphabet: set[str]) -> list[tuple[UnicodeBlock, int]]:
     count_infos = dict[int, int]()
     for c in alphabet:
         code_point = ord(c)
@@ -28,7 +28,7 @@ def _get_unicode_chr_count_infos(alphabet: list[str]) -> list[tuple[UnicodeBlock
     return [(unidata_blocks.get_block_by_code_point(code_start), count_infos[code_start]) for code_start in code_starts]
 
 
-def _get_locale_chr_count_infos(alphabet: list[str], query_category_func: Callable[[str], str | None]) -> dict[str, int]:
+def _get_locale_chr_count_infos(alphabet: set[str], query_category_func: Callable[[str], str | None]) -> dict[str, int]:
     count_infos = dict[str, int]()
     for c in alphabet:
         category = query_category_func(c)
@@ -42,7 +42,7 @@ def _get_locale_chr_count_infos(alphabet: list[str], query_category_func: Callab
     return count_infos
 
 
-def _get_gb2312_chr_count_infos(alphabet: list[str]) -> list[tuple[str, int, int]]:
+def _get_gb2312_chr_count_infos(alphabet: set[str]) -> list[tuple[str, int, int]]:
     count_infos = _get_locale_chr_count_infos(alphabet, gb2312.query_category)
     return [
         ('一级汉字', count_infos.get('level-1', 0), gb2312.get_level_1_count()),
@@ -52,7 +52,7 @@ def _get_gb2312_chr_count_infos(alphabet: list[str]) -> list[tuple[str, int, int
     ]
 
 
-def _get_big5_chr_count_infos(alphabet: list[str]) -> list[tuple[str, int, int]]:
+def _get_big5_chr_count_infos(alphabet: set[str]) -> list[tuple[str, int, int]]:
     count_infos = _get_locale_chr_count_infos(alphabet, big5.query_category)
     return [
         ('常用汉字', count_infos.get('level-1', 0), big5.get_level_1_count()),
@@ -62,7 +62,7 @@ def _get_big5_chr_count_infos(alphabet: list[str]) -> list[tuple[str, int, int]]
     ]
 
 
-def _get_shiftjis_chr_count_infos(alphabet: list[str]) -> list[tuple[str, int, int]]:
+def _get_shiftjis_chr_count_infos(alphabet: set[str]) -> list[tuple[str, int, int]]:
     count_infos = _get_locale_chr_count_infos(alphabet, shiftjis.query_category)
     return [
         ('单字节-ASCII可打印字符', count_infos.get('single-byte-ascii-printable', 0), shiftjis.get_single_byte_ascii_printable_count()),
@@ -73,7 +73,7 @@ def _get_shiftjis_chr_count_infos(alphabet: list[str]) -> list[tuple[str, int, i
     ]
 
 
-def _get_ksx1001_chr_count_infos(alphabet: list[str]) -> list[tuple[str, int, int]]:
+def _get_ksx1001_chr_count_infos(alphabet: set[str]) -> list[tuple[str, int, int]]:
     count_infos = _get_locale_chr_count_infos(alphabet, ksx1001.query_category)
     return [
         ('谚文音节', count_infos.get('syllable', 0), ksx1001.get_syllable_count()),
@@ -154,7 +154,8 @@ def make_info_file(font_config: FontConfig, context: DesignContext, width_mode: 
 
 
 def make_alphabet_txt_file(font_config: FontConfig, context: DesignContext, width_mode: str):
-    alphabet = context.get_alphabet(width_mode)
+    alphabet = list(context.get_alphabet(width_mode))
+    alphabet.sort()
     fs_util.make_dirs(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, font_config.get_alphabet_txt_file_name(width_mode))
     with open(file_path, 'w', encoding='utf-8') as file:

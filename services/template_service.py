@@ -19,13 +19,14 @@ _environment = Environment(
 
 
 def make_alphabet_html_file(font_config: FontConfig, context: DesignContext, width_mode: str):
-    alphabet = context.get_alphabet(width_mode)
+    alphabet = [c for c in context.get_alphabet(width_mode) if ord(c) >= 128]
+    alphabet.sort()
     template = _environment.get_template('alphabet.html')
     html = template.render(
         configs=configs,
         font_config=font_config,
         width_mode=width_mode,
-        alphabet=''.join([c for c in alphabet if ord(c) >= 128]),
+        alphabet=''.join(alphabet),
     )
     fs_util.make_dirs(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, font_config.get_alphabet_html_file_name(width_mode))

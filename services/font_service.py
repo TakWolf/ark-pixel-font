@@ -105,17 +105,18 @@ class DesignContext:
             glyph_file_paths_group: dict[str, dict[str, dict[str, str]]],
     ):
         self._character_mapping_group = character_mapping_group
+        self._alphabet_group = dict[str, set[str]]()
+        for width_mode, character_mapping in character_mapping_group.items():
+            alphabet = {chr(code_point) for code_point in character_mapping}
+            self._alphabet_group[width_mode] = alphabet
         self._glyph_file_paths_group = glyph_file_paths_group
         self._glyph_data_pool = dict[str, tuple[list[list[int]], int, int]]()
 
     def get_character_mapping(self, width_mode: str) -> dict[int, str]:
         return self._character_mapping_group[width_mode]
 
-    def get_alphabet(self, width_mode: str) -> list[str]:
-        character_mapping = self.get_character_mapping(width_mode)
-        alphabet = [chr(code_point) for code_point in character_mapping]
-        alphabet.sort()
-        return alphabet
+    def get_alphabet(self, width_mode: str) -> set[str]:
+        return self._alphabet_group[width_mode]
 
     def get_glyph_file_paths(self, width_mode: str, language_flavor: str) -> dict[str, str]:
         return self._glyph_file_paths_group[width_mode][language_flavor]
