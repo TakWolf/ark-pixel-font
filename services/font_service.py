@@ -235,18 +235,15 @@ def make_font_files(
         font_config: FontConfig,
         context: DesignContext,
         width_mode: str,
-        language_flavors: list[str] = None,
         font_formats: list[str] = None,
 ):
-    if language_flavors is None:
-        language_flavors = configs.language_flavors
     if font_formats is None:
         font_formats = configs.font_formats
 
     fs_util.make_dirs(path_define.outputs_dir)
 
     glyph_cacher = {}
-    for language_flavor in language_flavors:
+    for language_flavor in configs.language_flavors:
         builder = _create_builder(font_config, context, glyph_cacher, width_mode, language_flavor)
         if 'otf' in font_formats or 'woff2' in font_formats:
             otf_builder = builder.to_otf_builder()
