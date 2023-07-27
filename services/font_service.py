@@ -4,6 +4,7 @@ import unicodedata
 
 import unidata_blocks
 from pixel_font_builder import FontBuilder, Glyph, StyleName, SerifMode
+from pixel_font_builder.opentype import Flavor
 
 import configs
 from configs import path_define, FontConfig
@@ -245,21 +246,22 @@ def make_font_files(
     glyph_cacher = {}
     for language_flavor in configs.language_flavors:
         builder = _create_builder(font_config, context, glyph_cacher, width_mode, language_flavor)
-        if 'otf' in font_formats or 'woff2' in font_formats:
-            otf_builder = builder.to_otf_builder()
-            if 'otf' in font_formats:
-                otf_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name(width_mode, language_flavor, 'otf'))
-                otf_builder.save(otf_file_path)
-                logger.info("Make font file: '%s'", otf_file_path)
-            if 'woff2' in font_formats:
-                otf_builder.font.flavor = 'woff2'
-                woff2_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name(width_mode, language_flavor, 'woff2'))
-                otf_builder.save(woff2_file_path)
-                logger.info("Make font file: '%s'", woff2_file_path)
+
+        if 'otf' in font_formats:
+            otf_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name(width_mode, language_flavor, 'otf'))
+            builder.save_otf(otf_file_path)
+            logger.info("Make font file: '%s'", otf_file_path)
+
+        if 'woff2' in font_formats:
+            woff2_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name(width_mode, language_flavor, 'woff2'))
+            builder.save_otf(woff2_file_path, flavor=Flavor.WOFF2)
+            logger.info("Make font file: '%s'", woff2_file_path)
+
         if 'ttf' in font_formats:
             ttf_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name(width_mode, language_flavor, 'ttf'))
             builder.save_ttf(ttf_file_path)
             logger.info("Make font file: '%s'", ttf_file_path)
+
         if 'bdf' in font_formats:
             bdf_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name(width_mode, language_flavor, 'bdf'))
             builder.save_bdf(bdf_file_path)
