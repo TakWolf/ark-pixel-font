@@ -3,7 +3,7 @@ import os
 import unicodedata
 
 import unidata_blocks
-from pixel_font_builder import FontBuilder, Glyph, StyleName, SerifMode
+from pixel_font_builder import FontBuilder, FontCollectionBuilder, Glyph, StyleName, SerifMode
 from pixel_font_builder.opentype import Flavor
 
 import configs
@@ -13,10 +13,10 @@ from utils import fs_util, glyph_util
 logger = logging.getLogger('font-service')
 
 
-def _parse_glyph_file_name(glyph_file_name: str) -> tuple[str, list[str]]:
+def _parse_glyph_file_name(glyph_file_name: str) -> tuple[int, list[str]]:
     tokens = glyph_file_name.removesuffix('.png').split(' ')
     assert 1 <= len(tokens) <= 2, f"Glyph file name '{glyph_file_name}': illegal format"
-    hex_name = tokens[0].upper()
+    code_point = int(tokens[0], 16)
     language_flavors = []
     if len(tokens) == 2:
         language_flavor_tokens = tokens[1].lower().split(',')
@@ -24,7 +24,7 @@ def _parse_glyph_file_name(glyph_file_name: str) -> tuple[str, list[str]]:
             if language_flavor in language_flavor_tokens:
                 language_flavors.append(language_flavor)
         assert len(language_flavors) == len(language_flavor_tokens), f"Glyph file name '{glyph_file_name}': unknown language flavors"
-    return hex_name, language_flavors
+    return code_point, language_flavors
 
 
 def format_glyph_files(font_config: FontConfig):
@@ -43,10 +43,10 @@ def format_glyph_files(font_config: FontConfig):
                 block = None
                 glyph_file_to_dir = width_mode_tmp_dir
             else:
-                hex_name, language_flavors = _parse_glyph_file_name(glyph_file_name)
-                code_point = int(hex_name, 16)
+                code_point, language_flavors = _parse_glyph_file_name(glyph_file_name)
                 c = chr(code_point)
                 east_asian_width = unicodedata.east_asian_width(c)
+                hex_name = f'{code_point:04X}'
                 glyph_file_name = f'{hex_name}{" " if len(language_flavors) > 0 else ""}{",".join(language_flavors)}.png'
                 block = unidata_blocks.get_block_by_code_point(code_point)
                 block_dir_name = f'{block.code_start:04X}-{block.code_end:04X} {block.name}'
@@ -100,34 +100,63 @@ def format_glyph_files(font_config: FontConfig):
 
 
 class DesignContext:
-    def __init__(
-            self,
-            character_mapping_group: dict[str, dict[int, str]],
-            glyph_file_paths_group: dict[str, dict[str, dict[str, str]]],
-    ):
-        self._character_mapping_group = character_mapping_group
-        self._alphabet_group = dict[str, set[str]]()
-        for width_mode, character_mapping in character_mapping_group.items():
-            alphabet = {chr(code_point) for code_point in character_mapping}
-            self._alphabet_group[width_mode] = alphabet
-        self._glyph_file_paths_group = glyph_file_paths_group
-        self._glyph_data_pool = dict[str, tuple[list[list[int]], int, int]]()
-
-    def get_character_mapping(self, width_mode: str) -> dict[int, str]:
-        return self._character_mapping_group[width_mode]
+    def __init__(self, glyphs_registry: dict[str, dict[int, dict[str, tuple[str, str]]]]):
+        self._glyphs_registry = glyphs_registry
+        self._alphabet_cacher = dict[str, set[str]]()
+        self._character_mapping_cacher = dict[str, dict[int, str]]()
+        self._glyph_file_paths_cacher = dict[str, dict[str, str]]()
+        self._glyph_data_cacher = dict[str, tuple[list[list[int]], int, int]]()
 
     def get_alphabet(self, width_mode: str) -> set[str]:
-        return self._alphabet_group[width_mode]
+        if width_mode in self._alphabet_cacher:
+            alphabet = self._alphabet_cacher[width_mode]
+        else:
+            alphabet = set()
+            for code_point in self._glyphs_registry[width_mode]:
+                if code_point < 0:
+                    continue
+                alphabet.add(chr(code_point))
+            self._alphabet_cacher[width_mode] = alphabet
+        return alphabet
 
-    def get_glyph_file_paths(self, width_mode: str, language_flavor: str) -> dict[str, str]:
-        return self._glyph_file_paths_group[width_mode][language_flavor]
+    def get_character_mapping(self, width_mode: str, language_flavor: str) -> dict[int, str]:
+        cache_name = f'{width_mode}#{language_flavor}'
+        if cache_name in self._character_mapping_cacher:
+            character_mapping = self._character_mapping_cacher[cache_name]
+        else:
+            character_mapping = {}
+            for code_point, glyph_infos in self._glyphs_registry[width_mode].items():
+                if code_point < 0:
+                    continue
+                character_mapping[code_point] = glyph_infos.get(language_flavor, glyph_infos['default'])[0]
+            self._character_mapping_cacher[cache_name] = character_mapping
+        return character_mapping
+
+    def get_glyph_file_paths(self, width_mode: str, language_flavor: str = None) -> dict[str, str]:
+        if language_flavor is None:
+            cache_name = width_mode
+        else:
+            cache_name = f'{width_mode}#{language_flavor}'
+        if cache_name in self._glyph_file_paths_cacher:
+            glyph_file_paths = self._glyph_file_paths_cacher[cache_name]
+        else:
+            glyph_file_paths = {}
+            for glyph_infos in self._glyphs_registry[width_mode].values():
+                if language_flavor is None:
+                    for glyph_name, glyph_file_path in glyph_infos.values():
+                        glyph_file_paths[glyph_name] = glyph_file_path
+                else:
+                    glyph_name, glyph_file_path = glyph_infos.get(language_flavor, glyph_infos['default'])
+                    glyph_file_paths[glyph_name] = glyph_file_path
+            self._glyph_file_paths_cacher[cache_name] = glyph_file_paths
+        return glyph_file_paths
 
     def load_glyph_data(self, glyph_file_path: str) -> tuple[list[list[int]], int, int]:
-        if glyph_file_path in self._glyph_data_pool:
-            glyph_data, glyph_width, glyph_height = self._glyph_data_pool[glyph_file_path]
+        if glyph_file_path in self._glyph_data_cacher:
+            glyph_data, glyph_width, glyph_height = self._glyph_data_cacher[glyph_file_path]
         else:
             glyph_data, glyph_width, glyph_height = glyph_util.load_glyph_data_from_png(glyph_file_path)
-            self._glyph_data_pool[glyph_file_path] = glyph_data, glyph_width, glyph_height
+            self._glyph_data_cacher[glyph_file_path] = glyph_data, glyph_width, glyph_height
             logger.info("Load glyph file: '%s'", glyph_file_path)
         return glyph_data, glyph_width, glyph_height
 
@@ -135,52 +164,39 @@ class DesignContext:
 def collect_glyph_files(font_config: FontConfig) -> DesignContext:
     root_dir = os.path.join(path_define.glyphs_dir, str(font_config.size))
 
-    character_mapping_group = dict[str, dict[int, str]]()
-    glyph_file_paths_group = dict[str, dict[str, dict[str, str]]]()
-    for width_mode in configs.width_modes:
-        character_mapping_group[width_mode] = {}
-        glyph_file_paths_group[width_mode] = {}
-
-    glyph_file_paths_cellar = dict[str, dict[str, dict[str, str]]]()
+    glyphs_cellar = dict[str, dict[int, dict[str, tuple[str, str]]]]()
     for width_mode_dir_name in configs.width_mode_dir_names:
-        glyph_file_paths_cellar[width_mode_dir_name] = {
-            'default': {},
-        }
-        for language_flavor in configs.language_flavors:
-            glyph_file_paths_cellar[width_mode_dir_name][language_flavor] = {}
-
+        glyphs_cellar[width_mode_dir_name] = {}
         width_mode_dir = os.path.join(root_dir, width_mode_dir_name)
         for glyph_file_dir, glyph_file_name in fs_util.walk_files(width_mode_dir):
             if not glyph_file_name.endswith('.png'):
                 continue
             glyph_file_path = os.path.join(glyph_file_dir, glyph_file_name)
             if glyph_file_name == 'notdef.png':
-                glyph_file_paths_cellar[width_mode_dir_name]['default']['.notdef'] = glyph_file_path
+                code_point = -1
+                language_flavors = []
+                glyph_name = '.notdef'
             else:
-                hex_name, language_flavors = _parse_glyph_file_name(glyph_file_name)
-                code_point = int(hex_name, 16)
+                code_point, language_flavors = _parse_glyph_file_name(glyph_file_name)
                 glyph_name = f'uni{code_point:04X}'
-                if len(language_flavors) > 0:
-                    for language_flavor in language_flavors:
-                        assert glyph_name not in glyph_file_paths_cellar[width_mode_dir_name][language_flavor], f"Glyph name '{glyph_name}' already exists in language flavor '{language_flavor}'"
-                        glyph_file_paths_cellar[width_mode_dir_name][language_flavor][glyph_name] = glyph_file_path
-                else:
-                    assert glyph_name not in glyph_file_paths_cellar[width_mode_dir_name]['default'], f"Glyph name '{glyph_name}' already exists"
-                    glyph_file_paths_cellar[width_mode_dir_name]['default'][glyph_name] = glyph_file_path
-                if width_mode_dir_name == 'common' or width_mode_dir_name == 'monospaced':
-                    character_mapping_group['monospaced'][code_point] = glyph_name
-                if width_mode_dir_name == 'common' or width_mode_dir_name == 'proportional':
-                    character_mapping_group['proportional'][code_point] = glyph_name
+            if code_point not in glyphs_cellar[width_mode_dir_name]:
+                glyphs_cellar[width_mode_dir_name][code_point] = {}
+            if len(language_flavors) > 0:
+                glyph_name = f'{glyph_name}-{language_flavors[0]}'
+            else:
+                language_flavors.append('default')
+            for language_flavor in language_flavors:
+                assert language_flavor not in glyphs_cellar[width_mode_dir_name][code_point], f"Glyph flavor already exists: '{code_point:04X}' '{width_mode_dir_name}.{language_flavor}'"
+                glyphs_cellar[width_mode_dir_name][code_point][language_flavor] = glyph_name, glyph_file_path
+        for code_point, glyph_infos in glyphs_cellar[width_mode_dir_name].items():
+            assert 'default' in glyph_infos, f"Glyph miss default flavor: '{code_point:04X}' '{width_mode_dir_name}'"
 
+    glyphs_registry = dict[str, dict[int, dict[str, tuple[str, str]]]]()
     for width_mode in configs.width_modes:
-        for language_flavor in configs.language_flavors:
-            glyph_file_paths = dict(glyph_file_paths_cellar['common']['default'])
-            glyph_file_paths.update(glyph_file_paths_cellar['common'][language_flavor])
-            glyph_file_paths.update(glyph_file_paths_cellar[width_mode]['default'])
-            glyph_file_paths.update(glyph_file_paths_cellar[width_mode][language_flavor])
-            glyph_file_paths_group[width_mode][language_flavor] = glyph_file_paths
+        glyphs_registry[width_mode] = dict(glyphs_cellar['common'])
+        glyphs_registry[width_mode].update(glyphs_cellar[width_mode])
 
-    return DesignContext(character_mapping_group, glyph_file_paths_group)
+    return DesignContext(glyphs_registry)
 
 
 def _create_builder(
@@ -189,6 +205,7 @@ def _create_builder(
         glyph_cacher: dict[str, Glyph],
         width_mode: str,
         language_flavor: str,
+        is_collection: bool,
 ) -> FontBuilder:
     font_attrs = font_config.get_attrs(width_mode)
     builder = FontBuilder(
@@ -199,8 +216,11 @@ def _create_builder(
         font_attrs.cap_height,
     )
 
-    builder.character_mapping.update(context.get_character_mapping(width_mode))
-    for glyph_name, glyph_file_path in context.get_glyph_file_paths(width_mode, language_flavor).items():
+    character_mapping = context.get_character_mapping(width_mode, language_flavor)
+    builder.character_mapping.update(character_mapping)
+
+    glyph_file_paths = context.get_glyph_file_paths(width_mode, None if is_collection else language_flavor)
+    for glyph_name, glyph_file_path in glyph_file_paths.items():
         if glyph_file_path in glyph_cacher:
             glyph = glyph_cacher[glyph_file_path]
         else:
@@ -229,6 +249,9 @@ def _create_builder(
     builder.meta_infos.designer_url = FontConfig.DESIGNER_URL
     builder.meta_infos.license_url = FontConfig.LICENSE_URL
 
+    if is_collection:
+        builder.opentype_configs.cff_family_name = f'{FontConfig.FAMILY_NAME} {font_config.size}px {width_mode.capitalize()}'
+
     return builder
 
 
@@ -237,32 +260,53 @@ def make_font_files(
         context: DesignContext,
         width_mode: str,
         font_formats: list[str] = None,
+        font_collection_formats: list[str] = None,
 ):
     if font_formats is None:
         font_formats = configs.font_formats
+    if font_collection_formats is None:
+        font_collection_formats = configs.font_collection_formats
 
     fs_util.make_dirs(path_define.outputs_dir)
 
     glyph_cacher = {}
-    for language_flavor in configs.language_flavors:
-        builder = _create_builder(font_config, context, glyph_cacher, width_mode, language_flavor)
 
-        if 'otf' in font_formats:
-            otf_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name(width_mode, language_flavor, 'otf'))
-            builder.save_otf(otf_file_path)
-            logger.info("Make font file: '%s'", otf_file_path)
+    if len(font_formats) > 0:
+        for language_flavor in configs.language_flavors:
+            builder = _create_builder(font_config, context, glyph_cacher, width_mode, language_flavor, is_collection=False)
 
-        if 'woff2' in font_formats:
-            woff2_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name(width_mode, language_flavor, 'woff2'))
-            builder.save_otf(woff2_file_path, flavor=Flavor.WOFF2)
-            logger.info("Make font file: '%s'", woff2_file_path)
+            if 'otf' in font_formats:
+                otf_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name(width_mode, language_flavor, 'otf'))
+                builder.save_otf(otf_file_path)
+                logger.info("Make font file: '%s'", otf_file_path)
 
-        if 'ttf' in font_formats:
-            ttf_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name(width_mode, language_flavor, 'ttf'))
-            builder.save_ttf(ttf_file_path)
-            logger.info("Make font file: '%s'", ttf_file_path)
+            if 'woff2' in font_formats:
+                woff2_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name(width_mode, language_flavor, 'woff2'))
+                builder.save_otf(woff2_file_path, flavor=Flavor.WOFF2)
+                logger.info("Make font file: '%s'", woff2_file_path)
 
-        if 'bdf' in font_formats:
-            bdf_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name(width_mode, language_flavor, 'bdf'))
-            builder.save_bdf(bdf_file_path)
-            logger.info("Make font file: '%s'", bdf_file_path)
+            if 'ttf' in font_formats:
+                ttf_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name(width_mode, language_flavor, 'ttf'))
+                builder.save_ttf(ttf_file_path)
+                logger.info("Make font file: '%s'", ttf_file_path)
+
+            if 'bdf' in font_formats:
+                bdf_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name(width_mode, language_flavor, 'bdf'))
+                builder.save_bdf(bdf_file_path)
+                logger.info("Make font file: '%s'", bdf_file_path)
+
+    if len(font_collection_formats) > 0:
+        collection_builder = FontCollectionBuilder()
+        for language_flavor in configs.language_flavors:
+            builder = _create_builder(font_config, context, glyph_cacher, width_mode, language_flavor, is_collection=True)
+            collection_builder.font_builders.append(builder)
+
+        if 'otc' in font_collection_formats:
+            otc_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_collection_file_name(width_mode, 'otc'))
+            collection_builder.save_otc(otc_file_path)
+            logger.info("Make font collection file: '%s'", otc_file_path)
+
+        if 'ttc' in font_collection_formats:
+            ttc_file_path = os.path.join(path_define.outputs_dir, font_config.get_font_collection_file_name(width_mode, 'ttc'))
+            collection_builder.save_ttc(ttc_file_path)
+            logger.info("Make font collection file: '%s'", ttc_file_path)

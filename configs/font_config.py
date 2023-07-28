@@ -52,6 +52,9 @@ class FontConfig:
     def get_font_file_name(self, width_mode: str, language_flavor: str, font_format: str) -> str:
         return f'{FontConfig.OUTPUTS_NAME}-{self.size}px-{width_mode}-{language_flavor}.{font_format}'
 
+    def get_font_collection_file_name(self, width_mode: str, font_format: str) -> str:
+        return f'{FontConfig.OUTPUTS_NAME}-{self.size}px-{width_mode}.{font_format}'
+
     def get_info_file_name(self, width_mode: str) -> str:
         return f'font-info-{self.size}px-{width_mode}.md'
 

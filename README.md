@@ -109,7 +109,7 @@
 
 可在 [Releases](https://github.com/TakWolf/ark-pixel-font/releases) 下载最新的版本。
 
-目前提供 `.otf`、`.ttf`、`.woff2`、`.bdf` 四种格式。
+目前提供 `.otf`、`.ttf`、`.woff2`、`.bdf` 四种单字体格式，以及 `.otc`、`.ttc` 两种集合字体格式。
 
 ### macOS - Homebrew
 
