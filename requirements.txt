@@ -1,5 +1,5 @@
 pixel-font-builder==0.0.8
-unidata-blocks==0.0.3
+unidata-blocks==0.0.5
 character-encoding-utils==0.0.5
 pypng==0.20220715.0
 Pillow==10.0.0

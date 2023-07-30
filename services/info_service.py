@@ -89,12 +89,12 @@ def _write_unicode_chr_count_infos_table(file: IO, infos: list[tuple[UnicodeBloc
     for block, count in infos:
         code_point_range = f'{block.code_start:04X} ~ {block.code_end:04X}'
         name = block.name
-        name_zh_cn = block.name_localized('zh-cn') or ''
+        name_zh = block.name_localized('zh', '')
         total = block.printable_count
         missing = total - count if total > 0 else 0
         progress = count / total if total > 0 else 1
         finished_emoji = '🚩' if progress == 1 else '🚧'
-        file.write(f'| {code_point_range} | {name} | {name_zh_cn} | {count} / {total} | {missing} | {progress:.2%} {finished_emoji} |\n')
+        file.write(f'| {code_point_range} | {name} | {name_zh} | {count} / {total} | {missing} | {progress:.2%} {finished_emoji} |\n')
 
 
 def _write_locale_chr_count_infos_table(file: IO, infos: list[tuple[str, int, int]]):
