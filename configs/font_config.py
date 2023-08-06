@@ -3,16 +3,20 @@ import time
 import tomllib
 from typing import Final
 
+import configs
 from configs import path_define
 
 
 class FontAttrs:
-    def __init__(self, config_data: dict, size: int, line_height: int):
-        self.box_origin_y: int = config_data['box_origin_y']
-        self.ascent = self.box_origin_y + (line_height - size) // 2
-        self.descent = self.ascent - line_height
+    def __init__(self, config_data: dict):
+        self.ascent: int = config_data['ascent']
+        self.descent: int = config_data['descent']
         self.x_height: int = config_data['x_height']
         self.cap_height: int = config_data['cap_height']
+
+    @property
+    def line_height(self) -> int:
+        return self.ascent - self.descent
 
 
 class FontConfig:
@@ -35,19 +39,22 @@ class FontConfig:
 
         self.size: int = config_data['size']
         assert self.size == size, f'Font config size not equals: expect {size} but actually {self.size}'
-        self.line_height: int = config_data['line_height']
-        assert (self.line_height - self.size) % 2 == 0, f"Font config {self.size}: the difference between 'line_height' and 'size' must be a multiple of 2"
 
-        self._attrs_group = {
-            'monospaced': FontAttrs(config_data['monospaced'], self.size, self.size),
-            'proportional': FontAttrs(config_data['proportional'], self.size, self.line_height),
-        }
+        self._width_mode_to_attrs: dict[str, FontAttrs] = {}
+        for width_mode in configs.width_modes:
+            attrs = FontAttrs(config_data[width_mode])
+            assert (attrs.line_height - self.size) % 2 == 0, f"Font config attrs {self.size} {width_mode}: the difference between 'line_height' and 'size' must be a multiple of 2"
+            self._width_mode_to_attrs[width_mode] = attrs
 
         self.demo_html_file_name = f'demo-{self.size}px.html'
         self.preview_image_file_name = f'preview-{self.size}px.png'
 
+    @property
+    def line_height(self) -> int:
+        return self._width_mode_to_attrs['proportional'].line_height
+
     def get_attrs(self, width_mode: str) -> FontAttrs:
-        return self._attrs_group[width_mode]
+        return self._width_mode_to_attrs[width_mode]
 
     def get_font_file_name(self, width_mode: str, language_flavor: str, font_format: str) -> str:
         return f'{FontConfig.OUTPUTS_NAME}-{self.size}px-{width_mode}-{language_flavor}.{font_format}'

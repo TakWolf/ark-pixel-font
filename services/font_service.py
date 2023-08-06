@@ -1,4 +1,5 @@
 import logging
+import math
 import os
 import unicodedata
 
@@ -225,7 +226,7 @@ def _create_builder(
             glyph = glyph_cacher[glyph_file_path]
         else:
             glyph_data, glyph_width, glyph_height = context.load_glyph_data(glyph_file_path)
-            offset_y = font_attrs.box_origin_y + (glyph_height - font_config.size) // 2 - glyph_height
+            offset_y = math.floor((font_attrs.ascent + font_attrs.descent - glyph_height) / 2)
             glyph = Glyph(
                 name=glyph_name,
                 advance_width=glyph_width,
