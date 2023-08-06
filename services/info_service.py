@@ -1,6 +1,7 @@
 import logging
 import os
-from typing import Callable, IO
+from collections.abc import Callable
+from typing import IO
 
 import unidata_blocks
 from character_encoding_utils import gb2312, big5, shiftjis, ksx1001
