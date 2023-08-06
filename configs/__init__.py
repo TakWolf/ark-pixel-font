@@ -6,7 +6,7 @@ from configs.git_deploy_config import GitDeployConfig
 build_random_key = random.random()
 
 font_configs = [FontConfig(size) for size in [10, 12, 16]]
-font_size_to_config: dict[int, FontConfig] = {font_config.size: font_config for font_config in font_configs}
+font_size_to_config = {font_config.size: font_config for font_config in font_configs}
 
 width_modes = [
     'monospaced',

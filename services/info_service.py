@@ -15,7 +15,7 @@ logger = logging.getLogger('info-service')
 
 
 def _get_unicode_chr_count_infos(alphabet: set[str]) -> list[tuple[UnicodeBlock, int]]:
-    count_infos = dict[int, int]()
+    count_infos = {}
     for c in alphabet:
         code_point = ord(c)
         block = unidata_blocks.get_block_by_code_point(code_point)
@@ -30,7 +30,7 @@ def _get_unicode_chr_count_infos(alphabet: set[str]) -> list[tuple[UnicodeBlock,
 
 
 def _get_locale_chr_count_infos(alphabet: set[str], query_category_func: Callable[[str], str | None]) -> dict[str, int]:
-    count_infos = dict[str, int]()
+    count_infos = {}
     for c in alphabet:
         category = query_category_func(c)
         if category is not None:
