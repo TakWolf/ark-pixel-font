@@ -7,7 +7,7 @@ import configs
 from configs import path_define
 
 
-class FontAttrs:
+class Metrics:
     def __init__(self, config_data: dict):
         self.ascent: int = config_data['ascent']
         self.descent: int = config_data['descent']
@@ -40,21 +40,21 @@ class FontConfig:
         self.size: int = config_data['size']
         assert self.size == size, f'Font config size not equals: expect {size} but actually {self.size}'
 
-        self._width_mode_to_attrs: dict[str, FontAttrs] = {}
+        self._width_mode_to_metrics: dict[str, Metrics] = {}
         for width_mode in configs.width_modes:
-            attrs = FontAttrs(config_data[width_mode])
-            assert (attrs.line_height - self.size) % 2 == 0, f"Font config attrs {self.size} {width_mode}: the difference between 'line_height' and 'size' must be a multiple of 2"
-            self._width_mode_to_attrs[width_mode] = attrs
+            metrics = Metrics(config_data[width_mode])
+            assert (metrics.line_height - self.size) % 2 == 0, f"Font metrics {self.size} {width_mode}: the difference between 'line_height' and 'size' must be a multiple of 2"
+            self._width_mode_to_metrics[width_mode] = metrics
 
         self.demo_html_file_name = f'demo-{self.size}px.html'
         self.preview_image_file_name = f'preview-{self.size}px.png'
 
     @property
     def line_height(self) -> int:
-        return self._width_mode_to_attrs['proportional'].line_height
+        return self._width_mode_to_metrics['proportional'].line_height
 
-    def get_attrs(self, width_mode: str) -> FontAttrs:
-        return self._width_mode_to_attrs[width_mode]
+    def get_metrics(self, width_mode: str) -> Metrics:
+        return self._width_mode_to_metrics[width_mode]
 
     def get_font_file_name(self, width_mode: str, language_flavor: str, font_format: str) -> str:
         return f'{FontConfig.OUTPUTS_NAME}-{self.size}px-{width_mode}-{language_flavor}.{font_format}'
