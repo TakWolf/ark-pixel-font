@@ -208,14 +208,31 @@ def _create_builder(
         language_flavor: str,
         is_collection: bool,
 ) -> FontBuilder:
+    builder = FontBuilder()
+
     font_attrs = font_config.get_attrs(width_mode)
-    builder = FontBuilder(
-        font_config.size,
-        font_attrs.ascent,
-        font_attrs.descent,
-        font_attrs.x_height,
-        font_attrs.cap_height,
-    )
+    builder.metrics.size = font_config.size
+    builder.metrics.ascent = font_attrs.ascent
+    builder.metrics.descent = font_attrs.descent
+    builder.metrics.x_height = font_attrs.x_height
+    builder.metrics.cap_height = font_attrs.cap_height
+
+    builder.meta_infos.version = FontConfig.VERSION
+    builder.meta_infos.family_name = f'{FontConfig.FAMILY_NAME} {font_config.size}px {width_mode.capitalize()} {language_flavor}'
+    builder.meta_infos.style_name = StyleName.REGULAR
+    builder.meta_infos.serif_mode = SerifMode.SANS_SERIF
+    builder.meta_infos.width_mode = width_mode.capitalize()
+    builder.meta_infos.manufacturer = FontConfig.MANUFACTURER
+    builder.meta_infos.designer = FontConfig.DESIGNER
+    builder.meta_infos.description = FontConfig.DESCRIPTION
+    builder.meta_infos.copyright_info = FontConfig.COPYRIGHT_INFO
+    builder.meta_infos.license_info = FontConfig.LICENSE_INFO
+    builder.meta_infos.vendor_url = FontConfig.VENDOR_URL
+    builder.meta_infos.designer_url = FontConfig.DESIGNER_URL
+    builder.meta_infos.license_url = FontConfig.LICENSE_URL
+
+    if is_collection:
+        builder.opentype_configs.cff_family_name = f'{FontConfig.FAMILY_NAME} {font_config.size}px {width_mode.capitalize()}'
 
     character_mapping = context.get_character_mapping(width_mode, language_flavor)
     builder.character_mapping.update(character_mapping)
@@ -234,24 +251,7 @@ def _create_builder(
                 data=glyph_data,
             )
             glyph_cacher[glyph_file_path] = glyph
-        builder.add_glyph(glyph)
-
-    builder.meta_infos.version = FontConfig.VERSION
-    builder.meta_infos.family_name = f'{FontConfig.FAMILY_NAME} {font_config.size}px {width_mode.capitalize()} {language_flavor}'
-    builder.meta_infos.style_name = StyleName.REGULAR
-    builder.meta_infos.serif_mode = SerifMode.SANS_SERIF
-    builder.meta_infos.width_mode = width_mode.capitalize()
-    builder.meta_infos.manufacturer = FontConfig.MANUFACTURER
-    builder.meta_infos.designer = FontConfig.DESIGNER
-    builder.meta_infos.description = FontConfig.DESCRIPTION
-    builder.meta_infos.copyright_info = FontConfig.COPYRIGHT_INFO
-    builder.meta_infos.license_info = FontConfig.LICENSE_INFO
-    builder.meta_infos.vendor_url = FontConfig.VENDOR_URL
-    builder.meta_infos.designer_url = FontConfig.DESIGNER_URL
-    builder.meta_infos.license_url = FontConfig.LICENSE_URL
-
-    if is_collection:
-        builder.opentype_configs.cff_family_name = f'{FontConfig.FAMILY_NAME} {font_config.size}px {width_mode.capitalize()}'
+        builder.glyphs.append(glyph)
 
     return builder
 
