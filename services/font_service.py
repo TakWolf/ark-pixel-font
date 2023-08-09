@@ -134,10 +134,7 @@ class DesignContext:
         return character_mapping
 
     def get_glyph_file_paths(self, width_mode: str, language_flavor: str = None) -> dict[str, str]:
-        if language_flavor is None:
-            cache_name = width_mode
-        else:
-            cache_name = f'{width_mode}#{language_flavor}'
+        cache_name = f'{width_mode}#{"" if language_flavor is None else language_flavor}'
         if cache_name in self._glyph_file_paths_cacher:
             glyph_file_paths = self._glyph_file_paths_cacher[cache_name]
         else:
