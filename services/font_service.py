@@ -30,12 +30,9 @@ def _parse_glyph_file_name(glyph_file_name: str) -> tuple[int, list[str]]:
 
 def format_glyph_files(font_config: FontConfig):
     root_dir = os.path.join(path_define.glyphs_dir, str(font_config.size))
-    tmp_dir = os.path.join(path_define.glyphs_tmp_dir, str(font_config.size))
-    fs_util.delete_dir(tmp_dir)
     for width_mode_dir_name in configs.width_mode_dir_names:
         width_mode_dir = os.path.join(root_dir, width_mode_dir_name)
-        width_mode_tmp_dir = os.path.join(tmp_dir, width_mode_dir_name)
-        for glyph_file_from_dir, _, glyph_file_names in os.walk(width_mode_dir):
+        for glyph_file_from_dir, _, glyph_file_names in list(os.walk(width_mode_dir, topdown=False)):
             for glyph_file_name in glyph_file_names:
                 if not glyph_file_name.endswith('.png'):
                     continue
@@ -43,7 +40,7 @@ def format_glyph_files(font_config: FontConfig):
                 if glyph_file_name == 'notdef.png':
                     east_asian_width = 'F'
                     block = None
-                    glyph_file_to_dir = width_mode_tmp_dir
+                    glyph_file_to_dir = width_mode_dir
                 else:
                     code_point, language_flavors = _parse_glyph_file_name(glyph_file_name)
                     c = chr(code_point)
@@ -52,12 +49,10 @@ def format_glyph_files(font_config: FontConfig):
                     glyph_file_name = f'{hex_name}{" " if len(language_flavors) > 0 else ""}{",".join(language_flavors)}.png'
                     block = unidata_blocks.get_block_by_code_point(code_point)
                     block_dir_name = f'{block.code_start:04X}-{block.code_end:04X} {block.name}'
-                    glyph_file_to_dir = os.path.join(width_mode_tmp_dir, block_dir_name)
+                    glyph_file_to_dir = os.path.join(width_mode_dir, block_dir_name)
                     if block.code_start == 0x4E00:  # CJK Unified Ideographs
                         glyph_file_to_dir = os.path.join(glyph_file_to_dir, f'{hex_name[0:-2]}-')
                 glyph_file_to_path = os.path.join(glyph_file_to_dir, glyph_file_name)
-                assert not os.path.exists(glyph_file_to_path), f"Glyph file duplication: '{glyph_file_from_path}'"
-
                 glyph_data, glyph_width, glyph_height = glyph_util.load_glyph_data_from_png(glyph_file_from_path)
 
                 if width_mode_dir_name == 'common' or width_mode_dir_name == 'monospaced':
@@ -93,12 +88,19 @@ def format_glyph_files(font_config: FontConfig):
                             glyph_data.insert(0, [0 for _ in range(glyph_width)])
                             glyph_data.append([0 for _ in range(glyph_width)])
 
-                fs_util.make_dirs(glyph_file_to_dir)
+                if glyph_file_to_path != glyph_file_from_path:
+                    assert not os.path.exists(glyph_file_to_path), f"Glyph file duplication: '{glyph_file_from_path}'"
+                    fs_util.make_dirs(glyph_file_to_dir)
+                    os.remove(glyph_file_from_path)
                 glyph_util.save_glyph_data_to_png(glyph_data, glyph_file_to_path)
                 logger.info("Format glyph file: '%s'", glyph_file_to_path)
-        fs_util.delete_dir(width_mode_dir)
-        if os.path.exists(width_mode_tmp_dir):
-            os.rename(width_mode_tmp_dir, width_mode_dir)
+
+            entry_names = os.listdir(glyph_file_from_dir)
+            if '.DS_Store' in entry_names:
+                os.remove(os.path.join(glyph_file_from_dir, '.DS_Store'))
+                entry_names.remove('.DS_Store')
+            if len(entry_names) == 0:
+                os.rmdir(glyph_file_from_dir)
 
 
 class DesignContext:
