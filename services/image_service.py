@@ -114,7 +114,7 @@ def make_readme_banner():
 
     image_background = Image.open(os.path.join(path_define.images_dir, 'readme-banner-background.png'))
     image = Image.new('RGBA', (image_background.width, image_background.height), (0, 0, 0, 0))
-    _draw_text_background(image, alphabet, 12, box_size, font_x1, (200, 200, 200, 255))
+    _draw_text_background(image, alphabet, 50, box_size, font_x1, (200, 200, 200, 255))
     image.paste(image_background, mask=image_background)
     _draw_text(image, (image.width / 2, 28), '方舟像素字体', font_x2, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     _draw_text(image, (image.width / 2, 28 + font_config.line_height * 2 + 4), '★ 开源的泛中日韩像素字体 ★', font_x1, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
@@ -140,7 +140,7 @@ def make_github_banner():
 
     image_background = Image.open(os.path.join(path_define.images_dir, 'github-banner-background.png'))
     image = Image.new('RGBA', (image_background.width, image_background.height), (0, 0, 0, 0))
-    _draw_text_background(image, alphabet, 6, box_size, font_zh_cn, (200, 200, 200, 255))
+    _draw_text_background(image, alphabet, 12, box_size, font_zh_cn, (200, 200, 200, 255))
     image.paste(image_background, mask=image_background)
     _draw_text(image, (image.width / 2, 40 + font_config.line_height), '方舟像素字体 / Ark Pixel Font', font_title, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     _draw_text(image, (image.width / 2, 40 + font_config.line_height * 3), '★ 开源的泛中日韩像素字体 ★', font_zh_cn, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
@@ -170,7 +170,7 @@ def make_itch_io_banner():
 
     image_background = Image.open(os.path.join(path_define.images_dir, 'itch-io-banner-background.png'))
     image = Image.new('RGBA', (image_background.width, image_background.height), (0, 0, 0, 0))
-    _draw_text_background(image, alphabet, 12, box_size, font_x1, (200, 200, 200, 255))
+    _draw_text_background(image, alphabet, 38, box_size, font_x1, (200, 200, 200, 255))
     image.paste(image_background, mask=image_background)
     _draw_text(image, (image.width / 2, 32), '方舟像素字体 / Ark Pixel Font', font_x2, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     _draw_text(image, (image.width / 2, 32 + font_config.line_height * 2 + 4), '★ 开源的泛中日韩像素字体 ★', font_x1, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
@@ -189,7 +189,7 @@ def make_itch_io_background():
     box_size = 14
 
     image = Image.new('RGBA', (box_size * 50, box_size * 50), (0, 0, 0, 0))
-    _draw_text_background(image, alphabet, 2, box_size, font, (30, 30, 30, 255))
+    _draw_text_background(image, alphabet, 5, box_size, font, (30, 30, 30, 255))
     image = image.resize((image.width * 2, image.height * 2), Image.Resampling.NEAREST)
 
     fs_util.make_dirs(path_define.outputs_dir)
