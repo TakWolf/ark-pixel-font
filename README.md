@@ -5,17 +5,13 @@
 [![SIL Open Font License 1.1](https://img.shields.io/badge/license-OFL--1.1-orange)](https://scripts.sil.org/OFL)
 [![MIT License](https://img.shields.io/badge/license-MIT-green)](https://opensource.org/licenses/MIT)
 [![Releases](https://img.shields.io/github/v/release/TakWolf/ark-pixel-font)](https://github.com/TakWolf/ark-pixel-font/releases)
+[![itch.io](https://img.shields.io/badge/itch.io-ark--pixel--font-red?logo=itch.io&logoColor=white)](https://takwolf.itch.io/ark-pixel-font)
 [![Discord](https://img.shields.io/discord/949265373964947458?logo=discord&logoColor=white&label=discord)](https://discord.gg/3GKtPKtjdU)
 [![QQ Group](https://img.shields.io/badge/QQ群-302383204-brightgreen?logo=tencentqq)](https://jq.qq.com/?_wv=1027&k=EXtKGHar)
 
-开源的泛中日韩像素字体。支持 10、12 和 16 像素。目标是为游戏开发提供一套可用于正文的开箱即用的像素字体解决方案。
+开源的泛中日韩像素字体。支持 10、12 和 16 像素。
 
 这个项目不仅提供了全部的字形源文件，也提供了构建字体所需要的完整程序。
-
-- [主页](https://ark-pixel-font.takwolf.com)
-- [itch.io](https://takwolf.itch.io/ark-pixel-font)
-- [Discord](https://discord.gg/3GKtPKtjdU)
-- [QQ 群](https://jq.qq.com/?_wv=1027&k=EXtKGHar)
 
 ## 预览
 
@@ -105,15 +101,18 @@
 | ja | 日语 | 字形采用日本参考规范 [《常用汉字表》](https://zh.wikipedia.org/wiki/%E5%B8%B8%E7%94%A8%E6%BC%A2%E5%AD%97) 中的写法。 |
 | ko | 朝鲜语 | |
 
-## 下载和使用
+## 下载
 
-可在 [Releases](https://github.com/TakWolf/ark-pixel-font/releases) 下载最新的版本。
+可通过以下渠道下载最新的版本：
+
+- [GitHub Releases](https://github.com/TakWolf/ark-pixel-font/releases)
+- [itch.io](https://takwolf.itch.io/ark-pixel-font)
 
 目前提供 `.otf`、`.ttf`、`.woff2`、`.bdf` 四种单字体格式，以及 `.otc`、`.ttc` 两种集合字体格式。
 
-### macOS - Homebrew
+### Homebrew
 
-如果您使用 macOS 系统，也可以通过 [Homebrew](https://brew.sh) 来安装本字体。
+您也可以通过 [Homebrew](https://brew.sh) 来安装字体。
 
 通过下面的命令来添加下载源：
 
@@ -149,7 +148,7 @@ brew install font-ark-pixel-16px-proportional
 
 等待任务完成后，可在 `build/outputs` 目录下找到生成的字体文件。
 
-## 授权信息
+## 授权许可
 
 分为「字体」和「构建程序」两个部分。
 
@@ -160,6 +159,11 @@ brew install font-ark-pixel-16px-proportional
 ### 构建程序
 
 使用 [MIT 许可证](LICENSE-MIT) 授权。
+
+## 官方社区
+
+- [「像素字体工房」Discord 服务器](https://discord.gg/3GKtPKtjdU)
+- [「像素字体工房」QQ 群 (302383204)](https://jq.qq.com/?_wv=1027&k=EXtKGHar)
 
 ## 程序依赖
 
@@ -175,9 +179,10 @@ brew install font-ark-pixel-16px-proportional
 ## 外部工具
 
 - [Aseprite](https://github.com/aseprite/aseprite)
-- [SYMBL - 字符查询工具](https://symbl.cc)
+- [SYMBL - Unicode 查询工具](https://symbl.cc)
+- [字嗨 - 漢字部件檢索](https://zi-hi.com/sp/uni/CJKSeeker)
 - [字統网 - 字形檢字](https://zi.tools/?secondary=search)
-- [国学大师 - 汉字部件查字](http://www.guoxuedashi.net/zidian/bujian/)
+- [思源映射管理器](https://github.com/NightFurySL2001/shs-cid)
 
 ## 参考资料
 
