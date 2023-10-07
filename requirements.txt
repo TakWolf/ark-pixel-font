@@ -1,8 +1,8 @@
 pixel-font-builder==0.0.10
-unidata-blocks==0.0.6
+unidata-blocks==0.0.8
 character-encoding-utils==0.0.6
 pypng==0.20220715.0
-Pillow==10.0.0
+Pillow==10.0.1
 beautifulsoup4==4.12.2
 Jinja2==3.1.2
-GitPython==3.1.32
+GitPython==3.1.37
