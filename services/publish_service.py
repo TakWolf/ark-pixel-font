@@ -68,7 +68,7 @@ def update_www():
 def deploy_www():
     repo = git.Repo.init(path_define.www_dir)
     repo.git.add(all=True)
-    repo.git.commit(m=f'deployed at {datetime.datetime.utcnow().replace(tzinfo=datetime.timezone.utc).isoformat()}')
+    repo.git.commit(m=f'deployed at {datetime.datetime.now(datetime.UTC).isoformat()}')
     current_branch_name = repo.git.branch(show_current=True)
     for git_deploy_config in configs.git_deploy_configs:
         repo.git.remote('add', git_deploy_config.remote_name, git_deploy_config.url)
