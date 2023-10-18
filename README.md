@@ -129,6 +129,34 @@
 
 目前提供 `.otf`、`.ttf`、`.woff2`、`.bdf` 四种单字体格式，以及 `.otc`、`.ttc` 两种集合字体格式。
 
+### Arch User Repository
+
+您也可以通过 [AUR](https://aur.archlinux.org/) 来安装字体。一般而言，您首先需要一个 AUR 助手，下面假定您使用 [Yay](https://github.com/Jguer/yay)。
+
+您可以根据需要安装对应的字体：
+
+- 等宽模式
+
+```shell
+yay -S ark-pixel-font-10px-monospaced
+yay -S ark-pixel-font-12px-monospaced
+yay -S ark-pixel-font-16px-monospaced
+```
+
+- 比例模式
+
+```shell
+yay -S ark-pixel-font-10px-proportional
+yay -S ark-pixel-font-12px-proportional
+yay -S ark-pixel-font-16px-proportional
+```
+
+您也可以通过下面命令直接安装全部字体：
+
+```shell
+yay -S ark-pixel-font
+```
+
 ### Homebrew
 
 您也可以通过 [Homebrew](https://brew.sh) 来安装字体。
@@ -163,7 +191,10 @@ brew install font-ark-pixel-16px-proportional
 
 这是一个标准的 [Python3](https://www.python.org) 项目。
 
-当您配置好运行环境后，执行 `python ./build.py` 命令来开始构建。
+当您配置好运行环境后，执行 `python ./build.py` 命令来开始构建。该构建程序支持以下命令行参数：
+
+- `--parallel`：启用并行编译字体
+- `--log <LEVEL>`：设置日志等级，默认为 `DEBUG`
 
 等待任务完成后，可在 `build/outputs` 目录下找到生成的字体文件。
 
