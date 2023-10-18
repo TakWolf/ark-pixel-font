@@ -55,29 +55,30 @@ def format_glyph_files(font_config: FontConfig):
                 glyph_file_to_path = os.path.join(glyph_file_to_dir, glyph_file_name)
                 glyph_data, glyph_width, glyph_height = glyph_util.load_glyph_data_from_png(glyph_file_from_path)
 
+                err_prefix = f"Incorrect glyph data: '{glyph_file_from_path}' "
                 if width_mode_dir_name == 'common' or width_mode_dir_name == 'monospaced':
-                    assert glyph_height == font_config.size, f"Incorrect glyph data: '{glyph_file_from_path}'"
+                    assert glyph_height == font_config.size, err_prefix + f"(Glyph height should be {font_config.size})"
 
                     # H/Halfwidth or Na/Narrow
                     if east_asian_width == 'H' or east_asian_width == 'Na':
-                        assert glyph_width == font_config.size / 2, f"Incorrect glyph data: '{glyph_file_from_path}'"
+                        assert glyph_width == font_config.size / 2, err_prefix + f"(Glyph width should be {font_config.size / 2}"
                     # F/Fullwidth or W/Wide
                     elif east_asian_width == 'F' or east_asian_width == 'W':
-                        assert glyph_width == font_config.size, f"Incorrect glyph data: '{glyph_file_from_path}'"
+                        assert glyph_width == font_config.size, err_prefix + f"(Glyph width should be {font_config.size})"
                     # A/Ambiguous or N/Neutral
                     else:
-                        assert glyph_width == font_config.size / 2 or glyph_width == font_config.size, f"Incorrect glyph data: '{glyph_file_from_path}'"
+                        assert glyph_width == font_config.size / 2 or glyph_width == font_config.size, err_prefix + f"(Glyph width should be either {font_config.size} or {font_config.size / 2})"
 
                     if block is not None:
                         if block.code_start == 0x4E00:  # CJK Unified Ideographs
                             if any(alpha != 0 for alpha in glyph_data[0]):
-                                raise AssertionError(f"Incorrect glyph data: '{glyph_file_from_path}'")
+                                raise AssertionError(err_prefix + "(First row must be fully empty)")
                             if any(glyph_data[i][-1] != 0 for i in range(0, len(glyph_data))):
-                                raise AssertionError(f"Incorrect glyph data: '{glyph_file_from_path}'")
+                                raise AssertionError(err_prefix + "(Last column must be fully empty)")
 
                 if width_mode_dir_name == 'proportional':
-                    assert glyph_height >= font_config.size, f"Incorrect glyph data: '{glyph_file_from_path}'"
-                    assert (glyph_height - font_config.size) % 2 == 0, f"Incorrect glyph data: '{glyph_file_from_path}'"
+                    assert glyph_height >= font_config.size, err_prefix + f"(Glyph height should be at least {font_config.size})"
+                    assert (glyph_height - font_config.size) % 2 == 0, err_prefix
 
                     if glyph_height > font_config.line_height:
                         for i in range((glyph_height - font_config.line_height) // 2):
