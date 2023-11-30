@@ -223,14 +223,7 @@ def _create_builder(
         language_flavor: str,
         is_collection: bool,
 ) -> FontBuilder:
-    builder = FontBuilder()
-
-    metrics = font_config.get_metrics(width_mode)
-    builder.metrics.size = font_config.size
-    builder.metrics.ascent = metrics.ascent
-    builder.metrics.descent = metrics.descent
-    builder.metrics.x_height = metrics.x_height
-    builder.metrics.cap_height = metrics.cap_height
+    builder = FontBuilder(font_config.size)
 
     builder.meta_infos.version = FontConfig.VERSION
     builder.meta_infos.family_name = f'{FontConfig.FAMILY_NAME} {font_config.size}px {width_mode.capitalize()} {language_flavor}'
@@ -249,6 +242,12 @@ def _create_builder(
     if is_collection:
         builder.opentype_configs.cff_family_name = f'{FontConfig.FAMILY_NAME} {font_config.size}px {width_mode.capitalize()}'
 
+    horizontal_header = font_config.get_horizontal_header(width_mode)
+    builder.horizontal_header.ascent = horizontal_header.ascent
+    builder.horizontal_header.descent = horizontal_header.descent
+    builder.horizontal_header.x_height = horizontal_header.x_height
+    builder.horizontal_header.cap_height = horizontal_header.cap_height
+
     character_mapping = context.get_character_mapping(width_mode, language_flavor)
     builder.character_mapping.update(character_mapping)
 
@@ -258,7 +257,7 @@ def _create_builder(
             glyph = glyph_cacher[glyph_file_path]
         else:
             glyph_data, glyph_width, glyph_height = context.load_glyph_data(glyph_file_path)
-            offset_y = math.floor((metrics.ascent + metrics.descent - glyph_height) / 2)
+            offset_y = math.floor((horizontal_header.ascent + horizontal_header.descent - glyph_height) / 2)
             glyph = Glyph(
                 name=glyph_name,
                 advance_width=glyph_width,

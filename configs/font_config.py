@@ -7,7 +7,7 @@ import configs
 from configs import path_define
 
 
-class Metrics:
+class HorizontalHeader:
     def __init__(self, config_data: dict):
         self.ascent: int = config_data['ascent']
         self.descent: int = config_data['descent']
@@ -38,23 +38,23 @@ class FontConfig:
             config_data: dict = tomllib.load(file)['font']
 
         self.size: int = config_data['size']
-        assert self.size == size, f'Font config size not equals: expect {size} but actually {self.size}'
+        assert self.size == size, f'Font Config size not equals: expect {size} but actually {self.size}'
 
-        self._width_mode_to_metrics: dict[str, Metrics] = {}
+        self._width_mode_to_horizontal_header: dict[str, HorizontalHeader] = {}
         for width_mode in configs.width_modes:
-            metrics = Metrics(config_data[width_mode])
-            assert (metrics.line_height - self.size) % 2 == 0, f"Font metrics {self.size} {width_mode}: the difference between 'line_height' and 'size' must be a multiple of 2"
-            self._width_mode_to_metrics[width_mode] = metrics
+            horizontal_header = HorizontalHeader(config_data[width_mode])
+            assert (horizontal_header.line_height - self.size) % 2 == 0, f"Font Horizontal Header {self.size} {width_mode}: the difference between 'line_height' and 'size' must be a multiple of 2"
+            self._width_mode_to_horizontal_header[width_mode] = horizontal_header
 
         self.demo_html_file_name = f'demo-{self.size}px.html'
         self.preview_image_file_name = f'preview-{self.size}px.png'
 
     @property
     def line_height(self) -> int:
-        return self._width_mode_to_metrics['proportional'].line_height
+        return self._width_mode_to_horizontal_header['proportional'].line_height
 
-    def get_metrics(self, width_mode: str) -> Metrics:
-        return self._width_mode_to_metrics[width_mode]
+    def get_horizontal_header(self, width_mode: str) -> HorizontalHeader:
+        return self._width_mode_to_horizontal_header[width_mode]
 
     def get_font_file_name(self, width_mode: str, language_flavor: str, font_format: str) -> str:
         return f'{FontConfig.OUTPUTS_NAME}-{self.size}px-{width_mode}-{language_flavor}.{font_format}'
