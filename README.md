@@ -179,7 +179,6 @@ brew install font-ark-pixel-16px-proportional
 
 ## 外部工具
 
-- [Aseprite](https://github.com/aseprite/aseprite)
 - [SYMBL - Unicode 查询工具](https://symbl.cc)
 - [字嗨 - 漢字部件檢索](https://zi-hi.com/sp/uni/CJKSeeker)
 - [字統网 - 字形檢字](https://zi.tools/?secondary=search)
