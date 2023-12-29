@@ -74,10 +74,8 @@ def format_glyph_files(font_config: FontConfig):
 
                     if block is not None:
                         if block.code_start == 0x4E00:  # CJK Unified Ideographs
-                            if any(alpha != 0 for alpha in glyph_data[0]):
-                                raise AssertionError(f"Incorrect glyph data: '{file_from_path}'")
-                            if any(glyph_data[i][-1] != 0 for i in range(0, len(glyph_data))):
-                                raise AssertionError(f"Incorrect glyph data: '{file_from_path}'")
+                            assert all(alpha == 0 for alpha in glyph_data[0]), f"Incorrect glyph data: '{file_from_path}'"
+                            assert all(glyph_data[i][-1] == 0 for i in range(0, len(glyph_data))), f"Incorrect glyph data: '{file_from_path}'"
 
                 if width_mode_dir_name == 'proportional':
                     assert glyph_height >= font_config.size, f"Incorrect glyph data: '{file_from_path}'"
