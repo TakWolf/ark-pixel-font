@@ -14,9 +14,9 @@ from scripts.utils import fs_util, glyph_util
 logger = logging.getLogger('font-service')
 
 
-def _parse_glyph_file_name(glyph_file_name: str) -> tuple[int, list[str]]:
-    tokens = glyph_file_name.removesuffix('.png').split(' ')
-    assert 1 <= len(tokens) <= 2, f"Glyph file name '{glyph_file_name}': illegal format"
+def _parse_glyph_file_name(file_name: str) -> tuple[int, list[str]]:
+    tokens = file_name.removesuffix('.png').split(' ')
+    assert 1 <= len(tokens) <= 2, f"Glyph file name '{file_name}': illegal format"
     code_point = int(tokens[0], 16)
     language_flavors = []
     if len(tokens) == 2:
@@ -24,7 +24,7 @@ def _parse_glyph_file_name(glyph_file_name: str) -> tuple[int, list[str]]:
         for language_flavor in configs.language_flavors:
             if language_flavor in language_flavor_tokens:
                 language_flavors.append(language_flavor)
-        assert len(language_flavors) == len(language_flavor_tokens), f"Glyph file name '{glyph_file_name}': unknown language flavors"
+        assert len(language_flavors) == len(language_flavor_tokens), f"Glyph file name '{file_name}': unknown language flavors"
     return code_point, language_flavors
 
 
@@ -32,52 +32,52 @@ def format_glyph_files(font_config: FontConfig):
     root_dir = os.path.join(path_define.glyphs_dir, str(font_config.size))
     for width_mode_dir_name in configs.width_mode_dir_names:
         width_mode_dir = os.path.join(root_dir, width_mode_dir_name)
-        for glyph_file_from_dir, _, glyph_file_names in list(os.walk(width_mode_dir, topdown=False)):
-            for glyph_file_name in glyph_file_names:
-                if not glyph_file_name.endswith('.png'):
+        for file_from_dir, _, file_names in list(os.walk(width_mode_dir, topdown=False)):
+            for file_name in file_names:
+                if not file_name.endswith('.png'):
                     continue
-                glyph_file_from_path = os.path.join(glyph_file_from_dir, glyph_file_name)
-                if glyph_file_name == 'notdef.png':
+                file_from_path = os.path.join(file_from_dir, file_name)
+                if file_name == 'notdef.png':
                     east_asian_width = 'F'
                     block = None
-                    glyph_file_to_dir = width_mode_dir
+                    file_to_dir = width_mode_dir
                 else:
-                    code_point, language_flavors = _parse_glyph_file_name(glyph_file_name)
+                    code_point, language_flavors = _parse_glyph_file_name(file_name)
                     c = chr(code_point)
                     east_asian_width = unicodedata.east_asian_width(c)
                     hex_name = f'{code_point:04X}'
-                    glyph_file_name = f'{hex_name}{" " if len(language_flavors) > 0 else ""}{",".join(language_flavors)}.png'
+                    file_name = f'{hex_name}{" " if len(language_flavors) > 0 else ""}{",".join(language_flavors)}.png'
                     block = unidata_blocks.get_block_by_code_point(code_point)
                     block_dir_name = f'{block.code_start:04X}-{block.code_end:04X} {block.name}'
-                    glyph_file_to_dir = os.path.join(width_mode_dir, block_dir_name)
+                    file_to_dir = os.path.join(width_mode_dir, block_dir_name)
                     if block.code_start == 0x4E00:  # CJK Unified Ideographs
-                        glyph_file_to_dir = os.path.join(glyph_file_to_dir, f'{hex_name[0:-2]}-')
-                glyph_file_to_path = os.path.join(glyph_file_to_dir, glyph_file_name)
-                glyph_data, glyph_width, glyph_height = glyph_util.load_glyph_data_from_png(glyph_file_from_path)
+                        file_to_dir = os.path.join(file_to_dir, f'{hex_name[0:-2]}-')
+                file_to_path = os.path.join(file_to_dir, file_name)
+                glyph_data, glyph_width, glyph_height = glyph_util.load_glyph_data_from_png(file_from_path)
 
                 if width_mode_dir_name == 'common' or width_mode_dir_name == 'monospaced':
-                    assert glyph_height == font_config.size, f"Incorrect glyph data: '{glyph_file_from_path}'"
+                    assert glyph_height == font_config.size, f"Incorrect glyph data: '{file_from_path}'"
 
                     # H/Halfwidth or Na/Narrow
                     if east_asian_width == 'H' or east_asian_width == 'Na':
-                        assert glyph_width == font_config.size / 2, f"Incorrect glyph data: '{glyph_file_from_path}'"
+                        assert glyph_width == font_config.size / 2, f"Incorrect glyph data: '{file_from_path}'"
                     # F/Fullwidth or W/Wide
                     elif east_asian_width == 'F' or east_asian_width == 'W':
-                        assert glyph_width == font_config.size, f"Incorrect glyph data: '{glyph_file_from_path}'"
+                        assert glyph_width == font_config.size, f"Incorrect glyph data: '{file_from_path}'"
                     # A/Ambiguous or N/Neutral
                     else:
-                        assert glyph_width == font_config.size / 2 or glyph_width == font_config.size, f"Incorrect glyph data: '{glyph_file_from_path}'"
+                        assert glyph_width == font_config.size / 2 or glyph_width == font_config.size, f"Incorrect glyph data: '{file_from_path}'"
 
                     if block is not None:
                         if block.code_start == 0x4E00:  # CJK Unified Ideographs
                             if any(alpha != 0 for alpha in glyph_data[0]):
-                                raise AssertionError(f"Incorrect glyph data: '{glyph_file_from_path}'")
+                                raise AssertionError(f"Incorrect glyph data: '{file_from_path}'")
                             if any(glyph_data[i][-1] != 0 for i in range(0, len(glyph_data))):
-                                raise AssertionError(f"Incorrect glyph data: '{glyph_file_from_path}'")
+                                raise AssertionError(f"Incorrect glyph data: '{file_from_path}'")
 
                 if width_mode_dir_name == 'proportional':
-                    assert glyph_height >= font_config.size, f"Incorrect glyph data: '{glyph_file_from_path}'"
-                    assert (glyph_height - font_config.size) % 2 == 0, f"Incorrect glyph data: '{glyph_file_from_path}'"
+                    assert glyph_height >= font_config.size, f"Incorrect glyph data: '{file_from_path}'"
+                    assert (glyph_height - font_config.size) % 2 == 0, f"Incorrect glyph data: '{file_from_path}'"
 
                     if glyph_height > font_config.line_height:
                         for i in range((glyph_height - font_config.line_height) // 2):
@@ -88,19 +88,19 @@ def format_glyph_files(font_config: FontConfig):
                             glyph_data.insert(0, [0 for _ in range(glyph_width)])
                             glyph_data.append([0 for _ in range(glyph_width)])
 
-                if glyph_file_to_path != glyph_file_from_path:
-                    assert not os.path.exists(glyph_file_to_path), f"Glyph file duplication: '{glyph_file_from_path}'"
-                    fs_util.make_dirs(glyph_file_to_dir)
-                    os.remove(glyph_file_from_path)
-                glyph_util.save_glyph_data_to_png(glyph_data, glyph_file_to_path)
-                logger.info("Format glyph file: '%s'", glyph_file_to_path)
+                if file_to_path != file_from_path:
+                    assert not os.path.exists(file_to_path), f"Glyph file duplication: '{file_from_path}'"
+                    fs_util.make_dirs(file_to_dir)
+                    os.remove(file_from_path)
+                glyph_util.save_glyph_data_to_png(glyph_data, file_to_path)
+                logger.info("Format glyph file: '%s'", file_to_path)
 
-            entry_names = os.listdir(glyph_file_from_dir)
+            entry_names = os.listdir(file_from_dir)
             if '.DS_Store' in entry_names:
-                os.remove(os.path.join(glyph_file_from_dir, '.DS_Store'))
+                os.remove(os.path.join(file_from_dir, '.DS_Store'))
                 entry_names.remove('.DS_Store')
             if len(entry_names) == 0:
-                os.rmdir(glyph_file_from_dir)
+                os.rmdir(file_from_dir)
 
 
 class DesignContext:
@@ -166,13 +166,13 @@ class DesignContext:
             self._glyph_file_infos_cacher[cache_name] = glyph_file_infos
         return glyph_file_infos
 
-    def load_glyph_data(self, glyph_file_path: str) -> tuple[list[list[int]], int, int]:
-        if glyph_file_path in self._glyph_data_cacher:
-            glyph_data, glyph_width, glyph_height = self._glyph_data_cacher[glyph_file_path]
+    def load_glyph_data(self, file_path: str) -> tuple[list[list[int]], int, int]:
+        if file_path in self._glyph_data_cacher:
+            glyph_data, glyph_width, glyph_height = self._glyph_data_cacher[file_path]
         else:
-            glyph_data, glyph_width, glyph_height = glyph_util.load_glyph_data_from_png(glyph_file_path)
-            self._glyph_data_cacher[glyph_file_path] = glyph_data, glyph_width, glyph_height
-            logger.info("Load glyph file: '%s'", glyph_file_path)
+            glyph_data, glyph_width, glyph_height = glyph_util.load_glyph_data_from_png(file_path)
+            self._glyph_data_cacher[file_path] = glyph_data, glyph_width, glyph_height
+            logger.info("Load glyph file: '%s'", file_path)
         return glyph_data, glyph_width, glyph_height
 
 
@@ -183,17 +183,17 @@ def collect_glyph_files(font_config: FontConfig) -> DesignContext:
     for width_mode_dir_name in configs.width_mode_dir_names:
         cellar[width_mode_dir_name] = {}
         width_mode_dir = os.path.join(root_dir, width_mode_dir_name)
-        for glyph_file_dir, _, glyph_file_names in os.walk(width_mode_dir):
-            for glyph_file_name in glyph_file_names:
-                if not glyph_file_name.endswith('.png'):
+        for file_dir, _, file_names in os.walk(width_mode_dir):
+            for file_name in file_names:
+                if not file_name.endswith('.png'):
                     continue
-                glyph_file_path = os.path.join(glyph_file_dir, glyph_file_name)
-                if glyph_file_name == 'notdef.png':
+                file_path = os.path.join(file_dir, file_name)
+                if file_name == 'notdef.png':
                     code_point = -1
                     language_flavors = []
                     glyph_name = '.notdef'
                 else:
-                    code_point, language_flavors = _parse_glyph_file_name(glyph_file_name)
+                    code_point, language_flavors = _parse_glyph_file_name(file_name)
                     glyph_name = f'uni{code_point:04X}'
                 if code_point not in cellar[width_mode_dir_name]:
                     cellar[width_mode_dir_name][code_point] = {}
@@ -203,7 +203,7 @@ def collect_glyph_files(font_config: FontConfig) -> DesignContext:
                     language_flavors.append('default')
                 for language_flavor in language_flavors:
                     assert language_flavor not in cellar[width_mode_dir_name][code_point], f"Glyph flavor already exists: '{code_point:04X}' '{width_mode_dir_name}.{language_flavor}'"
-                    cellar[width_mode_dir_name][code_point][language_flavor] = glyph_name, glyph_file_path
+                    cellar[width_mode_dir_name][code_point][language_flavor] = glyph_name, file_path
         for code_point, glyph_source in cellar[width_mode_dir_name].items():
             assert 'default' in glyph_source, f"Glyph miss default flavor: '{code_point:04X}' '{width_mode_dir_name}'"
 
@@ -257,11 +257,11 @@ def _create_builder(
     builder.character_mapping.update(character_mapping)
 
     glyph_file_infos = context.get_glyph_file_infos(width_mode, None if is_collection else language_flavor)
-    for glyph_name, glyph_file_path in glyph_file_infos:
-        if glyph_file_path in glyph_cacher:
-            glyph = glyph_cacher[glyph_file_path]
+    for glyph_name, file_path in glyph_file_infos:
+        if file_path in glyph_cacher:
+            glyph = glyph_cacher[file_path]
         else:
-            glyph_data, glyph_width, glyph_height = context.load_glyph_data(glyph_file_path)
+            glyph_data, glyph_width, glyph_height = context.load_glyph_data(file_path)
             horizontal_origin_y = math.floor((layout_params.ascent + layout_params.descent - glyph_height) / 2)
             vertical_origin_y = (glyph_height - font_config.size) // 2
             glyph = Glyph(
@@ -272,7 +272,7 @@ def _create_builder(
                 vertical_origin_y=vertical_origin_y,
                 data=glyph_data,
             )
-            glyph_cacher[glyph_file_path] = glyph
+            glyph_cacher[file_path] = glyph
         builder.glyphs.append(glyph)
 
     return builder
