@@ -30,8 +30,12 @@ def _parse_glyph_file_name(file_name: str) -> tuple[int, list[str]]:
 
 def format_glyph_files(font_config: FontConfig):
     root_dir = os.path.join(path_define.glyphs_dir, str(font_config.size))
-    for width_mode_dir_name in configs.width_mode_dir_names:
+    for width_mode_dir_name in os.listdir(root_dir):
         width_mode_dir = os.path.join(root_dir, width_mode_dir_name)
+        if not os.path.isdir(width_mode_dir):
+            continue
+        assert width_mode_dir_name == 'common' or width_mode_dir_name in configs.width_modes, f"Width mode '{width_mode_dir}' undefined: '{width_mode_dir}'"
+
         for file_from_dir, _, file_names in list(os.walk(width_mode_dir, topdown=False)):
             for file_name in file_names:
                 if not file_name.endswith('.png'):
@@ -177,10 +181,14 @@ class DesignContext:
 
 
 def collect_glyph_files(font_config: FontConfig) -> DesignContext:
-    root_dir = os.path.join(path_define.glyphs_dir, str(font_config.size))
-
     cellar = {}
-    for width_mode_dir_name in configs.width_mode_dir_names:
+    root_dir = os.path.join(path_define.glyphs_dir, str(font_config.size))
+    for width_mode_dir_name in os.listdir(root_dir):
+        width_mode_dir = os.path.join(root_dir, width_mode_dir_name)
+        if not os.path.isdir(width_mode_dir):
+            continue
+        assert width_mode_dir_name == 'common' or width_mode_dir_name in configs.width_modes, f"Width mode '{width_mode_dir}' undefined: '{width_mode_dir}'"
+
         cellar[width_mode_dir_name] = {}
         width_mode_dir = os.path.join(root_dir, width_mode_dir_name)
         for file_dir, _, file_names in os.walk(width_mode_dir):
