@@ -1,7 +1,11 @@
+import os
+
 import png
 
 
-def load_glyph_data_from_png(file_path: str) -> tuple[list[list[int]], int, int]:
+def load_glyph_data_from_png(
+        file_path: str | bytes | os.PathLike[str] | os.PathLike[bytes],
+) -> tuple[list[list[int]], int, int]:
     width, height, bitmap, _ = png.Reader(filename=file_path).read()
     data = []
     for bitmap_row in bitmap:
@@ -16,7 +20,10 @@ def load_glyph_data_from_png(file_path: str) -> tuple[list[list[int]], int, int]
     return data, width, height
 
 
-def save_glyph_data_to_png(data: list[list[int]], file_path: str):
+def save_glyph_data_to_png(
+        data: list[list[int]],
+        file_path: str | bytes | os.PathLike[str] | os.PathLike[bytes],
+):
     bitmap = []
     for data_row in data:
         bitmap_row = []
