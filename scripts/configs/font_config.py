@@ -3,8 +3,8 @@ import os
 import tomllib
 from typing import Final
 
-import configs
-from configs import path_define
+from scripts import configs
+from scripts.configs import path_define
 
 
 class LayoutParams:

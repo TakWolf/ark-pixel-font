@@ -1,13 +1,13 @@
 import logging
 
-import configs
-from services import font_service, info_service
+from scripts import configs
+from scripts.services import font_service, info_service
 
 logging.basicConfig(level=logging.DEBUG)
 
 
 def main():
-    font_config = configs.font_size_to_config[10]
+    font_config = configs.font_size_to_config[12]
     font_service.format_glyph_files(font_config)
     context = font_service.collect_glyph_files(font_config)
     for width_mode in configs.width_modes:

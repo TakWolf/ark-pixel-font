@@ -1,7 +1,7 @@
 import logging
 
-import configs
-from services import font_service
+from scripts import configs
+from scripts.services import font_service
 
 logging.basicConfig(level=logging.DEBUG)
 

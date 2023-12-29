@@ -4,10 +4,10 @@ import os
 import bs4
 from jinja2 import Environment, FileSystemLoader
 
-import configs
-from configs import path_define, FontConfig
-from services.font_service import DesignContext
-from utils import fs_util
+from scripts import configs
+from scripts.configs import path_define, FontConfig
+from scripts.services.font_service import DesignContext
+from scripts.utils import fs_util
 
 logger = logging.getLogger('template-service')
 

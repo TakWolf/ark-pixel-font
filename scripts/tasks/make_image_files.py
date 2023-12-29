@@ -1,7 +1,7 @@
 import logging
 
-import configs
-from services import image_service
+from scripts import configs
+from scripts.services import image_service
 
 logging.basicConfig(level=logging.DEBUG)
 

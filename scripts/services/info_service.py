@@ -7,9 +7,9 @@ import unidata_blocks
 from character_encoding_utils import gb2312, big5, shiftjis, ksx1001
 from unidata_blocks import UnicodeBlock
 
-from configs import path_define, FontConfig
-from services.font_service import DesignContext
-from utils import fs_util
+from scripts.configs import path_define, FontConfig
+from scripts.services.font_service import DesignContext
+from scripts.utils import fs_util
 
 logger = logging.getLogger('info-service')
 

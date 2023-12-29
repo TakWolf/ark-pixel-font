@@ -5,9 +5,9 @@ import os
 from PIL import Image, ImageFont, ImageDraw
 from PIL.ImageFont import FreeTypeFont
 
-import configs
-from configs import path_define, FontConfig
-from utils import fs_util
+from scripts import configs
+from scripts.configs import path_define, FontConfig
+from scripts.utils import fs_util
 
 logger = logging.getLogger('image-service')
 
