@@ -1,5 +1,6 @@
 import logging
 import os
+from collections import defaultdict
 from collections.abc import Callable
 from typing import IO
 
@@ -15,72 +16,66 @@ logger = logging.getLogger('info-service')
 
 
 def _get_unicode_chr_count_infos(alphabet: set[str]) -> list[tuple[UnicodeBlock, int]]:
-    count_infos = {}
+    count_infos = defaultdict(int)
     for c in alphabet:
         code_point = ord(c)
         block = unidata_blocks.get_block_by_code_point(code_point)
         if not c.isprintable() and block.printable_count > 0:
             continue
-        count = count_infos.get(block.code_start, 0)
-        count += 1
-        count_infos[block.code_start] = count
+        count_infos[block.code_start] += 1
     code_starts = list(count_infos.keys())
     code_starts.sort()
     return [(unidata_blocks.get_block_by_code_point(code_start), count_infos[code_start]) for code_start in code_starts]
 
 
-def _get_locale_chr_count_infos(alphabet: set[str], query_category_func: Callable[[str], str | None]) -> dict[str, int]:
-    count_infos = {}
+def _get_locale_chr_count_infos(alphabet: set[str], query_category_func: Callable[[str], str | None]) -> defaultdict[str, int]:
+    count_infos = defaultdict(int)
     for c in alphabet:
         category = query_category_func(c)
         if category is not None:
-            category_count = count_infos.get(category, 0)
-            category_count += 1
-            count_infos[category] = category_count
-            total_count = count_infos.get('total', 0)
-            total_count += 1
-            count_infos['total'] = total_count
+            count_infos[category] += 1
+            count_infos['total'] += 1
     return count_infos
 
 
 def _get_gb2312_chr_count_infos(alphabet: set[str]) -> list[tuple[str, int, int]]:
     count_infos = _get_locale_chr_count_infos(alphabet, gb2312.query_category)
     return [
-        ('一级汉字', count_infos.get('level-1', 0), gb2312.get_level_1_count()),
-        ('二级汉字', count_infos.get('level-2', 0), gb2312.get_level_2_count()),
-        ('其他字符', count_infos.get('other', 0), gb2312.get_other_count()),
-        ('总计', count_infos.get('total', 0), gb2312.get_count()),
+        ('一级汉字', count_infos['level-1'], gb2312.get_level_1_count()),
+        ('二级汉字', count_infos['level-2'], gb2312.get_level_2_count()),
+        ('其他字符', count_infos['other'], gb2312.get_other_count()),
+        ('总计', count_infos['total'], gb2312.get_count()),
     ]
 
 
 def _get_big5_chr_count_infos(alphabet: set[str]) -> list[tuple[str, int, int]]:
     count_infos = _get_locale_chr_count_infos(alphabet, big5.query_category)
     return [
-        ('常用汉字', count_infos.get('level-1', 0), big5.get_level_1_count()),
-        ('次常用汉字', count_infos.get('level-2', 0), big5.get_level_2_count()),
-        ('其他字符', count_infos.get('other', 0), big5.get_other_count()),
-        ('总计', count_infos.get('total', 0), big5.get_count()),
+        ('常用汉字', count_infos['level-1'], big5.get_level_1_count()),
+        ('次常用汉字', count_infos['level-2'], big5.get_level_2_count()),
+        ('其他字符', count_infos['other'], big5.get_other_count()),
+        ('总计', count_infos['total'], big5.get_count()),
     ]
 
 
 def _get_shiftjis_chr_count_infos(alphabet: set[str]) -> list[tuple[str, int, int]]:
     count_infos = _get_locale_chr_count_infos(alphabet, shiftjis.query_category)
     return [
-        ('单字节-ASCII可打印字符', count_infos.get('single-byte-ascii-printable', 0), shiftjis.get_single_byte_ascii_printable_count()),
-        ('单字节-半角片假名', count_infos.get('single-byte-half-width-katakana', 0), shiftjis.get_single_byte_half_width_katakana_count()),
-        ('双字节-其他字符', count_infos.get('double-byte-other', 0), shiftjis.get_double_byte_other_count()),
-        ('双字节-汉字', count_infos.get('double-byte-kanji', 0), shiftjis.get_double_byte_kanji_count()),
-        ('总计', count_infos.get('total', 0) - count_infos.get('single-byte-ascii-control', 0), shiftjis.get_count() - shiftjis.get_single_byte_ascii_control_count()),
+        ('单字节-ASCII可打印字符', count_infos['single-byte-ascii-printable'], shiftjis.get_single_byte_ascii_printable_count()),
+        ('单字节-半角片假名', count_infos['single-byte-half-width-katakana'], shiftjis.get_single_byte_half_width_katakana_count()),
+        ('双字节-其他字符', count_infos['double-byte-other'], shiftjis.get_double_byte_other_count()),
+        ('双字节-汉字', count_infos['double-byte-kanji'], shiftjis.get_double_byte_kanji_count()),
+        ('总计', count_infos['total'] - count_infos['single-byte-ascii-control'], shiftjis.get_count() - shiftjis.get_single_byte_ascii_control_count()),
     ]
 
 
 def _get_ksx1001_chr_count_infos(alphabet: set[str]) -> list[tuple[str, int, int]]:
     count_infos = _get_locale_chr_count_infos(alphabet, ksx1001.query_category)
     return [
-        ('谚文音节', count_infos.get('syllable', 0), ksx1001.get_syllable_count()),
-        ('汉字', count_infos.get('hanja', 0), ksx1001.get_hanja_count()),
-        ('其他字符', count_infos.get('other', 0), ksx1001.get_other_count()),
-        ('总计', count_infos.get('total', 0), ksx1001.get_count()),
+        ('谚文音节', count_infos['syllable'], ksx1001.get_syllable_count()),
+        ('汉字', count_infos['hanja'], ksx1001.get_hanja_count()),
+        ('其他字符', count_infos['other'], ksx1001.get_other_count()),
+        ('总计', count_infos['total'], ksx1001.get_count()),
     ]
 
 
