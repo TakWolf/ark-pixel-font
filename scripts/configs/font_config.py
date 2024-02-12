@@ -30,7 +30,7 @@ class FontConfig:
     LICENSE_INFO: Final[str] = 'This Font Software is licensed under the SIL Open Font License, Version 1.1.'
     VENDOR_URL: Final[str] = 'https://ark-pixel-font.takwolf.com'
     DESIGNER_URL: Final[str] = 'https://takwolf.com'
-    LICENSE_URL: Final[str] = 'https://scripts.sil.org/OFL'
+    LICENSE_URL: Final[str] = 'https://openfontlicense.org'
 
     def __init__(self, size: int):
         config_file_path = os.path.join(path_define.glyphs_dir, str(size), 'config.toml')
