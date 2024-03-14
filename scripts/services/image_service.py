@@ -97,7 +97,7 @@ def make_preview_image_file(font_config: FontConfig):
     _draw_text(image, (font_config.size, font_config.size + font_config.line_height * 8), '★☆☺☹♠♡♢♣♤♥♦♧☀☼♩♪♫♬☂☁⚓✈⚔☯', font_latin)
     image = image.resize((image.width * 2, image.height * 2), Image.Resampling.NEAREST)
 
-    fs_util.make_dirs(path_define.outputs_dir)
+    fs_util.make_dir(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, font_config.preview_image_file_name)
     image.save(file_path)
     logger.info("Make preview image file: '%s'", file_path)
@@ -120,7 +120,7 @@ def make_readme_banner():
     _draw_text(image, (image.width / 2, 28 + font_config.line_height * 2 + 4), '★ 开源的泛中日韩像素字体 ★', font_x1, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     image = image.resize((image.width * 2, image.height * 2), Image.Resampling.NEAREST)
 
-    fs_util.make_dirs(path_define.outputs_dir)
+    fs_util.make_dir(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, 'readme-banner.png')
     image.save(file_path)
     logger.info("Make readme banner: '%s'", file_path)
@@ -153,7 +153,7 @@ def make_github_banner():
     _draw_text(image, (image.width / 2, 40 + font_config.line_height * 11), '★☆☺☹♠♡♢♣♤♥♦♧☀☼♩♪♫♬☂☁⚓✈⚔☯', font_latin, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     image = image.resize((image.width * 2, image.height * 2), Image.Resampling.NEAREST)
 
-    fs_util.make_dirs(path_define.outputs_dir)
+    fs_util.make_dir(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, 'github-banner.png')
     image.save(file_path)
     logger.info("Make github banner: '%s'", file_path)
@@ -176,7 +176,7 @@ def make_itch_io_banner():
     _draw_text(image, (image.width / 2, 32 + font_config.line_height * 2 + 4), '★ 开源的泛中日韩像素字体 ★', font_x1, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     image = image.resize((image.width * 2, image.height * 2), Image.Resampling.NEAREST)
 
-    fs_util.make_dirs(path_define.outputs_dir)
+    fs_util.make_dir(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, 'itch-io-banner.png')
     image.save(file_path)
     logger.info("Make itch.io banner: '%s'", file_path)
@@ -192,7 +192,7 @@ def make_itch_io_background():
     _draw_text_background(image, alphabet, 5, box_size, font, (30, 30, 30, 255))
     image = image.resize((image.width * 2, image.height * 2), Image.Resampling.NEAREST)
 
-    fs_util.make_dirs(path_define.outputs_dir)
+    fs_util.make_dir(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, 'itch-io-background.png')
     image.save(file_path)
     logger.info("Make itch.io background: '%s'", file_path)
@@ -222,7 +222,7 @@ def make_itch_io_cover():
     _draw_text(image, (image.width / 2, 6 + font_config.line_height * 12), '☀☼♩♪♫♬☂☁⚓✈⚔☯', font_latin, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     image = image.resize((image.width * 2, image.height * 2), Image.Resampling.NEAREST)
 
-    fs_util.make_dirs(path_define.outputs_dir)
+    fs_util.make_dir(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, 'itch-io-cover.png')
     image.save(file_path)
     logger.info("Make itch.io cover: '%s'", file_path)
@@ -253,7 +253,7 @@ def make_afdian_cover():
     _draw_text(image, (image.width / 2, 18 + font_config.line_height * 14), '☀☼♩♪♫♬☂☁⚓✈⚔☯', font_latin, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     image = image.resize((image.width * 2, image.height * 2), Image.Resampling.NEAREST)
 
-    fs_util.make_dirs(path_define.outputs_dir)
+    fs_util.make_dir(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, 'afdian-cover.png')
     image.save(file_path)
     logger.info("Make afdian cover: '%s'", file_path)

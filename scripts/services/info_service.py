@@ -105,7 +105,7 @@ def _write_locale_chr_count_infos_table(file: IO, infos: list[tuple[str, int, in
 
 def make_info_file(font_config: FontConfig, context: DesignContext, width_mode: str):
     alphabet = context.get_alphabet(width_mode)
-    fs_util.make_dirs(path_define.outputs_dir)
+    fs_util.make_dir(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, font_config.get_info_file_name(width_mode))
     with open(file_path, 'w', encoding='utf-8') as file:
         file.write(f'# {FontConfig.FAMILY_NAME} {font_config.size}px {"等宽模式" if width_mode == "monospaced" else "比例模式"}\n')
@@ -152,7 +152,7 @@ def make_info_file(font_config: FontConfig, context: DesignContext, width_mode: 
 def make_alphabet_txt_file(font_config: FontConfig, context: DesignContext, width_mode: str):
     alphabet = list(context.get_alphabet(width_mode))
     alphabet.sort()
-    fs_util.make_dirs(path_define.outputs_dir)
+    fs_util.make_dir(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, font_config.get_alphabet_txt_file_name(width_mode))
     with open(file_path, 'w', encoding='utf-8') as file:
         file.write(''.join(alphabet))

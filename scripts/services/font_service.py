@@ -92,7 +92,7 @@ def format_glyph_files(font_config: FontConfig):
 
                 if file_path_to != file_path_from:
                     assert not os.path.exists(file_path_to), f"Glyph file duplication: '{file_path_from}'"
-                    fs_util.make_dirs(file_dir_to)
+                    fs_util.make_dir(file_dir_to)
                     os.remove(file_path_from)
                 glyph_util.save_glyph_data_to_png(glyph_data, file_path_to)
                 logger.info("Format glyph file: '%s'", file_path_to)
@@ -296,7 +296,7 @@ def make_font_files(
     if font_collection_formats is None:
         font_collection_formats = configs.font_collection_formats
 
-    fs_util.make_dirs(path_define.outputs_dir)
+    fs_util.make_dir(path_define.outputs_dir)
 
     glyph_cacher = {}
 

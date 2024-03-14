@@ -28,7 +28,7 @@ def make_alphabet_html_file(font_config: FontConfig, context: DesignContext, wid
         width_mode=width_mode,
         alphabet=''.join(alphabet),
     )
-    fs_util.make_dirs(path_define.outputs_dir)
+    fs_util.make_dir(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, font_config.get_alphabet_html_file_name(width_mode))
     with open(file_path, 'w', encoding='utf-8') as file:
         file.write(html)
@@ -108,7 +108,7 @@ def make_demo_html_file(font_config: FontConfig, context: DesignContext):
         font_config=font_config,
         content_html=content_html,
     )
-    fs_util.make_dirs(path_define.outputs_dir)
+    fs_util.make_dir(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, font_config.demo_html_file_name)
     with open(file_path, 'w', encoding='utf-8') as file:
         file.write(html)
@@ -118,7 +118,7 @@ def make_demo_html_file(font_config: FontConfig, context: DesignContext):
 def make_index_html_file():
     template = _environment.get_template('index.html')
     html = template.render(configs=configs)
-    fs_util.make_dirs(path_define.outputs_dir)
+    fs_util.make_dir(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, 'index.html')
     with open(file_path, 'w', encoding='utf-8') as file:
         file.write(html)
@@ -128,7 +128,7 @@ def make_index_html_file():
 def make_playground_html_file():
     template = _environment.get_template('playground.html')
     html = template.render(configs=configs)
-    fs_util.make_dirs(path_define.outputs_dir)
+    fs_util.make_dir(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, 'playground.html')
     with open(file_path, 'w', encoding='utf-8') as file:
         file.write(html)

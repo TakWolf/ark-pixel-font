@@ -14,7 +14,7 @@ logger = logging.getLogger('publish-service')
 
 
 def make_release_zips(font_config: FontConfig, width_mode: str):
-    fs_util.make_dirs(path_define.releases_dir)
+    fs_util.make_dir(path_define.releases_dir)
 
     for font_format in configs.font_formats:
         file_path = os.path.join(path_define.releases_dir, font_config.get_release_zip_file_name(width_mode, font_format))
@@ -44,7 +44,7 @@ def _copy_file(file_name: str, dir_from: str, dir_to: str):
 
 
 def update_docs():
-    fs_util.make_dirs(path_define.docs_dir)
+    fs_util.make_dir(path_define.docs_dir)
     _copy_file('readme-banner.png', path_define.outputs_dir, path_define.docs_dir)
     for font_config in configs.font_configs:
         _copy_file(font_config.preview_image_file_name, path_define.outputs_dir, path_define.docs_dir)
