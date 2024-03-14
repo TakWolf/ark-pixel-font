@@ -36,11 +36,11 @@ def make_release_zips(font_config: FontConfig, width_mode: str):
         logger.info("Make release zip: '%s'", file_path)
 
 
-def _copy_file(file_name: str, from_dir: str, to_dir: str):
-    from_path = os.path.join(from_dir, file_name)
-    to_path = os.path.join(to_dir, file_name)
-    shutil.copyfile(from_path, to_path)
-    logger.info("Copy from '%s' to '%s'", from_path, to_path)
+def _copy_file(file_name: str, dir_from: str, dir_to: str):
+    path_from = os.path.join(dir_from, file_name)
+    path_to = os.path.join(dir_to, file_name)
+    shutil.copyfile(path_from, path_to)
+    logger.info("Copy from '%s' to '%s'", path_from, path_to)
 
 
 def update_docs():

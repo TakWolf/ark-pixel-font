@@ -36,15 +36,15 @@ def format_glyph_files(font_config: FontConfig):
             continue
         assert width_mode_dir_name == 'common' or width_mode_dir_name in configs.width_modes, f"Width mode '{width_mode_dir}' undefined: '{width_mode_dir}'"
 
-        for file_from_dir, _, file_names in list(os.walk(width_mode_dir, topdown=False)):
+        for file_dir_from, _, file_names in list(os.walk(width_mode_dir, topdown=False)):
             for file_name in file_names:
                 if not file_name.endswith('.png'):
                     continue
-                file_from_path = os.path.join(file_from_dir, file_name)
+                file_path_from = os.path.join(file_dir_from, file_name)
                 if file_name == 'notdef.png':
                     east_asian_width = 'F'
                     block = None
-                    file_to_dir = width_mode_dir
+                    file_dir_to = width_mode_dir
                 else:
                     code_point, language_flavors = _parse_glyph_file_name(file_name)
                     c = chr(code_point)
@@ -53,33 +53,33 @@ def format_glyph_files(font_config: FontConfig):
                     file_name = f'{hex_name}{" " if len(language_flavors) > 0 else ""}{",".join(language_flavors)}.png'
                     block = unidata_blocks.get_block_by_code_point(code_point)
                     block_dir_name = f'{block.code_start:04X}-{block.code_end:04X} {block.name}'
-                    file_to_dir = os.path.join(width_mode_dir, block_dir_name)
+                    file_dir_to = os.path.join(width_mode_dir, block_dir_name)
                     if block.code_start == 0x4E00:  # CJK Unified Ideographs
-                        file_to_dir = os.path.join(file_to_dir, f'{hex_name[0:-2]}-')
-                file_to_path = os.path.join(file_to_dir, file_name)
-                glyph_data, glyph_width, glyph_height = glyph_util.load_glyph_data_from_png(file_from_path)
+                        file_dir_to = os.path.join(file_dir_to, f'{hex_name[0:-2]}-')
+                file_path_to = os.path.join(file_dir_to, file_name)
+                glyph_data, glyph_width, glyph_height = glyph_util.load_glyph_data_from_png(file_path_from)
 
                 if width_mode_dir_name == 'common' or width_mode_dir_name == 'monospaced':
-                    assert glyph_height == font_config.size, f"Incorrect glyph data: '{file_from_path}'"
+                    assert glyph_height == font_config.size, f"Incorrect glyph data: '{file_path_from}'"
 
                     # H/Halfwidth or Na/Narrow
                     if east_asian_width == 'H' or east_asian_width == 'Na':
-                        assert glyph_width == font_config.size / 2, f"Incorrect glyph data: '{file_from_path}'"
+                        assert glyph_width == font_config.size / 2, f"Incorrect glyph data: '{file_path_from}'"
                     # F/Fullwidth or W/Wide
                     elif east_asian_width == 'F' or east_asian_width == 'W':
-                        assert glyph_width == font_config.size, f"Incorrect glyph data: '{file_from_path}'"
+                        assert glyph_width == font_config.size, f"Incorrect glyph data: '{file_path_from}'"
                     # A/Ambiguous or N/Neutral
                     else:
-                        assert glyph_width == font_config.size / 2 or glyph_width == font_config.size, f"Incorrect glyph data: '{file_from_path}'"
+                        assert glyph_width == font_config.size / 2 or glyph_width == font_config.size, f"Incorrect glyph data: '{file_path_from}'"
 
                     if block is not None:
                         if block.code_start == 0x4E00:  # CJK Unified Ideographs
-                            assert all(alpha == 0 for alpha in glyph_data[0]), f"Incorrect glyph data: '{file_from_path}'"
-                            assert all(glyph_data[i][-1] == 0 for i in range(0, len(glyph_data))), f"Incorrect glyph data: '{file_from_path}'"
+                            assert all(alpha == 0 for alpha in glyph_data[0]), f"Incorrect glyph data: '{file_path_from}'"
+                            assert all(glyph_data[i][-1] == 0 for i in range(0, len(glyph_data))), f"Incorrect glyph data: '{file_path_from}'"
 
                 if width_mode_dir_name == 'proportional':
-                    assert glyph_height >= font_config.size, f"Incorrect glyph data: '{file_from_path}'"
-                    assert (glyph_height - font_config.size) % 2 == 0, f"Incorrect glyph data: '{file_from_path}'"
+                    assert glyph_height >= font_config.size, f"Incorrect glyph data: '{file_path_from}'"
+                    assert (glyph_height - font_config.size) % 2 == 0, f"Incorrect glyph data: '{file_path_from}'"
 
                     if glyph_height > font_config.line_height:
                         for i in range((glyph_height - font_config.line_height) // 2):
@@ -90,19 +90,19 @@ def format_glyph_files(font_config: FontConfig):
                             glyph_data.insert(0, [0 for _ in range(glyph_width)])
                             glyph_data.append([0 for _ in range(glyph_width)])
 
-                if file_to_path != file_from_path:
-                    assert not os.path.exists(file_to_path), f"Glyph file duplication: '{file_from_path}'"
-                    fs_util.make_dirs(file_to_dir)
-                    os.remove(file_from_path)
-                glyph_util.save_glyph_data_to_png(glyph_data, file_to_path)
-                logger.info("Format glyph file: '%s'", file_to_path)
+                if file_path_to != file_path_from:
+                    assert not os.path.exists(file_path_to), f"Glyph file duplication: '{file_path_from}'"
+                    fs_util.make_dirs(file_dir_to)
+                    os.remove(file_path_from)
+                glyph_util.save_glyph_data_to_png(glyph_data, file_path_to)
+                logger.info("Format glyph file: '%s'", file_path_to)
 
-            entry_names = os.listdir(file_from_dir)
+            entry_names = os.listdir(file_dir_from)
             if '.DS_Store' in entry_names:
-                os.remove(os.path.join(file_from_dir, '.DS_Store'))
+                os.remove(os.path.join(file_dir_from, '.DS_Store'))
                 entry_names.remove('.DS_Store')
             if len(entry_names) == 0:
-                os.rmdir(file_from_dir)
+                os.rmdir(file_dir_from)
 
 
 class DesignContext:
