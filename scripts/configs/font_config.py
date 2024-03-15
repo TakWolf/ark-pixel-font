@@ -7,7 +7,7 @@ from scripts import configs
 from scripts.configs import path_define
 
 
-class LayoutParams:
+class LayoutParam:
     def __init__(self, config_data: dict):
         self.ascent: int = config_data['ascent']
         self.descent: int = config_data['descent']
@@ -40,21 +40,21 @@ class FontConfig:
         self.size: int = config_data['size']
         assert self.size == size, f'Font Config size not equals: expect {size} but actually {self.size}'
 
-        self._width_mode_to_layout_params: dict[str, LayoutParams] = {}
+        self._width_mode_to_layout_param: dict[str, LayoutParam] = {}
         for width_mode in configs.width_modes:
-            layout_params = LayoutParams(config_data[width_mode])
-            assert (layout_params.line_height - self.size) % 2 == 0, f"Font Layout Params {self.size} {width_mode}: the difference between 'line_height' and 'size' must be a multiple of 2"
-            self._width_mode_to_layout_params[width_mode] = layout_params
+            layout_param = LayoutParam(config_data[width_mode])
+            assert (layout_param.line_height - self.size) % 2 == 0, f"Font Layout Params {self.size} {width_mode}: the difference between 'line_height' and 'size' must be a multiple of 2"
+            self._width_mode_to_layout_param[width_mode] = layout_param
 
         self.demo_html_file_name = f'demo-{self.size}px.html'
         self.preview_image_file_name = f'preview-{self.size}px.png'
 
     @property
     def line_height(self) -> int:
-        return self._width_mode_to_layout_params['proportional'].line_height
+        return self._width_mode_to_layout_param['proportional'].line_height
 
-    def get_layout_params(self, width_mode: str) -> LayoutParams:
-        return self._width_mode_to_layout_params[width_mode]
+    def get_layout_param(self, width_mode: str) -> LayoutParam:
+        return self._width_mode_to_layout_param[width_mode]
 
     def get_font_file_name(self, width_mode: str, language_flavor: str, font_format: str) -> str:
         return f'{FontConfig.OUTPUTS_NAME}-{self.size}px-{width_mode}-{language_flavor}.{font_format}'

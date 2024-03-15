@@ -248,16 +248,16 @@ def _create_builder(
     if is_collection:
         builder.opentype_config.cff_family_name = f'{FontConfig.FAMILY_NAME} {font_config.size}px {width_mode.capitalize()}'
 
-    layout_params = font_config.get_layout_params(width_mode)
+    layout_param = font_config.get_layout_param(width_mode)
 
-    builder.horizontal_header.ascent = layout_params.ascent
-    builder.horizontal_header.descent = layout_params.descent
+    builder.horizontal_header.ascent = layout_param.ascent
+    builder.horizontal_header.descent = layout_param.descent
 
-    builder.vertical_header.ascent = layout_params.ascent
-    builder.vertical_header.descent = layout_params.descent
+    builder.vertical_header.ascent = layout_param.ascent
+    builder.vertical_header.descent = layout_param.descent
 
-    builder.os2_config.x_height = layout_params.x_height
-    builder.os2_config.cap_height = layout_params.cap_height
+    builder.os2_config.x_height = layout_param.x_height
+    builder.os2_config.cap_height = layout_param.cap_height
 
     character_mapping = context.get_character_mapping(width_mode, language_flavor)
     builder.character_mapping.update(character_mapping)
@@ -268,7 +268,7 @@ def _create_builder(
             glyph = glyph_cacher[file_path]
         else:
             glyph_data, glyph_width, glyph_height = context.load_glyph_data(file_path)
-            horizontal_origin_y = math.floor((layout_params.ascent + layout_params.descent - glyph_height) / 2)
+            horizontal_origin_y = math.floor((layout_param.ascent + layout_param.descent - glyph_height) / 2)
             vertical_origin_y = (glyph_height - font_config.size) // 2
             glyph = Glyph(
                 name=glyph_name,
