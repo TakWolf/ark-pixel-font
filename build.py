@@ -1,11 +1,7 @@
-import logging
-
 from scripts import configs
 from scripts.configs import path_define
 from scripts.services import font_service, publish_service, info_service, template_service, image_service
 from scripts.utils import fs_util
-
-logging.basicConfig(level=logging.DEBUG)
 
 
 def main():

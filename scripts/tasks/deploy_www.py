@@ -1,8 +1,4 @@
-import logging
-
 from scripts.services import publish_service
-
-logging.basicConfig(level=logging.DEBUG)
 
 
 def main():

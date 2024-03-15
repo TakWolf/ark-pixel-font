@@ -1,9 +1,5 @@
-import logging
-
 from scripts import configs
 from scripts.services import image_service
-
-logging.basicConfig(level=logging.DEBUG)
 
 
 def main():

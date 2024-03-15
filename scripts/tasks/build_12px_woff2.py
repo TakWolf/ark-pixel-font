@@ -1,9 +1,5 @@
-import logging
-
 from scripts import configs
 from scripts.services import font_service, info_service
-
-logging.basicConfig(level=logging.DEBUG)
 
 
 def main():
