@@ -9,7 +9,7 @@ from scripts import configs
 from scripts.configs import path_define, FontConfig
 from scripts.utils import fs_util
 
-logger = logging.getLogger('image-service')
+logger = logging.getLogger('image_service')
 
 
 def _load_alphabet(font_config: FontConfig, width_mode: str) -> list[str]:

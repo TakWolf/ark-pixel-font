@@ -10,7 +10,7 @@ from scripts import configs
 from scripts.configs import path_define, FontConfig
 from scripts.utils import fs_util
 
-logger = logging.getLogger('publish-service')
+logger = logging.getLogger('publish_service')
 
 
 def make_release_zips(font_config: FontConfig, width_mode: str):
