@@ -5,7 +5,8 @@ from scripts.utils import fs_util
 
 
 def main():
-    fs_util.delete_dir(path_define.build_dir)
+    fs_util.delete_dir(path_define.outputs_dir)
+    fs_util.delete_dir(path_define.releases_dir)
 
     for font_config in configs.font_configs:
         font_service.format_glyph_files(font_config)
