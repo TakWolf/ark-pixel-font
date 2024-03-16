@@ -1,5 +1,6 @@
 import logging
 import os
+import random
 
 import bs4
 from jinja2 import Environment, FileSystemLoader
@@ -17,22 +18,34 @@ _environment = Environment(
     loader=FileSystemLoader(path_define.templates_dir),
 )
 
+_build_random_key = random.random()
+
+
+def _make_html_file(template_name: str, file_name: str, params: dict[str, object] = None):
+    params = {} if params is None else dict(params)
+    params['configs'] = {
+        'build_random_key': _build_random_key,
+        'width_modes': configs.width_modes,
+        'language_flavors': configs.language_flavors,
+        'locale_to_language_flavor': configs.locale_to_language_flavor,
+        'font_configs': configs.font_configs,
+        'font_size_to_config': configs.font_size_to_config,
+    }
+
+    html = _environment.get_template(template_name).render(params)
+
+    fs_util.make_dir(path_define.outputs_dir)
+    file_path = os.path.join(path_define.outputs_dir, file_name)
+    fs_util.write_str(html, file_path)
+    logger.info("Make html file: '%s'", file_path)
+
 
 def make_alphabet_html_file(font_config: FontConfig, context: DesignContext, width_mode: str):
-    alphabet = [c for c in context.get_alphabet(width_mode) if ord(c) >= 128]
-    alphabet.sort()
-
-    template = _environment.get_template('alphabet.html')
-    html = template.render(
-        configs=configs,
-        font_config=font_config,
-        width_mode=width_mode,
-        alphabet=''.join(alphabet),
-    )
-    fs_util.make_dir(path_define.outputs_dir)
-    file_path = os.path.join(path_define.outputs_dir, font_config.get_alphabet_html_file_name(width_mode))
-    fs_util.write_str(html, file_path)
-    logger.info("Make alphabet html file: '%s'", file_path)
+    _make_html_file('alphabet.html', font_config.get_alphabet_html_file_name(width_mode), {
+        'font_config': font_config,
+        'width_mode': width_mode,
+        'alphabet': ''.join(sorted([c for c in context.get_alphabet(width_mode) if ord(c) >= 128])),
+    })
 
 
 def _handle_demo_html_element(context: DesignContext, soup: bs4.BeautifulSoup, element: bs4.PageElement):
@@ -94,38 +107,21 @@ def _handle_demo_html_element(context: DesignContext, soup: bs4.BeautifulSoup, e
 
 
 def make_demo_html_file(font_config: FontConfig, context: DesignContext):
-    content_file_path = os.path.join(path_define.templates_dir, 'demo-content.html')
-    content_html = fs_util.read_str(content_file_path)
+    content_html = fs_util.read_str(os.path.join(path_define.templates_dir, 'demo-content.html'))
     content_html = ''.join(line.strip() for line in content_html.split('\n'))
     soup = bs4.BeautifulSoup(content_html, 'html.parser')
     _handle_demo_html_element(context, soup, soup)
     content_html = str(soup)
 
-    template = _environment.get_template('demo.html')
-    html = template.render(
-        configs=configs,
-        font_config=font_config,
-        content_html=content_html,
-    )
-    fs_util.make_dir(path_define.outputs_dir)
-    file_path = os.path.join(path_define.outputs_dir, font_config.demo_html_file_name)
-    fs_util.write_str(html, file_path)
-    logger.info("Make demo html file: '%s'", file_path)
+    _make_html_file('demo.html', font_config.demo_html_file_name, {
+        'font_config': font_config,
+        'content_html': content_html,
+    })
 
 
 def make_index_html_file():
-    template = _environment.get_template('index.html')
-    html = template.render(configs=configs)
-    fs_util.make_dir(path_define.outputs_dir)
-    file_path = os.path.join(path_define.outputs_dir, 'index.html')
-    fs_util.write_str(html, file_path)
-    logger.info("Make index html file: '%s'", file_path)
+    _make_html_file('index.html', 'index.html')
 
 
 def make_playground_html_file():
-    template = _environment.get_template('playground.html')
-    html = template.render(configs=configs)
-    fs_util.make_dir(path_define.outputs_dir)
-    file_path = os.path.join(path_define.outputs_dir, 'playground.html')
-    fs_util.write_str(html, file_path)
-    logger.info("Make playground html file: '%s'", file_path)
+    _make_html_file('playground.html', 'playground.html')
