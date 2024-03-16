@@ -14,8 +14,7 @@ logger = logging.getLogger('image-service')
 
 def _load_alphabet(font_config: FontConfig, width_mode: str) -> list[str]:
     file_path = os.path.join(path_define.outputs_dir, font_config.get_alphabet_txt_file_name(width_mode))
-    with open(file_path, 'r', encoding='utf-8') as file:
-        text = file.read()
+    text = fs_util.read_str(file_path)
     alphabet = list(text)
     alphabet.sort()
     return alphabet

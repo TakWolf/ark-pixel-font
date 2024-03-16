@@ -21,6 +21,7 @@ _environment = Environment(
 def make_alphabet_html_file(font_config: FontConfig, context: DesignContext, width_mode: str):
     alphabet = [c for c in context.get_alphabet(width_mode) if ord(c) >= 128]
     alphabet.sort()
+
     template = _environment.get_template('alphabet.html')
     html = template.render(
         configs=configs,
@@ -30,8 +31,7 @@ def make_alphabet_html_file(font_config: FontConfig, context: DesignContext, wid
     )
     fs_util.make_dir(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, font_config.get_alphabet_html_file_name(width_mode))
-    with open(file_path, 'w', encoding='utf-8') as file:
-        file.write(html)
+    fs_util.write_str(html, file_path)
     logger.info("Make alphabet html file: '%s'", file_path)
 
 
@@ -95,9 +95,8 @@ def _handle_demo_html_element(context: DesignContext, soup: bs4.BeautifulSoup, e
 
 def make_demo_html_file(font_config: FontConfig, context: DesignContext):
     content_file_path = os.path.join(path_define.templates_dir, 'demo-content.html')
-    with open(content_file_path, 'r', encoding='utf-8') as file:
-        content_html = file.read()
-        content_html = ''.join(line.strip() for line in content_html.split('\n'))
+    content_html = fs_util.read_str(content_file_path)
+    content_html = ''.join(line.strip() for line in content_html.split('\n'))
     soup = bs4.BeautifulSoup(content_html, 'html.parser')
     _handle_demo_html_element(context, soup, soup)
     content_html = str(soup)
@@ -110,8 +109,7 @@ def make_demo_html_file(font_config: FontConfig, context: DesignContext):
     )
     fs_util.make_dir(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, font_config.demo_html_file_name)
-    with open(file_path, 'w', encoding='utf-8') as file:
-        file.write(html)
+    fs_util.write_str(html, file_path)
     logger.info("Make demo html file: '%s'", file_path)
 
 
@@ -120,8 +118,7 @@ def make_index_html_file():
     html = template.render(configs=configs)
     fs_util.make_dir(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, 'index.html')
-    with open(file_path, 'w', encoding='utf-8') as file:
-        file.write(html)
+    fs_util.write_str(html, file_path)
     logger.info("Make index html file: '%s'", file_path)
 
 
@@ -130,6 +127,5 @@ def make_playground_html_file():
     html = template.render(configs=configs)
     fs_util.make_dir(path_define.outputs_dir)
     file_path = os.path.join(path_define.outputs_dir, 'playground.html')
-    with open(file_path, 'w', encoding='utf-8') as file:
-        file.write(html)
+    fs_util.write_str(html, file_path)
     logger.info("Make playground html file: '%s'", file_path)
