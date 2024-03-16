@@ -79,9 +79,9 @@ def _get_ksx1001_chr_count_infos(alphabet: set[str]) -> list[tuple[str, int, int
     ]
 
 
-def _write_unicode_chr_count_infos_table(file: IO, infos: list[tuple[UnicodeBlock, int]]):
-    file.write('| 区块范围 | 区块名称 | 区块含义 | 完成数 | 缺失数 | 进度 |\n')
-    file.write('|---|---|---|---:|---:|---:|\n')
+def _write_unicode_chr_count_infos_table(output: IO, infos: list[tuple[UnicodeBlock, int]]):
+    output.write('| 区块范围 | 区块名称 | 区块含义 | 完成数 | 缺失数 | 进度 |\n')
+    output.write('|---|---|---|---:|---:|---:|\n')
     for block, count in infos:
         code_point_range = f'{block.code_start:04X} ~ {block.code_end:04X}'
         name = block.name
@@ -90,17 +90,17 @@ def _write_unicode_chr_count_infos_table(file: IO, infos: list[tuple[UnicodeBloc
         missing = total - count if total > 0 else 0
         progress = count / total if total > 0 else 1
         finished_emoji = '🚩' if progress == 1 else '🚧'
-        file.write(f'| {code_point_range} | {name} | {name_zh} | {count} / {total} | {missing} | {progress:.2%} {finished_emoji} |\n')
+        output.write(f'| {code_point_range} | {name} | {name_zh} | {count} / {total} | {missing} | {progress:.2%} {finished_emoji} |\n')
 
 
-def _write_locale_chr_count_infos_table(file: IO, infos: list[tuple[str, int, int]]):
-    file.write('| 区块名称 | 完成数 | 缺失数 | 进度 |\n')
-    file.write('|---|---:|---:|---:|\n')
+def _write_locale_chr_count_infos_table(output: IO, infos: list[tuple[str, int, int]]):
+    output.write('| 区块名称 | 完成数 | 缺失数 | 进度 |\n')
+    output.write('|---|---:|---:|---:|\n')
     for name, count, total in infos:
         missing = total - count
         progress = count / total
         finished_emoji = '🚩' if progress == 1 else '🚧'
-        file.write(f'| {name} | {count} / {total} | {missing} | {progress:.2%} {finished_emoji} |\n')
+        output.write(f'| {name} | {count} / {total} | {missing} | {progress:.2%} {finished_emoji} |\n')
 
 
 def make_info_file(font_config: FontConfig, context: DesignContext, width_mode: str):
