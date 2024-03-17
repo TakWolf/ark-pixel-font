@@ -8,11 +8,11 @@ from scripts.utils import fs_util
 
 
 class LayoutParam:
-    def __init__(self, config_data: dict):
-        self.ascent: int = config_data['ascent']
-        self.descent: int = config_data['descent']
-        self.x_height: int = config_data['x_height']
-        self.cap_height: int = config_data['cap_height']
+    def __init__(self, ascent: int, descent: int, x_height: int, cap_height: int):
+        self.ascent = ascent
+        self.descent = descent
+        self.x_height = x_height
+        self.cap_height = cap_height
 
     @property
     def line_height(self) -> int:
@@ -32,28 +32,39 @@ class FontConfig:
     DESIGNER_URL: Final[str] = 'https://takwolf.com'
     LICENSE_URL: Final[str] = 'https://openfontlicense.org'
 
-    def __init__(self, size: int):
+    @staticmethod
+    def load_all() -> dict[int, 'FontConfig']:
+        return {font_size: FontConfig.load(font_size) for font_size in configs.font_sizes}
+
+    @staticmethod
+    def load(size: int) -> 'FontConfig':
         config_file_path = os.path.join(path_define.glyphs_dir, str(size), 'config.toml')
         config_data: dict = fs_util.read_toml(config_file_path)['font']
+        assert size == config_data['size'], f"Font Config size not equals: expect {size} but actually {config_data['size']}"
 
-        self.size: int = config_data['size']
-        assert self.size == size, f'Font Config size not equals: expect {size} but actually {self.size}'
-
-        self._width_mode_to_layout_param: dict[str, LayoutParam] = {}
+        layout_params = {}
         for width_mode in configs.width_modes:
-            layout_param = LayoutParam(config_data[width_mode])
-            assert (layout_param.line_height - self.size) % 2 == 0, f"Font Layout Params {self.size} {width_mode}: the difference between 'line_height' and 'size' must be a multiple of 2"
-            self._width_mode_to_layout_param[width_mode] = layout_param
+            layout_param = LayoutParam(
+                config_data[width_mode]['ascent'],
+                config_data[width_mode]['descent'],
+                config_data[width_mode]['x_height'],
+                config_data[width_mode]['cap_height'],
+            )
+            assert (layout_param.line_height - size) % 2 == 0, f"Font Layout Params {size} {width_mode}: the difference between 'line_height' and 'size' must be a multiple of 2"
+            layout_params[width_mode] = layout_param
 
-        self.demo_html_file_name = f'demo-{self.size}px.html'
-        self.preview_image_file_name = f'preview-{self.size}px.png'
+        return FontConfig(size, layout_params)
+
+    def __init__(self, size: int, layout_params: dict[str, LayoutParam]):
+        self.size = size
+        self.layout_params = layout_params
+
+        self.demo_html_file_name = f'demo-{size}px.html'
+        self.preview_image_file_name = f'preview-{size}px.png'
 
     @property
     def line_height(self) -> int:
-        return self._width_mode_to_layout_param['proportional'].line_height
-
-    def get_layout_param(self, width_mode: str) -> LayoutParam:
-        return self._width_mode_to_layout_param[width_mode]
+        return self.layout_params['proportional'].line_height
 
     def get_font_file_name(self, width_mode: str, language_flavor: str, font_format: str) -> str:
         return f'{FontConfig.OUTPUTS_NAME}-{self.size}px-{width_mode}-{language_flavor}.{font_format}'

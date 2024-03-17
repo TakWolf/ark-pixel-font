@@ -248,7 +248,7 @@ def _create_builder(
     if is_collection:
         builder.opentype_config.cff_family_name = f'{FontConfig.FAMILY_NAME} {font_config.size}px {width_mode.capitalize()}'
 
-    layout_param = font_config.get_layout_param(width_mode)
+    layout_param = font_config.layout_params[width_mode]
 
     builder.horizontal_header.ascent = layout_param.ascent
     builder.horizontal_header.descent = layout_param.descent
