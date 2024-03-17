@@ -33,8 +33,8 @@ font_collection_formats = ['otc', 'ttc']
 font_configs = [FontConfig(size) for size in [10, 12, 16]]
 font_size_to_config = {font_config.size: font_config for font_config in font_configs}
 
-git_deploy_configs = [GitDeployConfig(
+git_deploy_config = GitDeployConfig(
     url='git@github.com:TakWolf/ark-pixel-font.git',
     remote_name='github',
     branch_name='gh-pages',
-)]
+)
