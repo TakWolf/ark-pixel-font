@@ -26,12 +26,13 @@ locale_to_language_flavor = {
     'ko': 'ko',
 }
 
+font_sizes = [10, 12, 16]
+
+font_configs = {font_size: FontConfig(font_size) for font_size in font_sizes}
+
 font_formats = ['otf', 'woff2', 'ttf', 'bdf']
 
 font_collection_formats = ['otc', 'ttc']
-
-font_configs = [FontConfig(size) for size in [10, 12, 16]]
-font_size_to_config = {font_config.size: font_config for font_config in font_configs}
 
 git_deploy_config = GitDeployConfig(
     url='git@github.com:TakWolf/ark-pixel-font.git',

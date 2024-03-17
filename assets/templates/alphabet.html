@@ -21,7 +21,7 @@
         {% if font_config.size != 12 or width_mode != 'monospaced' %}
         @font-face {
             font-family: ark-pixel-12px-monospaced-latin;
-            src: url("{{ configs.font_size_to_config[12].get_font_file_name('monospaced', 'latin', 'woff2') }}?r={{ configs.build_random_key }}");
+            src: url("{{ configs.font_configs[12].get_font_file_name('monospaced', 'latin', 'woff2') }}?r={{ configs.build_random_key }}");
         }
         {% endif %}
         .options-group {

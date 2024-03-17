@@ -7,7 +7,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-        {% for font_config in configs.font_configs  %}
+        {% for font_config in configs.font_configs.values() %}
         {% for width_mode in configs.width_modes %}
         .font-{{ font_config.size }}px-{{ width_mode }} {
             font-size: {{ font_config.size * 2 }}px;
@@ -86,7 +86,7 @@
 {% block body %}
     <form class="toolbar">
         <div class="options-group">
-            {% for font_config in configs.font_configs %}
+            {% for font_config in configs.font_configs.values() %}
             <label class="option">
                 <input id="radio-font-size-{{ font_config.size }}" name="font_size" type="radio" onchange="onFontSizeChange('{{ font_config.size }}');">
                 <span></span>

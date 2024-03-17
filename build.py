@@ -8,7 +8,7 @@ def main():
     fs_util.delete_dir(path_define.outputs_dir)
     fs_util.delete_dir(path_define.releases_dir)
 
-    for font_config in configs.font_configs:
+    for font_config in configs.font_configs.values():
         font_service.format_glyph_files(font_config)
         context = font_service.collect_glyph_files(font_config)
         for width_mode in configs.width_modes:

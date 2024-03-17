@@ -39,7 +39,7 @@ def update_docs():
     fs_util.make_dir(path_define.docs_dir)
 
     fs_util.copy_the_file('readme-banner.png', path_define.outputs_dir, path_define.docs_dir)
-    for font_config in configs.font_configs:
+    for font_config in configs.font_configs.values():
         fs_util.copy_the_file(font_config.preview_image_file_name, path_define.outputs_dir, path_define.docs_dir)
         for width_mode in configs.width_modes:
             fs_util.copy_the_file(font_config.get_info_file_name(width_mode), path_define.outputs_dir, path_define.docs_dir)
@@ -57,7 +57,7 @@ def update_www():
 
     fs_util.copy_the_file('index.html', path_define.outputs_dir, path_define.www_dir)
     fs_util.copy_the_file('playground.html', path_define.outputs_dir, path_define.www_dir)
-    for font_config in configs.font_configs:
+    for font_config in configs.font_configs.values():
         fs_util.copy_the_file(font_config.demo_html_file_name, path_define.outputs_dir, path_define.www_dir)
         for width_mode in configs.width_modes:
             fs_util.copy_the_file(font_config.get_alphabet_html_file_name(width_mode), path_define.outputs_dir, path_define.www_dir)

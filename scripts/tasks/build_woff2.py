@@ -3,7 +3,7 @@ from scripts.services import font_service, info_service
 
 
 def main():
-    for font_config in configs.font_configs:
+    for font_config in configs.font_configs.values():
         font_service.format_glyph_files(font_config)
         context = font_service.collect_glyph_files(font_config)
         for width_mode in configs.width_modes:

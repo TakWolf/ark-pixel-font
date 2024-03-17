@@ -103,7 +103,7 @@ def make_preview_image_file(font_config: FontConfig):
 
 
 def make_readme_banner():
-    font_config = configs.font_size_to_config[12]
+    font_config = configs.font_configs[12]
     alphabet = _load_alphabet(font_config, 'proportional')
     font_x1 = _load_font(font_config, 'proportional', 'zh_cn')
     font_x2 = _load_font(font_config, 'proportional', 'zh_cn', 2)
@@ -126,7 +126,7 @@ def make_readme_banner():
 
 
 def make_github_banner():
-    font_config = configs.font_size_to_config[12]
+    font_config = configs.font_configs[12]
     alphabet = _load_alphabet(font_config, 'proportional')
     font_title = _load_font(font_config, 'proportional', 'zh_cn', 2)
     font_latin = _load_font(font_config, 'proportional', 'latin')
@@ -159,7 +159,7 @@ def make_github_banner():
 
 
 def make_itch_io_banner():
-    font_config = configs.font_size_to_config[12]
+    font_config = configs.font_configs[12]
     alphabet = _load_alphabet(font_config, 'proportional')
     font_x1 = _load_font(font_config, 'proportional', 'zh_cn')
     font_x2 = _load_font(font_config, 'proportional', 'zh_cn', 2)
@@ -182,7 +182,7 @@ def make_itch_io_banner():
 
 
 def make_itch_io_background():
-    font_config = configs.font_size_to_config[12]
+    font_config = configs.font_configs[12]
     alphabet = _load_alphabet(font_config, 'proportional')
     font = _load_font(font_config, 'proportional', 'zh_cn')
     box_size = 14
@@ -198,7 +198,7 @@ def make_itch_io_background():
 
 
 def make_itch_io_cover():
-    font_config = configs.font_size_to_config[12]
+    font_config = configs.font_configs[12]
     font_title = _load_font(font_config, 'proportional', 'zh_cn', 2)
     font_latin = _load_font(font_config, 'proportional', 'latin')
     font_zh_cn = _load_font(font_config, 'proportional', 'zh_cn')
@@ -228,7 +228,7 @@ def make_itch_io_cover():
 
 
 def make_afdian_cover():
-    font_config = configs.font_size_to_config[12]
+    font_config = configs.font_configs[12]
     font_title = _load_font(font_config, 'proportional', 'zh_cn', 2)
     font_latin = _load_font(font_config, 'proportional', 'latin')
     font_zh_cn = _load_font(font_config, 'proportional', 'zh_cn')

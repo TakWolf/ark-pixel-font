@@ -29,7 +29,6 @@ def _make_html_file(template_name: str, file_name: str, params: dict[str, object
         'language_flavors': configs.language_flavors,
         'locale_to_language_flavor': configs.locale_to_language_flavor,
         'font_configs': configs.font_configs,
-        'font_size_to_config': configs.font_size_to_config,
     }
 
     html = _environment.get_template(template_name).render(params)

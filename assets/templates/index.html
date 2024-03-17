@@ -9,9 +9,9 @@
         }
         @font-face {
             font-family: ark-pixel-12px-monospaced-latin;
-            src: url("{{ configs.font_size_to_config[12].get_font_file_name('monospaced', 'latin', 'woff2') }}?r={{ configs.build_random_key }}");
+            src: url("{{ configs.font_configs[12].get_font_file_name('monospaced', 'latin', 'woff2') }}?r={{ configs.build_random_key }}");
         }
-        {% for font_config in configs.font_configs  %}
+        {% for font_config in configs.font_configs.values() %}
         {% for locale, language_flavor in configs.locale_to_language_flavor.items() %}
         {% with font_family = 'ark-pixel-' ~ font_config.size ~ 'px-proportional-' ~ language_flavor %}
         @font-face {
@@ -121,7 +121,7 @@
 {% endblock %}
 {% block body %}
     <form class="options-group">
-        {% for font_config in configs.font_configs %}
+        {% for font_config in configs.font_configs.values() %}
         <label class="option">
             <input id="radio-font-size-{{ font_config.size }}" name="font_size" type="radio" onchange="onFontSizeChange('{{ font_config.size }}');">
             <span></span>
@@ -150,7 +150,7 @@
         <div class="link-group" lang="en">
             <a class="link-tab" href="playground.html" target="_blank">playground</a>
         </div>
-        {% for font_config in configs.font_configs %}
+        {% for font_config in configs.font_configs.values() %}
         <div class="link-group" lang="en">
             <span class="link-tab">{{ font_config.size }}px</span>
             {% for width_mode in configs.width_modes %}
