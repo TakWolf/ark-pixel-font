@@ -12,7 +12,7 @@
         {% with font_family = 'ark-pixel-' ~ font_config.size ~ 'px-' ~ width_mode ~ '-' ~ language_flavor %}
         @font-face {
             font-family: {{ font_family }};
-            src: url("{{ font_config.get_font_file_name(width_mode, language_flavor, 'woff2') }}?r={{ configs.build_random_key }}");
+            src: url("{{ font_config.get_font_file_name(width_mode, language_flavor, 'woff2') }}?r={{ build_random_key }}");
         }
         .font-{{ width_mode }} :lang({{ locale }}) {
             font-family: {{ font_family }}, sans-serif;
@@ -23,7 +23,7 @@
         {% if font_config.size != 12 %}
         @font-face {
             font-family: ark-pixel-12px-monospaced-latin;
-            src: url("{{ configs.font_configs[12].get_font_file_name('monospaced', 'latin', 'woff2') }}?r={{ configs.build_random_key }}");
+            src: url("{{ configs.font_configs[12].get_font_file_name('monospaced', 'latin', 'woff2') }}?r={{ build_random_key }}");
         }
         {% endif %}
         .theme-light {
