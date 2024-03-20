@@ -8,6 +8,10 @@ from scripts.utils import fs_util
 
 
 class LayoutParam:
+    @staticmethod
+    def from_data(data: dict[str, int]) -> 'LayoutParam':
+        return LayoutParam(data['ascent'], data['descent'], data['x_height'], data['cap_height'])
+
     def __init__(self, ascent: int, descent: int, x_height: int, cap_height: int):
         self.ascent = ascent
         self.descent = descent
@@ -40,17 +44,15 @@ class FontConfig:
     def load(size: int) -> 'FontConfig':
         config_file_path = os.path.join(path_define.glyphs_dir, str(size), 'config.toml')
         config_data: dict = fs_util.read_toml(config_file_path)['font']
-        assert size == config_data['size'], f"Font Config size not equals: expect {size} but actually {config_data['size']}"
+        assert size == config_data['size'], f"Config 'size' error: '{config_file_path}'"
 
         layout_params = {}
         for width_mode in configs.width_modes:
-            layout_param = LayoutParam(
-                config_data[width_mode]['ascent'],
-                config_data[width_mode]['descent'],
-                config_data[width_mode]['x_height'],
-                config_data[width_mode]['cap_height'],
-            )
-            assert (layout_param.line_height - size) % 2 == 0, f"Font Layout Params {size} {width_mode}: the difference between 'line_height' and 'size' must be a multiple of 2"
+            layout_param = LayoutParam.from_data(config_data[width_mode])
+            if width_mode == 'monospaced':
+                assert layout_param.line_height == size, f"Config 'monospaced.line_height' error: '{config_file_path}'"
+            else:
+                assert (layout_param.line_height - size) % 2 == 0, f"Config 'proportional.line_height' error: '{config_file_path}'"
             layout_params[width_mode] = layout_param
 
         return FontConfig(size, layout_params)
