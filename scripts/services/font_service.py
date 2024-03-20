@@ -78,17 +78,7 @@ def format_glyph_files(font_config: FontConfig):
                             assert all(glyph_data[i][-1] == 0 for i in range(0, len(glyph_data))), f"Incorrect glyph data: '{file_path_from}'"
 
                 if width_mode_dir_name == 'proportional':
-                    assert glyph_height >= font_config.size, f"Incorrect glyph data: '{file_path_from}'"
-                    assert (glyph_height - font_config.size) % 2 == 0, f"Incorrect glyph data: '{file_path_from}'"
-
-                    if glyph_height > font_config.line_height:
-                        for i in range((glyph_height - font_config.line_height) // 2):
-                            glyph_data.pop(0)
-                            glyph_data.pop()
-                    elif glyph_height < font_config.line_height:
-                        for i in range((font_config.line_height - glyph_height) // 2):
-                            glyph_data.insert(0, [0 for _ in range(glyph_width)])
-                            glyph_data.append([0 for _ in range(glyph_width)])
+                    assert glyph_height == font_config.line_height, f"Incorrect glyph data: '{file_path_from}'"
 
                 if file_path_to != file_path_from:
                     assert not os.path.exists(file_path_to), f"Glyph file duplication: '{file_path_from}'"
