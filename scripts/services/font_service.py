@@ -50,7 +50,7 @@ def format_glyph_files(font_config: FontConfig):
                     c = chr(code_point)
                     east_asian_width = unicodedata.east_asian_width(c)
                     hex_name = f'{code_point:04X}'
-                    file_name = f'{hex_name}{" " if len(language_flavors) > 0 else ""}{",".join(language_flavors)}.png'
+                    file_name = f'{hex_name}{' ' if len(language_flavors) > 0 else ''}{','.join(language_flavors)}.png'
                     block = unidata_blocks.get_block_by_code_point(code_point)
                     block_dir_name = f'{block.code_start:04X}-{block.code_end:04X} {block.name}'
                     file_dir_to = os.path.join(width_mode_dir, block_dir_name)
@@ -139,7 +139,7 @@ class DesignContext:
         return character_mapping
 
     def get_glyph_file_infos(self, width_mode: str, language_flavor: str = None) -> list[tuple[str, str]]:
-        cache_name = f'{width_mode}#{"" if language_flavor is None else language_flavor}'
+        cache_name = f'{width_mode}#{'' if language_flavor is None else language_flavor}'
         if cache_name in self._glyph_file_infos_cacher:
             glyph_file_infos = self._glyph_file_infos_cacher[cache_name]
         else:

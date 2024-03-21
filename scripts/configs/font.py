@@ -24,7 +24,7 @@ class LayoutParam:
 
 
 class FontConfig:
-    VERSION: Final[str] = datetime.datetime.now(datetime.UTC).strftime("%Y.%m.%d")
+    VERSION: Final[str] = datetime.datetime.now(datetime.UTC).strftime('%Y.%m.%d')
     FAMILY_NAME: Final[str] = 'Ark Pixel'
     OUTPUTS_NAME: Final[str] = 'ark-pixel'
     MANUFACTURER: Final[str] = 'TakWolf'
