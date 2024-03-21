@@ -178,7 +178,6 @@ def collect_glyph_files(font_config: FontConfig) -> DesignContext:
         assert width_mode_dir_name == 'common' or width_mode_dir_name in configs.width_modes, f"Width mode '{width_mode_dir_name}' undefined: '{width_mode_dir}'"
 
         cellar[width_mode_dir_name] = {}
-        width_mode_dir = os.path.join(root_dir, width_mode_dir_name)
         for file_dir, _, file_names in os.walk(width_mode_dir):
             for file_name in file_names:
                 if not file_name.endswith('.png'):
