@@ -6,7 +6,7 @@ import bs4
 from jinja2 import Environment, FileSystemLoader
 
 from scripts import configs
-from scripts.configs import path_define, FontConfig
+from scripts.configs import path_define
 from scripts.services.font_service import DesignContext
 from scripts.utils import fs_util
 
@@ -34,21 +34,21 @@ def _make_html_file(template_name: str, file_name: str, params: dict[str, object
     logger.info("Make html file: '%s'", file_path)
 
 
-def make_alphabet_html_file(font_config: FontConfig, context: DesignContext, width_mode: str):
-    _make_html_file('alphabet.html', font_config.get_alphabet_html_file_name(width_mode), {
-        'font_config': font_config,
+def make_alphabet_html_file(design_context: DesignContext, width_mode: str):
+    _make_html_file('alphabet.html', design_context.font_config.get_alphabet_html_file_name(width_mode), {
+        'font_config': design_context.font_config,
         'width_mode': width_mode,
-        'alphabet': ''.join(sorted([c for c in context.get_alphabet(width_mode) if ord(c) >= 128])),
+        'alphabet': ''.join(sorted([c for c in design_context.get_alphabet(width_mode) if ord(c) >= 128])),
     })
 
 
-def _handle_demo_html_element(context: DesignContext, soup: bs4.BeautifulSoup, element: bs4.PageElement):
+def _handle_demo_html_element(design_context: DesignContext, soup: bs4.BeautifulSoup, element: bs4.PageElement):
     if isinstance(element, bs4.element.Tag):
         for child_element in list(element.contents):
-            _handle_demo_html_element(context, soup, child_element)
+            _handle_demo_html_element(design_context, soup, child_element)
     elif isinstance(element, bs4.element.NavigableString):
-        alphabet_monospaced = context.get_alphabet('monospaced')
-        alphabet_proportional = context.get_alphabet('proportional')
+        alphabet_monospaced = design_context.get_alphabet('monospaced')
+        alphabet_proportional = design_context.get_alphabet('proportional')
         text = str(element)
         tmp_parent = soup.new_tag('div')
         last_status = None
@@ -100,15 +100,15 @@ def _handle_demo_html_element(context: DesignContext, soup: bs4.BeautifulSoup, e
         tmp_parent.unwrap()
 
 
-def make_demo_html_file(font_config: FontConfig, context: DesignContext):
+def make_demo_html_file(design_context: DesignContext):
     content_html = fs_util.read_str(os.path.join(path_define.templates_dir, 'demo-content.html'))
     content_html = ''.join(line.strip() for line in content_html.split('\n'))
     soup = bs4.BeautifulSoup(content_html, 'html.parser')
-    _handle_demo_html_element(context, soup, soup)
+    _handle_demo_html_element(design_context, soup, soup)
     content_html = str(soup)
 
-    _make_html_file('demo.html', font_config.demo_html_file_name, {
-        'font_config': font_config,
+    _make_html_file('demo.html', design_context.font_config.demo_html_file_name, {
+        'font_config': design_context.font_config,
         'content_html': content_html,
     })
 

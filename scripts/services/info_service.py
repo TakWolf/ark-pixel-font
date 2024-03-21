@@ -104,11 +104,11 @@ def _write_locale_chr_count_infos_table(output: IO, infos: list[tuple[str, int, 
         output.write(f'| {name} | {count} / {total} | {missing} | {progress:.2%} {finished_emoji} |\n')
 
 
-def make_info_file(font_config: FontConfig, context: DesignContext, width_mode: str):
-    alphabet = context.get_alphabet(width_mode)
+def make_info_file(design_context: DesignContext, width_mode: str):
+    alphabet = design_context.get_alphabet(width_mode)
 
     output = io.StringIO()
-    output.write(f'# {FontConfig.FAMILY_NAME} {font_config.size}px {'等宽模式' if width_mode == 'monospaced' else '比例模式'}\n')
+    output.write(f'# {FontConfig.FAMILY_NAME} {design_context.font_config.size}px {'等宽模式' if width_mode == 'monospaced' else '比例模式'}\n')
     output.write('\n')
     output.write('## 基本信息\n')
     output.write('\n')
@@ -148,16 +148,16 @@ def make_info_file(font_config: FontConfig, context: DesignContext, width_mode: 
     _write_locale_chr_count_infos_table(output, _get_ksx1001_chr_count_infos(alphabet))
 
     fs_util.make_dir(path_define.outputs_dir)
-    file_path = os.path.join(path_define.outputs_dir, font_config.get_info_file_name(width_mode))
+    file_path = os.path.join(path_define.outputs_dir, design_context.font_config.get_info_file_name(width_mode))
     fs_util.write_str(output.getvalue(), file_path)
     logger.info("Make info file: '%s'", file_path)
 
 
-def make_alphabet_txt_file(font_config: FontConfig, context: DesignContext, width_mode: str):
-    alphabet = list(context.get_alphabet(width_mode))
+def make_alphabet_txt_file(design_context: DesignContext, width_mode: str):
+    alphabet = list(design_context.get_alphabet(width_mode))
     alphabet.sort()
 
     fs_util.make_dir(path_define.outputs_dir)
-    file_path = os.path.join(path_define.outputs_dir, font_config.get_alphabet_txt_file_name(width_mode))
+    file_path = os.path.join(path_define.outputs_dir, design_context.font_config.get_alphabet_txt_file_name(width_mode))
     fs_util.write_str(''.join(alphabet), file_path)
     logger.info("Make alphabet txt file: '%s'", file_path)
