@@ -24,7 +24,7 @@ def _get_unicode_chr_count_infos(alphabet: set[str]) -> list[tuple[UnicodeBlock,
         if not c.isprintable() and block.printable_count > 0:
             continue
         count_infos[block.code_start] += 1
-    code_starts = list(count_infos.keys())
+    code_starts = list(count_infos)
     code_starts.sort()
     return [(unidata_blocks.get_block_by_code_point(code_start), count_infos[code_start]) for code_start in code_starts]
 

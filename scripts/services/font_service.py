@@ -108,7 +108,7 @@ class DesignContext:
         if width_mode in self._sequence_cacher:
             sequence = self._sequence_cacher[width_mode]
         else:
-            sequence = list(self._registry[width_mode].keys())
+            sequence = list(self._registry[width_mode])
             sequence.sort()
             self._sequence_cacher[width_mode] = sequence
         return sequence
