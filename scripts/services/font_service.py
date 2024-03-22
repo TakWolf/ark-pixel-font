@@ -153,15 +153,15 @@ class DesignContext:
                         assert not os.path.exists(file_path), f"Glyph file duplication: '{glyph_file.file_path}' -> '{file_path}'"
                         fs_util.make_dir(file_dir)
                         os.rename(glyph_file.file_path, file_path)
-                        file_dir_from = os.path.dirname(glyph_file.file_path)
                         glyph_file.file_path = file_path
                         logger.info(f"Standardize glyph file path: '{glyph_file.file_path}'")
 
-                        remained_file_names = os.listdir(file_dir_from)
-                        if '.DS_Store' in remained_file_names:
-                            remained_file_names.remove('.DS_Store')
-                        if len(remained_file_names) == 0:
-                            fs_util.delete_dir(file_dir_from)
+        for file_dir, _, _ in os.walk(root_dir, topdown=False):
+            file_names = os.listdir(file_dir)
+            if '.DS_Store' in file_names:
+                file_names.remove('.DS_Store')
+            if len(file_names) == 0:
+                fs_util.delete_dir(file_dir)
 
     def _get_sequence(self, width_mode: str) -> list[int]:
         if width_mode in self._sequence_pool:
