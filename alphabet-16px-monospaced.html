@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ark Pixel - Alphabet 16px monospaced</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        @font-face {
+            font-family: ark-pixel-16px-monospaced-latin;
+            src: url("ark-pixel-16px-monospaced-latin.woff2?r=0.9660633250170994");
+        }
+        :lang(en) {
+            font-family: ark-pixel-16px-monospaced-latin, sans-serif;
+        }
+        @font-face {
+            font-family: ark-pixel-16px-monospaced-zh_cn;
+            src: url("ark-pixel-16px-monospaced-zh_cn.woff2?r=0.9660633250170994");
+        }
+        :lang(zh-cn) {
+            font-family: ark-pixel-16px-monospaced-zh_cn, sans-serif;
+        }
+        @font-face {
+            font-family: ark-pixel-16px-monospaced-zh_hk;
+            src: url("ark-pixel-16px-monospaced-zh_hk.woff2?r=0.9660633250170994");
+        }
+        :lang(zh-hk) {
+            font-family: ark-pixel-16px-monospaced-zh_hk, sans-serif;
+        }
+        @font-face {
+            font-family: ark-pixel-16px-monospaced-zh_tw;
+            src: url("ark-pixel-16px-monospaced-zh_tw.woff2?r=0.9660633250170994");
+        }
+        :lang(zh-tw) {
+            font-family: ark-pixel-16px-monospaced-zh_tw, sans-serif;
+        }
+        @font-face {
+            font-family: ark-pixel-16px-monospaced-zh_tr;
+            src: url("ark-pixel-16px-monospaced-zh_tr.woff2?r=0.9660633250170994");
+        }
+        :lang(zh-tr) {
+            font-family: ark-pixel-16px-monospaced-zh_tr, sans-serif;
+        }
+        @font-face {
+            font-family: ark-pixel-16px-monospaced-ja;
+            src: url("ark-pixel-16px-monospaced-ja.woff2?r=0.9660633250170994");
+        }
+        :lang(ja) {
+            font-family: ark-pixel-16px-monospaced-ja, sans-serif;
+        }
+        @font-face {
+            font-family: ark-pixel-16px-monospaced-ko;
+            src: url("ark-pixel-16px-monospaced-ko.woff2?r=0.9660633250170994");
+        }
+        :lang(ko) {
+            font-family: ark-pixel-16px-monospaced-ko, sans-serif;
+        }
+        @font-face {
+            font-family: ark-pixel-12px-monospaced-latin;
+            src: url("ark-pixel-12px-monospaced-latin.woff2?r=0.9660633250170994");
+        }
+        .options-group {
+            height: 36px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            flex-direction: row;
+            background-color: #ffd339;
+        }
+        .option {
+            height: 100%;
+            margin-left: 24px;
+            margin-right: 24px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            color: #4b4b4b;
+            font-family: ark-pixel-12px-monospaced-latin, sans-serif;
+            font-size: 24px;
+            line-height: 36px;
+        }
+        .option input[type="radio"] {
+            display: none;
+        }
+        .option input[type="radio"] + span {
+            width: 10px;
+            height: 10px;
+            margin-left: 12px;
+            margin-right: 12px;
+            border-width: 2px;
+            border-color: #4b4b4b;
+            border-style: solid;
+        }
+        .option input[type="radio"]:checked + span {
+            background-color: #4b4b4b;
+        }
+        #content {
+            margin-top: 36px;
+            color: #4b4b4b;
+            font-size: 64px;
+            line-height: 64px;
+            word-break: break-all;
+            background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.1) 8%, transparent 8%), linear-gradient(180deg, transparent 96%, rgba(0, 0, 0, 0.1) 96%);
+            background-size: 32px 64px;
+        }
+    </style>
+
+    <script charset="UTF-8" id="LA_COLLECT" src="https://sdk.51.la/js-sdk-pro.min.js"></script>
+    <script>LA.init({id: 'KDw2F6OnLoNDNl4L', ck: 'KDw2F6OnLoNDNl4L'});</script>
+</head>
+<body>
+    <form class="options-group">
+        <label class="option">
+            <input id="radio-locale-en" name="locale" type="radio" onchange="onLocaleChange('en');">
+            <span></span>
+            latin
+        </label>
+        <label class="option">
+            <input id="radio-locale-zh-cn" name="locale" type="radio" onchange="onLocaleChange('zh-cn');">
+            <span></span>
+            zh-cn
+        </label>
+        <label class="option">
+            <input id="radio-locale-zh-hk" name="locale" type="radio" onchange="onLocaleChange('zh-hk');">
+            <span></span>
+            zh-hk
+        </label>
+        <label class="option">
+            <input id="radio-locale-zh-tw" name="locale" type="radio" onchange="onLocaleChange('zh-tw');">
+            <span></span>
+            zh-tw
+        </label>
+        <label class="option">
+            <input id="radio-locale-zh-tr" name="locale" type="radio" onchange="onLocaleChange('zh-tr');">
+            <span></span>
+            zh-tr
+        </label>
+        <label class="option">
+            <input id="radio-locale-ja" name="locale" type="radio" onchange="onLocaleChange('ja');">
+            <span></span>
+            ja
+        </label>
+        <label class="option">
+            <input id="radio-locale-ko" name="locale" type="radio" onchange="onLocaleChange('ko');">
+            <span></span>
+            ko
+        </label>
+    </form>
+    <div id="content">
+        ABCDEFGHIJKLMNOPQRSTUVWXYZ
+        <br>
+        abcdefghijklmnopqrstuvwxyz
+        <br>
+        0123456789 !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
+        <br>
+        ¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĆćĈĉĊċČčĐđĒēĔĕĖėĚěĜĝĞğĠġĨĩĪīĬĭŃńŇňŌōŎŏŔŕŨũŪūŬŭŴŵŶŷŸŹźŻżŽžƒǍǎǏǐǑǒǓǔǕǖǗǘǙǚǛǜǝǞǟǠǡǢǣǸǹǼǽȞȟȲȳ΄΅ΆΈΉΊΌΎΏΐΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩΪΫάέήίΰαβγδεζηθικλμνξοπρςστυφχψωϊϋόύώЀЁЃЌЍАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдежзийклмнопрстуфхцчшщъыьэюяѐёѓќѝӢӣӮӯ‐‑‒–—―‖‗‘’‚‛“”„‟†‡•‣․‥…‧‰‱′″※‾⁋⁌⁍⁰ⁱ⁴⁵⁶⁷⁸⁹⁺⁻⁼⁽⁾ⁿ₀₁₂₃₄₅₆₇₈₉₊₋₌₍₎ₐₑₒₓₔₕₖₗₘₙₚₛₜ℃℉⅐⅑⅒⅓⅔⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩⅪⅫⅬⅭⅮⅯⅰⅱⅲⅳⅴⅵⅶⅷⅸⅹⅺⅻⅼⅽⅾⅿ↉←↑→↓↔↕↖↗↘↙↚↛↩↪↰↱↲↳↴↵↶↷↸↹↺↻↼↽↾↿⇀⇁⇂⇃⇄⇅⇆⇇⇈⇉⇊⇋⇌⇐⇑⇒⇓⇔⇕⇖⇗⇘⇙⇚⇛⇠⇡⇢⇣⇤⇥⇦⇧⇨⇩⇪⇫⇬⇭⇮⇯⇰⇱⇲⇳⇵⇽⇾⇿⌌⌍⌎⌏⌐⌑⌒⌓⌔⌕⌖⌗⌘⌙⌚⌛⌜⌝⌞⌟⏎⏏⏨⏩⏪⏫⏬⏭⏮⏯⏳⏴⏵⏶⏷⏸⏹⏺⏻⏼⏽⏾⏿①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳⑴⑵⑶⑷⑸⑹⑺⑻⑼⑽⑾⑿⒀⒁⒂⒃⒄⒅⒆⒇⒈⒉⒊⒋⒌⒍⒎⒏⒐⒑⒒⒓⒔⒕⒖⒗⒘⒙⒚⒛⒜⒝⒞⒟⒠⒡⒢⒣⒤⒥⒦⒧⒨⒩⒪⒫⒬⒭⒮⒯⒰⒱⒲⒳⒴⒵ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤⓥⓦⓧⓨⓩ⓪⓫⓬⓭⓮⓯⓰⓱⓲⓳⓴⓵⓶⓷⓸⓹⓺⓻⓼⓽⓾⓿─━│┃┄┅┆┇┈┉┊┋┌┍┎┏┐┑┒┓└┕┖┗┘┙┚┛├┝┞┟┠┡┢┣┤┥┦┧┨┩┪┫┬┭┮┯┰┱┲┳┴┵┶┷┸┹┺┻┼┽┾┿╀╁╂╃╄╅╆╇╈╉╊╋╌╍╎╏═║╒╓╔╕╖╗╘╙╚╛╜╝╞╟╠╡╢╣╤╥╦╧╨╩╪╫╬╭╮╯╰╱╲╳╴╵╶╷╸╹╺╻╼╽╾╿▀▁▂▃▄▅▆▇█▉▊▋▌▍▎▏▐░▒▓▔▕▖▗▘▙▚▛▜▝▞▟■□▢▣▤▥▦▧▨▩▪▫▬▭▮▯▰▱▲△▴▵▶▷▸▹►▻▼▽▾▿◀◁◂◃◄◅◆◇◈◉◊○◌◍◎●◐◑◒◓◔◕◖◗◘◙◚◛◜◝◞◟◠◡◢◣◤◥◦◧◨◩◪◫◬◭◮◯◰◱◲◳◴◵◶◷◸◹◺◻◼◽◾◿☀☁☂☃☄★☆☇☈☉☊☋☌☍☎☏☐☑☒☓☔☖☗☜☝☞☟☠☪☫☬☭☮☯☰☱☲☳☴☵☶☷☸☹☺☻☼☽☾♀♁♂♈♉♊♋♌♍♎♏♐♑♒♓♔♕♖♗♘♙♚♛♜♝♞♟♠♡♢♣♤♥♦♧♨♩♪♫♬♭♮♯⚀⚁⚂⚃⚄⚅⚆⚇⚈⚉⚊⚋⚌⚍⚎⚏⚐⚑⚓⚔⚕⚘⚙⚚⚪⚫⚬⛄⛅⛆⛇⛈⛉⛊⛋⛓⛢⛨⛩⛪⛫⛬⛱⛲⛵⛶⛼⛽⛿✈✉❶❷❸❹❺❻❼❽❾❿➀➁➂➃➄➅➆➇➈➉➊➋➌➍➎➏➐➑➒➓　、。〃〄々〆〇〈〉《》「」『』【】〒〓〔〕〖〗〘〙〚〛〜〝〞〟〠〡〢〣〤〥〦〧〨〩〶〷〸〹〺〼〾〿ぁあぃいぅうぇえぉおかがきぎくぐけげこごさざしじすずせぜそぞただちぢっつづてでとどなにぬねのはばぱひびぴふぶぷへべぺほぼぽまみむめもゃやゅゆょよらりるれろゎわゐゑをんゔゕゖ゙゚゛゜ゝゞゟ・ーㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦㄧㄨㄩㄪㄫㄬㄭㄮㄯ㈠㈡㈢㈣㈤㈥㈦㈧㈨㈩㈪㈫㈬㈭㈮㈯㈰㈽㉁㉄㉆㉈㉉㉊㉋㉌㉍㉎㉏㉑㉒㉓㉔㉕㉖㉗㉘㉙㉚㉛㉜㉝㉞㉟㉿㊀㊁㊂㊃㊄㊅㊆㊇㊈㊉㊊㊋㊌㊍㊎㊏㊐㊡㊣㊤㊥㊦㊧㊨㊭㊱㊲㊳㊴㊵㊶㊷㊸㊹㊺㊻㊼㊽㊾㊿㋀㋁㋂㋃㋄㋅㋆㋇㋈㋉㋊㋋㋿㍘㍙㍚㍛㍜㍝㍞㍟㍠㍡㍢㍣㍤㍥㍦㍧㍨㍩㍪㍫㍬㍭㍮㍯㍰㍻㍼㍽㍾㏠㏡㏢㏣㏤㏥㏦㏧㏨㏩㏪㏫㏬㏭㏮㏯㏰㏱㏲㏳㏴㏵㏶㏷㏸㏹㏺㏻㏼㏽㏾一丁丄丅万丈上下且丨个丫亅事亚亜亞人伞個倩傘全其具典冂円十卄卅啨堂尋情文日旦晴書曹曺替林果猜白百目直相而行请車里重量金錆門閃閈靑青面革首香︐︑︒︓︔︕︖︗︘︙︰︱︲︳︴︵︶︷︸︹︺︻︼︽︾︿﹀﹁﹂﹃﹄﹅﹆﹇﹈﹉﹊﹋﹌﹍﹎﹏！＂＃＄％＆＇（）＊＋，－．／０１２３４５６７８９：；＜＝＞？＠ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ［＼］＾＿｀ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ｛｜｝～｟｠｡｢｣､･ｰﾞﾟ￠￡￢￣￤￥￦￨￩￪￫￬￭￮￼�
+    </div>
+    <script>
+        let content = document.getElementById('content');
+
+        let configs = {
+            locale: 'zh-cn',
+        };
+
+        function applyConfigs() {
+            localStorage.setItem('configs:alphabet-16px-monospaced', JSON.stringify(configs));
+            content.setAttribute('lang', configs.locale);
+        }
+
+        function onLocaleChange(locale) {
+            configs.locale = locale;
+            applyConfigs();
+        }
+
+        (function () {
+            let json = localStorage.getItem('configs:alphabet-16px-monospaced');
+            if (json) {
+                Object.assign(configs, JSON.parse(json));
+            }
+            document.getElementById('radio-locale-' + configs.locale).checked = true;
+            applyConfigs();
+        })();
+    </script>
+</body>
+</html>

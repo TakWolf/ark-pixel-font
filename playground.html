@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ark Pixel - Playground</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .font-10px-monospaced {
+            font-size: 20px;
+            line-height: 32px;
+        }
+        @font-face {
+            font-family: ark-pixel-10px-monospaced-latin;
+            src: url("ark-pixel-10px-monospaced-latin.woff2?r=0.9660633250170994");
+        }
+        .font-10px-monospaced:lang(en) {
+            font-family: ark-pixel-10px-monospaced-latin, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-10px-monospaced-zh_cn;
+            src: url("ark-pixel-10px-monospaced-zh_cn.woff2?r=0.9660633250170994");
+        }
+        .font-10px-monospaced:lang(zh-cn) {
+            font-family: ark-pixel-10px-monospaced-zh_cn, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-10px-monospaced-zh_hk;
+            src: url("ark-pixel-10px-monospaced-zh_hk.woff2?r=0.9660633250170994");
+        }
+        .font-10px-monospaced:lang(zh-hk) {
+            font-family: ark-pixel-10px-monospaced-zh_hk, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-10px-monospaced-zh_tw;
+            src: url("ark-pixel-10px-monospaced-zh_tw.woff2?r=0.9660633250170994");
+        }
+        .font-10px-monospaced:lang(zh-tw) {
+            font-family: ark-pixel-10px-monospaced-zh_tw, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-10px-monospaced-zh_tr;
+            src: url("ark-pixel-10px-monospaced-zh_tr.woff2?r=0.9660633250170994");
+        }
+        .font-10px-monospaced:lang(zh-tr) {
+            font-family: ark-pixel-10px-monospaced-zh_tr, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-10px-monospaced-ja;
+            src: url("ark-pixel-10px-monospaced-ja.woff2?r=0.9660633250170994");
+        }
+        .font-10px-monospaced:lang(ja) {
+            font-family: ark-pixel-10px-monospaced-ja, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-10px-monospaced-ko;
+            src: url("ark-pixel-10px-monospaced-ko.woff2?r=0.9660633250170994");
+        }
+        .font-10px-monospaced:lang(ko) {
+            font-family: ark-pixel-10px-monospaced-ko, serif;
+        }
+        .font-10px-proportional {
+            font-size: 20px;
+            line-height: 32px;
+        }
+        @font-face {
+            font-family: ark-pixel-10px-proportional-latin;
+            src: url("ark-pixel-10px-proportional-latin.woff2?r=0.9660633250170994");
+        }
+        .font-10px-proportional:lang(en) {
+            font-family: ark-pixel-10px-proportional-latin, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-10px-proportional-zh_cn;
+            src: url("ark-pixel-10px-proportional-zh_cn.woff2?r=0.9660633250170994");
+        }
+        .font-10px-proportional:lang(zh-cn) {
+            font-family: ark-pixel-10px-proportional-zh_cn, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-10px-proportional-zh_hk;
+            src: url("ark-pixel-10px-proportional-zh_hk.woff2?r=0.9660633250170994");
+        }
+        .font-10px-proportional:lang(zh-hk) {
+            font-family: ark-pixel-10px-proportional-zh_hk, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-10px-proportional-zh_tw;
+            src: url("ark-pixel-10px-proportional-zh_tw.woff2?r=0.9660633250170994");
+        }
+        .font-10px-proportional:lang(zh-tw) {
+            font-family: ark-pixel-10px-proportional-zh_tw, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-10px-proportional-zh_tr;
+            src: url("ark-pixel-10px-proportional-zh_tr.woff2?r=0.9660633250170994");
+        }
+        .font-10px-proportional:lang(zh-tr) {
+            font-family: ark-pixel-10px-proportional-zh_tr, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-10px-proportional-ja;
+            src: url("ark-pixel-10px-proportional-ja.woff2?r=0.9660633250170994");
+        }
+        .font-10px-proportional:lang(ja) {
+            font-family: ark-pixel-10px-proportional-ja, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-10px-proportional-ko;
+            src: url("ark-pixel-10px-proportional-ko.woff2?r=0.9660633250170994");
+        }
+        .font-10px-proportional:lang(ko) {
+            font-family: ark-pixel-10px-proportional-ko, serif;
+        }
+        .font-12px-monospaced {
+            font-size: 24px;
+            line-height: 36px;
+        }
+        @font-face {
+            font-family: ark-pixel-12px-monospaced-latin;
+            src: url("ark-pixel-12px-monospaced-latin.woff2?r=0.9660633250170994");
+        }
+        .font-12px-monospaced:lang(en) {
+            font-family: ark-pixel-12px-monospaced-latin, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-12px-monospaced-zh_cn;
+            src: url("ark-pixel-12px-monospaced-zh_cn.woff2?r=0.9660633250170994");
+        }
+        .font-12px-monospaced:lang(zh-cn) {
+            font-family: ark-pixel-12px-monospaced-zh_cn, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-12px-monospaced-zh_hk;
+            src: url("ark-pixel-12px-monospaced-zh_hk.woff2?r=0.9660633250170994");
+        }
+        .font-12px-monospaced:lang(zh-hk) {
+            font-family: ark-pixel-12px-monospaced-zh_hk, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-12px-monospaced-zh_tw;
+            src: url("ark-pixel-12px-monospaced-zh_tw.woff2?r=0.9660633250170994");
+        }
+        .font-12px-monospaced:lang(zh-tw) {
+            font-family: ark-pixel-12px-monospaced-zh_tw, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-12px-monospaced-zh_tr;
+            src: url("ark-pixel-12px-monospaced-zh_tr.woff2?r=0.9660633250170994");
+        }
+        .font-12px-monospaced:lang(zh-tr) {
+            font-family: ark-pixel-12px-monospaced-zh_tr, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-12px-monospaced-ja;
+            src: url("ark-pixel-12px-monospaced-ja.woff2?r=0.9660633250170994");
+        }
+        .font-12px-monospaced:lang(ja) {
+            font-family: ark-pixel-12px-monospaced-ja, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-12px-monospaced-ko;
+            src: url("ark-pixel-12px-monospaced-ko.woff2?r=0.9660633250170994");
+        }
+        .font-12px-monospaced:lang(ko) {
+            font-family: ark-pixel-12px-monospaced-ko, serif;
+        }
+        .font-12px-proportional {
+            font-size: 24px;
+            line-height: 36px;
+        }
+        @font-face {
+            font-family: ark-pixel-12px-proportional-latin;
+            src: url("ark-pixel-12px-proportional-latin.woff2?r=0.9660633250170994");
+        }
+        .font-12px-proportional:lang(en) {
+            font-family: ark-pixel-12px-proportional-latin, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-12px-proportional-zh_cn;
+            src: url("ark-pixel-12px-proportional-zh_cn.woff2?r=0.9660633250170994");
+        }
+        .font-12px-proportional:lang(zh-cn) {
+            font-family: ark-pixel-12px-proportional-zh_cn, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-12px-proportional-zh_hk;
+            src: url("ark-pixel-12px-proportional-zh_hk.woff2?r=0.9660633250170994");
+        }
+        .font-12px-proportional:lang(zh-hk) {
+            font-family: ark-pixel-12px-proportional-zh_hk, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-12px-proportional-zh_tw;
+            src: url("ark-pixel-12px-proportional-zh_tw.woff2?r=0.9660633250170994");
+        }
+        .font-12px-proportional:lang(zh-tw) {
+            font-family: ark-pixel-12px-proportional-zh_tw, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-12px-proportional-zh_tr;
+            src: url("ark-pixel-12px-proportional-zh_tr.woff2?r=0.9660633250170994");
+        }
+        .font-12px-proportional:lang(zh-tr) {
+            font-family: ark-pixel-12px-proportional-zh_tr, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-12px-proportional-ja;
+            src: url("ark-pixel-12px-proportional-ja.woff2?r=0.9660633250170994");
+        }
+        .font-12px-proportional:lang(ja) {
+            font-family: ark-pixel-12px-proportional-ja, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-12px-proportional-ko;
+            src: url("ark-pixel-12px-proportional-ko.woff2?r=0.9660633250170994");
+        }
+        .font-12px-proportional:lang(ko) {
+            font-family: ark-pixel-12px-proportional-ko, serif;
+        }
+        .font-16px-monospaced {
+            font-size: 32px;
+            line-height: 48px;
+        }
+        @font-face {
+            font-family: ark-pixel-16px-monospaced-latin;
+            src: url("ark-pixel-16px-monospaced-latin.woff2?r=0.9660633250170994");
+        }
+        .font-16px-monospaced:lang(en) {
+            font-family: ark-pixel-16px-monospaced-latin, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-16px-monospaced-zh_cn;
+            src: url("ark-pixel-16px-monospaced-zh_cn.woff2?r=0.9660633250170994");
+        }
+        .font-16px-monospaced:lang(zh-cn) {
+            font-family: ark-pixel-16px-monospaced-zh_cn, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-16px-monospaced-zh_hk;
+            src: url("ark-pixel-16px-monospaced-zh_hk.woff2?r=0.9660633250170994");
+        }
+        .font-16px-monospaced:lang(zh-hk) {
+            font-family: ark-pixel-16px-monospaced-zh_hk, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-16px-monospaced-zh_tw;
+            src: url("ark-pixel-16px-monospaced-zh_tw.woff2?r=0.9660633250170994");
+        }
+        .font-16px-monospaced:lang(zh-tw) {
+            font-family: ark-pixel-16px-monospaced-zh_tw, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-16px-monospaced-zh_tr;
+            src: url("ark-pixel-16px-monospaced-zh_tr.woff2?r=0.9660633250170994");
+        }
+        .font-16px-monospaced:lang(zh-tr) {
+            font-family: ark-pixel-16px-monospaced-zh_tr, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-16px-monospaced-ja;
+            src: url("ark-pixel-16px-monospaced-ja.woff2?r=0.9660633250170994");
+        }
+        .font-16px-monospaced:lang(ja) {
+            font-family: ark-pixel-16px-monospaced-ja, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-16px-monospaced-ko;
+            src: url("ark-pixel-16px-monospaced-ko.woff2?r=0.9660633250170994");
+        }
+        .font-16px-monospaced:lang(ko) {
+            font-family: ark-pixel-16px-monospaced-ko, serif;
+        }
+        .font-16px-proportional {
+            font-size: 32px;
+            line-height: 48px;
+        }
+        @font-face {
+            font-family: ark-pixel-16px-proportional-latin;
+            src: url("ark-pixel-16px-proportional-latin.woff2?r=0.9660633250170994");
+        }
+        .font-16px-proportional:lang(en) {
+            font-family: ark-pixel-16px-proportional-latin, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-16px-proportional-zh_cn;
+            src: url("ark-pixel-16px-proportional-zh_cn.woff2?r=0.9660633250170994");
+        }
+        .font-16px-proportional:lang(zh-cn) {
+            font-family: ark-pixel-16px-proportional-zh_cn, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-16px-proportional-zh_hk;
+            src: url("ark-pixel-16px-proportional-zh_hk.woff2?r=0.9660633250170994");
+        }
+        .font-16px-proportional:lang(zh-hk) {
+            font-family: ark-pixel-16px-proportional-zh_hk, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-16px-proportional-zh_tw;
+            src: url("ark-pixel-16px-proportional-zh_tw.woff2?r=0.9660633250170994");
+        }
+        .font-16px-proportional:lang(zh-tw) {
+            font-family: ark-pixel-16px-proportional-zh_tw, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-16px-proportional-zh_tr;
+            src: url("ark-pixel-16px-proportional-zh_tr.woff2?r=0.9660633250170994");
+        }
+        .font-16px-proportional:lang(zh-tr) {
+            font-family: ark-pixel-16px-proportional-zh_tr, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-16px-proportional-ja;
+            src: url("ark-pixel-16px-proportional-ja.woff2?r=0.9660633250170994");
+        }
+        .font-16px-proportional:lang(ja) {
+            font-family: ark-pixel-16px-proportional-ja, serif;
+        }
+        @font-face {
+            font-family: ark-pixel-16px-proportional-ko;
+            src: url("ark-pixel-16px-proportional-ko.woff2?r=0.9660633250170994");
+        }
+        .font-16px-proportional:lang(ko) {
+            font-family: ark-pixel-16px-proportional-ko, serif;
+        }
+        .toolbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+        .options-group {
+            height: 36px;
+            display: flex;
+            flex-direction: row;
+            background-color: #ffd339;
+        }
+        .option {
+            height: 100%;
+            margin-left: 24px;
+            margin-right: 24px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            color: #4b4b4b;
+            font-family: ark-pixel-12px-monospaced-latin, sans-serif;
+            font-size: 24px;
+            line-height: 36px;
+        }
+        .option input[type="radio"] {
+            display: none;
+        }
+        .option input[type="radio"] + span {
+            width: 10px;
+            height: 10px;
+            margin-left: 12px;
+            margin-right: 12px;
+            border-width: 2px;
+            border-color: #4b4b4b;
+            border-style: solid;
+        }
+        .option input[type="radio"]:checked + span {
+            background-color: #4b4b4b;
+        }
+        .content {
+            position: fixed;
+            top: 108px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+        .content textarea {
+            width: 100%;
+            height: 100%;
+            padding: 24px;
+            color: #4b4b4b;
+            outline: none;
+            border: none;
+            resize: none;
+        }
+    </style>
+
+    <script charset="UTF-8" id="LA_COLLECT" src="https://sdk.51.la/js-sdk-pro.min.js"></script>
+    <script>LA.init({id: 'KDw2F6OnLoNDNl4L', ck: 'KDw2F6OnLoNDNl4L'});</script>
+</head>
+<body>
+    <form class="toolbar">
+        <div class="options-group">
+            <label class="option">
+                <input id="radio-font-size-10" name="font_size" type="radio" onchange="onFontSizeChange('10');">
+                <span></span>
+                10px
+            </label>
+            <label class="option">
+                <input id="radio-font-size-12" name="font_size" type="radio" onchange="onFontSizeChange('12');">
+                <span></span>
+                12px
+            </label>
+            <label class="option">
+                <input id="radio-font-size-16" name="font_size" type="radio" onchange="onFontSizeChange('16');">
+                <span></span>
+                16px
+            </label>
+        </div>
+        <div class="options-group" style="background-color: #94e34a;">
+            <label class="option">
+                <input id="radio-width-mode-monospaced" name="width_mode" type="radio" onchange="onWidthModeChange('monospaced');">
+                <span></span>
+                monospaced
+            </label>
+            <label class="option">
+                <input id="radio-width-mode-proportional" name="width_mode" type="radio" onchange="onWidthModeChange('proportional');">
+                <span></span>
+                proportional
+            </label>
+        </div>
+        <div class="options-group" style="background-color: #6ebdff;">
+            <label class="option">
+                <input id="radio-locale-en" name="locale" type="radio" onchange="onLocaleChange('en');">
+                <span></span>
+                latin
+            </label>
+            <label class="option">
+                <input id="radio-locale-zh-cn" name="locale" type="radio" onchange="onLocaleChange('zh-cn');">
+                <span></span>
+                zh-cn
+            </label>
+            <label class="option">
+                <input id="radio-locale-zh-hk" name="locale" type="radio" onchange="onLocaleChange('zh-hk');">
+                <span></span>
+                zh-hk
+            </label>
+            <label class="option">
+                <input id="radio-locale-zh-tw" name="locale" type="radio" onchange="onLocaleChange('zh-tw');">
+                <span></span>
+                zh-tw
+            </label>
+            <label class="option">
+                <input id="radio-locale-zh-tr" name="locale" type="radio" onchange="onLocaleChange('zh-tr');">
+                <span></span>
+                zh-tr
+            </label>
+            <label class="option">
+                <input id="radio-locale-ja" name="locale" type="radio" onchange="onLocaleChange('ja');">
+                <span></span>
+                ja
+            </label>
+            <label class="option">
+                <input id="radio-locale-ko" name="locale" type="radio" onchange="onLocaleChange('ko');">
+                <span></span>
+                ko
+            </label>
+        </div>
+    </form>
+    <label class="content">
+        <textarea id="input-box" placeholder="请随便写点什么… / Please input something…"></textarea>
+    </label>
+    <script>
+        let inputBox = document.getElementById('input-box');
+
+        let configs = {
+            fontSize: 12,
+            widthMode: 'proportional',
+            locale: 'zh-cn',
+        };
+
+        function applyConfigs() {
+            localStorage.setItem('configs:playground', JSON.stringify(configs));
+            inputBox.className = 'font-' + configs.fontSize + 'px-' + configs.widthMode;
+            inputBox.setAttribute('lang', configs.locale);
+        }
+
+        function onFontSizeChange(fontSize) {
+            configs.fontSize = fontSize;
+            applyConfigs();
+        }
+
+        function onWidthModeChange(widthMode) {
+            configs.widthMode = widthMode;
+            applyConfigs();
+        }
+
+        function onLocaleChange(locale) {
+            configs.locale = locale;
+            applyConfigs();
+        }
+
+        (function () {
+            let json = localStorage.getItem('configs:playground');
+            if (json) {
+                Object.assign(configs, JSON.parse(json));
+            }
+            document.getElementById('radio-font-size-' + configs.fontSize).checked = true;
+            document.getElementById('radio-width-mode-' + configs.widthMode).checked = true;
+            document.getElementById('radio-locale-' + configs.locale).checked = true;
+            applyConfigs();
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>方舟像素字体 / Ark Pixel Font</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        @font-face {
+            font-family: ark-pixel-12px-monospaced-latin;
+            src: url("ark-pixel-12px-monospaced-latin.woff2?r=0.9660633250170994");
+        }
+        @font-face {
+            font-family: ark-pixel-10px-proportional-latin;
+            src: url("ark-pixel-10px-proportional-latin.woff2?r=0.9660633250170994");
+        }
+        .font-10px-proportional :lang(en) {
+            font-family: ark-pixel-10px-proportional-latin, sans-serif;
+        }
+        @font-face {
+            font-family: ark-pixel-10px-proportional-zh_cn;
+            src: url("ark-pixel-10px-proportional-zh_cn.woff2?r=0.9660633250170994");
+        }
+        .font-10px-proportional :lang(zh-cn) {
+            font-family: ark-pixel-10px-proportional-zh_cn, sans-serif;
+        }
+        @font-face {
+            font-family: ark-pixel-10px-proportional-zh_hk;
+            src: url("ark-pixel-10px-proportional-zh_hk.woff2?r=0.9660633250170994");
+        }
+        .font-10px-proportional :lang(zh-hk) {
+            font-family: ark-pixel-10px-proportional-zh_hk, sans-serif;
+        }
+        @font-face {
+            font-family: ark-pixel-10px-proportional-zh_tw;
+            src: url("ark-pixel-10px-proportional-zh_tw.woff2?r=0.9660633250170994");
+        }
+        .font-10px-proportional :lang(zh-tw) {
+            font-family: ark-pixel-10px-proportional-zh_tw, sans-serif;
+        }
+        @font-face {
+            font-family: ark-pixel-10px-proportional-zh_tr;
+            src: url("ark-pixel-10px-proportional-zh_tr.woff2?r=0.9660633250170994");
+        }
+        .font-10px-proportional :lang(zh-tr) {
+            font-family: ark-pixel-10px-proportional-zh_tr, sans-serif;
+        }
+        @font-face {
+            font-family: ark-pixel-10px-proportional-ja;
+            src: url("ark-pixel-10px-proportional-ja.woff2?r=0.9660633250170994");
+        }
+        .font-10px-proportional :lang(ja) {
+            font-family: ark-pixel-10px-proportional-ja, sans-serif;
+        }
+        @font-face {
+            font-family: ark-pixel-10px-proportional-ko;
+            src: url("ark-pixel-10px-proportional-ko.woff2?r=0.9660633250170994");
+        }
+        .font-10px-proportional :lang(ko) {
+            font-family: ark-pixel-10px-proportional-ko, sans-serif;
+        }
+        .font-10px-proportional .title {
+            font-size: 40px;
+            font-weight: normal;
+            line-height: 64px;
+            text-shadow: 2px 2px #4b4b4b;
+        }
+        .font-10px-proportional .text {
+            font-size: 20px;
+            line-height: 32px;
+            text-shadow: 2px 2px #4b4b4b;
+        }
+        .font-10px-proportional .copyright {
+            font-size: 20px;
+            line-height: 32px;
+            text-shadow: 2px 2px #4b4b4b;
+        }
+        .font-10px-proportional .link-group {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+        .font-10px-proportional .link-tab {
+            margin-left: 10px;
+            margin-right: 10px;
+            font-size: 20px;
+            line-height: 32px;
+            text-shadow: 2px 2px #4b4b4b;
+        }
+        @font-face {
+            font-family: ark-pixel-12px-proportional-latin;
+            src: url("ark-pixel-12px-proportional-latin.woff2?r=0.9660633250170994");
+        }
+        .font-12px-proportional :lang(en) {
+            font-family: ark-pixel-12px-proportional-latin, sans-serif;
+        }
+        @font-face {
+            font-family: ark-pixel-12px-proportional-zh_cn;
+            src: url("ark-pixel-12px-proportional-zh_cn.woff2?r=0.9660633250170994");
+        }
+        .font-12px-proportional :lang(zh-cn) {
+            font-family: ark-pixel-12px-proportional-zh_cn, sans-serif;
+        }
+        @font-face {
+            font-family: ark-pixel-12px-proportional-zh_hk;
+            src: url("ark-pixel-12px-proportional-zh_hk.woff2?r=0.9660633250170994");
+        }
+        .font-12px-proportional :lang(zh-hk) {
+            font-family: ark-pixel-12px-proportional-zh_hk, sans-serif;
+        }
+        @font-face {
+            font-family: ark-pixel-12px-proportional-zh_tw;
+            src: url("ark-pixel-12px-proportional-zh_tw.woff2?r=0.9660633250170994");
+        }
+        .font-12px-proportional :lang(zh-tw) {
+            font-family: ark-pixel-12px-proportional-zh_tw, sans-serif;
+        }
+        @font-face {
+            font-family: ark-pixel-12px-proportional-zh_tr;
+            src: url("ark-pixel-12px-proportional-zh_tr.woff2?r=0.9660633250170994");
+        }
+        .font-12px-proportional :lang(zh-tr) {
+            font-family: ark-pixel-12px-proportional-zh_tr, sans-serif;
+        }
+        @font-face {
+            font-family: ark-pixel-12px-proportional-ja;
+            src: url("ark-pixel-12px-proportional-ja.woff2?r=0.9660633250170994");
+        }
+        .font-12px-proportional :lang(ja) {
+            font-family: ark-pixel-12px-proportional-ja, sans-serif;
+        }
+        @font-face {
+            font-family: ark-pixel-12px-proportional-ko;
+            src: url("ark-pixel-12px-proportional-ko.woff2?r=0.9660633250170994");
+        }
+        .font-12px-proportional :lang(ko) {
+            font-family: ark-pixel-12px-proportional-ko, sans-serif;
+        }
+        .font-12px-proportional .title {
+            font-size: 48px;
+            font-weight: normal;
+            line-height: 72px;
+            text-shadow: 2px 2px #4b4b4b;
+        }
+        .font-12px-proportional .text {
+            font-size: 24px;
+            line-height: 36px;
+            text-shadow: 2px 2px #4b4b4b;
+        }
+        .font-12px-proportional .copyright {
+            font-size: 24px;
+            line-height: 36px;
+            text-shadow: 2px 2px #4b4b4b;
+        }
+        .font-12px-proportional .link-group {
+            margin-top: 6px;
+            margin-bottom: 6px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+        .font-12px-proportional .link-tab {
+            margin-left: 12px;
+            margin-right: 12px;
+            font-size: 24px;
+            line-height: 36px;
+            text-shadow: 2px 2px #4b4b4b;
+        }
+        @font-face {
+            font-family: ark-pixel-16px-proportional-latin;
+            src: url("ark-pixel-16px-proportional-latin.woff2?r=0.9660633250170994");
+        }
+        .font-16px-proportional :lang(en) {
+            font-family: ark-pixel-16px-proportional-latin, sans-serif;
+        }
+        @font-face {
+            font-family: ark-pixel-16px-proportional-zh_cn;
+            src: url("ark-pixel-16px-proportional-zh_cn.woff2?r=0.9660633250170994");
+        }
+        .font-16px-proportional :lang(zh-cn) {
+            font-family: ark-pixel-16px-proportional-zh_cn, sans-serif;
+        }
+        @font-face {
+            font-family: ark-pixel-16px-proportional-zh_hk;
+            src: url("ark-pixel-16px-proportional-zh_hk.woff2?r=0.9660633250170994");
+        }
+        .font-16px-proportional :lang(zh-hk) {
+            font-family: ark-pixel-16px-proportional-zh_hk, sans-serif;
+        }
+        @font-face {
+            font-family: ark-pixel-16px-proportional-zh_tw;
+            src: url("ark-pixel-16px-proportional-zh_tw.woff2?r=0.9660633250170994");
+        }
+        .font-16px-proportional :lang(zh-tw) {
+            font-family: ark-pixel-16px-proportional-zh_tw, sans-serif;
+        }
+        @font-face {
+            font-family: ark-pixel-16px-proportional-zh_tr;
+            src: url("ark-pixel-16px-proportional-zh_tr.woff2?r=0.9660633250170994");
+        }
+        .font-16px-proportional :lang(zh-tr) {
+            font-family: ark-pixel-16px-proportional-zh_tr, sans-serif;
+        }
+        @font-face {
+            font-family: ark-pixel-16px-proportional-ja;
+            src: url("ark-pixel-16px-proportional-ja.woff2?r=0.9660633250170994");
+        }
+        .font-16px-proportional :lang(ja) {
+            font-family: ark-pixel-16px-proportional-ja, sans-serif;
+        }
+        @font-face {
+            font-family: ark-pixel-16px-proportional-ko;
+            src: url("ark-pixel-16px-proportional-ko.woff2?r=0.9660633250170994");
+        }
+        .font-16px-proportional :lang(ko) {
+            font-family: ark-pixel-16px-proportional-ko, sans-serif;
+        }
+        .font-16px-proportional .title {
+            font-size: 64px;
+            font-weight: normal;
+            line-height: 96px;
+            text-shadow: 2px 2px #4b4b4b;
+        }
+        .font-16px-proportional .text {
+            font-size: 32px;
+            line-height: 48px;
+            text-shadow: 2px 2px #4b4b4b;
+        }
+        .font-16px-proportional .copyright {
+            font-size: 32px;
+            line-height: 48px;
+            text-shadow: 2px 2px #4b4b4b;
+        }
+        .font-16px-proportional .link-group {
+            margin-top: 8px;
+            margin-bottom: 8px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+        .font-16px-proportional .link-tab {
+            margin-left: 16px;
+            margin-right: 16px;
+            font-size: 32px;
+            line-height: 48px;
+            text-shadow: 2px 2px #4b4b4b;
+        }
+        @keyframes background-scrolling {
+            100% {
+                background-position: 128px 128px;
+            }
+        }
+        body {
+            color: white;
+            background-color: #1c82e5;
+            background-image: linear-gradient(45deg, dodgerblue 25%, transparent 25%, transparent 75%, dodgerblue 75%), linear-gradient(-45deg, dodgerblue 25%, transparent 25%, transparent 75%, dodgerblue 75%);
+            background-size: 128px 128px;
+            background-attachment: fixed;
+            animation: background-scrolling 4s infinite linear;
+        }
+        a {
+            color: white;
+        }
+        .options-group {
+            height: 36px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            background-color: royalblue;
+            box-shadow: 0 1px 8px rgba(75, 75, 75, 0.8);
+        }
+        .option {
+            height: 100%;
+            margin-left: 24px;
+            margin-right: 24px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            color: white;
+            font-family: ark-pixel-12px-monospaced-latin, sans-serif;
+            font-size: 24px;
+            line-height: 36px;
+        }
+        .option input[type="radio"] {
+            display: none;
+        }
+        .option input[type="radio"] + span {
+            width: 10px;
+            height: 10px;
+            margin-left: 12px;
+            margin-right: 12px;
+            border-width: 2px;
+            border-color: white;
+            border-style: solid;
+        }
+        .option input[type="radio"]:checked + span {
+            background-color: white;
+        }
+        #page {
+            margin-top: 64px;
+            margin-bottom: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+
+    <script charset="UTF-8" id="LA_COLLECT" src="https://sdk.51.la/js-sdk-pro.min.js"></script>
+    <script>LA.init({id: 'KDw2F6OnLoNDNl4L', ck: 'KDw2F6OnLoNDNl4L'});</script>
+</head>
+<body>
+    <form class="options-group">
+        <label class="option">
+            <input id="radio-font-size-10" name="font_size" type="radio" onchange="onFontSizeChange('10');">
+            <span></span>
+            10px
+        </label>
+        <label class="option">
+            <input id="radio-font-size-12" name="font_size" type="radio" onchange="onFontSizeChange('12');">
+            <span></span>
+            12px
+        </label>
+        <label class="option">
+            <input id="radio-font-size-16" name="font_size" type="radio" onchange="onFontSizeChange('16');">
+            <span></span>
+            16px
+        </label>
+    </form>
+    <div id="page">
+        <h1 class="title" lang="zh-cn">方舟像素字体 / Ark Pixel Font</h1>
+        <br>
+        <div class="text" lang="zh-cn">★ 开源的泛中日韩像素字体 ★</div>
+        <div class="link-group" lang="en">
+            <a class="link-tab" href="https://github.com/TakWolf/ark-pixel-font" target="_blank">github</a>
+            <a class="link-tab" href="https://takwolf.itch.io/ark-pixel-font" target="_blank">itch.io</a>
+            <a class="link-tab" href="https://discord.gg/3GKtPKtjdU" target="_blank">discord</a>
+        </div>
+        <br>
+        <div class="text" lang="zh-cn">我们度过的每个平凡的日常，也许就是连续发生的奇迹。</div>
+        <div class="text" lang="zh-tr">我們度過的每個平凡的日常，也許就是連續發生的奇蹟。</div>
+        <div class="text" lang="ja">日々、私たちが過ごしている日常は、実は奇跡の連続なのかもしれない。</div>
+        <div class="text" lang="en">THE QUICK BROWN FOX JUMPS OVER A LAZY DOG.</div>
+        <div class="text" lang="en">the quick brown fox jumps over a lazy dog.</div>
+        <div class="text" lang="en">0123456789</div>
+        <div class="text" lang="en">★☆☺☹♠♡♢♣♤♥♦♧☀☼♩♪♫♬☂☁⚓✈⚔☯</div>
+        <br>
+        <div class="link-group" lang="en">
+            <a class="link-tab" href="playground.html" target="_blank">playground</a>
+        </div>
+        <div class="link-group" lang="en">
+            <span class="link-tab">10px</span>
+            <a class="link-tab" href="alphabet-10px-monospaced.html" target="_blank">alphabet-monospaced</a>
+            <a class="link-tab" href="alphabet-10px-proportional.html" target="_blank">alphabet-proportional</a>
+            <a class="link-tab" href="demo-10px.html" target="_blank">demo</a>
+        </div>
+        <div class="link-group" lang="en">
+            <span class="link-tab">12px</span>
+            <a class="link-tab" href="alphabet-12px-monospaced.html" target="_blank">alphabet-monospaced</a>
+            <a class="link-tab" href="alphabet-12px-proportional.html" target="_blank">alphabet-proportional</a>
+            <a class="link-tab" href="demo-12px.html" target="_blank">demo</a>
+        </div>
+        <div class="link-group" lang="en">
+            <span class="link-tab">16px</span>
+            <a class="link-tab" href="alphabet-16px-monospaced.html" target="_blank">alphabet-monospaced</a>
+            <a class="link-tab" href="alphabet-16px-proportional.html" target="_blank">alphabet-proportional</a>
+            <a class="link-tab" href="demo-16px.html" target="_blank">demo</a>
+        </div>
+        <br>
+        <div class="copyright" lang="en">© 2021 TakWolf</div>
+    </div>
+    <script>
+        let page = document.getElementById('page');
+
+        let configs = {
+            fontSize: 12,
+        };
+
+        function applyConfigs() {
+            localStorage.setItem('configs:index', JSON.stringify(configs));
+            page.className = 'font-' + configs.fontSize + 'px-proportional';
+        }
+
+        function onFontSizeChange(fontSize) {
+            configs.fontSize = fontSize;
+            applyConfigs();
+        }
+
+        (function () {
+            let json = localStorage.getItem('configs:index');
+            if (json) {
+                Object.assign(configs, JSON.parse(json));
+            }
+            document.getElementById('radio-font-size-' + configs.fontSize).checked = true;
+            applyConfigs();
+        })();
+    </script>
+</body>
+</html>
