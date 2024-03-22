@@ -1,4 +1,4 @@
-name: Release
+name: Release 10px Proportional
 
 on:
   release:
@@ -22,8 +22,8 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Build
-      run: python ./build.py
+      run: python -m scripts.tasks.release_10px_proportional
     - name: Release
       uses: softprops/action-gh-release@v2
       with:
-        files: ./build/releases/*.zip
+        files: ./build/releases-10px-proportional/*.zip
