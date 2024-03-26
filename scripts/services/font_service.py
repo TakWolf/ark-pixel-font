@@ -139,7 +139,7 @@ class DesignContext:
                             assert glyph_file.glyph_width == self.font_config.size / 2 or glyph_file.glyph_width == self.font_config.size, f"Glyph data error: '{glyph_file.file_path}'"
 
                         if block is not None:
-                            if block.code_start == 0x4E00:  # CJK Unified Ideographs
+                            if 'CJK Unified Ideographs' in block.name:
                                 assert all(alpha == 0 for alpha in glyph_file.glyph_data[0]), f"Glyph data error: '{glyph_file.file_path}'"
                                 assert all(glyph_file.glyph_data[i][-1] == 0 for i in range(0, len(glyph_file.glyph_data))), f"Glyph data error: '{glyph_file.file_path}'"
 
