@@ -9,7 +9,7 @@
 [![Discord](https://img.shields.io/discord/949265373964947458?color=4E5AF0&logo=discord&logoColor=white&label=discord)](https://discord.gg/3GKtPKtjdU)
 [![QQ Group](https://img.shields.io/badge/QQ群-302383204-brightgreen?logo=tencentqq)](https://jq.qq.com/?_wv=1027&k=EXtKGHar)
 
-开源的泛中日韩像素字体。支持 10、12 和 16 像素。
+开源的泛中日韩像素字体，黑体无衬线风格，支持 10、12 和 16 像素。
 
 这个项目不仅提供了全部的字形源文件，也提供了构建字体所需要的完整程序。
 
@@ -94,11 +94,11 @@
 | 版本 | 含义 | 说明 |
 |---|---|---|
 | latin | 拉丁语 | 在非中日韩环境下使用，标点符号采用西文习惯写法。 |
-| zh_cn | 中文-中国大陆 | 字形采用中国大陆地区标准规范[《通用规范汉字表》](https://www.moe.gov.cn/jyb_sjzl/ziliao/A19/201306/t20130601_186002.html)中的写法。 |
-| zh_hk | 中文-香港特别行政区 | 字形采用香港地区教育规范[《常用字字形表》](https://zh.wikipedia.org/wiki/%E5%B8%B8%E7%94%A8%E5%AD%97%E5%AD%97%E5%BD%A2%E8%A1%A8)中的写法。 |
-| zh_tw | 中文-台湾地区 | 字形采用台湾地区教育规范[《国字标准字体》](https://zh.wikipedia.org/wiki/%E5%9C%8B%E5%AD%97%E6%A8%99%E6%BA%96%E5%AD%97%E9%AB%94)中的写法。 |
-| zh_tr | 中文-传统印刷 | 字形采用[「传统印刷体」](https://zh.wikipedia.org/wiki/%E8%88%8A%E5%AD%97%E5%BD%A2)写法，符合香港和台湾地区传统使用习惯。 |
-| ja | 日语 | 字形采用日本参考规范[《常用汉字表》](https://zh.wikipedia.org/wiki/%E5%B8%B8%E7%94%A8%E6%BC%A2%E5%AD%97)中的写法。 |
+| zh_cn | 中文-中国大陆 | 字形采用中国大陆地区标准规范 [《通用规范汉字表》](https://www.moe.gov.cn/jyb_sjzl/ziliao/A19/201306/t20130601_186002.html) 中的写法。 |
+| zh_hk | 中文-香港特别行政区 | 字形采用香港地区教育规范 [《常用字字形表》](https://zh.wikipedia.org/wiki/%E5%B8%B8%E7%94%A8%E5%AD%97%E5%AD%97%E5%BD%A2%E8%A1%A8) 中的写法。 |
+| zh_tw | 中文-台湾地区 | 字形采用台湾地区教育规范 [《国字标准字体》](https://zh.wikipedia.org/wiki/%E5%9C%8B%E5%AD%97%E6%A8%99%E6%BA%96%E5%AD%97%E9%AB%94) 中的写法。 |
+| zh_tr | 中文-传统印刷 | 字形采用 [「传统印刷体」](https://zh.wikipedia.org/wiki/%E8%88%8A%E5%AD%97%E5%BD%A2) 写法，符合香港和台湾地区传统使用习惯。 |
+| ja | 日语 | 字形采用日本参考规范 [《常用汉字表》](https://zh.wikipedia.org/wiki/%E5%B8%B8%E7%94%A8%E6%BC%A2%E5%AD%97) 中的写法。 |
 | ko | 朝鲜语 | |
 
 ## 下载
@@ -155,11 +155,11 @@ brew install font-ark-pixel-16px-proportional
 
 ### 字体
 
-使用[「SIL 开放字体许可证第 1.1 版」](LICENSE-OFL)授权，保留字体名称「方舟像素 / Ark Pixel」。
+使用 [「SIL 开放字体许可证第 1.1 版」](LICENSE-OFL) 授权，保留字体名称「方舟像素 / Ark Pixel」。
 
 ### 构建程序
 
-使用[「MIT 许可证」](LICENSE-MIT)授权。
+使用 [「MIT 许可证」](LICENSE-MIT) 授权。
 
 ## 官方社区
 
