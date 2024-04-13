@@ -30,7 +30,7 @@ font_sizes = [10, 12, 16]
 
 font_configs = FontConfig.load_all()
 
-font_formats = ['otf', 'woff2', 'ttf', 'bdf']
+font_formats = ['otf', 'woff2', 'ttf', 'bdf', 'pcf']
 
 font_collection_formats = ['otc', 'ttc']
 

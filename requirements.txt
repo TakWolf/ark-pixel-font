@@ -1,4 +1,4 @@
-pixel-font-builder==0.0.16
+pixel-font-builder==0.0.18
 unidata-blocks==0.0.9
 character-encoding-utils==0.0.6
 pypng==0.20220715.0

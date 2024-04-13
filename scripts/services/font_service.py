@@ -334,6 +334,14 @@ class FontContext:
             builder.save_bdf(file_path)
             logger.info("Make font file: '%s'", file_path)
 
+    def make_pcf(self):
+        fs_util.make_dir(path_define.outputs_dir)
+        for language_flavor in configs.language_flavors:
+            builder = self._get_builder(language_flavor)
+            file_path = os.path.join(path_define.outputs_dir, self.design_context.font_config.get_font_file_name(self.width_mode, language_flavor, 'pcf'))
+            builder.save_pcf(file_path)
+            logger.info("Make font file: '%s'", file_path)
+
     def _get_collection_builder(self) -> FontCollectionBuilder:
         if self._collection_builder is None:
             collection_builder = FontCollectionBuilder()
