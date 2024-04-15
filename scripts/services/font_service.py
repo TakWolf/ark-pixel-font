@@ -256,8 +256,8 @@ def _create_builder(
     builder.horizontal_header.ascent = layout_param.ascent
     builder.horizontal_header.descent = layout_param.descent
 
-    builder.vertical_header.ascent = layout_param.ascent
-    builder.vertical_header.descent = layout_param.descent
+    builder.vertical_header.ascent = math.ceil(layout_param.line_height / 2)
+    builder.vertical_header.descent = math.floor(layout_param.line_height / 2)
 
     builder.os2_config.x_height = layout_param.x_height
     builder.os2_config.cap_height = layout_param.cap_height
@@ -271,7 +271,7 @@ def _create_builder(
             glyph = glyph_pool[glyph_file.file_path]
         else:
             horizontal_origin_y = math.floor((layout_param.ascent + layout_param.descent - glyph_file.glyph_height) / 2)
-            vertical_origin_y = (glyph_file.glyph_height - design_context.font_config.size) // 2
+            vertical_origin_y = (design_context.font_config.size - glyph_file.glyph_height) // 2 - 1
             glyph = Glyph(
                 name=glyph_file.glyph_name,
                 advance_width=glyph_file.glyph_width,
