@@ -10,7 +10,8 @@ from pixel_font_builder.opentype import Flavor
 
 from scripts import configs
 from scripts.configs import path_define, FontConfig
-from scripts.utils import fs_util, glyph_util
+from scripts.utils import fs_util
+from scripts.utils.bitmap_util import CroppedBitmap
 
 logger = logging.getLogger('font_service')
 
@@ -38,7 +39,7 @@ class GlyphFile:
 
     def __init__(self, file_path: str, code_point: int, language_flavors: list[str]):
         self.file_path = file_path
-        self.glyph_data, self.glyph_width, self.glyph_height = glyph_util.load_glyph_data_from_png(file_path)
+        self.bitmap = CroppedBitmap.load(file_path)
         self.code_point = code_point
         self.language_flavors = language_flavors
 
@@ -126,27 +127,27 @@ class DesignContext:
                             file_dir = os.path.join(file_dir, f'{hex_name[0:-2]}-')
 
                     if width_mode_dir_name == 'common' or width_mode_dir_name == 'monospaced':
-                        assert glyph_file.glyph_height == self.font_config.size, f"Glyph data error: '{glyph_file.file_path}'"
+                        assert glyph_file.bitmap.raw_height == self.font_config.size, f"Glyph data error: '{glyph_file.file_path}'"
 
                         # H/Halfwidth or Na/Narrow
                         if east_asian_width == 'H' or east_asian_width == 'Na':
-                            assert glyph_file.glyph_width == self.font_config.size / 2, f"Glyph data error: '{glyph_file.file_path}'"
+                            assert glyph_file.bitmap.raw_width == self.font_config.size / 2, f"Glyph data error: '{glyph_file.file_path}'"
                         # F/Fullwidth or W/Wide
                         elif east_asian_width == 'F' or east_asian_width == 'W':
-                            assert glyph_file.glyph_width == self.font_config.size, f"Glyph data error: '{glyph_file.file_path}'"
+                            assert glyph_file.bitmap.raw_width == self.font_config.size, f"Glyph data error: '{glyph_file.file_path}'"
                         # A/Ambiguous or N/Neutral
                         else:
-                            assert glyph_file.glyph_width == self.font_config.size / 2 or glyph_file.glyph_width == self.font_config.size, f"Glyph data error: '{glyph_file.file_path}'"
+                            assert glyph_file.bitmap.raw_width == self.font_config.size / 2 or glyph_file.bitmap.raw_width == self.font_config.size, f"Glyph data error: '{glyph_file.file_path}'"
 
                         if block is not None:
                             if 'CJK Unified Ideographs' in block.name:
-                                assert all(alpha == 0 for alpha in glyph_file.glyph_data[0]), f"Glyph data error: '{glyph_file.file_path}'"
-                                assert all(glyph_file.glyph_data[i][-1] == 0 for i in range(0, len(glyph_file.glyph_data))), f"Glyph data error: '{glyph_file.file_path}'"
+                                assert all(glyph_file.bitmap.index_raw_data(raw_x, 0) == 0 for raw_x in range(glyph_file.bitmap.raw_width)), f"Glyph data error: '{glyph_file.file_path}'"
+                                assert all(glyph_file.bitmap.index_raw_data(-1, raw_y) == 0 for raw_y in range(glyph_file.bitmap.raw_height)), f"Glyph data error: '{glyph_file.file_path}'"
 
                     if width_mode_dir_name == 'proportional':
-                        assert glyph_file.glyph_height == self.font_config.line_height, f"Glyph data error: '{glyph_file.file_path}'"
+                        assert glyph_file.bitmap.raw_height == self.font_config.line_height, f"Glyph data error: '{glyph_file.file_path}'"
 
-                    glyph_util.save_glyph_data_to_png(glyph_file.glyph_data, glyph_file.file_path)
+                    glyph_file.bitmap.save(glyph_file.file_path)
 
                     file_path = os.path.join(file_dir, file_name)
                     if glyph_file.file_path != file_path:
@@ -270,15 +271,16 @@ def _create_builder(
         if glyph_file.file_path in glyph_pool:
             glyph = glyph_pool[glyph_file.file_path]
         else:
-            horizontal_origin_y = math.floor((layout_param.ascent + layout_param.descent - glyph_file.glyph_height) / 2)
-            vertical_origin_y = (design_context.font_config.size - glyph_file.glyph_height) // 2 - 1
+            horizontal_origin_x = glyph_file.bitmap.cropped_left
+            horizontal_origin_y = math.floor((layout_param.ascent + layout_param.descent - glyph_file.bitmap.raw_height) / 2) + glyph_file.bitmap.cropped_bottom
+            vertical_origin_y = (design_context.font_config.size - glyph_file.bitmap.raw_height) // 2 - 1 + glyph_file.bitmap.cropped_top
             glyph = Glyph(
                 name=glyph_file.glyph_name,
-                advance_width=glyph_file.glyph_width,
+                advance_width=glyph_file.bitmap.raw_width,
                 advance_height=design_context.font_config.size,
-                horizontal_origin=(0, horizontal_origin_y),
+                horizontal_origin=(horizontal_origin_x, horizontal_origin_y),
                 vertical_origin_y=vertical_origin_y,
-                data=glyph_file.glyph_data,
+                data=glyph_file.bitmap.data,
             )
             glyph_pool[glyph_file.file_path] = glyph
         builder.glyphs.append(glyph)
