@@ -177,6 +177,11 @@ brew install font-ark-pixel-16px-proportional
 - [Jinja](https://github.com/pallets/jinja)
 - [GitPython](https://github.com/gitpython-developers/GitPython)
 
+## 字形依赖
+
+- [像素字形 - 谚文音节](https://github.com/TakWolf/pixel-glyphs-hangul-syllables)
+- [像素字形 - 盲文图案](https://github.com/TakWolf/pixel-glyphs-braille-patterns)
+
 ## 外部工具
 
 - [SYMBL - Unicode 查询工具](https://symbl.cc)
