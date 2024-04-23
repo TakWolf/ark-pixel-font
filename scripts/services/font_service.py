@@ -249,9 +249,6 @@ def _create_builder(
     builder.meta_info.designer_url = FontConfig.DESIGNER_URL
     builder.meta_info.license_url = FontConfig.LICENSE_URL
 
-    if is_collection:
-        builder.opentype_config.cff_family_name = f'{FontConfig.FAMILY_NAME} {design_context.font_config.size}px {width_mode.capitalize()}'
-
     layout_param = design_context.font_config.layout_params[width_mode]
 
     builder.horizontal_header.ascent = layout_param.ascent
