@@ -107,7 +107,6 @@
 
 - [GitHub Releases](https://github.com/TakWolf/ark-pixel-font/releases)
 - [itch.io](https://takwolf.itch.io/ark-pixel-font)
-- [123云盘](https://www.123pan.com/s/qKSojv-QUVSh.html)
 
 目前提供 `.otf`、`.ttf`、`.woff2`、`.bdf`、`.pcf` 五种单字体格式，以及 `.otc`、`.ttc` 两种集合字体格式。
 
