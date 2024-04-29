@@ -1,9 +1,9 @@
-import io
 import logging
 import os
 from collections import defaultdict
 from collections.abc import Callable
-from typing import IO
+from io import StringIO
+from typing import TextIO
 
 import unidata_blocks
 from character_encoding_utils import gb2312, big5, shiftjis, ksx1001
@@ -80,7 +80,7 @@ def _get_ksx1001_chr_count_infos(alphabet: set[str]) -> list[tuple[str, int, int
     ]
 
 
-def _write_unicode_chr_count_infos_table(output: IO, infos: list[tuple[UnicodeBlock, int]]):
+def _write_unicode_chr_count_infos_table(output: TextIO, infos: list[tuple[UnicodeBlock, int]]):
     output.write('| 区块范围 | 区块名称 | 区块含义 | 完成数 | 缺失数 | 进度 |\n')
     output.write('|---|---|---|---:|---:|---:|\n')
     for block, count in infos:
@@ -94,7 +94,7 @@ def _write_unicode_chr_count_infos_table(output: IO, infos: list[tuple[UnicodeBl
         output.write(f'| {code_point_range} | {name} | {name_zh} | {count} / {total} | {missing} | {progress:.2%} {finished_emoji} |\n')
 
 
-def _write_locale_chr_count_infos_table(output: IO, infos: list[tuple[str, int, int]]):
+def _write_locale_chr_count_infos_table(output: TextIO, infos: list[tuple[str, int, int]]):
     output.write('| 区块名称 | 完成数 | 缺失数 | 进度 |\n')
     output.write('|---|---:|---:|---:|\n')
     for name, count, total in infos:
@@ -107,7 +107,7 @@ def _write_locale_chr_count_infos_table(output: IO, infos: list[tuple[str, int, 
 def make_info_file(design_context: DesignContext, width_mode: str):
     alphabet = design_context.get_alphabet(width_mode)
 
-    output = io.StringIO()
+    output = StringIO()
     output.write(f'# {FontConfig.FAMILY_NAME} {design_context.font_config.size}px {'等宽模式' if width_mode == 'monospaced' else '比例模式'}\n')
     output.write('\n')
     output.write('## 基本信息\n')
