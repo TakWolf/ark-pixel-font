@@ -257,8 +257,8 @@ def _create_builder(
     builder.vertical_header.ascent = math.ceil(layout_param.line_height / 2)
     builder.vertical_header.descent = math.floor(layout_param.line_height / 2)
 
-    builder.os2_config.x_height = layout_param.x_height
-    builder.os2_config.cap_height = layout_param.cap_height
+    builder.os2_configs.x_height = layout_param.x_height
+    builder.os2_configs.cap_height = layout_param.cap_height
 
     character_mapping = design_context.get_character_mapping(width_mode, language_flavor)
     builder.character_mapping.update(character_mapping)
@@ -277,7 +277,7 @@ def _create_builder(
                 advance_height=design_context.font_config.size,
                 horizontal_origin=(horizontal_origin_x, horizontal_origin_y),
                 vertical_origin_y=vertical_origin_y,
-                data=glyph_file.bitmap.data,
+                bitmap=glyph_file.bitmap.data,
             )
             glyph_pool[glyph_file.file_path] = glyph
         builder.glyphs.append(glyph)
@@ -346,7 +346,7 @@ class FontContext:
             collection_builder = FontCollectionBuilder()
             for language_flavor in configs.language_flavors:
                 builder = _create_builder(self.design_context, self._glyph_pool, self.width_mode, language_flavor, is_collection=True)
-                collection_builder.font_builders.append(builder)
+                collection_builder.append(builder)
             self._collection_builder = collection_builder
         return self._collection_builder
 
