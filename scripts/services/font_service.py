@@ -5,7 +5,7 @@ import re
 import unicodedata
 
 import unidata_blocks
-from pixel_font_builder import FontBuilder, FontCollectionBuilder, Glyph, StyleName, SerifMode
+from pixel_font_builder import FontBuilder, FontCollectionBuilder, WeightName, SerifStyle, SlantStyle, Glyph
 from pixel_font_builder.opentype import Flavor
 
 from scripts import configs
@@ -229,15 +229,24 @@ def _create_builder(
         language_flavor: str,
         is_collection: bool,
 ) -> FontBuilder:
-    builder = FontBuilder(design_context.font_config.size)
+    layout_param = design_context.font_config.layout_params[width_mode]
 
-    builder.created_time = FontConfig.VERSION_TIME
-    builder.modified_time = FontConfig.VERSION_TIME
+    builder = FontBuilder()
+    builder.font_metric.font_size = design_context.font_config.size
+    builder.font_metric.horizontal_layout.ascent = layout_param.ascent
+    builder.font_metric.horizontal_layout.descent = layout_param.descent
+    builder.font_metric.vertical_layout.ascent = math.ceil(layout_param.line_height / 2)
+    builder.font_metric.vertical_layout.descent = math.floor(layout_param.line_height / 2)
+    builder.font_metric.x_height = layout_param.x_height
+    builder.font_metric.cap_height = layout_param.cap_height
 
     builder.meta_info.version = FontConfig.VERSION
+    builder.meta_info.created_time = FontConfig.VERSION_TIME
+    builder.meta_info.modified_time = FontConfig.VERSION_TIME
     builder.meta_info.family_name = f'{FontConfig.FAMILY_NAME} {design_context.font_config.size}px {width_mode.capitalize()} {language_flavor}'
-    builder.meta_info.style_name = StyleName.REGULAR
-    builder.meta_info.serif_mode = SerifMode.SANS_SERIF
+    builder.meta_info.weight_name = WeightName.REGULAR
+    builder.meta_info.serif_style = SerifStyle.SANS_SERIF
+    builder.meta_info.slant_style = SlantStyle.NORMAL
     builder.meta_info.width_mode = width_mode.capitalize()
     builder.meta_info.manufacturer = FontConfig.MANUFACTURER
     builder.meta_info.designer = FontConfig.DESIGNER
@@ -247,17 +256,6 @@ def _create_builder(
     builder.meta_info.vendor_url = FontConfig.VENDOR_URL
     builder.meta_info.designer_url = FontConfig.DESIGNER_URL
     builder.meta_info.license_url = FontConfig.LICENSE_URL
-
-    layout_param = design_context.font_config.layout_params[width_mode]
-
-    builder.horizontal_header.ascent = layout_param.ascent
-    builder.horizontal_header.descent = layout_param.descent
-
-    builder.vertical_header.ascent = math.ceil(layout_param.line_height / 2)
-    builder.vertical_header.descent = math.floor(layout_param.line_height / 2)
-
-    builder.os2_configs.x_height = layout_param.x_height
-    builder.os2_configs.cap_height = layout_param.cap_height
 
     character_mapping = design_context.get_character_mapping(width_mode, language_flavor)
     builder.character_mapping.update(character_mapping)
