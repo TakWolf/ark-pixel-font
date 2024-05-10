@@ -108,7 +108,7 @@ def make_info_file(design_context: DesignContext, width_mode: str):
     alphabet = design_context.get_alphabet(width_mode)
 
     output = StringIO()
-    output.write(f'# {FontConfig.FAMILY_NAME} {design_context.font_config.size}px {'等宽模式' if width_mode == 'monospaced' else '比例模式'}\n')
+    output.write(f'# {FontConfig.FAMILY_NAME} {design_context.font_config.font_size}px {'等宽模式' if width_mode == 'monospaced' else '比例模式'}\n')
     output.write('\n')
     output.write('## 基本信息\n')
     output.write('\n')

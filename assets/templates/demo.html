@@ -1,5 +1,5 @@
 {% extends "common/base.html" %}
-{% block title %}Ark Pixel - Demo {{ font_config.size }}px{% endblock %}
+{% block title %}Ark Pixel - Demo {{ font_config.font_size }}px{% endblock %}
 {% block style %}
     <style>
         * {
@@ -9,7 +9,7 @@
         }
         {% for width_mode in configs.width_modes %}
         {% for locale, language_flavor in configs.locale_to_language_flavor.items() %}
-        {% with font_family = 'ark-pixel-' ~ font_config.size ~ 'px-' ~ width_mode ~ '-' ~ language_flavor %}
+        {% with font_family = 'ark-pixel-' ~ font_config.font_size ~ 'px-' ~ width_mode ~ '-' ~ language_flavor %}
         @font-face {
             font-family: {{ font_family }};
             src: url("{{ font_config.get_font_file_name(width_mode, language_flavor, 'woff2') }}?r={{ build_random_key }}");
@@ -20,7 +20,7 @@
         {% endwith %}
         {% endfor %}
         {% endfor %}
-        {% if font_config.size != 12 %}
+        {% if font_config.font_size != 12 %}
         @font-face {
             font-family: ark-pixel-12px-monospaced-latin;
             src: url("{{ configs.font_configs[12].get_font_file_name('monospaced', 'latin', 'woff2') }}?r={{ build_random_key }}");
@@ -117,16 +117,16 @@
             }
         }
         .title {
-            margin-top: {{ font_config.size * 4 }}px;
-            margin-bottom: {{ font_config.size * 2 }}px;
-            font-size: {{ font_config.size * 3 }}px;
+            margin-top: {{ font_config.font_size * 4 }}px;
+            margin-bottom: {{ font_config.font_size * 2 }}px;
+            font-size: {{ font_config.font_size * 3 }}px;
             font-weight: normal;
             line-height: {{ font_config.line_height * 3 }}px;
         }
         .content {
-            margin-top: {{ font_config.size * 2 }}px;
-            margin-bottom: {{ font_config.size * 2 }}px;
-            font-size: {{ font_config.size * 2 }}px;
+            margin-top: {{ font_config.font_size * 2 }}px;
+            margin-bottom: {{ font_config.font_size * 2 }}px;
+            font-size: {{ font_config.font_size * 2 }}px;
             line-height: {{ font_config.line_height * 2 }}px;
         }
     </style>
@@ -155,7 +155,7 @@
         };
 
         function applyConfigs() {
-            localStorage.setItem('configs:demo-{{ font_config.size }}px', JSON.stringify(configs));
+            localStorage.setItem('configs:demo-{{ font_config.font_size }}px', JSON.stringify(configs));
             page.className = 'font-' + configs.widthMode;
             document.body.className = 'theme-' + configs.theme;
         }
@@ -171,7 +171,7 @@
         }
 
         (function () {
-            let json = localStorage.getItem('configs:demo-{{ font_config.size }}px');
+            let json = localStorage.getItem('configs:demo-{{ font_config.font_size }}px');
             if (json) {
                 Object.assign(configs, JSON.parse(json));
             }

@@ -9,17 +9,17 @@
         }
         {% for font_config in configs.font_configs.values() %}
         {% for width_mode in configs.width_modes %}
-        .font-{{ font_config.size }}px-{{ width_mode }} {
-            font-size: {{ font_config.size * 2 }}px;
+        .font-{{ font_config.font_size }}px-{{ width_mode }} {
+            font-size: {{ font_config.font_size * 2 }}px;
             line-height: {{ font_config.line_height * 2 }}px;
         }
         {% for locale, language_flavor in configs.locale_to_language_flavor.items() %}
-        {% with font_family = 'ark-pixel-' ~ font_config.size ~ 'px-' ~ width_mode ~ '-' ~ language_flavor %}
+        {% with font_family = 'ark-pixel-' ~ font_config.font_size ~ 'px-' ~ width_mode ~ '-' ~ language_flavor %}
         @font-face {
             font-family: {{ font_family }};
             src: url("{{ font_config.get_font_file_name(width_mode, language_flavor, 'woff2') }}?r={{ build_random_key }}");
         }
-        .font-{{ font_config.size }}px-{{ width_mode }}:lang({{ locale }}) {
+        .font-{{ font_config.font_size }}px-{{ width_mode }}:lang({{ locale }}) {
             font-family: {{ font_family }}, serif;
         }
         {% endwith %}
@@ -88,9 +88,9 @@
         <div class="options-group">
             {% for font_config in configs.font_configs.values() %}
             <label class="option">
-                <input id="radio-font-size-{{ font_config.size }}" name="font_size" type="radio" onchange="onFontSizeChange('{{ font_config.size }}');">
+                <input id="radio-font-size-{{ font_config.font_size }}" name="font_size" type="radio" onchange="onFontSizeChange('{{ font_config.font_size }}');">
                 <span></span>
-                {{ font_config.size }}px
+                {{ font_config.font_size }}px
             </label>
             {% endfor %}
         </div>

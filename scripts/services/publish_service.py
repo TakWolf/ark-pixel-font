@@ -14,7 +14,7 @@ logger = logging.getLogger('publish_service')
 
 def make_release_zips(font_config: FontConfig, width_mode: str, special_folder: bool = False):
     if special_folder:
-        releases_dir = f'{path_define.releases_dir}-{font_config.size}px-{width_mode}'
+        releases_dir = f'{path_define.releases_dir}-{font_config.font_size}px-{width_mode}'
     else:
         releases_dir = path_define.releases_dir
     fs_util.make_dir(releases_dir)

@@ -1,5 +1,5 @@
 {% extends "common/base.html" %}
-{% block title %}Ark Pixel - Alphabet {{ font_config.size }}px {{ width_mode }}{% endblock %}
+{% block title %}Ark Pixel - Alphabet {{ font_config.font_size }}px {{ width_mode }}{% endblock %}
 {% block style %}
     <style>
         * {
@@ -8,7 +8,7 @@
             box-sizing: border-box;
         }
         {% for locale, language_flavor in configs.locale_to_language_flavor.items() %}
-        {% with font_family = 'ark-pixel-' ~ font_config.size ~ 'px-' ~ width_mode ~ '-' ~ language_flavor %}
+        {% with font_family = 'ark-pixel-' ~ font_config.font_size ~ 'px-' ~ width_mode ~ '-' ~ language_flavor %}
         @font-face {
             font-family: {{ font_family }};
             src: url("{{ font_config.get_font_file_name(width_mode, language_flavor, 'woff2') }}?r={{ build_random_key }}");
@@ -18,7 +18,7 @@
         }
         {% endwith %}
         {% endfor %}
-        {% if font_config.size != 12 or width_mode != 'monospaced' %}
+        {% if font_config.font_size != 12 or width_mode != 'monospaced' %}
         @font-face {
             font-family: ark-pixel-12px-monospaced-latin;
             src: url("{{ configs.font_configs[12].get_font_file_name('monospaced', 'latin', 'woff2') }}?r={{ build_random_key }}");
@@ -65,17 +65,17 @@
         #content {
             margin-top: 36px;
             color: #4b4b4b;
-            font-size: {{ font_config.size * 4 }}px;
-            line-height: {{ font_config.size * 4 }}px;
+            font-size: {{ font_config.font_size * 4 }}px;
+            line-height: {{ font_config.font_size * 4 }}px;
             word-break: break-all;
             background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.1) 8%, transparent 8%), linear-gradient(180deg, transparent 96%, rgba(0, 0, 0, 0.1) 96%);
-            background-size: {{ font_config.size * 2 }}px {{ font_config.size * 4 }}px;
+            background-size: {{ font_config.font_size * 2 }}px {{ font_config.font_size * 4 }}px;
         }
         {% else %}
         #content {
             margin-top: 36px;
             color: #4b4b4b;
-            font-size: {{ font_config.size * 4 }}px;
+            font-size: {{ font_config.font_size * 4 }}px;
             line-height: {{ font_config.line_height * 4 }}px;
             word-break: break-all;
             background-image: linear-gradient(180deg, transparent 96%, rgba(0, 0, 0, 0.1) 96%);
@@ -111,7 +111,7 @@
         };
 
         function applyConfigs() {
-            localStorage.setItem('configs:alphabet-{{ font_config.size }}px-{{ width_mode }}', JSON.stringify(configs));
+            localStorage.setItem('configs:alphabet-{{ font_config.font_size }}px-{{ width_mode }}', JSON.stringify(configs));
             content.setAttribute('lang', configs.locale);
         }
 
@@ -121,7 +121,7 @@
         }
 
         (function () {
-            let json = localStorage.getItem('configs:alphabet-{{ font_config.size }}px-{{ width_mode }}');
+            let json = localStorage.getItem('configs:alphabet-{{ font_config.font_size }}px-{{ width_mode }}');
             if (json) {
                 Object.assign(configs, JSON.parse(json));
             }

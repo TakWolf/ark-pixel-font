@@ -22,7 +22,7 @@ def _load_alphabet(font_config: FontConfig, width_mode: str) -> list[str]:
 
 def _load_font(font_config: FontConfig, width_mode: str, language_flavor: str, scale: int = 1) -> FreeTypeFont:
     file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name(width_mode, language_flavor, 'woff2'))
-    return ImageFont.truetype(file_path, font_config.size * scale)
+    return ImageFont.truetype(file_path, font_config.font_size * scale)
 
 
 def _draw_text(
@@ -84,16 +84,16 @@ def make_preview_image_file(font_config: FontConfig):
     font_zh_tr = _load_font(font_config, 'proportional', 'zh_tr')
     font_ja = _load_font(font_config, 'proportional', 'ja')
 
-    image = Image.new('RGBA', (font_config.size * 27, font_config.size * 2 + font_config.line_height * 9), (255, 255, 255, 255))
-    _draw_text(image, (font_config.size, font_config.size), '方舟像素字体 / Ark Pixel Font', font_zh_cn)
-    _draw_text(image, (font_config.size, font_config.size + font_config.line_height), '我们度过的每个平凡的日常，也许就是连续发生的奇迹。', font_zh_cn)
-    _draw_text(image, (font_config.size, font_config.size + font_config.line_height * 2), '我們度過的每個平凡的日常，也許就是連續發生的奇蹟。', font_zh_tr)
-    _draw_text(image, (font_config.size, font_config.size + font_config.line_height * 3), '日々、私たちが過ごしている日常は、', font_ja)
-    _draw_text(image, (font_config.size, font_config.size + font_config.line_height * 4), '実は奇跡の連続なのかもしれない。', font_ja)
-    _draw_text(image, (font_config.size, font_config.size + font_config.line_height * 5), 'THE QUICK BROWN FOX JUMPS OVER A LAZY DOG.', font_latin)
-    _draw_text(image, (font_config.size, font_config.size + font_config.line_height * 6), 'the quick brown fox jumps over a lazy dog.', font_latin)
-    _draw_text(image, (font_config.size, font_config.size + font_config.line_height * 7), '0123456789', font_latin)
-    _draw_text(image, (font_config.size, font_config.size + font_config.line_height * 8), '★☆☺☹♠♡♢♣♤♥♦♧☀☼♩♪♫♬☂☁⚓✈⚔☯', font_latin)
+    image = Image.new('RGBA', (font_config.font_size * 27, font_config.font_size * 2 + font_config.line_height * 9), (255, 255, 255, 255))
+    _draw_text(image, (font_config.font_size, font_config.font_size), '方舟像素字体 / Ark Pixel Font', font_zh_cn)
+    _draw_text(image, (font_config.font_size, font_config.font_size + font_config.line_height), '我们度过的每个平凡的日常，也许就是连续发生的奇迹。', font_zh_cn)
+    _draw_text(image, (font_config.font_size, font_config.font_size + font_config.line_height * 2), '我們度過的每個平凡的日常，也許就是連續發生的奇蹟。', font_zh_tr)
+    _draw_text(image, (font_config.font_size, font_config.font_size + font_config.line_height * 3), '日々、私たちが過ごしている日常は、', font_ja)
+    _draw_text(image, (font_config.font_size, font_config.font_size + font_config.line_height * 4), '実は奇跡の連続なのかもしれない。', font_ja)
+    _draw_text(image, (font_config.font_size, font_config.font_size + font_config.line_height * 5), 'THE QUICK BROWN FOX JUMPS OVER A LAZY DOG.', font_latin)
+    _draw_text(image, (font_config.font_size, font_config.font_size + font_config.line_height * 6), 'the quick brown fox jumps over a lazy dog.', font_latin)
+    _draw_text(image, (font_config.font_size, font_config.font_size + font_config.line_height * 7), '0123456789', font_latin)
+    _draw_text(image, (font_config.font_size, font_config.font_size + font_config.line_height * 8), '★☆☺☹♠♡♢♣♤♥♦♧☀☼♩♪♫♬☂☁⚓✈⚔☯', font_latin)
     image = image.resize((image.width * 2, image.height * 2), Image.Resampling.NEAREST)
 
     fs_util.make_dir(path_define.outputs_dir)

@@ -42,47 +42,47 @@ class FontConfig:
         return {font_size: FontConfig.load(font_size) for font_size in configs.font_sizes}
 
     @staticmethod
-    def load(size: int) -> 'FontConfig':
-        config_file_path = os.path.join(path_define.glyphs_dir, str(size), 'config.toml')
+    def load(font_size: int) -> 'FontConfig':
+        config_file_path = os.path.join(path_define.glyphs_dir, str(font_size), 'config.toml')
         config_data: dict = fs_util.read_toml(config_file_path)['font']
-        assert size == config_data['size'], f"Config 'size' error: '{config_file_path}'"
+        assert font_size == config_data['size'], f"Config 'size' error: '{config_file_path}'"
 
         layout_params = {}
         for width_mode in configs.width_modes:
             layout_param = LayoutParam.from_data(config_data[width_mode])
             if width_mode == 'monospaced':
-                assert layout_param.line_height == size, f"Config 'monospaced.line_height' error: '{config_file_path}'"
+                assert layout_param.line_height == font_size, f"Config 'monospaced.line_height' error: '{config_file_path}'"
             else:
-                assert (layout_param.line_height - size) % 2 == 0, f"Config 'proportional.line_height' error: '{config_file_path}'"
+                assert (layout_param.line_height - font_size) % 2 == 0, f"Config 'proportional.line_height' error: '{config_file_path}'"
             layout_params[width_mode] = layout_param
 
-        return FontConfig(size, layout_params)
+        return FontConfig(font_size, layout_params)
 
-    def __init__(self, size: int, layout_params: dict[str, LayoutParam]):
-        self.size = size
+    def __init__(self, font_size: int, layout_params: dict[str, LayoutParam]):
+        self.font_size = font_size
         self.layout_params = layout_params
 
-        self.demo_html_file_name = f'demo-{size}px.html'
-        self.preview_image_file_name = f'preview-{size}px.png'
+        self.demo_html_file_name = f'demo-{font_size}px.html'
+        self.preview_image_file_name = f'preview-{font_size}px.png'
 
     @property
     def line_height(self) -> int:
         return self.layout_params['proportional'].line_height
 
     def get_font_file_name(self, width_mode: str, language_flavor: str, font_format: str) -> str:
-        return f'{FontConfig.OUTPUTS_NAME}-{self.size}px-{width_mode}-{language_flavor}.{font_format}'
+        return f'{FontConfig.OUTPUTS_NAME}-{self.font_size}px-{width_mode}-{language_flavor}.{font_format}'
 
     def get_font_collection_file_name(self, width_mode: str, font_format: str) -> str:
-        return f'{FontConfig.OUTPUTS_NAME}-{self.size}px-{width_mode}.{font_format}'
+        return f'{FontConfig.OUTPUTS_NAME}-{self.font_size}px-{width_mode}.{font_format}'
 
     def get_info_file_name(self, width_mode: str) -> str:
-        return f'font-info-{self.size}px-{width_mode}.md'
+        return f'font-info-{self.font_size}px-{width_mode}.md'
 
     def get_alphabet_txt_file_name(self, width_mode: str) -> str:
-        return f'alphabet-{self.size}px-{width_mode}.txt'
+        return f'alphabet-{self.font_size}px-{width_mode}.txt'
 
     def get_release_zip_file_name(self, width_mode: str, font_format: str) -> str:
-        return f'{FontConfig.OUTPUTS_NAME}-font-{self.size}px-{width_mode}-{font_format}-v{FontConfig.VERSION}.zip'
+        return f'{FontConfig.OUTPUTS_NAME}-font-{self.font_size}px-{width_mode}-{font_format}-v{FontConfig.VERSION}.zip'
 
     def get_alphabet_html_file_name(self, width_mode: str) -> str:
-        return f'alphabet-{self.size}px-{width_mode}.html'
+        return f'alphabet-{self.font_size}px-{width_mode}.html'
