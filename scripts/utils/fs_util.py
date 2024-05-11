@@ -2,6 +2,7 @@ import logging
 import os
 import shutil
 import tomllib
+from typing import Any
 
 logger = logging.getLogger('fs_util')
 
@@ -87,5 +88,5 @@ def write_str(text: str, path: str | bytes | os.PathLike[str] | os.PathLike[byte
         file.write(text)
 
 
-def read_toml(path: str | bytes | os.PathLike[str] | os.PathLike[bytes]) -> dict:
+def read_toml(path: str | bytes | os.PathLike[str] | os.PathLike[bytes]) -> Any:
     return tomllib.loads(read_str(path))

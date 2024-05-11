@@ -8,10 +8,6 @@ from scripts.utils import fs_util
 
 
 class LayoutParam:
-    @staticmethod
-    def from_data(data: dict[str, int]) -> 'LayoutParam':
-        return LayoutParam(data['ascent'], data['descent'], data['x_height'], data['cap_height'])
-
     def __init__(self, ascent: int, descent: int, x_height: int, cap_height: int):
         self.ascent = ascent
         self.descent = descent
@@ -43,17 +39,23 @@ class FontConfig:
 
     @staticmethod
     def load(font_size: int) -> 'FontConfig':
-        config_file_path = os.path.join(path_define.glyphs_dir, str(font_size), 'config.toml')
-        config_data: dict = fs_util.read_toml(config_file_path)['font']
-        assert font_size == config_data['size'], f"Config 'size' error: '{config_file_path}'"
+        file_path = os.path.join(path_define.glyphs_dir, str(font_size), 'config.toml')
+        config_data = fs_util.read_toml(file_path)['font']
+        assert font_size == config_data['size'], f"Config 'size' error: '{file_path}'"
 
         layout_params = {}
         for width_mode in configs.width_modes:
-            layout_param = LayoutParam.from_data(config_data[width_mode])
+            layout_param_data = config_data[width_mode]
+            layout_param = LayoutParam(
+                layout_param_data['ascent'],
+                layout_param_data['descent'],
+                layout_param_data['x_height'],
+                layout_param_data['cap_height'],
+            )
             if width_mode == 'monospaced':
-                assert layout_param.line_height == font_size, f"Config 'monospaced.line_height' error: '{config_file_path}'"
+                assert layout_param.line_height == font_size, f"Config 'monospaced.line_height' error: '{file_path}'"
             else:
-                assert (layout_param.line_height - font_size) % 2 == 0, f"Config 'proportional.line_height' error: '{config_file_path}'"
+                assert (layout_param.line_height - font_size) % 2 == 0, f"Config 'proportional.line_height' error: '{file_path}'"
             layout_params[width_mode] = layout_param
 
         return FontConfig(font_size, layout_params)
