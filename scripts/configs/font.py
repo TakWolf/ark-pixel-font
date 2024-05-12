@@ -20,7 +20,7 @@ class LayoutParam:
 
 
 class FontConfig:
-    VERSION: Final[str] = '2024.04.05'
+    VERSION: Final[str] = '2024.05.12'
     VERSION_TIME: Final[datetime.datetime] = datetime.datetime.fromisoformat(f'{VERSION.replace('.', '-')}T00:00:00Z')
     FAMILY_NAME: Final[str] = 'Ark Pixel'
     OUTPUTS_NAME: Final[str] = 'ark-pixel'
