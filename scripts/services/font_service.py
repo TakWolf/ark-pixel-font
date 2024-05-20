@@ -36,6 +36,13 @@ class GlyphFile:
 
         return GlyphFile(file_path, code_point, language_flavors)
 
+    file_path: str
+    bitmap: list[list[int]]
+    width: int
+    height: int
+    code_point: int
+    language_flavors: list[str]
+
     def __init__(self, file_path: str, code_point: int, language_flavors: list[str]):
         self.file_path = file_path
         self.bitmap, self.width, self.height = bitmap_util.load_png(file_path)
@@ -93,6 +100,13 @@ class DesignContext:
 
         return DesignContext(font_config, glyph_file_registry)
 
+    font_config: FontConfig
+    _glyph_file_registry: dict[str, dict[int, dict[str, GlyphFile]]]
+    _sequence_pool: dict[str, list[int]]
+    _alphabet_pool: dict[str, set[str]]
+    _character_mapping_pool: dict[str, dict[int, str]]
+    _glyph_files_pool: dict[str, list[GlyphFile]]
+
     def __init__(
             self,
             font_config: FontConfig,
@@ -100,10 +114,10 @@ class DesignContext:
     ):
         self.font_config = font_config
         self._glyph_file_registry = glyph_file_registry
-        self._sequence_pool: dict[str, list[int]] = {}
-        self._alphabet_pool: dict[str, set[str]] = {}
-        self._character_mapping_pool: dict[str, dict[int, str]] = {}
-        self._glyph_files_pool: dict[str, list[GlyphFile]] = {}
+        self._sequence_pool = {}
+        self._alphabet_pool = {}
+        self._character_mapping_pool = {}
+        self._glyph_files_pool = {}
 
     def standardize(self):
         root_dir = os.path.join(path_define.glyphs_dir, str(self.font_config.font_size))
@@ -282,12 +296,18 @@ def _create_builder(
 
 
 class FontContext:
+    design_context: DesignContext
+    width_mode: str
+    _glyph_pool: dict[str, Glyph]
+    _builders: dict[str, FontBuilder]
+    _collection_builder: FontCollectionBuilder | None
+
     def __init__(self, design_context: DesignContext, width_mode: str):
         self.design_context = design_context
         self.width_mode = width_mode
-        self._glyph_pool: dict[str, Glyph] = {}
-        self._builders: dict[str, FontBuilder] = {}
-        self._collection_builder: FontCollectionBuilder | None = None
+        self._glyph_pool = {}
+        self._builders = {}
+        self._collection_builder = None
 
     def _get_builder(self, language_flavor: str) -> FontBuilder:
         if language_flavor in self._builders:

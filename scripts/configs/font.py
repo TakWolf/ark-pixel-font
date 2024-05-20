@@ -8,6 +8,11 @@ from scripts.utils import fs_util
 
 
 class LayoutParam:
+    ascent: int
+    descent: int
+    x_height: int
+    cap_height: int
+
     def __init__(self, ascent: int, descent: int, x_height: int, cap_height: int):
         self.ascent = ascent
         self.descent = descent
@@ -59,6 +64,12 @@ class FontConfig:
             layout_params[width_mode] = layout_param
 
         return FontConfig(font_size, layout_params)
+
+    font_size: int
+    layout_params: dict[str, LayoutParam]
+
+    demo_html_file_name: str
+    preview_image_file_name: str
 
     def __init__(self, font_size: int, layout_params: dict[str, LayoutParam]):
         self.font_size = font_size
