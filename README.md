@@ -110,35 +110,19 @@
 
 目前提供 `.otf`、`.ttf`、`.woff2`、`.bdf`、`.pcf` 五种单字体格式，以及 `.otc`、`.ttc` 两种集合字体格式。
 
-### Homebrew
+## 使用包管理器安装 
 
-您也可以通过 [Homebrew](https://brew.sh) 来安装字体。
-
-通过下面的命令来添加下载源：
-
-```shell
-brew tap homebrew/cask-fonts
-```
-
-然后根据需要安装对应的字体：
-
-- 等宽模式
+### [Homebrew](https://brew.sh)
 
 ```shell
 brew install font-ark-pixel-10px-monospaced
 brew install font-ark-pixel-12px-monospaced
 brew install font-ark-pixel-16px-monospaced
-```
 
-- 比例模式
-
-```shell
 brew install font-ark-pixel-10px-proportional
 brew install font-ark-pixel-12px-proportional
 brew install font-ark-pixel-16px-proportional
 ```
-
-详细信息请查看 [homebrew-cask-fonts](https://github.com/Homebrew/homebrew-cask-fonts) 的主页。
 
 ## 本地构建
 
