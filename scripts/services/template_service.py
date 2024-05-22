@@ -28,7 +28,7 @@ def _make_html_file(template_name: str, file_name: str, params: dict[str, object
 
     html = _environment.get_template(template_name).render(params)
 
-    fs_util.make_dir(path_define.outputs_dir)
+    os.makedirs(path_define.outputs_dir, exist_ok=True)
     file_path = os.path.join(path_define.outputs_dir, file_name)
     fs_util.write_str(html, file_path)
     logger.info("Make html file: '%s'", file_path)

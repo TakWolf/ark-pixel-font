@@ -1,13 +1,13 @@
 import datetime
 import logging
 import os
+import shutil
 import zipfile
 
 import git
 
 from scripts import configs
 from scripts.configs import path_define, FontConfig, GitDeployConfig
-from scripts.utils import fs_util
 
 logger = logging.getLogger('publish_service')
 
@@ -17,7 +17,7 @@ def make_release_zips(font_config: FontConfig, width_mode: str, special_folder: 
         releases_dir = f'{path_define.releases_dir}-{font_config.font_size}px-{width_mode}'
     else:
         releases_dir = path_define.releases_dir
-    fs_util.make_dir(releases_dir)
+    os.makedirs(releases_dir, exist_ok=True)
 
     for font_format in configs.font_formats:
         file_path = os.path.join(releases_dir, font_config.get_release_zip_file_name(width_mode, font_format))
@@ -40,33 +40,45 @@ def make_release_zips(font_config: FontConfig, width_mode: str, special_folder: 
 
 
 def update_docs():
-    fs_util.make_dir(path_define.docs_dir)
+    os.makedirs(path_define.docs_dir, exist_ok=True)
 
-    fs_util.copy_the_file('readme-banner.png', path_define.outputs_dir, path_define.docs_dir)
+    shutil.copyfile(os.path.join(path_define.outputs_dir, 'readme-banner.png'), os.path.join(path_define.docs_dir, 'readme-banner.png'))
     for font_config in configs.font_configs.values():
-        fs_util.copy_the_file(font_config.preview_image_file_name, path_define.outputs_dir, path_define.docs_dir)
+        shutil.copyfile(os.path.join(path_define.outputs_dir, font_config.preview_image_file_name), os.path.join(path_define.docs_dir, font_config.preview_image_file_name))
         for width_mode in configs.width_modes:
-            fs_util.copy_the_file(font_config.get_info_file_name(width_mode), path_define.outputs_dir, path_define.docs_dir)
+            info_file_name = font_config.get_info_file_name(width_mode)
+            shutil.copyfile(os.path.join(path_define.outputs_dir, info_file_name), os.path.join(path_define.docs_dir, info_file_name))
 
 
 def update_www():
-    fs_util.make_dir(path_define.www_dir)
+    os.makedirs(path_define.www_dir, exist_ok=True)
     for name in os.listdir(path_define.www_dir):
         if name == '.git':
             continue
-        fs_util.delete_item(os.path.join(path_define.www_dir, name))
+        path = os.path.join(path_define.www_dir, name)
+        if os.path.isfile(path):
+            os.remove(path)
+        elif os.path.isdir(path):
+            shutil.rmtree(path)
 
     for name in os.listdir(path_define.www_static_dir):
-        fs_util.copy_the_item(name, path_define.www_static_dir, path_define.www_dir)
+        path_from = os.path.join(path_define.www_static_dir, name)
+        path_to = os.path.join(path_define.www_dir, name)
+        if os.path.isfile(path_from):
+            shutil.copyfile(path_from, path_to)
+        elif os.path.isdir(path_from):
+            shutil.copytree(path_from, path_to)
 
-    fs_util.copy_the_file('index.html', path_define.outputs_dir, path_define.www_dir)
-    fs_util.copy_the_file('playground.html', path_define.outputs_dir, path_define.www_dir)
+    shutil.copyfile(os.path.join(path_define.outputs_dir, 'index.html'), os.path.join(path_define.www_dir, 'index.html'))
+    shutil.copyfile(os.path.join(path_define.outputs_dir, 'playground.html'), os.path.join(path_define.www_dir, 'playground.html'))
     for font_config in configs.font_configs.values():
-        fs_util.copy_the_file(font_config.demo_html_file_name, path_define.outputs_dir, path_define.www_dir)
+        shutil.copyfile(os.path.join(path_define.outputs_dir, font_config.demo_html_file_name), os.path.join(path_define.www_dir, font_config.demo_html_file_name))
         for width_mode in configs.width_modes:
-            fs_util.copy_the_file(font_config.get_alphabet_html_file_name(width_mode), path_define.outputs_dir, path_define.www_dir)
+            alphabet_html_file_name = font_config.get_alphabet_html_file_name(width_mode)
+            shutil.copyfile(os.path.join(path_define.outputs_dir, alphabet_html_file_name), os.path.join(path_define.www_dir, alphabet_html_file_name))
             for language_flavor in configs.language_flavors:
-                fs_util.copy_the_file(font_config.get_font_file_name(width_mode, language_flavor, 'woff2'), path_define.outputs_dir, path_define.www_dir)
+                font_file_name = font_config.get_font_file_name(width_mode, language_flavor, 'woff2')
+                shutil.copyfile(os.path.join(path_define.outputs_dir, font_file_name), os.path.join(path_define.www_dir, font_file_name))
 
 
 def deploy_www(config: GitDeployConfig):

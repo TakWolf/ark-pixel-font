@@ -147,7 +147,7 @@ def make_info_file(design_context: DesignContext, width_mode: str):
     output.write('\n')
     _write_locale_chr_count_infos_table(output, _get_ksx1001_chr_count_infos(alphabet))
 
-    fs_util.make_dir(path_define.outputs_dir)
+    os.makedirs(path_define.outputs_dir, exist_ok=True)
     file_path = os.path.join(path_define.outputs_dir, design_context.font_config.get_info_file_name(width_mode))
     fs_util.write_str(output.getvalue(), file_path)
     logger.info("Make info file: '%s'", file_path)
@@ -157,7 +157,7 @@ def make_alphabet_txt_file(design_context: DesignContext, width_mode: str):
     alphabet = list(design_context.get_alphabet(width_mode))
     alphabet.sort()
 
-    fs_util.make_dir(path_define.outputs_dir)
+    os.makedirs(path_define.outputs_dir, exist_ok=True)
     file_path = os.path.join(path_define.outputs_dir, design_context.font_config.get_alphabet_txt_file_name(width_mode))
     fs_util.write_str(''.join(alphabet), file_path)
     logger.info("Make alphabet txt file: '%s'", file_path)
