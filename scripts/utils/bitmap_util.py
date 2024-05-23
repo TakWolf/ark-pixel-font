@@ -1,9 +1,9 @@
-import os
+from pathlib import Path
 
 import png
 
 
-def load_png(file_path: str | bytes | os.PathLike[str] | os.PathLike[bytes]) -> tuple[list[list[int]], int, int]:
+def load_png(file_path: Path) -> tuple[list[list[int]], int, int]:
     width, height, pixels, _ = png.Reader(filename=file_path).read()
     bitmap = []
     for pixels_row in pixels:
@@ -15,10 +15,7 @@ def load_png(file_path: str | bytes | os.PathLike[str] | os.PathLike[bytes]) -> 
     return bitmap, width, height
 
 
-def save_png(
-        bitmap: list[list[int]],
-        file_path: str | bytes | os.PathLike[str] | os.PathLike[bytes],
-):
+def save_png(bitmap: list[list[int]], file_path: Path):
     pixels = []
     for bitmap_row in bitmap:
         pixels_row = []

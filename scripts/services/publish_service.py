@@ -14,75 +14,73 @@ logger = logging.getLogger('publish_service')
 
 def make_release_zips(font_config: FontConfig, width_mode: str, special_folder: bool = False):
     if special_folder:
-        releases_dir = f'{path_define.releases_dir}-{font_config.font_size}px-{width_mode}'
+        releases_dir = path_define.releases_dir.with_name(f'{path_define.releases_dir.name}-{font_config.font_size}px-{width_mode}')
     else:
         releases_dir = path_define.releases_dir
-    os.makedirs(releases_dir, exist_ok=True)
+    releases_dir.mkdir(parents=True, exist_ok=True)
 
     for font_format in configs.font_formats:
-        file_path = os.path.join(releases_dir, font_config.get_release_zip_file_name(width_mode, font_format))
+        file_path = releases_dir.joinpath(font_config.get_release_zip_file_name(width_mode, font_format))
         with zipfile.ZipFile(file_path, 'w') as file:
-            file.write(os.path.join(path_define.project_root_dir, 'LICENSE-OFL'), 'OFL.txt')
+            file.write(path_define.project_root_dir.joinpath('LICENSE-OFL'), 'OFL.txt')
             for language_flavor in configs.language_flavors:
                 font_file_name = font_config.get_font_file_name(width_mode, language_flavor, font_format)
-                font_file_path = os.path.join(path_define.outputs_dir, font_file_name)
+                font_file_path = path_define.outputs_dir.joinpath(font_file_name)
                 file.write(font_file_path, font_file_name)
         logger.info("Make release zip: '%s'", file_path)
 
     for font_format in configs.font_collection_formats:
-        file_path = os.path.join(releases_dir, font_config.get_release_zip_file_name(width_mode, font_format))
+        file_path = releases_dir.joinpath(font_config.get_release_zip_file_name(width_mode, font_format))
         with zipfile.ZipFile(file_path, 'w') as file:
-            file.write(os.path.join(path_define.project_root_dir, 'LICENSE-OFL'), 'OFL.txt')
+            file.write(path_define.project_root_dir.joinpath('LICENSE-OFL'), 'OFL.txt')
             font_file_name = font_config.get_font_collection_file_name(width_mode, font_format)
-            font_file_path = os.path.join(path_define.outputs_dir, font_file_name)
+            font_file_path = path_define.outputs_dir.joinpath(font_file_name)
             file.write(font_file_path, font_file_name)
         logger.info("Make release zip: '%s'", file_path)
 
 
 def update_docs():
-    os.makedirs(path_define.docs_dir, exist_ok=True)
+    path_define.docs_dir.mkdir(exist_ok=True)
 
-    shutil.copyfile(os.path.join(path_define.outputs_dir, 'readme-banner.png'), os.path.join(path_define.docs_dir, 'readme-banner.png'))
+    shutil.copyfile(path_define.outputs_dir.joinpath('readme-banner.png'), path_define.docs_dir.joinpath('readme-banner.png'))
     for font_config in configs.font_configs.values():
-        shutil.copyfile(os.path.join(path_define.outputs_dir, font_config.preview_image_file_name), os.path.join(path_define.docs_dir, font_config.preview_image_file_name))
+        shutil.copyfile(path_define.outputs_dir.joinpath(font_config.preview_image_file_name), path_define.docs_dir.joinpath(font_config.preview_image_file_name))
         for width_mode in configs.width_modes:
             info_file_name = font_config.get_info_file_name(width_mode)
-            shutil.copyfile(os.path.join(path_define.outputs_dir, info_file_name), os.path.join(path_define.docs_dir, info_file_name))
+            shutil.copyfile(path_define.outputs_dir.joinpath(info_file_name), path_define.docs_dir.joinpath(info_file_name))
 
 
 def update_www():
-    os.makedirs(path_define.www_dir, exist_ok=True)
-    for name in os.listdir(path_define.www_dir):
-        if name == '.git':
+    path_define.www_dir.mkdir(parents=True, exist_ok=True)
+    for path in path_define.www_dir.iterdir():
+        if path.name == '.git':
             continue
-        path = os.path.join(path_define.www_dir, name)
-        if os.path.isfile(path):
+        if path.is_file():
             os.remove(path)
-        elif os.path.isdir(path):
+        elif path.is_dir():
             shutil.rmtree(path)
 
-    for name in os.listdir(path_define.www_static_dir):
-        path_from = os.path.join(path_define.www_static_dir, name)
-        path_to = os.path.join(path_define.www_dir, name)
-        if os.path.isfile(path_from):
+    for path_from in path_define.www_static_dir.iterdir():
+        path_to = path_define.www_dir.joinpath(path_from.name)
+        if path_from.is_file():
             shutil.copyfile(path_from, path_to)
-        elif os.path.isdir(path_from):
+        elif path_from.is_dir():
             shutil.copytree(path_from, path_to)
 
-    shutil.copyfile(os.path.join(path_define.outputs_dir, 'index.html'), os.path.join(path_define.www_dir, 'index.html'))
-    shutil.copyfile(os.path.join(path_define.outputs_dir, 'playground.html'), os.path.join(path_define.www_dir, 'playground.html'))
+    shutil.copyfile(path_define.outputs_dir.joinpath('index.html'), path_define.www_dir.joinpath('index.html'))
+    shutil.copyfile(path_define.outputs_dir.joinpath('playground.html'), path_define.www_dir.joinpath('playground.html'))
     for font_config in configs.font_configs.values():
-        shutil.copyfile(os.path.join(path_define.outputs_dir, font_config.demo_html_file_name), os.path.join(path_define.www_dir, font_config.demo_html_file_name))
+        shutil.copyfile(path_define.outputs_dir.joinpath(font_config.demo_html_file_name), path_define.www_dir.joinpath(font_config.demo_html_file_name))
         for width_mode in configs.width_modes:
             alphabet_html_file_name = font_config.get_alphabet_html_file_name(width_mode)
-            shutil.copyfile(os.path.join(path_define.outputs_dir, alphabet_html_file_name), os.path.join(path_define.www_dir, alphabet_html_file_name))
+            shutil.copyfile(path_define.outputs_dir.joinpath(alphabet_html_file_name), path_define.www_dir.joinpath(alphabet_html_file_name))
             for language_flavor in configs.language_flavors:
                 font_file_name = font_config.get_font_file_name(width_mode, language_flavor, 'woff2')
-                shutil.copyfile(os.path.join(path_define.outputs_dir, font_file_name), os.path.join(path_define.www_dir, font_file_name))
+                shutil.copyfile(path_define.outputs_dir.joinpath(font_file_name), path_define.www_dir.joinpath(font_file_name))
 
 
 def deploy_www(config: GitDeployConfig):
-    if os.path.exists(os.path.join(path_define.www_dir, '.git')):
+    if path_define.www_dir.joinpath('.git').exists():
         repo = git.Repo(path_define.www_dir)
     else:
         repo = git.Repo.init(path_define.www_dir)

@@ -1,27 +1,25 @@
 import logging
 import math
-import os
 
 from PIL import Image, ImageFont, ImageDraw
 from PIL.ImageFont import FreeTypeFont
 
 from scripts import configs
 from scripts.configs import path_define, FontConfig
-from scripts.utils import fs_util
 
 logger = logging.getLogger('image_service')
 
 
 def _load_alphabet(font_config: FontConfig, width_mode: str) -> list[str]:
-    file_path = os.path.join(path_define.outputs_dir, font_config.get_alphabet_txt_file_name(width_mode))
-    text = fs_util.read_str(file_path)
+    file_path = path_define.outputs_dir.joinpath(font_config.get_alphabet_txt_file_name(width_mode))
+    text = file_path.read_text('utf-8')
     alphabet = list(text)
     alphabet.sort()
     return alphabet
 
 
 def _load_font(font_config: FontConfig, width_mode: str, language_flavor: str, scale: int = 1) -> FreeTypeFont:
-    file_path = os.path.join(path_define.outputs_dir, font_config.get_font_file_name(width_mode, language_flavor, 'woff2'))
+    file_path = path_define.outputs_dir.joinpath(font_config.get_font_file_name(width_mode, language_flavor, 'woff2'))
     return ImageFont.truetype(file_path, font_config.font_size * scale)
 
 
@@ -96,8 +94,8 @@ def make_preview_image_file(font_config: FontConfig):
     _draw_text(image, (font_config.font_size, font_config.font_size + font_config.line_height * 8), '★☆☺☹♠♡♢♣♤♥♦♧☀☼♩♪♫♬☂☁⚓✈⚔☯', font_latin)
     image = image.resize((image.width * 2, image.height * 2), Image.Resampling.NEAREST)
 
-    os.makedirs(path_define.outputs_dir, exist_ok=True)
-    file_path = os.path.join(path_define.outputs_dir, font_config.preview_image_file_name)
+    path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
+    file_path = path_define.outputs_dir.joinpath(font_config.preview_image_file_name)
     image.save(file_path)
     logger.info("Make preview image file: '%s'", file_path)
 
@@ -111,7 +109,7 @@ def make_readme_banner():
     text_color = (255, 255, 255, 255)
     shadow_color = (80, 80, 80, 255)
 
-    image_background = Image.open(os.path.join(path_define.images_dir, 'readme-banner-background.png'))
+    image_background = Image.open(path_define.images_dir.joinpath('readme-banner-background.png'))
     image = Image.new('RGBA', (image_background.width, image_background.height), (0, 0, 0, 0))
     _draw_text_background(image, alphabet, 50, box_size, font_x1, (200, 200, 200, 255))
     image.paste(image_background, mask=image_background)
@@ -119,8 +117,8 @@ def make_readme_banner():
     _draw_text(image, (image.width / 2, 28 + font_config.line_height * 2 + 4), '★ 开源的泛中日韩像素字体 ★', font_x1, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     image = image.resize((image.width * 2, image.height * 2), Image.Resampling.NEAREST)
 
-    os.makedirs(path_define.outputs_dir, exist_ok=True)
-    file_path = os.path.join(path_define.outputs_dir, 'readme-banner.png')
+    path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
+    file_path = path_define.outputs_dir.joinpath('readme-banner.png')
     image.save(file_path)
     logger.info("Make readme banner: '%s'", file_path)
 
@@ -137,7 +135,7 @@ def make_github_banner():
     text_color = (255, 255, 255, 255)
     shadow_color = (80, 80, 80, 255)
 
-    image_background = Image.open(os.path.join(path_define.images_dir, 'github-banner-background.png'))
+    image_background = Image.open(path_define.images_dir.joinpath('github-banner-background.png'))
     image = Image.new('RGBA', (image_background.width, image_background.height), (0, 0, 0, 0))
     _draw_text_background(image, alphabet, 12, box_size, font_zh_cn, (200, 200, 200, 255))
     image.paste(image_background, mask=image_background)
@@ -152,8 +150,8 @@ def make_github_banner():
     _draw_text(image, (image.width / 2, 40 + font_config.line_height * 11), '★☆☺☹♠♡♢♣♤♥♦♧☀☼♩♪♫♬☂☁⚓✈⚔☯', font_latin, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     image = image.resize((image.width * 2, image.height * 2), Image.Resampling.NEAREST)
 
-    os.makedirs(path_define.outputs_dir, exist_ok=True)
-    file_path = os.path.join(path_define.outputs_dir, 'github-banner.png')
+    path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
+    file_path = path_define.outputs_dir.joinpath('github-banner.png')
     image.save(file_path)
     logger.info("Make github banner: '%s'", file_path)
 
@@ -167,7 +165,7 @@ def make_itch_io_banner():
     text_color = (255, 255, 255, 255)
     shadow_color = (80, 80, 80, 255)
 
-    image_background = Image.open(os.path.join(path_define.images_dir, 'itch-io-banner-background.png'))
+    image_background = Image.open(path_define.images_dir.joinpath('itch-io-banner-background.png'))
     image = Image.new('RGBA', (image_background.width, image_background.height), (0, 0, 0, 0))
     _draw_text_background(image, alphabet, 38, box_size, font_x1, (200, 200, 200, 255))
     image.paste(image_background, mask=image_background)
@@ -175,8 +173,8 @@ def make_itch_io_banner():
     _draw_text(image, (image.width / 2, 32 + font_config.line_height * 2 + 4), '★ 开源的泛中日韩像素字体 ★', font_x1, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     image = image.resize((image.width * 2, image.height * 2), Image.Resampling.NEAREST)
 
-    os.makedirs(path_define.outputs_dir, exist_ok=True)
-    file_path = os.path.join(path_define.outputs_dir, 'itch-io-banner.png')
+    path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
+    file_path = path_define.outputs_dir.joinpath('itch-io-banner.png')
     image.save(file_path)
     logger.info("Make itch.io banner: '%s'", file_path)
 
@@ -191,8 +189,8 @@ def make_itch_io_background():
     _draw_text_background(image, alphabet, 5, box_size, font, (30, 30, 30, 255))
     image = image.resize((image.width * 2, image.height * 2), Image.Resampling.NEAREST)
 
-    os.makedirs(path_define.outputs_dir, exist_ok=True)
-    file_path = os.path.join(path_define.outputs_dir, 'itch-io-background.png')
+    path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
+    file_path = path_define.outputs_dir.joinpath('itch-io-background.png')
     image.save(file_path)
     logger.info("Make itch.io background: '%s'", file_path)
 
@@ -207,7 +205,7 @@ def make_itch_io_cover():
     text_color = (255, 255, 255, 255)
     shadow_color = (80, 80, 80, 255)
 
-    image = Image.open(os.path.join(path_define.images_dir, 'itch-io-cover-background.png'))
+    image = Image.open(path_define.images_dir.joinpath('itch-io-cover-background.png'))
     _draw_text(image, (image.width / 2, 6), '方舟像素字体', font_title, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     _draw_text(image, (image.width / 2, 6 + font_config.line_height * 2), 'Ark Pixel Font', font_latin, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     _draw_text(image, (image.width / 2, 6 + font_config.line_height * 4), '我们度过的每个平凡的日常，也许就是连续发生的奇迹。', font_zh_cn, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
@@ -221,8 +219,8 @@ def make_itch_io_cover():
     _draw_text(image, (image.width / 2, 6 + font_config.line_height * 12), '☀☼♩♪♫♬☂☁⚓✈⚔☯', font_latin, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     image = image.resize((image.width * 2, image.height * 2), Image.Resampling.NEAREST)
 
-    os.makedirs(path_define.outputs_dir, exist_ok=True)
-    file_path = os.path.join(path_define.outputs_dir, 'itch-io-cover.png')
+    path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
+    file_path = path_define.outputs_dir.joinpath('itch-io-cover.png')
     image.save(file_path)
     logger.info("Make itch.io cover: '%s'", file_path)
 
@@ -237,7 +235,7 @@ def make_afdian_cover():
     text_color = (255, 255, 255, 255)
     shadow_color = (80, 80, 80, 255)
 
-    image = Image.open(os.path.join(path_define.images_dir, 'afdian-cover-background.png'))
+    image = Image.open(path_define.images_dir.joinpath('afdian-cover-background.png'))
     _draw_text(image, (image.width / 2, 12), '方舟像素字体', font_title, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     _draw_text(image, (image.width / 2, 12 + font_config.line_height * 2), 'Ark Pixel Font', font_latin, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     _draw_text(image, (image.width / 2, 18 + font_config.line_height * 3), '★ 开源的泛中日韩像素字体 ★', font_zh_cn, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
@@ -252,7 +250,7 @@ def make_afdian_cover():
     _draw_text(image, (image.width / 2, 18 + font_config.line_height * 14), '☀☼♩♪♫♬☂☁⚓✈⚔☯', font_latin, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     image = image.resize((image.width * 2, image.height * 2), Image.Resampling.NEAREST)
 
-    os.makedirs(path_define.outputs_dir, exist_ok=True)
-    file_path = os.path.join(path_define.outputs_dir, 'afdian-cover.png')
+    path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
+    file_path = path_define.outputs_dir.joinpath('afdian-cover.png')
     image.save(file_path)
     logger.info("Make afdian cover: '%s'", file_path)

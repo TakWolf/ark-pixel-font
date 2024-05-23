@@ -1,5 +1,4 @@
 import logging
-import os
 from collections import defaultdict
 from collections.abc import Callable
 from io import StringIO
@@ -11,7 +10,6 @@ from unidata_blocks import UnicodeBlock
 
 from scripts.configs import path_define, FontConfig
 from scripts.services.font_service import DesignContext
-from scripts.utils import fs_util
 
 logger = logging.getLogger('info_service')
 
@@ -147,9 +145,9 @@ def make_info_file(design_context: DesignContext, width_mode: str):
     output.write('\n')
     _write_locale_chr_count_infos_table(output, _get_ksx1001_chr_count_infos(alphabet))
 
-    os.makedirs(path_define.outputs_dir, exist_ok=True)
-    file_path = os.path.join(path_define.outputs_dir, design_context.font_config.get_info_file_name(width_mode))
-    fs_util.write_str(output.getvalue(), file_path)
+    path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
+    file_path = path_define.outputs_dir.joinpath(design_context.font_config.get_info_file_name(width_mode))
+    file_path.write_text(output.getvalue(), 'utf-8')
     logger.info("Make info file: '%s'", file_path)
 
 
@@ -157,7 +155,7 @@ def make_alphabet_txt_file(design_context: DesignContext, width_mode: str):
     alphabet = list(design_context.get_alphabet(width_mode))
     alphabet.sort()
 
-    os.makedirs(path_define.outputs_dir, exist_ok=True)
-    file_path = os.path.join(path_define.outputs_dir, design_context.font_config.get_alphabet_txt_file_name(width_mode))
-    fs_util.write_str(''.join(alphabet), file_path)
+    path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
+    file_path = path_define.outputs_dir.joinpath(design_context.font_config.get_alphabet_txt_file_name(width_mode))
+    file_path.write_text(''.join(alphabet), 'utf-8')
     logger.info("Make alphabet txt file: '%s'", file_path)

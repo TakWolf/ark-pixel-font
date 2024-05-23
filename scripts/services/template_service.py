@@ -1,5 +1,4 @@
 import logging
-import os
 import random
 
 import bs4
@@ -8,7 +7,6 @@ from jinja2 import Environment, FileSystemLoader
 from scripts import configs
 from scripts.configs import path_define
 from scripts.services.font_service import DesignContext
-from scripts.utils import fs_util
 
 logger = logging.getLogger('template_service')
 
@@ -28,9 +26,9 @@ def _make_html_file(template_name: str, file_name: str, params: dict[str, object
 
     html = _environment.get_template(template_name).render(params)
 
-    os.makedirs(path_define.outputs_dir, exist_ok=True)
-    file_path = os.path.join(path_define.outputs_dir, file_name)
-    fs_util.write_str(html, file_path)
+    path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
+    file_path = path_define.outputs_dir.joinpath(file_name)
+    file_path.write_text(html, 'utf-8')
     logger.info("Make html file: '%s'", file_path)
 
 
@@ -101,7 +99,7 @@ def _handle_demo_html_element(design_context: DesignContext, soup: bs4.Beautiful
 
 
 def make_demo_html_file(design_context: DesignContext):
-    content_html = fs_util.read_str(os.path.join(path_define.templates_dir, 'demo-content.html'))
+    content_html = path_define.templates_dir.joinpath('demo-content.html').read_text('utf-8')
     content_html = ''.join(line.strip() for line in content_html.split('\n'))
     soup = bs4.BeautifulSoup(content_html, 'html.parser')
     _handle_demo_html_element(design_context, soup, soup)
