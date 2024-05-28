@@ -7,7 +7,7 @@
 [![Releases](https://img.shields.io/github/v/release/TakWolf/ark-pixel-font)](https://github.com/TakWolf/ark-pixel-font/releases)
 [![Itch.io](https://img.shields.io/badge/itch.io-ark--pixel--font-FF2449?logo=itch.io&logoColor=white)](https://takwolf.itch.io/ark-pixel-font)
 [![Discord](https://img.shields.io/discord/949265373964947458?color=4E5AF0&logo=discord&logoColor=white&label=discord)](https://discord.gg/3GKtPKtjdU)
-[![QQ Group](https://img.shields.io/badge/QQ群-302383204-brightgreen?logo=tencentqq)](https://jq.qq.com/?_wv=1027&k=EXtKGHar)
+[![QQ Group](https://img.shields.io/badge/QQ群-302383204-brightgreen?logo=tencentqq&logoColor=white)](https://jq.qq.com/?_wv=1027&k=EXtKGHar)
 
 开源的泛中日韩像素字体，黑体无衬线风格，支持 10、12 和 16 像素。
 
