@@ -26,4 +26,4 @@ jobs:
     - name: Release
       uses: softprops/action-gh-release@v2
       with:
-        files: ./build/releases-16px-proportional/*.zip
+        files: ./build/releases/ark-pixel-font-16px-proportional-*.zip

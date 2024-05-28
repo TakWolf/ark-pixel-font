@@ -12,15 +12,11 @@ from scripts.configs import path_define, FontConfig, GitDeployConfig
 logger = logging.getLogger('publish_service')
 
 
-def make_release_zips(font_config: FontConfig, width_mode: str, special_folder: bool = False):
-    if special_folder:
-        releases_dir = path_define.releases_dir.with_name(f'{path_define.releases_dir.name}-{font_config.font_size}px-{width_mode}')
-    else:
-        releases_dir = path_define.releases_dir
-    releases_dir.mkdir(parents=True, exist_ok=True)
+def make_release_zips(font_config: FontConfig, width_mode: str):
+    path_define.releases_dir.mkdir(parents=True, exist_ok=True)
 
     for font_format in configs.font_formats:
-        file_path = releases_dir.joinpath(font_config.get_release_zip_file_name(width_mode, font_format))
+        file_path = path_define.releases_dir.joinpath(font_config.get_release_zip_file_name(width_mode, font_format))
         with zipfile.ZipFile(file_path, 'w') as file:
             file.write(path_define.project_root_dir.joinpath('LICENSE-OFL'), 'OFL.txt')
             for language_flavor in configs.language_flavors:
@@ -30,7 +26,7 @@ def make_release_zips(font_config: FontConfig, width_mode: str, special_folder: 
         logger.info("Make release zip: '%s'", file_path)
 
     for font_format in configs.font_collection_formats:
-        file_path = releases_dir.joinpath(font_config.get_release_zip_file_name(width_mode, font_format))
+        file_path = path_define.releases_dir.joinpath(font_config.get_release_zip_file_name(width_mode, font_format))
         with zipfile.ZipFile(file_path, 'w') as file:
             file.write(path_define.project_root_dir.joinpath('LICENSE-OFL'), 'OFL.txt')
             font_file_name = font_config.get_font_collection_file_name(width_mode, font_format)

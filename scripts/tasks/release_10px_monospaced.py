@@ -17,7 +17,7 @@ def main():
     font_context.make_pcf()
     font_context.make_otc()
     font_context.make_ttc()
-    publish_service.make_release_zips(font_config, width_mode, special_folder=True)
+    publish_service.make_release_zips(font_config, width_mode)
     info_service.make_info_file(design_context, width_mode)
     info_service.make_alphabet_txt_file(design_context, width_mode)
 
