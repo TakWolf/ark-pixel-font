@@ -165,27 +165,27 @@
     <script>
         let page = document.getElementById('page');
 
-        let configs = {
+        let settings = {
             fontSize: 12,
         };
 
-        function applyConfigs() {
-            localStorage.setItem('configs:index', JSON.stringify(configs));
-            page.className = 'font-' + configs.fontSize + 'px-proportional';
+        function applySettings() {
+            localStorage.setItem('settings:index', JSON.stringify(settings));
+            page.className = 'font-' + settings.fontSize + 'px-proportional';
         }
 
         function onFontSizeChange(fontSize) {
-            configs.fontSize = fontSize;
-            applyConfigs();
+            settings.fontSize = fontSize;
+            applySettings();
         }
 
         (function () {
-            let json = localStorage.getItem('configs:index');
+            let json = localStorage.getItem('settings:index');
             if (json) {
-                Object.assign(configs, JSON.parse(json));
+                Object.assign(settings, JSON.parse(json));
             }
-            document.getElementById('radio-font-size-' + configs.fontSize).checked = true;
-            applyConfigs();
+            document.getElementById('radio-font-size-' + settings.fontSize).checked = true;
+            applySettings();
         })();
     </script>
 {% endblock %}

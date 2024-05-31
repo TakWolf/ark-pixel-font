@@ -119,42 +119,42 @@
     <script>
         let inputBox = document.getElementById('input-box');
 
-        let configs = {
+        let settings = {
             fontSize: 12,
             widthMode: 'proportional',
             locale: 'zh-cn',
         };
 
-        function applyConfigs() {
-            localStorage.setItem('configs:playground', JSON.stringify(configs));
-            inputBox.className = 'font-' + configs.fontSize + 'px-' + configs.widthMode;
-            inputBox.setAttribute('lang', configs.locale);
+        function applySettings() {
+            localStorage.setItem('settings:playground', JSON.stringify(settings));
+            inputBox.className = 'font-' + settings.fontSize + 'px-' + settings.widthMode;
+            inputBox.setAttribute('lang', settings.locale);
         }
 
         function onFontSizeChange(fontSize) {
-            configs.fontSize = fontSize;
-            applyConfigs();
+            settings.fontSize = fontSize;
+            applySettings();
         }
 
         function onWidthModeChange(widthMode) {
-            configs.widthMode = widthMode;
-            applyConfigs();
+            settings.widthMode = widthMode;
+            applySettings();
         }
 
         function onLocaleChange(locale) {
-            configs.locale = locale;
-            applyConfigs();
+            settings.locale = locale;
+            applySettings();
         }
 
         (function () {
-            let json = localStorage.getItem('configs:playground');
+            let json = localStorage.getItem('settings:playground');
             if (json) {
-                Object.assign(configs, JSON.parse(json));
+                Object.assign(settings, JSON.parse(json));
             }
-            document.getElementById('radio-font-size-' + configs.fontSize).checked = true;
-            document.getElementById('radio-width-mode-' + configs.widthMode).checked = true;
-            document.getElementById('radio-locale-' + configs.locale).checked = true;
-            applyConfigs();
+            document.getElementById('radio-font-size-' + settings.fontSize).checked = true;
+            document.getElementById('radio-width-mode-' + settings.widthMode).checked = true;
+            document.getElementById('radio-locale-' + settings.locale).checked = true;
+            applySettings();
         })();
     </script>
 {% endblock %}

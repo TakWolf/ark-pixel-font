@@ -149,34 +149,34 @@
     <script>
         let page = document.getElementById('page');
 
-        let configs = {
+        let settings = {
             widthMode: 'proportional',
             theme: 'light',
         };
 
-        function applyConfigs() {
-            localStorage.setItem('configs:demo-{{ font_config.font_size }}px', JSON.stringify(configs));
-            page.className = 'font-' + configs.widthMode;
-            document.body.className = 'theme-' + configs.theme;
+        function applySettings() {
+            localStorage.setItem('settings:demo-{{ font_config.font_size }}px', JSON.stringify(settings));
+            page.className = 'font-' + settings.widthMode;
+            document.body.className = 'theme-' + settings.theme;
         }
 
         function onWidthModeChange(widthMode) {
-            configs.widthMode = widthMode;
-            applyConfigs();
+            settings.widthMode = widthMode;
+            applySettings();
         }
 
         function onThemeChange(theme) {
-            configs.theme = theme;
-            applyConfigs();
+            settings.theme = theme;
+            applySettings();
         }
 
         (function () {
-            let json = localStorage.getItem('configs:demo-{{ font_config.font_size }}px');
+            let json = localStorage.getItem('settings:demo-{{ font_config.font_size }}px');
             if (json) {
-                Object.assign(configs, JSON.parse(json));
+                Object.assign(settings, JSON.parse(json));
             }
-            document.getElementById('radio-width-mode-' + configs.widthMode).checked = true;
-            applyConfigs();
+            document.getElementById('radio-width-mode-' + settings.widthMode).checked = true;
+            applySettings();
         })();
     </script>
 {% endblock %}

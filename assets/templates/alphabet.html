@@ -106,27 +106,27 @@
     <script>
         let content = document.getElementById('content');
 
-        let configs = {
+        let settings = {
             locale: 'zh-cn',
         };
 
-        function applyConfigs() {
-            localStorage.setItem('configs:alphabet-{{ font_config.font_size }}px-{{ width_mode }}', JSON.stringify(configs));
-            content.setAttribute('lang', configs.locale);
+        function applySettings() {
+            localStorage.setItem('settings:alphabet-{{ font_config.font_size }}px-{{ width_mode }}', JSON.stringify(settings));
+            content.setAttribute('lang', settings.locale);
         }
 
         function onLocaleChange(locale) {
-            configs.locale = locale;
-            applyConfigs();
+            settings.locale = locale;
+            applySettings();
         }
 
         (function () {
-            let json = localStorage.getItem('configs:alphabet-{{ font_config.font_size }}px-{{ width_mode }}');
+            let json = localStorage.getItem('settings:alphabet-{{ font_config.font_size }}px-{{ width_mode }}');
             if (json) {
-                Object.assign(configs, JSON.parse(json));
+                Object.assign(settings, JSON.parse(json));
             }
-            document.getElementById('radio-locale-' + configs.locale).checked = true;
-            applyConfigs();
+            document.getElementById('radio-locale-' + settings.locale).checked = true;
+            applySettings();
         })();
     </script>
 {% endblock %}
