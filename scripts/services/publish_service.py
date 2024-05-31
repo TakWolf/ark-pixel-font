@@ -1,6 +1,7 @@
 import datetime
 import logging
 import os
+import re
 import shutil
 import zipfile
 
@@ -36,43 +37,46 @@ def make_release_zips(font_config: FontConfig, width_mode: str):
 
 
 def update_docs():
-    path_define.docs_dir.mkdir(exist_ok=True)
-
-    shutil.copyfile(path_define.outputs_dir.joinpath('readme-banner.png'), path_define.docs_dir.joinpath('readme-banner.png'))
-    for font_config in configs.font_configs.values():
-        shutil.copyfile(path_define.outputs_dir.joinpath(font_config.preview_image_file_name), path_define.docs_dir.joinpath(font_config.preview_image_file_name))
-        for width_mode in configs.width_modes:
-            info_file_name = font_config.get_info_file_name(width_mode)
-            shutil.copyfile(path_define.outputs_dir.joinpath(info_file_name), path_define.docs_dir.joinpath(info_file_name))
+    for file_dir, _, file_names in path_define.outputs_dir.walk():
+        for file_name in file_names:
+            if re.match(r'font-info-.*px-.*\.md|preview-.*px\.png', file_name) is None and file_name != 'readme-banner.png':
+                continue
+            path_from = file_dir.joinpath(file_name)
+            path_to = path_define.docs_dir.joinpath(path_from.relative_to(path_define.outputs_dir))
+            path_to.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(path_from, path_to)
+            logger.info("Copy file: '%s' -> '%s'", path_from, path_to)
 
 
 def update_www():
-    path_define.www_dir.mkdir(parents=True, exist_ok=True)
-    for path in path_define.www_dir.iterdir():
-        if path.name == '.git':
-            continue
-        if path.is_file():
-            os.remove(path)
-        elif path.is_dir():
-            shutil.rmtree(path)
+    if path_define.www_dir.exists():
+        for path in path_define.www_dir.iterdir():
+            if path.name == '.git':
+                continue
+            if path.is_file():
+                os.remove(path)
+            elif path.is_dir():
+                shutil.rmtree(path)
 
-    for path_from in path_define.www_static_dir.iterdir():
-        path_to = path_define.www_dir.joinpath(path_from.name)
-        if path_from.is_file():
+    for file_dir, _, file_names in path_define.www_static_dir.walk():
+        for file_name in file_names:
+            if file_name == '.DS_Store':
+                continue
+            path_from = file_dir.joinpath(file_name)
+            path_to = path_define.www_dir.joinpath(path_from.relative_to(path_define.www_static_dir))
+            path_to.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(path_from, path_to)
-        elif path_from.is_dir():
-            shutil.copytree(path_from, path_to)
+            logger.info("Copy file: '%s' -> '%s'", path_from, path_to)
 
-    shutil.copyfile(path_define.outputs_dir.joinpath('index.html'), path_define.www_dir.joinpath('index.html'))
-    shutil.copyfile(path_define.outputs_dir.joinpath('playground.html'), path_define.www_dir.joinpath('playground.html'))
-    for font_config in configs.font_configs.values():
-        shutil.copyfile(path_define.outputs_dir.joinpath(font_config.demo_html_file_name), path_define.www_dir.joinpath(font_config.demo_html_file_name))
-        for width_mode in configs.width_modes:
-            alphabet_html_file_name = font_config.get_alphabet_html_file_name(width_mode)
-            shutil.copyfile(path_define.outputs_dir.joinpath(alphabet_html_file_name), path_define.www_dir.joinpath(alphabet_html_file_name))
-            for language_flavor in configs.language_flavors:
-                font_file_name = font_config.get_font_file_name(width_mode, language_flavor, 'woff2')
-                shutil.copyfile(path_define.outputs_dir.joinpath(font_file_name), path_define.www_dir.joinpath(font_file_name))
+    for file_dir, _, file_names in path_define.outputs_dir.walk():
+        for file_name in file_names:
+            if not file_name.endswith(('.html', '.woff2')):
+                continue
+            path_from = file_dir.joinpath(file_name)
+            path_to = path_define.www_dir.joinpath(path_from.relative_to(path_define.outputs_dir))
+            path_to.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(path_from, path_to)
+            logger.info("Copy file: '%s' -> '%s'", path_from, path_to)
 
 
 def deploy_www(config: GitDeployConfig):
