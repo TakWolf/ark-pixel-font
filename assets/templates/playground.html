@@ -7,13 +7,13 @@
             padding: 0;
             box-sizing: border-box;
         }
-        {% for font_config in configs.font_configs.values() %}
-        {% for width_mode in configs.width_modes %}
+        {% for font_config in font_configs.values() %}
+        {% for width_mode in width_modes %}
         .font-{{ font_config.font_size }}px-{{ width_mode }} {
             font-size: {{ font_config.font_size * 2 }}px;
             line-height: {{ font_config.line_height * 2 }}px;
         }
-        {% for locale, language_flavor in configs.locale_to_language_flavor.items() %}
+        {% for locale, language_flavor in locale_to_language_flavor.items() %}
         {% with font_family = 'ark-pixel-' ~ font_config.font_size ~ 'px-' ~ width_mode ~ '-' ~ language_flavor %}
         @font-face {
             font-family: {{ font_family }};
@@ -86,7 +86,7 @@
 {% block body %}
     <form class="toolbar">
         <div class="options-group">
-            {% for font_config in configs.font_configs.values() %}
+            {% for font_config in font_configs.values() %}
             <label class="option">
                 <input id="radio-font-size-{{ font_config.font_size }}" name="font_size" type="radio" onchange="onFontSizeChange('{{ font_config.font_size }}');">
                 <span></span>
@@ -95,7 +95,7 @@
             {% endfor %}
         </div>
         <div class="options-group" style="background-color: #94e34a;">
-            {% for width_mode in configs.width_modes %}
+            {% for width_mode in width_modes %}
             <label class="option">
                 <input id="radio-width-mode-{{ width_mode }}" name="width_mode" type="radio" onchange="onWidthModeChange('{{ width_mode }}');">
                 <span></span>
@@ -104,7 +104,7 @@
             {% endfor %}
         </div>
         <div class="options-group" style="background-color: #6ebdff;">
-            {% for locale, language_flavor in configs.locale_to_language_flavor.items() %}
+            {% for locale, language_flavor in locale_to_language_flavor.items() %}
             <label class="option">
                 <input id="radio-locale-{{ locale }}" name="locale" type="radio" onchange="onLocaleChange('{{ locale }}');">
                 <span></span>

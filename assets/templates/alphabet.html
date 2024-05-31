@@ -7,7 +7,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-        {% for locale, language_flavor in configs.locale_to_language_flavor.items() %}
+        {% for locale, language_flavor in locale_to_language_flavor.items() %}
         {% with font_family = 'ark-pixel-' ~ font_config.font_size ~ 'px-' ~ width_mode ~ '-' ~ language_flavor %}
         @font-face {
             font-family: {{ font_family }};
@@ -21,7 +21,7 @@
         {% if font_config.font_size != 12 or width_mode != 'monospaced' %}
         @font-face {
             font-family: ark-pixel-12px-monospaced-latin;
-            src: url("{{ configs.font_configs[12].get_font_file_name('monospaced', 'latin', 'woff2') }}?r={{ build_random_key }}");
+            src: url("{{ font_configs[12].get_font_file_name('monospaced', 'latin', 'woff2') }}?r={{ build_random_key }}");
         }
         {% endif %}
         .options-group {
@@ -86,7 +86,7 @@
 {% endblock %}
 {% block body %}
     <form class="options-group">
-        {% for locale, language_flavor in configs.locale_to_language_flavor.items() %}
+        {% for locale, language_flavor in locale_to_language_flavor.items() %}
         <label class="option">
             <input id="radio-locale-{{ locale }}" name="locale" type="radio" onchange="onLocaleChange('{{ locale }}');">
             <span></span>
