@@ -8,7 +8,8 @@ import unidata_blocks
 from character_encoding_utils import gb2312, big5, shiftjis, ksx1001
 from unidata_blocks import UnicodeBlock
 
-from scripts.configs import path_define, FontConfig
+from scripts import configs
+from scripts.configs import path_define
 from scripts.services.font_service import DesignContext
 
 logger = logging.getLogger('info_service')
@@ -106,13 +107,13 @@ def make_info_file(design_context: DesignContext, width_mode: str):
     alphabet = design_context.get_alphabet(width_mode)
 
     output = StringIO()
-    output.write(f'# {FontConfig.FAMILY_NAME} {design_context.font_config.font_size}px {'等宽模式' if width_mode == 'monospaced' else '比例模式'}\n')
+    output.write(f'# Ark Pixel {design_context.font_config.font_size}px {'等宽模式' if width_mode == 'monospaced' else '比例模式'}\n')
     output.write('\n')
     output.write('## 基本信息\n')
     output.write('\n')
     output.write('| 属性 | 值 |\n')
     output.write('|---|---|\n')
-    output.write(f'| 版本号 | {FontConfig.VERSION} |\n')
+    output.write(f'| 版本号 | {configs.font_version} |\n')
     output.write(f'| 字符总数 | {len(alphabet)} |\n')
     output.write('\n')
     output.write('## Unicode 字符分布\n')

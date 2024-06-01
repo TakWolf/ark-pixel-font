@@ -1,3 +1,5 @@
+import datetime
+
 from scripts.configs.deploy import GitDeployConfig
 from scripts.configs.font import FontConfig
 
@@ -25,6 +27,10 @@ locale_to_language_flavor = {
     'ja': 'ja',
     'ko': 'ko',
 }
+
+font_version = '2024.05.12'
+
+font_version_time = datetime.datetime.fromisoformat(f'{font_version.replace('.', '-')}T00:00:00Z')
 
 font_sizes = [10, 12, 16]
 

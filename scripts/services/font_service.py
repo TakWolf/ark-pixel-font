@@ -252,22 +252,22 @@ def _create_builder(
     builder.font_metric.x_height = layout_param.x_height
     builder.font_metric.cap_height = layout_param.cap_height
 
-    builder.meta_info.version = FontConfig.VERSION
-    builder.meta_info.created_time = FontConfig.VERSION_TIME
-    builder.meta_info.modified_time = FontConfig.VERSION_TIME
-    builder.meta_info.family_name = f'{FontConfig.FAMILY_NAME} {design_context.font_config.font_size}px {width_mode.capitalize()} {language_flavor}'
+    builder.meta_info.version = configs.font_version
+    builder.meta_info.created_time = configs.font_version_time
+    builder.meta_info.modified_time = configs.font_version_time
+    builder.meta_info.family_name = f'Ark Pixel {design_context.font_config.font_size}px {width_mode.capitalize()} {language_flavor}'
     builder.meta_info.weight_name = WeightName.REGULAR
     builder.meta_info.serif_style = SerifStyle.SANS_SERIF
     builder.meta_info.slant_style = SlantStyle.NORMAL
     builder.meta_info.width_mode = width_mode.capitalize()
-    builder.meta_info.manufacturer = FontConfig.MANUFACTURER
-    builder.meta_info.designer = FontConfig.DESIGNER
-    builder.meta_info.description = FontConfig.DESCRIPTION
-    builder.meta_info.copyright_info = FontConfig.COPYRIGHT_INFO
-    builder.meta_info.license_info = FontConfig.LICENSE_INFO
-    builder.meta_info.vendor_url = FontConfig.VENDOR_URL
-    builder.meta_info.designer_url = FontConfig.DESIGNER_URL
-    builder.meta_info.license_url = FontConfig.LICENSE_URL
+    builder.meta_info.manufacturer = 'TakWolf'
+    builder.meta_info.designer = 'TakWolf'
+    builder.meta_info.description = 'Open source Pan-CJK pixel font.'
+    builder.meta_info.copyright_info = "Copyright (c) 2021, TakWolf (https://takwolf.com), with Reserved Font Name 'Ark Pixel'."
+    builder.meta_info.license_info = 'This Font Software is licensed under the SIL Open Font License, Version 1.1.'
+    builder.meta_info.vendor_url = 'https://ark-pixel-font.takwolf.com'
+    builder.meta_info.designer_url = 'https://takwolf.com'
+    builder.meta_info.license_url = 'https://openfontlicense.org'
 
     character_mapping = design_context.get_character_mapping(width_mode, language_flavor)
     builder.character_mapping.update(character_mapping)
