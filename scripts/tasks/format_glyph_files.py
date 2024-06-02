@@ -1,9 +1,10 @@
-from scripts import configs
+from scripts.configs import FontConfig
 from scripts.services.font_service import DesignContext
 
 
 def main():
-    for font_config in configs.font_configs.values():
+    font_configs = FontConfig.load_all()
+    for font_config in font_configs.values():
         design_context = DesignContext.load(font_config)
         design_context.standardize()
 

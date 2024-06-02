@@ -1,10 +1,11 @@
 from scripts import configs
+from scripts.configs import FontConfig
 from scripts.services import info_service
 from scripts.services.font_service import DesignContext, FontContext
 
 
 def main():
-    font_config = configs.font_configs[10]
+    font_config = FontConfig.load(10)
     design_context = DesignContext.load(font_config)
     design_context.standardize()
     for width_mode in configs.width_modes:

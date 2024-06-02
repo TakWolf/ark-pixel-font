@@ -5,7 +5,7 @@ import bs4
 from jinja2 import Environment, FileSystemLoader
 
 from scripts import configs
-from scripts.configs import path_define
+from scripts.configs import path_define, FontConfig
 from scripts.services.font_service import DesignContext
 
 logger = logging.getLogger('template_service')
@@ -22,7 +22,6 @@ _build_random_key = random.random()
 def _make_html_file(template_name: str, file_name: str, params: dict[str, object] = None):
     params = {} if params is None else dict(params)
     params['build_random_key'] = _build_random_key
-    params['font_configs'] = configs.font_configs
     params['width_modes'] = configs.width_modes
     params['locale_to_language_flavor'] = configs.locale_to_language_flavor
 
@@ -113,9 +112,13 @@ def make_demo_html_file(design_context: DesignContext):
     })
 
 
-def make_index_html_file():
-    _make_html_file('index.html', 'index.html')
+def make_index_html_file(font_configs: dict[int, FontConfig]):
+    _make_html_file('index.html', 'index.html', {
+        'font_configs': font_configs,
+    })
 
 
-def make_playground_html_file():
-    _make_html_file('playground.html', 'playground.html')
+def make_playground_html_file(font_configs: dict[int, FontConfig]):
+    _make_html_file('playground.html', 'playground.html', {
+        'font_configs': font_configs,
+    })
