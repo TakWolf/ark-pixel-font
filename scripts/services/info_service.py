@@ -147,7 +147,7 @@ def make_info_file(design_context: DesignContext, width_mode: str):
     _write_locale_chr_count_infos_table(output, _get_ksx1001_chr_count_infos(alphabet))
 
     path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
-    file_path = path_define.outputs_dir.joinpath(design_context.font_config.get_info_file_name(width_mode))
+    file_path = path_define.outputs_dir.joinpath(f'font-info-{design_context.font_config.font_size}px-{width_mode}.md')
     file_path.write_text(output.getvalue(), 'utf-8')
     logger.info("Make info file: '%s'", file_path)
 
@@ -157,6 +157,6 @@ def make_alphabet_txt_file(design_context: DesignContext, width_mode: str):
     alphabet.sort()
 
     path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
-    file_path = path_define.outputs_dir.joinpath(design_context.font_config.get_alphabet_txt_file_name(width_mode))
+    file_path = path_define.outputs_dir.joinpath(f'alphabet-{design_context.font_config.font_size}px-{width_mode}.txt')
     file_path.write_text(''.join(alphabet), 'utf-8')
     logger.info("Make alphabet txt file: '%s'", file_path)

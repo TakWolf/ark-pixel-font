@@ -7,16 +7,18 @@
             padding: 0;
             box-sizing: border-box;
         }
+        {% with font_family = 'ark-pixel-12px-monospaced-latin' %}
         @font-face {
-            font-family: ark-pixel-12px-monospaced-latin;
-            src: url("{{ font_configs[12].get_font_file_name('monospaced', 'latin', 'woff2') }}?r={{ build_random_key }}");
+            font-family: {{ font_family }};
+            src: url("{{ font_family }}.woff2?r={{ build_random_key }}");
         }
+        {% endwith %}
         {% for font_config in font_configs.values() %}
         {% for locale, language_flavor in locale_to_language_flavor.items() %}
         {% with font_family = 'ark-pixel-' ~ font_config.font_size ~ 'px-proportional-' ~ language_flavor %}
         @font-face {
             font-family: {{ font_family }};
-            src: url("{{ font_config.get_font_file_name('proportional', language_flavor, 'woff2') }}?r={{ build_random_key }}");
+            src: url("{{ font_family }}.woff2?r={{ build_random_key }}");
         }
         .font-{{ font_config.font_size }}px-proportional :lang({{ locale }}) {
             font-family: {{ font_family }}, sans-serif;

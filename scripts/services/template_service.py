@@ -35,7 +35,7 @@ def _make_html_file(template_name: str, file_name: str, params: dict[str, object
 
 
 def make_alphabet_html_file(design_context: DesignContext, width_mode: str):
-    _make_html_file('alphabet.html', design_context.font_config.get_alphabet_html_file_name(width_mode), {
+    _make_html_file('alphabet.html', f'alphabet-{design_context.font_config.font_size}px-{width_mode}.html', {
         'font_config': design_context.font_config,
         'width_mode': width_mode,
         'alphabet': ''.join(sorted([c for c in design_context.get_alphabet(width_mode) if ord(c) >= 128])),
@@ -107,7 +107,7 @@ def make_demo_html_file(design_context: DesignContext):
     _handle_demo_html_element(design_context, soup, soup)
     content_html = str(soup)
 
-    _make_html_file('demo.html', design_context.font_config.demo_html_file_name, {
+    _make_html_file('demo.html', f'demo-{design_context.font_config.font_size}px.html', {
         'font_config': design_context.font_config,
         'content_html': content_html,
     })

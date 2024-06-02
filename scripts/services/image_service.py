@@ -11,7 +11,7 @@ logger = logging.getLogger('image_service')
 
 
 def _load_alphabet(font_config: FontConfig, width_mode: str) -> list[str]:
-    file_path = path_define.outputs_dir.joinpath(font_config.get_alphabet_txt_file_name(width_mode))
+    file_path = path_define.outputs_dir.joinpath(f'alphabet-{font_config.font_size}px-{width_mode}.txt')
     text = file_path.read_text('utf-8')
     alphabet = list(text)
     alphabet.sort()
@@ -19,7 +19,7 @@ def _load_alphabet(font_config: FontConfig, width_mode: str) -> list[str]:
 
 
 def _load_font(font_config: FontConfig, width_mode: str, language_flavor: str, scale: int = 1) -> FreeTypeFont:
-    file_path = path_define.outputs_dir.joinpath(font_config.get_font_file_name(width_mode, language_flavor, 'woff2'))
+    file_path = path_define.outputs_dir.joinpath(f'ark-pixel-{font_config.font_size}px-{width_mode}-{language_flavor}.woff2')
     return ImageFont.truetype(file_path, font_config.font_size * scale)
 
 
@@ -95,7 +95,7 @@ def make_preview_image_file(font_config: FontConfig):
     image = image.resize((image.width * 2, image.height * 2), Image.Resampling.NEAREST)
 
     path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
-    file_path = path_define.outputs_dir.joinpath(font_config.preview_image_file_name)
+    file_path = path_define.outputs_dir.joinpath(f'preview-{font_config.font_size}px.png')
     image.save(file_path)
     logger.info("Make preview image file: '%s'", file_path)
 

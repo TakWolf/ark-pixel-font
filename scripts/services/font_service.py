@@ -319,7 +319,7 @@ class FontContext:
         path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
         for language_flavor in configs.language_flavors:
             builder = self._get_builder(language_flavor)
-            file_path = path_define.outputs_dir.joinpath(self.design_context.font_config.get_font_file_name(self.width_mode, language_flavor, 'otf'))
+            file_path = path_define.outputs_dir.joinpath(f'ark-pixel-{self.design_context.font_config.font_size}px-{self.width_mode}-{language_flavor}.otf')
             builder.save_otf(file_path)
             logger.info("Make font file: '%s'", file_path)
 
@@ -327,7 +327,7 @@ class FontContext:
         path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
         for language_flavor in configs.language_flavors:
             builder = self._get_builder(language_flavor)
-            file_path = path_define.outputs_dir.joinpath(self.design_context.font_config.get_font_file_name(self.width_mode, language_flavor, 'woff2'))
+            file_path = path_define.outputs_dir.joinpath(f'ark-pixel-{self.design_context.font_config.font_size}px-{self.width_mode}-{language_flavor}.woff2')
             builder.save_otf(file_path, flavor=Flavor.WOFF2)
             logger.info("Make font file: '%s'", file_path)
 
@@ -335,7 +335,7 @@ class FontContext:
         path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
         for language_flavor in configs.language_flavors:
             builder = self._get_builder(language_flavor)
-            file_path = path_define.outputs_dir.joinpath(self.design_context.font_config.get_font_file_name(self.width_mode, language_flavor, 'ttf'))
+            file_path = path_define.outputs_dir.joinpath(f'ark-pixel-{self.design_context.font_config.font_size}px-{self.width_mode}-{language_flavor}.ttf')
             builder.save_ttf(file_path)
             logger.info("Make font file: '%s'", file_path)
 
@@ -343,7 +343,7 @@ class FontContext:
         path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
         for language_flavor in configs.language_flavors:
             builder = self._get_builder(language_flavor)
-            file_path = path_define.outputs_dir.joinpath(self.design_context.font_config.get_font_file_name(self.width_mode, language_flavor, 'bdf'))
+            file_path = path_define.outputs_dir.joinpath(f'ark-pixel-{self.design_context.font_config.font_size}px-{self.width_mode}-{language_flavor}.bdf')
             builder.save_bdf(file_path)
             logger.info("Make font file: '%s'", file_path)
 
@@ -351,7 +351,7 @@ class FontContext:
         path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
         for language_flavor in configs.language_flavors:
             builder = self._get_builder(language_flavor)
-            file_path = path_define.outputs_dir.joinpath(self.design_context.font_config.get_font_file_name(self.width_mode, language_flavor, 'pcf'))
+            file_path = path_define.outputs_dir.joinpath(f'ark-pixel-{self.design_context.font_config.font_size}px-{self.width_mode}-{language_flavor}.pcf')
             builder.save_pcf(file_path)
             logger.info("Make font file: '%s'", file_path)
 
@@ -367,13 +367,13 @@ class FontContext:
     def make_otc(self):
         path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
         collection_builder = self._get_collection_builder()
-        file_path = path_define.outputs_dir.joinpath(self.design_context.font_config.get_font_collection_file_name(self.width_mode, 'otc'))
+        file_path = path_define.outputs_dir.joinpath(f'ark-pixel-{self.design_context.font_config.font_size}px-{self.width_mode}.otc')
         collection_builder.save_otc(file_path)
         logger.info("Make font collection file: '%s'", file_path)
 
     def make_ttc(self):
         path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
         collection_builder = self._get_collection_builder()
-        file_path = path_define.outputs_dir.joinpath(self.design_context.font_config.get_font_collection_file_name(self.width_mode, 'ttc'))
+        file_path = path_define.outputs_dir.joinpath(f'ark-pixel-{self.design_context.font_config.font_size}px-{self.width_mode}.ttc')
         collection_builder.save_ttc(file_path)
         logger.info("Make font collection file: '%s'", file_path)
