@@ -1,3 +1,5 @@
+import itertools
+
 from scripts import configs
 from scripts.configs import path_define, FontConfig
 from scripts.services import publish_service, info_service, template_service, image_service
@@ -22,7 +24,8 @@ def main():
             font_context.make_pcf()
             font_context.make_otc()
             font_context.make_ttc()
-            publish_service.make_release_zips(font_size, width_mode)
+            for font_format in itertools.chain(configs.font_formats, configs.font_collection_formats):
+                publish_service.make_release_zip(font_size, width_mode, font_format)
             info_service.make_info_file(design_context, width_mode)
             info_service.make_alphabet_txt_file(design_context, width_mode)
             template_service.make_alphabet_html_file(design_context, width_mode)

@@ -13,25 +13,19 @@ from scripts.configs import path_define
 logger = logging.getLogger('publish_service')
 
 
-def make_release_zips(font_size: int, width_mode: str):
+def make_release_zip(font_size: int, width_mode: str, font_format: str):
     path_define.releases_dir.mkdir(parents=True, exist_ok=True)
-
-    for font_format in configs.font_formats:
-        file_path = path_define.releases_dir.joinpath(f'ark-pixel-font-{font_size}px-{width_mode}-{font_format}-v{configs.font_version}.zip')
-        with zipfile.ZipFile(file_path, 'w') as file:
-            file.write(path_define.project_root_dir.joinpath('LICENSE-OFL'), 'OFL.txt')
+    file_path = path_define.releases_dir.joinpath(f'ark-pixel-font-{font_size}px-{width_mode}-{font_format}-v{configs.font_version}.zip')
+    with zipfile.ZipFile(file_path, 'w') as file:
+        file.write(path_define.project_root_dir.joinpath('LICENSE-OFL'), 'OFL.txt')
+        if font_format in configs.font_formats:
             for language_flavor in configs.language_flavors:
                 font_file_name = f'ark-pixel-{font_size}px-{width_mode}-{language_flavor}.{font_format}'
                 file.write(path_define.outputs_dir.joinpath(font_file_name), font_file_name)
-        logger.info("Make release zip: '%s'", file_path)
-
-    for font_format in configs.font_collection_formats:
-        file_path = path_define.releases_dir.joinpath(f'ark-pixel-font-{font_size}px-{width_mode}-{font_format}-v{configs.font_version}.zip')
-        with zipfile.ZipFile(file_path, 'w') as file:
-            file.write(path_define.project_root_dir.joinpath('LICENSE-OFL'), 'OFL.txt')
+        else:
             font_file_name = f'ark-pixel-{font_size}px-{width_mode}.{font_format}'
             file.write(path_define.outputs_dir.joinpath(font_file_name), font_file_name)
-        logger.info("Make release zip: '%s'", file_path)
+    logger.info("Make release zip: '%s'", file_path)
 
 
 def update_docs():
