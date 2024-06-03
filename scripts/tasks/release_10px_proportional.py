@@ -4,11 +4,12 @@ from scripts.services.font_service import DesignContext, FontContext
 
 
 def main():
-    font_config = FontConfig.load(10)
+    font_size = 10
+    width_mode = 'proportional'
+
+    font_config = FontConfig.load(font_size)
     design_context = DesignContext.load(font_config)
     design_context.standardize()
-
-    width_mode = 'proportional'
     font_context = FontContext(design_context, width_mode)
     font_context.make_otf()
     font_context.make_woff2()
@@ -17,7 +18,7 @@ def main():
     font_context.make_pcf()
     font_context.make_otc()
     font_context.make_ttc()
-    publish_service.make_release_zips(font_config, width_mode)
+    publish_service.make_release_zips(font_size, width_mode)
     info_service.make_info_file(design_context, width_mode)
     info_service.make_alphabet_txt_file(design_context, width_mode)
 

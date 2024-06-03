@@ -10,7 +10,7 @@ def main():
     fs_util.delete_dir(path_define.releases_dir)
 
     font_configs = FontConfig.load_all()
-    for font_config in font_configs.values():
+    for font_size, font_config in font_configs.items():
         design_context = DesignContext.load(font_config)
         design_context.standardize()
         for width_mode in configs.width_modes:
@@ -22,7 +22,7 @@ def main():
             font_context.make_pcf()
             font_context.make_otc()
             font_context.make_ttc()
-            publish_service.make_release_zips(font_config, width_mode)
+            publish_service.make_release_zips(font_size, width_mode)
             info_service.make_info_file(design_context, width_mode)
             info_service.make_alphabet_txt_file(design_context, width_mode)
             template_service.make_alphabet_html_file(design_context, width_mode)
