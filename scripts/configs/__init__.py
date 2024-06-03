@@ -38,8 +38,8 @@ locale_to_language_flavor = {
     'ko': 'ko',
 }
 
-git_deploy_config = GitDeployConfig(
+git_deploy_configs = [GitDeployConfig(
     url='git@github.com:TakWolf/ark-pixel-font.git',
     remote_name='github',
     branch_name='gh-pages',
-)
+)]

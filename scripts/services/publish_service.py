@@ -8,7 +8,7 @@ import zipfile
 import git
 
 from scripts import configs
-from scripts.configs import path_define, FontConfig, GitDeployConfig
+from scripts.configs import path_define, FontConfig
 
 logger = logging.getLogger('publish_service')
 
@@ -79,19 +79,20 @@ def update_www():
             logger.info("Copy file: '%s' -> '%s'", path_from, path_to)
 
 
-def deploy_www(config: GitDeployConfig):
+def deploy_www():
     if path_define.www_dir.joinpath('.git').exists():
         repo = git.Repo(path_define.www_dir)
     else:
         repo = git.Repo.init(path_define.www_dir)
 
-    if config.remote_name in repo.git.remote().splitlines():
-        repo.git.remote('rm', config.remote_name)
-    repo.git.remote('add', config.remote_name, config.url)
-
     if len(repo.git.status('-s').splitlines()) > 0:
         repo.git.add(all=True)
         repo.git.commit(m=f'deployed at {datetime.datetime.now(datetime.UTC).isoformat()}')
 
+    remote_names = repo.git.remote().splitlines()
     current_branch_name = repo.git.branch(show_current=True)
-    repo.git.push(config.remote_name, f'{current_branch_name}:{config.branch_name}', '-f')
+    for config in configs.git_deploy_configs:
+        if config.remote_name in remote_names:
+            repo.git.remote('rm', config.remote_name)
+        repo.git.remote('add', config.remote_name, config.url)
+        repo.git.push(config.remote_name, f'{current_branch_name}:{config.branch_name}', '-f')
