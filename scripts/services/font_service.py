@@ -211,7 +211,7 @@ class DesignContext:
             self._character_mapping_pool[key] = character_mapping
         return character_mapping
 
-    def get_glyph_files(self, width_mode: str, language_flavor: str = None) -> list[GlyphFile]:
+    def get_glyph_files(self, width_mode: str, language_flavor: str | None = None) -> list[GlyphFile]:
         key = f'{width_mode}#{'' if language_flavor is None else language_flavor}'
         if key in self._glyph_files_pool:
             glyph_files = self._glyph_files_pool[key]
