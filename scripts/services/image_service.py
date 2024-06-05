@@ -75,7 +75,7 @@ def _draw_text_background(
             alphabet_index += step
 
 
-def make_preview_image_file(font_config: FontConfig):
+def make_preview_image(font_config: FontConfig):
     font_latin = _load_font(font_config, 'proportional', 'latin')
     font_zh_cn = _load_font(font_config, 'proportional', 'zh_cn')
     font_zh_tr = _load_font(font_config, 'proportional', 'zh_tr')
@@ -96,7 +96,7 @@ def make_preview_image_file(font_config: FontConfig):
     path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
     file_path = path_define.outputs_dir.joinpath(f'preview-{font_config.font_size}px.png')
     image.save(file_path)
-    logger.info("Make preview image file: '%s'", file_path)
+    logger.info("Make preview image: '%s'", file_path)
 
 
 def make_readme_banner(font_configs: dict[int, FontConfig]):

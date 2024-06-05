@@ -19,7 +19,7 @@ _environment = Environment(
 _build_random_key = random.random()
 
 
-def _make_html_file(template_name: str, file_name: str, params: dict[str, object] | None = None):
+def _make_html(template_name: str, file_name: str, params: dict[str, object] | None = None):
     params = {} if params is None else dict(params)
     params['build_random_key'] = _build_random_key
     params['width_modes'] = configs.width_modes
@@ -30,11 +30,11 @@ def _make_html_file(template_name: str, file_name: str, params: dict[str, object
     path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
     file_path = path_define.outputs_dir.joinpath(file_name)
     file_path.write_text(html, 'utf-8')
-    logger.info("Make html file: '%s'", file_path)
+    logger.info("Make html: '%s'", file_path)
 
 
-def make_alphabet_html_file(design_context: DesignContext, width_mode: str):
-    _make_html_file('alphabet.html', f'alphabet-{design_context.font_config.font_size}px-{width_mode}.html', {
+def make_alphabet_html(design_context: DesignContext, width_mode: str):
+    _make_html('alphabet.html', f'alphabet-{design_context.font_config.font_size}px-{width_mode}.html', {
         'font_config': design_context.font_config,
         'width_mode': width_mode,
         'alphabet': ''.join(sorted([c for c in design_context.get_alphabet(width_mode) if ord(c) >= 128])),
@@ -99,26 +99,26 @@ def _handle_demo_html_element(design_context: DesignContext, soup: bs4.Beautiful
         tmp_parent.unwrap()
 
 
-def make_demo_html_file(design_context: DesignContext):
+def make_demo_html(design_context: DesignContext):
     content_html = path_define.templates_dir.joinpath('demo-content.html').read_text('utf-8')
     content_html = ''.join(line.strip() for line in content_html.split('\n'))
     soup = bs4.BeautifulSoup(content_html, 'html.parser')
     _handle_demo_html_element(design_context, soup, soup)
     content_html = str(soup)
 
-    _make_html_file('demo.html', f'demo-{design_context.font_config.font_size}px.html', {
+    _make_html('demo.html', f'demo-{design_context.font_config.font_size}px.html', {
         'font_config': design_context.font_config,
         'content_html': content_html,
     })
 
 
-def make_index_html_file(font_configs: dict[int, FontConfig]):
-    _make_html_file('index.html', 'index.html', {
+def make_index_html(font_configs: dict[int, FontConfig]):
+    _make_html('index.html', 'index.html', {
         'font_configs': font_configs,
     })
 
 
-def make_playground_html_file(font_configs: dict[int, FontConfig]):
-    _make_html_file('playground.html', 'playground.html', {
+def make_playground_html(font_configs: dict[int, FontConfig]):
+    _make_html('playground.html', 'playground.html', {
         'font_configs': font_configs,
     })

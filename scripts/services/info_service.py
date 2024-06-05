@@ -103,7 +103,7 @@ def _write_locale_chr_count_infos_table(output: TextIO, infos: list[tuple[str, i
         output.write(f'| {name} | {count} / {total} | {missing} | {progress:.2%} {finished_emoji} |\n')
 
 
-def make_info_file(design_context: DesignContext, width_mode: str):
+def make_font_info(design_context: DesignContext, width_mode: str):
     alphabet = design_context.get_alphabet(width_mode)
 
     output = StringIO()
@@ -149,14 +149,14 @@ def make_info_file(design_context: DesignContext, width_mode: str):
     path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
     file_path = path_define.outputs_dir.joinpath(f'font-info-{design_context.font_config.font_size}px-{width_mode}.md')
     file_path.write_text(output.getvalue(), 'utf-8')
-    logger.info("Make info file: '%s'", file_path)
+    logger.info("Make font info: '%s'", file_path)
 
 
-def make_alphabet_txt_file(design_context: DesignContext, width_mode: str):
+def make_alphabet_txt(design_context: DesignContext, width_mode: str):
     alphabet = list(design_context.get_alphabet(width_mode))
     alphabet.sort()
 
     path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
     file_path = path_define.outputs_dir.joinpath(f'alphabet-{design_context.font_config.font_size}px-{width_mode}.txt')
     file_path.write_text(''.join(alphabet), 'utf-8')
-    logger.info("Make alphabet txt file: '%s'", file_path)
+    logger.info("Make alphabet txt: '%s'", file_path)

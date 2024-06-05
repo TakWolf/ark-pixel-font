@@ -324,7 +324,7 @@ class FontContext:
             self._collection_builder = collection_builder
         return self._collection_builder
 
-    def make_font_files(self, font_format: str):
+    def make_fonts(self, font_format: str):
         path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
         if font_format in configs.font_formats:
             for language_flavor in configs.language_flavors:
@@ -334,9 +334,9 @@ class FontContext:
                     builder.save_otf(file_path, flavor=Flavor.WOFF2)
                 else:
                     getattr(builder, f'save_{font_format}')(file_path)
-                logger.info("Make font file: '%s'", file_path)
+                logger.info("Make font: '%s'", file_path)
         else:
             collection_builder = self._get_collection_builder()
             file_path = path_define.outputs_dir.joinpath(f'ark-pixel-{self.design_context.font_config.font_size}px-{self.width_mode}.{font_format}')
             getattr(collection_builder, f'save_{font_format}')(file_path)
-            logger.info("Make font collection file: '%s'", file_path)
+            logger.info("Make font collection: '%s'", file_path)

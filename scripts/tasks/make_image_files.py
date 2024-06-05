@@ -5,7 +5,7 @@ from scripts.services import image_service
 def main():
     font_configs = FontConfig.load_all()
     for font_config in font_configs.values():
-        image_service.make_preview_image_file(font_config)
+        image_service.make_preview_image(font_config)
     image_service.make_readme_banner(font_configs)
     image_service.make_github_banner(font_configs)
     image_service.make_itch_io_banner(font_configs)

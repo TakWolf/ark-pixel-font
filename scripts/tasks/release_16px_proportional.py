@@ -15,10 +15,10 @@ def main():
     design_context.standardize()
     font_context = FontContext(design_context, width_mode)
     for font_format in itertools.chain(configs.font_formats, configs.font_collection_formats):
-        font_context.make_font_files(font_format)
+        font_context.make_fonts(font_format)
         publish_service.make_release_zip(font_size, width_mode, font_format)
-    info_service.make_info_file(design_context, width_mode)
-    info_service.make_alphabet_txt_file(design_context, width_mode)
+    info_service.make_font_info(design_context, width_mode)
+    info_service.make_alphabet_txt(design_context, width_mode)
 
 
 if __name__ == '__main__':
