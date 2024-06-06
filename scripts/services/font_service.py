@@ -170,7 +170,7 @@ class DesignContext:
                         file_dir.mkdir(parents=True, exist_ok=True)
                         glyph_file.file_path.rename(file_path)
                         glyph_file.file_path = file_path
-                        logger.info(f"Standardize glyph file path: '{glyph_file.file_path}'")
+                        logger.info("Standardize glyph file path: '%s'", glyph_file.file_path)
 
         for file_dir, _, _ in root_dir.walk(top_down=False):
             if fs_util.is_empty_dir(file_dir):
