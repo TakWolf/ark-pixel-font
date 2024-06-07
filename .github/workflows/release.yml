@@ -27,7 +27,7 @@ jobs:
         python -m pip install pip --upgrade
         python -m pip install -r requirements.txt
     - name: Build
-      run: python -m scripts.tasks.release_${{ matrix.font-size }}px_${{ matrix.width-mode }}
+      run: python -m scripts.tools.release_${{ matrix.font-size }}px_${{ matrix.width-mode }}
     - name: Release
       uses: softprops/action-gh-release@v2
       with:
