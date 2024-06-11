@@ -7,7 +7,7 @@ from scripts.services.font_service import DesignContext, FontContext
 def main():
     font_config = FontConfig.load(16)
     design_context = DesignContext.load(font_config)
-    design_context.standardize()
+    design_context.standardized()
     for width_mode in configs.width_modes:
         font_context = FontContext(design_context, width_mode)
         font_context.make_fonts('woff2')

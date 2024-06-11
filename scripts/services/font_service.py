@@ -121,7 +121,7 @@ class DesignContext:
         self._character_mapping_pool = {}
         self._glyph_files_pool = {}
 
-    def standardize(self):
+    def standardized(self):
         root_dir = path_define.glyphs_dir.joinpath(str(self.font_config.font_size))
         for width_mode_dir_name, code_point_registry in self._glyph_file_registry.items():
             width_mode_dir = root_dir.joinpath(width_mode_dir_name)

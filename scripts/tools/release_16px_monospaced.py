@@ -12,7 +12,7 @@ def main():
 
     font_config = FontConfig.load(font_size)
     design_context = DesignContext.load(font_config)
-    design_context.standardize()
+    design_context.standardized()
     font_context = FontContext(design_context, width_mode)
     for font_format in itertools.chain(configs.font_formats, configs.font_collection_formats):
         font_context.make_fonts(font_format)
