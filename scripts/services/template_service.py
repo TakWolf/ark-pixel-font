@@ -8,7 +8,7 @@ from scripts import configs
 from scripts.configs import path_define, FontConfig
 from scripts.services.font_service import DesignContext
 
-logger = logging.getLogger('template_service')
+logger = logging.getLogger(__name__)
 
 _environment = Environment(
     trim_blocks=True,

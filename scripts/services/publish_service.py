@@ -10,7 +10,7 @@ import git
 from scripts import configs
 from scripts.configs import path_define
 
-logger = logging.getLogger('publish_service')
+logger = logging.getLogger(__name__)
 
 
 def make_release_zip(font_size: int, width_mode: str, font_format: str):

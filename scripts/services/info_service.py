@@ -12,7 +12,7 @@ from scripts import configs
 from scripts.configs import path_define
 from scripts.services.font_service import DesignContext
 
-logger = logging.getLogger('info_service')
+logger = logging.getLogger(__name__)
 
 
 def _get_unicode_chr_count_infos(alphabet: set[str]) -> list[tuple[UnicodeBlock, int]]:

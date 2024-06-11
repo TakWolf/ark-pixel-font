@@ -14,7 +14,7 @@ from scripts import configs
 from scripts.configs import path_define, FontConfig
 from scripts.utils import fs_util, bitmap_util
 
-logger = logging.getLogger('font_service')
+logger = logging.getLogger(__name__)
 
 
 class GlyphFile:
