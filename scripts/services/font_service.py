@@ -9,10 +9,11 @@ from pathlib import Path
 import unidata_blocks
 from pixel_font_builder import FontBuilder, FontCollectionBuilder, WeightName, SerifStyle, SlantStyle, WidthMode, Glyph
 from pixel_font_builder.opentype import Flavor
+from pixel_font_knife import mono_bitmap_util
 
 from scripts import configs
 from scripts.configs import path_define, FontConfig
-from scripts.utils import fs_util, bitmap_util
+from scripts.utils import fs_util
 
 logger = logging.getLogger(__name__)
 
@@ -47,7 +48,7 @@ class GlyphFile:
 
     def __init__(self, file_path: Path, code_point: int, language_flavors: list[str]):
         self.file_path = file_path
-        self.bitmap, self.width, self.height = bitmap_util.load_png(file_path)
+        self.bitmap, self.width, self.height = mono_bitmap_util.load_png(file_path)
         self.code_point = code_point
         self.language_flavors = language_flavors
 
@@ -162,7 +163,7 @@ class DesignContext:
                     if width_mode_dir_name == 'proportional':
                         assert glyph_file.height == self.font_config.line_height, f"Glyph data error: '{glyph_file.file_path}'"
 
-                    bitmap_util.save_png(glyph_file.bitmap, glyph_file.file_path)
+                    mono_bitmap_util.save_png(glyph_file.bitmap, glyph_file.file_path)
 
                     file_path = file_dir.joinpath(file_name)
                     if glyph_file.file_path != file_path:
