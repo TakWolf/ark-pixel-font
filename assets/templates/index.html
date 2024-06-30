@@ -125,7 +125,7 @@
     <form class="options-group">
         {% for font_config in font_configs.values() %}
         <label class="option">
-            <input id="radio-font-size-{{ font_config.font_size }}" name="font_size" type="radio" onchange="onFontSizeChange('{{ font_config.font_size }}');">
+            <input id="radio-font-size-{{ font_config.font_size }}" name="font_size" type="radio" onchange="onFontSizeChange('{{ font_config.font_size }}')">
             <span></span>
             {{ font_config.font_size }}px
         </label>
@@ -165,29 +165,27 @@
         <div class="copyright" lang="en">© 2021 TakWolf</div>
     </div>
     <script>
-        let page = document.getElementById('page');
+        let page = document.getElementById('page')
 
         let settings = {
             fontSize: 12,
-        };
+        }
 
         function applySettings() {
-            localStorage.setItem('settings:index', JSON.stringify(settings));
-            page.className = 'font-' + settings.fontSize + 'px-proportional';
+            localStorage.setItem('settings:index', JSON.stringify(settings))
+            page.className = 'font-' + settings.fontSize + 'px-proportional'
         }
 
         function onFontSizeChange(fontSize) {
-            settings.fontSize = fontSize;
-            applySettings();
+            settings.fontSize = fontSize
+            applySettings()
         }
 
-        (function () {
-            let json = localStorage.getItem('settings:index');
-            if (json) {
-                Object.assign(settings, JSON.parse(json));
-            }
-            document.getElementById('radio-font-size-' + settings.fontSize).checked = true;
-            applySettings();
-        })();
+        let json = localStorage.getItem('settings:index')
+        if (json) {
+            Object.assign(settings, JSON.parse(json))
+        }
+        document.getElementById('radio-font-size-' + settings.fontSize).checked = true
+        applySettings()
     </script>
 {% endblock %}

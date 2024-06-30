@@ -90,7 +90,7 @@
     <form class="options-group">
         {% for locale, language_flavor in locale_to_language_flavor.items() %}
         <label class="option">
-            <input id="radio-locale-{{ locale }}" name="locale" type="radio" onchange="onLocaleChange('{{ locale }}');">
+            <input id="radio-locale-{{ locale }}" name="locale" type="radio" onchange="onLocaleChange('{{ locale }}')">
             <span></span>
             {{ language_flavor.replace('_', '-') }}
         </label>
@@ -106,29 +106,27 @@
         {{ alphabet }}
     </div>
     <script>
-        let content = document.getElementById('content');
+        let content = document.getElementById('content')
 
         let settings = {
             locale: 'zh-cn',
-        };
+        }
 
         function applySettings() {
-            localStorage.setItem('settings:alphabet-{{ font_config.font_size }}px-{{ width_mode }}', JSON.stringify(settings));
-            content.setAttribute('lang', settings.locale);
+            localStorage.setItem('settings:alphabet-{{ font_config.font_size }}px-{{ width_mode }}', JSON.stringify(settings))
+            content.setAttribute('lang', settings.locale)
         }
 
         function onLocaleChange(locale) {
-            settings.locale = locale;
-            applySettings();
+            settings.locale = locale
+            applySettings()
         }
 
-        (function () {
-            let json = localStorage.getItem('settings:alphabet-{{ font_config.font_size }}px-{{ width_mode }}');
-            if (json) {
-                Object.assign(settings, JSON.parse(json));
-            }
-            document.getElementById('radio-locale-' + settings.locale).checked = true;
-            applySettings();
-        })();
+        let json = localStorage.getItem('settings:alphabet-{{ font_config.font_size }}px-{{ width_mode }}')
+        if (json) {
+            Object.assign(settings, JSON.parse(json))
+        }
+        document.getElementById('radio-locale-' + settings.locale).checked = true
+        applySettings()
     </script>
 {% endblock %}
