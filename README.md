@@ -170,7 +170,7 @@ brew install font-ark-pixel-16px-proportional
 - [SYMBL - Unicode 查询工具](https://symbl.cc)
 - [字嗨 - 漢字部件檢索](https://zi-hi.com/sp/uni/CJKSeeker)
 - [字統网 - 字形檢字](https://zi.tools/?secondary=search)
-- [思源映射管理器](https://github.com/NightFurySL2001/shs-cid)
+- [思源映射查看器](https://github.com/TakWolf/source-han-mapping-viewer)
 
 ## 参考资料
 
