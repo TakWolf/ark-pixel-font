@@ -128,7 +128,7 @@ brew install font-ark-pixel-16px-proportional
 
 这是一个标准的 [Python3](https://www.python.org) 项目。
 
-当您配置好运行环境后，执行 `python ./build.py` 命令来开始构建。
+当您配置好运行环境后，执行 `python -m tools.build` 命令来开始构建。
 
 等待任务完成后，可在 `build/outputs` 目录下找到生成的字体文件。
 

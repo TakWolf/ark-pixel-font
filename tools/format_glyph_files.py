@@ -1,5 +1,5 @@
-from scripts.configs import FontConfig
-from scripts.services.font_service import DesignContext
+from tools.configs import FontConfig
+from tools.services.font_service import DesignContext
 
 
 def main():

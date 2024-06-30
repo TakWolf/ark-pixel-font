@@ -8,9 +8,9 @@ import unidata_blocks
 from character_encoding_utils import gb2312, big5, shiftjis, ksx1001
 from unidata_blocks import UnicodeBlock
 
-from scripts import configs
-from scripts.configs import path_define
-from scripts.services.font_service import DesignContext
+from tools import configs
+from tools.configs import path_define
+from tools.services.font_service import DesignContext
 
 logger = logging.getLogger(__name__)
 

@@ -1,5 +1,5 @@
-from scripts.configs.deploy import GitDeployConfig
-from scripts.configs.font import FontConfig
+from tools.configs.deploy import GitDeployConfig
+from tools.configs.font import FontConfig
 
 font_version = '2024.05.12'
 

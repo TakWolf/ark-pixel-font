@@ -1,7 +1,7 @@
-from scripts import configs
-from scripts.configs import FontConfig
-from scripts.services import info_service
-from scripts.services.font_service import DesignContext, FontContext
+from tools import configs
+from tools.configs import FontConfig
+from tools.services import info_service
+from tools.services.font_service import DesignContext, FontContext
 
 
 def main():

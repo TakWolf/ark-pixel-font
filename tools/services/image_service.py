@@ -4,7 +4,7 @@ import math
 from PIL import Image, ImageFont, ImageDraw
 from PIL.ImageFont import FreeTypeFont
 
-from scripts.configs import path_define, FontConfig
+from tools.configs import path_define, FontConfig
 
 logger = logging.getLogger(__name__)
 

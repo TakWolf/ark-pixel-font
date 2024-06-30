@@ -1,4 +1,4 @@
-from scripts.services import publish_service
+from tools.services import publish_service
 
 
 def main():

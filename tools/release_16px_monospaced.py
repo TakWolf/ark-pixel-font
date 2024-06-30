@@ -1,14 +1,14 @@
 import itertools
 
-from scripts import configs
-from scripts.configs import FontConfig
-from scripts.services import publish_service, info_service
-from scripts.services.font_service import DesignContext, FontContext
+from tools import configs
+from tools.configs import FontConfig
+from tools.services import publish_service, info_service
+from tools.services.font_service import DesignContext, FontContext
 
 
 def main():
-    font_size = 12
-    width_mode = 'proportional'
+    font_size = 16
+    width_mode = 'monospaced'
 
     font_config = FontConfig.load(font_size)
     design_context = DesignContext.load(font_config)

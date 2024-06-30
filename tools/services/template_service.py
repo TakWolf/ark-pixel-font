@@ -4,9 +4,9 @@ import random
 import bs4
 from jinja2 import Environment, FileSystemLoader
 
-from scripts import configs
-from scripts.configs import path_define, FontConfig
-from scripts.services.font_service import DesignContext
+from tools import configs
+from tools.configs import path_define, FontConfig
+from tools.services.font_service import DesignContext
 
 logger = logging.getLogger(__name__)
 

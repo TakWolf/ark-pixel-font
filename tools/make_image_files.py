@@ -1,5 +1,5 @@
-from scripts.configs import FontConfig
-from scripts.services import image_service
+from tools.configs import FontConfig
+from tools.services import image_service
 
 
 def main():
