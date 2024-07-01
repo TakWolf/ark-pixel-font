@@ -1,4 +1,3 @@
-from tools.configs.deploy import GitDeployConfig
 
 font_version = '2024.05.12'
 
@@ -32,9 +31,3 @@ locale_to_language_flavor = {
     'ja': 'ja',
     'ko': 'ko',
 }
-
-git_deploy_configs = [GitDeployConfig(
-    url='git@github.com:TakWolf/ark-pixel-font.git',
-    remote_name='github',
-    branch_name='gh-pages',
-)]

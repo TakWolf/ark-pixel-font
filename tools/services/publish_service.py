@@ -1,11 +1,7 @@
-import datetime
 import logging
-import os
 import re
 import shutil
 import zipfile
-
-import git
 
 from tools import configs
 from tools.configs import path_define
@@ -38,53 +34,3 @@ def update_docs():
             path_to.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(path_from, path_to)
             logger.info("Copy file: '%s' -> '%s'", path_from, path_to)
-
-
-def update_www():
-    if path_define.www_dir.exists():
-        for path in path_define.www_dir.iterdir():
-            if path.name == '.git':
-                continue
-            if path.is_file():
-                os.remove(path)
-            elif path.is_dir():
-                shutil.rmtree(path)
-
-    for file_dir, _, file_names in path_define.www_static_dir.walk():
-        for file_name in file_names:
-            if file_name == '.DS_Store':
-                continue
-            path_from = file_dir.joinpath(file_name)
-            path_to = path_define.www_dir.joinpath(path_from.relative_to(path_define.www_static_dir))
-            path_to.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(path_from, path_to)
-            logger.info("Copy file: '%s' -> '%s'", path_from, path_to)
-
-    for file_dir, _, file_names in path_define.outputs_dir.walk():
-        for file_name in file_names:
-            if not file_name.endswith(('.html', '.woff2')):
-                continue
-            path_from = file_dir.joinpath(file_name)
-            path_to = path_define.www_dir.joinpath(path_from.relative_to(path_define.outputs_dir))
-            path_to.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(path_from, path_to)
-            logger.info("Copy file: '%s' -> '%s'", path_from, path_to)
-
-
-def deploy_www():
-    if path_define.www_dir.joinpath('.git').exists():
-        repo = git.Repo(path_define.www_dir)
-    else:
-        repo = git.Repo.init(path_define.www_dir)
-
-    if len(repo.git.status('-s').splitlines()) > 0:
-        repo.git.add(all=True)
-        repo.git.commit(m=f'deployed at {datetime.datetime.now(datetime.UTC).isoformat()}')
-
-    remote_names = repo.git.remote().splitlines()
-    current_branch_name = repo.git.branch(show_current=True)
-    for config in configs.git_deploy_configs:
-        if config.remote_name in remote_names:
-            repo.git.remote('rm', config.remote_name)
-        repo.git.remote('add', config.remote_name, config.url)
-        repo.git.push(config.remote_name, f'{current_branch_name}:{config.branch_name}', '-f')
