@@ -5,7 +5,8 @@ import bs4
 from jinja2 import Environment, FileSystemLoader
 
 from tools import configs
-from tools.configs import path_define, FontConfig
+from tools.configs import path_define
+from tools.configs.font import FontConfig
 from tools.services.font_service import DesignContext
 
 logger = logging.getLogger(__name__)

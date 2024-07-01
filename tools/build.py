@@ -1,7 +1,8 @@
 import itertools
 
 from tools import configs
-from tools.configs import path_define, FontConfig
+from tools.configs import path_define
+from tools.configs.font import FontConfig
 from tools.services import publish_service, info_service, template_service, image_service
 from tools.services.font_service import DesignContext, FontContext
 from tools.utils import fs_util

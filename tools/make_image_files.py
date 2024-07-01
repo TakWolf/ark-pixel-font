@@ -1,4 +1,4 @@
-from tools.configs import FontConfig
+from tools.configs.font import FontConfig
 from tools.services import image_service
 
 
