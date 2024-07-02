@@ -23,9 +23,7 @@ def _get_unicode_chr_count_infos(alphabet: set[str]) -> list[tuple[UnicodeBlock,
         if not c.isprintable() and block.printable_count > 0:
             continue
         count_infos[block.code_start] += 1
-    code_starts = list(count_infos)
-    code_starts.sort()
-    return [(unidata_blocks.get_block_by_code_point(code_start), count_infos[code_start]) for code_start in code_starts]
+    return [(unidata_blocks.get_block_by_code_point(code_start), count) for code_start, count in sorted(count_infos.items())]
 
 
 def _get_locale_chr_count_infos(alphabet: set[str], query_category_func: Callable[[str], str | None]) -> defaultdict[str, int]:
@@ -153,8 +151,7 @@ def make_font_info(design_context: DesignContext, width_mode: str):
 
 
 def make_alphabet_txt(design_context: DesignContext, width_mode: str):
-    alphabet = list(design_context.get_alphabet(width_mode))
-    alphabet.sort()
+    alphabet = sorted(design_context.get_alphabet(width_mode))
 
     path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
     file_path = path_define.outputs_dir.joinpath(f'alphabet-{design_context.font_config.font_size}px-{width_mode}.txt')

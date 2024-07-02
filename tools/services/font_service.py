@@ -184,8 +184,7 @@ class DesignContext:
         else:
             sequence = set(self._glyph_file_registry['common'])
             sequence.update(self._glyph_file_registry[width_mode])
-            sequence = list(sequence)
-            sequence.sort()
+            sequence = sorted(sequence)
             self._sequence_pool[width_mode] = sequence
         return sequence
 

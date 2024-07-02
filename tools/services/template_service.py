@@ -48,7 +48,7 @@ def make_alphabet_html(design_context: DesignContext, width_mode: str):
     _make_html('alphabet.html', f'alphabet-{design_context.font_config.font_size}px-{width_mode}.html', {
         'font_config': design_context.font_config,
         'width_mode': width_mode,
-        'alphabet': ''.join(sorted([c for c in design_context.get_alphabet(width_mode) if ord(c) >= 128])),
+        'alphabet': ''.join(sorted(c for c in design_context.get_alphabet(width_mode) if ord(c) >= 128)),
     })
 
 

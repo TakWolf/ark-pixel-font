@@ -13,9 +13,7 @@ logger = logging.getLogger(__name__)
 def _load_alphabet(font_config: FontConfig, width_mode: str) -> list[str]:
     file_path = path_define.outputs_dir.joinpath(f'alphabet-{font_config.font_size}px-{width_mode}.txt')
     text = file_path.read_text('utf-8')
-    alphabet = list(text)
-    alphabet.sort()
-    return alphabet
+    return sorted(text)
 
 
 def _load_font(font_config: FontConfig, width_mode: str, language_flavor: str, scale: int = 1) -> FreeTypeFont:
