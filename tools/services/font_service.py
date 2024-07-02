@@ -7,7 +7,7 @@ import unicodedata
 from pathlib import Path
 
 import unidata_blocks
-from pixel_font_builder import FontBuilder, FontCollectionBuilder, WeightName, SerifStyle, SlantStyle, WidthMode, Glyph
+from pixel_font_builder import FontBuilder, FontCollectionBuilder, WeightName, SerifStyle, SlantStyle, WidthStyle, Glyph
 from pixel_font_builder.opentype import Flavor
 from pixel_font_knife import mono_bitmap_util
 
@@ -262,7 +262,7 @@ def _create_builder(
     builder.meta_info.weight_name = WeightName.REGULAR
     builder.meta_info.serif_style = SerifStyle.SANS_SERIF
     builder.meta_info.slant_style = SlantStyle.NORMAL
-    builder.meta_info.width_mode = WidthMode(width_mode.capitalize())
+    builder.meta_info.width_style = WidthStyle(width_mode.capitalize())
     builder.meta_info.manufacturer = 'TakWolf'
     builder.meta_info.designer = 'TakWolf'
     builder.meta_info.description = 'Open source Pan-CJK pixel font.'
