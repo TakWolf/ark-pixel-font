@@ -1,7 +1,8 @@
 import shutil
-import tomllib
 from pathlib import Path
 from typing import Any
+
+import yaml
 
 
 def delete_dir(path: Path):
@@ -17,5 +18,5 @@ def is_empty_dir(path: Path) -> bool:
     return True
 
 
-def read_toml(path: Path) -> Any:
-    return tomllib.loads(path.read_text('utf-8'))
+def read_yaml(path: Path) -> Any:
+    return yaml.safe_load(path.read_text('utf-8'))

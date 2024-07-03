@@ -1,0 +1,11 @@
+monospaced:
+  ascent: 10
+  descent: -2
+  x-height: 6
+  cap-height: 8
+
+proportional:
+  ascent: 14
+  descent: -4
+  x-height: 6
+  cap-height: 9

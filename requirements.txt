@@ -2,6 +2,7 @@ pixel-font-builder==0.0.27
 pixel-font-knife==0.0.1
 unidata-blocks==0.0.13
 character-encoding-utils==0.0.8
+PyYAML==6.0.1
 pillow==10.4.0
 beautifulsoup4==4.12.3
 Jinja2==3.1.4

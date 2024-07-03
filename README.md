@@ -155,6 +155,7 @@ brew install font-ark-pixel-16px-proportional
 - [Pixel Font Knife](https://github.com/TakWolf/pixel-font-knife)
 - [Unidata Blocks](https://github.com/TakWolf/unidata-blocks)
 - [Character Encoding Utils](https://github.com/TakWolf/character-encoding-utils)
+- [PyYAML](https://github.com/yaml/pyyaml)
 - [Pillow](https://github.com/python-pillow/Pillow)
 - [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/)
 - [Jinja](https://github.com/pallets/jinja)
