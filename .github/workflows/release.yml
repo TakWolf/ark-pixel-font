@@ -8,11 +8,6 @@ jobs:
   release:
     permissions:
       contents: write
-    strategy:
-      matrix:
-        font-size: [10, 12, 16]
-        width-mode: [monospaced, proportional]
-      fail-fast: false
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -26,8 +21,8 @@ jobs:
           python -m pip install pip --upgrade
           python -m pip install -r requirements.txt
       - name: Build
-        run: python -m tools.release_${{ matrix.font-size }}px_${{ matrix.width-mode }}
+        run: python -m tools.build
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          files: ./build/releases/ark-pixel-font-${{ matrix.font-size }}px-${{ matrix.width-mode }}-*.zip
+          files: ./build/releases/*.zip
