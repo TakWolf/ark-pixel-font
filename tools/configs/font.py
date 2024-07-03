@@ -27,7 +27,7 @@ class FontConfig:
 
     @staticmethod
     def load(font_size: int) -> 'FontConfig':
-        file_path = path_define.glyphs_dir.joinpath(str(font_size), 'config.yaml')
+        file_path = path_define.glyphs_dir.joinpath(str(font_size), 'config.yml')
         config_data = fs_util.read_yaml(file_path)
 
         layout_params = {}
