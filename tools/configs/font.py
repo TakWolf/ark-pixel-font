@@ -1,4 +1,3 @@
-from tools import configs
 from tools.configs import path_define
 from tools.utils import fs_util
 
@@ -21,10 +20,6 @@ class LayoutParam:
 
 
 class FontConfig:
-    @staticmethod
-    def load_all() -> dict[int, 'FontConfig']:
-        return {font_size: FontConfig.load(font_size) for font_size in configs.font_sizes}
-
     @staticmethod
     def load(font_size: int) -> 'FontConfig':
         file_path = path_define.glyphs_dir.joinpath(str(font_size), 'config.yml')

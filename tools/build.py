@@ -12,7 +12,7 @@ def main():
     if path_define.build_dir.exists():
         shutil.rmtree(path_define.build_dir)
 
-    font_configs = FontConfig.load_all()
+    font_configs = {font_size: FontConfig.load(font_size) for font_size in configs.font_sizes}
     for font_size, font_config in font_configs.items():
         design_context = DesignContext.load(font_config)
         design_context.standardized()

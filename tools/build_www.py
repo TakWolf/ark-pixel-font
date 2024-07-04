@@ -5,7 +5,7 @@ from tools.services.font_service import DesignContext, FontContext
 
 
 def main():
-    font_configs = FontConfig.load_all()
+    font_configs = {font_size: FontConfig.load(font_size) for font_size in configs.font_sizes}
     for font_config in font_configs.values():
         design_context = DesignContext.load(font_config)
         design_context.standardized()
