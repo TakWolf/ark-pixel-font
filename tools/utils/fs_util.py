@@ -13,4 +13,5 @@ def is_empty_dir(path: Path) -> bool:
 
 
 def read_yaml(path: Path) -> Any:
-    return yaml.safe_load(path.read_text('utf-8'))
+    with path.open('rb') as file:
+        return yaml.safe_load(file)
