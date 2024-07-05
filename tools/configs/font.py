@@ -1,4 +1,4 @@
-from tools.configs import path_define
+from tools.configs import path_define, FontSize, WidthMode
 from tools.utils import fs_util
 
 
@@ -21,7 +21,7 @@ class LayoutParam:
 
 class FontConfig:
     @staticmethod
-    def load(font_size: int) -> 'FontConfig':
+    def load(font_size: FontSize) -> 'FontConfig':
         file_path = path_define.glyphs_dir.joinpath(str(font_size), 'config.yml')
         config_data = fs_util.read_yaml(file_path)
 
@@ -36,10 +36,10 @@ class FontConfig:
 
         return FontConfig(font_size, layout_params)
 
-    font_size: int
-    layout_params: dict[str, LayoutParam]
+    font_size: FontSize
+    layout_params: dict[WidthMode, LayoutParam]
 
-    def __init__(self, font_size: int, layout_params: dict[str, LayoutParam]):
+    def __init__(self, font_size: FontSize, layout_params: dict[WidthMode, LayoutParam]):
         self.font_size = font_size
         self.layout_params = layout_params
 
