@@ -9,7 +9,7 @@ from loguru import logger
 from unidata_blocks import UnicodeBlock
 
 from tools import configs
-from tools.configs import path_define
+from tools.configs import path_define, WidthMode
 from tools.services.font_service import DesignContext
 
 
@@ -99,7 +99,7 @@ def _write_locale_chr_count_infos_table(output: TextIO, infos: list[tuple[str, i
         output.write(f'| {name} | {count} / {total} | {missing} | {progress:.2%} {finished_emoji} |\n')
 
 
-def make_font_info(design_context: DesignContext, width_mode: str):
+def make_font_info(design_context: DesignContext, width_mode: WidthMode):
     alphabet = design_context.get_alphabet(width_mode)
 
     output = StringIO()
@@ -148,7 +148,7 @@ def make_font_info(design_context: DesignContext, width_mode: str):
     logger.info("Make font info: '{}'", file_path)
 
 
-def make_alphabet_txt(design_context: DesignContext, width_mode: str):
+def make_alphabet_txt(design_context: DesignContext, width_mode: WidthMode):
     alphabet = sorted(design_context.get_alphabet(width_mode))
 
     path_define.outputs_dir.mkdir(parents=True, exist_ok=True)

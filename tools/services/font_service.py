@@ -12,7 +12,7 @@ from pixel_font_builder.opentype import Flavor
 from pixel_font_knife.mono_bitmap import MonoBitmap
 
 from tools import configs
-from tools.configs import path_define
+from tools.configs import path_define, WidthMode, LanguageFlavor, FontFormat, FontCollectionFormat
 from tools.configs.font import FontConfig
 from tools.utils import fs_util
 
@@ -182,7 +182,7 @@ class DesignContext:
             if fs_util.is_empty_dir(file_dir):
                 shutil.rmtree(file_dir)
 
-    def _get_sequence(self, width_mode: str) -> list[int]:
+    def _get_sequence(self, width_mode: WidthMode) -> list[int]:
         if width_mode in self._sequence_pool:
             sequence = self._sequence_pool[width_mode]
         else:
@@ -192,7 +192,7 @@ class DesignContext:
             self._sequence_pool[width_mode] = sequence
         return sequence
 
-    def get_alphabet(self, width_mode: str) -> set[str]:
+    def get_alphabet(self, width_mode: WidthMode) -> set[str]:
         if width_mode in self._alphabet_pool:
             alphabet = self._alphabet_pool[width_mode]
         else:
@@ -200,7 +200,7 @@ class DesignContext:
             self._alphabet_pool[width_mode] = alphabet
         return alphabet
 
-    def get_character_mapping(self, width_mode: str, language_flavor: str) -> dict[int, str]:
+    def get_character_mapping(self, width_mode: WidthMode, language_flavor: LanguageFlavor) -> dict[int, str]:
         key = f'{width_mode}#{language_flavor}'
         if key in self._character_mapping_pool:
             character_mapping = self._character_mapping_pool[key]
@@ -217,7 +217,7 @@ class DesignContext:
             self._character_mapping_pool[key] = character_mapping
         return character_mapping
 
-    def get_glyph_files(self, width_mode: str, language_flavor: str | None = None) -> list[GlyphFile]:
+    def get_glyph_files(self, width_mode: WidthMode, language_flavor: LanguageFlavor | None = None) -> list[GlyphFile]:
         key = f'{width_mode}#{'' if language_flavor is None else language_flavor}'
         if key in self._glyph_files_pool:
             glyph_files = self._glyph_files_pool[key]
@@ -243,8 +243,8 @@ class DesignContext:
 def _create_builder(
         design_context: DesignContext,
         glyph_pool: dict[Path, Glyph],
-        width_mode: str,
-        language_flavor: str,
+        width_mode: WidthMode,
+        language_flavor: LanguageFlavor,
         is_collection: bool,
 ) -> FontBuilder:
     layout_param = design_context.font_config.layout_params[width_mode]
@@ -301,19 +301,19 @@ def _create_builder(
 
 class FontContext:
     design_context: DesignContext
-    width_mode: str
+    width_mode: WidthMode
     _glyph_pool: dict[Path, Glyph]
-    _builders: dict[str, FontBuilder]
+    _builders: dict[LanguageFlavor, FontBuilder]
     _collection_builder: FontCollectionBuilder | None
 
-    def __init__(self, design_context: DesignContext, width_mode: str):
+    def __init__(self, design_context: DesignContext, width_mode: WidthMode):
         self.design_context = design_context
         self.width_mode = width_mode
         self._glyph_pool = {}
         self._builders = {}
         self._collection_builder = None
 
-    def _get_builder(self, language_flavor: str) -> FontBuilder:
+    def _get_builder(self, language_flavor: LanguageFlavor) -> FontBuilder:
         if language_flavor in self._builders:
             builder = self._builders[language_flavor]
         else:
@@ -330,7 +330,7 @@ class FontContext:
             self._collection_builder = collection_builder
         return self._collection_builder
 
-    def make_fonts(self, font_format: str):
+    def make_fonts(self, font_format: FontFormat | FontCollectionFormat):
         path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
         if font_format in configs.font_formats:
             for language_flavor in configs.language_flavors:

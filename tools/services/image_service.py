@@ -4,17 +4,17 @@ from PIL import Image, ImageFont, ImageDraw
 from PIL.ImageFont import FreeTypeFont
 from loguru import logger
 
-from tools.configs import path_define
+from tools.configs import path_define, FontSize, WidthMode, LanguageFlavor
 from tools.configs.font import FontConfig
 
 
-def _load_alphabet(font_config: FontConfig, width_mode: str) -> list[str]:
+def _load_alphabet(font_config: FontConfig, width_mode: WidthMode) -> list[str]:
     file_path = path_define.outputs_dir.joinpath(f'alphabet-{font_config.font_size}px-{width_mode}.txt')
     text = file_path.read_text('utf-8')
     return sorted(text)
 
 
-def _load_font(font_config: FontConfig, width_mode: str, language_flavor: str, scale: int = 1) -> FreeTypeFont:
+def _load_font(font_config: FontConfig, width_mode: WidthMode, language_flavor: LanguageFlavor, scale: int = 1) -> FreeTypeFont:
     file_path = path_define.outputs_dir.joinpath(f'ark-pixel-{font_config.font_size}px-{width_mode}-{language_flavor}.woff2')
     return ImageFont.truetype(file_path, font_config.font_size * scale)
 
@@ -96,7 +96,7 @@ def make_preview_image(font_config: FontConfig):
     logger.info("Make preview image: '{}'", file_path)
 
 
-def make_readme_banner(font_configs: dict[int, FontConfig]):
+def make_readme_banner(font_configs: dict[FontSize, FontConfig]):
     font_config = font_configs[12]
     alphabet = _load_alphabet(font_config, 'proportional')
     font_x1 = _load_font(font_config, 'proportional', 'zh_cn')
@@ -119,7 +119,7 @@ def make_readme_banner(font_configs: dict[int, FontConfig]):
     logger.info("Make readme banner: '{}'", file_path)
 
 
-def make_github_banner(font_configs: dict[int, FontConfig]):
+def make_github_banner(font_configs: dict[FontSize, FontConfig]):
     font_config = font_configs[12]
     alphabet = _load_alphabet(font_config, 'proportional')
     font_title = _load_font(font_config, 'proportional', 'zh_cn', 2)
@@ -152,7 +152,7 @@ def make_github_banner(font_configs: dict[int, FontConfig]):
     logger.info("Make github banner: '{}'", file_path)
 
 
-def make_itch_io_banner(font_configs: dict[int, FontConfig]):
+def make_itch_io_banner(font_configs: dict[FontSize, FontConfig]):
     font_config = font_configs[12]
     alphabet = _load_alphabet(font_config, 'proportional')
     font_x1 = _load_font(font_config, 'proportional', 'zh_cn')
@@ -175,7 +175,7 @@ def make_itch_io_banner(font_configs: dict[int, FontConfig]):
     logger.info("Make itch.io banner: '{}'", file_path)
 
 
-def make_itch_io_background(font_configs: dict[int, FontConfig]):
+def make_itch_io_background(font_configs: dict[FontSize, FontConfig]):
     font_config = font_configs[12]
     alphabet = _load_alphabet(font_config, 'proportional')
     font = _load_font(font_config, 'proportional', 'zh_cn')
@@ -191,7 +191,7 @@ def make_itch_io_background(font_configs: dict[int, FontConfig]):
     logger.info("Make itch.io background: '{}'", file_path)
 
 
-def make_itch_io_cover(font_configs: dict[int, FontConfig]):
+def make_itch_io_cover(font_configs: dict[FontSize, FontConfig]):
     font_config = font_configs[12]
     font_title = _load_font(font_config, 'proportional', 'zh_cn', 2)
     font_latin = _load_font(font_config, 'proportional', 'latin')
@@ -221,7 +221,7 @@ def make_itch_io_cover(font_configs: dict[int, FontConfig]):
     logger.info("Make itch.io cover: '{}'", file_path)
 
 
-def make_afdian_cover(font_configs: dict[int, FontConfig]):
+def make_afdian_cover(font_configs: dict[FontSize, FontConfig]):
     font_config = font_configs[12]
     font_title = _load_font(font_config, 'proportional', 'zh_cn', 2)
     font_latin = _load_font(font_config, 'proportional', 'latin')

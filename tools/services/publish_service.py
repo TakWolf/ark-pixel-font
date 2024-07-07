@@ -5,10 +5,10 @@ import zipfile
 from loguru import logger
 
 from tools import configs
-from tools.configs import path_define
+from tools.configs import path_define, FontSize, WidthMode, FontFormat, FontCollectionFormat
 
 
-def make_release_zip(font_size: int, width_mode: str, font_format: str):
+def make_release_zip(font_size: FontSize, width_mode: WidthMode, font_format: FontFormat | FontCollectionFormat):
     path_define.releases_dir.mkdir(parents=True, exist_ok=True)
     file_path = path_define.releases_dir.joinpath(f'ark-pixel-font-{font_size}px-{width_mode}-{font_format}-v{configs.font_version}.zip')
     with zipfile.ZipFile(file_path, 'w') as file:

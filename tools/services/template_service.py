@@ -5,7 +5,7 @@ from jinja2 import Environment, FileSystemLoader
 from loguru import logger
 
 from tools import configs
-from tools.configs import path_define
+from tools.configs import path_define, FontSize, WidthMode
 from tools.configs.font import FontConfig
 from tools.services.font_service import DesignContext
 
@@ -42,7 +42,7 @@ def _make_html(template_name: str, file_name: str, params: dict[str, object] | N
     logger.info("Make html: '{}'", file_path)
 
 
-def make_alphabet_html(design_context: DesignContext, width_mode: str):
+def make_alphabet_html(design_context: DesignContext, width_mode: WidthMode):
     _make_html('alphabet.html', f'alphabet-{design_context.font_config.font_size}px-{width_mode}.html', {
         'font_config': design_context.font_config,
         'width_mode': width_mode,
@@ -121,13 +121,13 @@ def make_demo_html(design_context: DesignContext):
     })
 
 
-def make_index_html(font_configs: dict[int, FontConfig]):
+def make_index_html(font_configs: dict[FontSize, FontConfig]):
     _make_html('index.html', 'index.html', {
         'font_configs': font_configs,
     })
 
 
-def make_playground_html(font_configs: dict[int, FontConfig]):
+def make_playground_html(font_configs: dict[FontSize, FontConfig]):
     _make_html('playground.html', 'playground.html', {
         'font_configs': font_configs,
     })
