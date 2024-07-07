@@ -14,7 +14,14 @@ from pixel_font_knife.mono_bitmap import MonoBitmap
 from tools import configs
 from tools.configs import path_define, WidthMode, LanguageFlavor, FontFormat, FontCollectionFormat
 from tools.configs.font import FontConfig
-from tools.utils import fs_util
+
+
+def _is_empty_dir(path: Path) -> bool:
+    for item_path in path.iterdir():
+        if item_path.name == '.DS_Store':
+            continue
+        return False
+    return True
 
 
 class GlyphFile:
@@ -179,7 +186,7 @@ class DesignContext:
                         logger.info("Format glyph file path: '{}'", glyph_file.file_path)
 
         for file_dir, _, _ in root_dir.walk(top_down=False):
-            if fs_util.is_empty_dir(file_dir):
+            if _is_empty_dir(file_dir):
                 shutil.rmtree(file_dir)
 
     def _get_sequence(self, width_mode: WidthMode) -> list[int]:
