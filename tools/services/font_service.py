@@ -10,7 +10,7 @@ from pixel_font_knife import glyph_file_util
 from pixel_font_knife.glyph_file_util import GlyphFile, GlyphFlavorGroup
 
 from tools import configs
-from tools.configs import path_define, WidthMode, LanguageFlavor, FontFormat, FontCollectionFormat
+from tools.configs import path_define, FontSize, WidthMode, LanguageFlavor, FontFormat, FontCollectionFormat
 from tools.configs.font import FontConfig
 
 
@@ -62,6 +62,10 @@ class DesignContext:
         self._builder_cache = {}
         self._collection_builder_cache = {}
 
+    @property
+    def font_size(self) -> FontSize:
+        return self.font_config.font_size
+
     def get_alphabet(self, width_mode: WidthMode) -> set[str]:
         if width_mode in self._alphabet_cache:
             alphabet = self._alphabet_cache[width_mode]
@@ -112,7 +116,7 @@ class DesignContext:
         layout_param = self.font_config.layout_params[width_mode]
 
         builder = FontBuilder()
-        builder.font_metric.font_size = self.font_config.font_size
+        builder.font_metric.font_size = self.font_size
         builder.font_metric.horizontal_layout.ascent = layout_param.ascent
         builder.font_metric.horizontal_layout.descent = layout_param.descent
         builder.font_metric.vertical_layout.ascent = math.ceil(layout_param.line_height / 2)
@@ -123,7 +127,7 @@ class DesignContext:
         builder.meta_info.version = configs.font_version
         builder.meta_info.created_time = datetime.datetime.fromisoformat(f'{configs.font_version.replace('.', '-')}T00:00:00Z')
         builder.meta_info.modified_time = builder.meta_info.created_time
-        builder.meta_info.family_name = f'Ark Pixel {self.font_config.font_size}px {width_mode.capitalize()} {language_flavor}'
+        builder.meta_info.family_name = f'Ark Pixel {self.font_size}px {width_mode.capitalize()} {language_flavor}'
         builder.meta_info.weight_name = WeightName.REGULAR
         builder.meta_info.serif_style = SerifStyle.SANS_SERIF
         builder.meta_info.slant_style = SlantStyle.NORMAL
@@ -146,11 +150,11 @@ class DesignContext:
                 glyph = glyph_pool[glyph_file.file_path]
             else:
                 horizontal_origin_y = math.floor((layout_param.ascent + layout_param.descent - glyph_file.height) / 2)
-                vertical_origin_y = (self.font_config.font_size - glyph_file.height) // 2 - 1
+                vertical_origin_y = (self.font_size - glyph_file.height) // 2 - 1
                 glyph = Glyph(
                     name=_get_glyph_name(glyph_file),
                     advance_width=glyph_file.width,
-                    advance_height=self.font_config.font_size,
+                    advance_height=self.font_size,
                     horizontal_origin=(0, horizontal_origin_y),
                     vertical_origin_y=vertical_origin_y,
                     bitmap=glyph_file.bitmap.data,
@@ -185,7 +189,7 @@ class DesignContext:
         if font_format in configs.font_formats:
             for language_flavor in configs.language_flavors:
                 builder = self._get_builder(width_mode, language_flavor)
-                file_path = path_define.outputs_dir.joinpath(f'ark-pixel-{self.font_config.font_size}px-{width_mode}-{language_flavor}.{font_format}')
+                file_path = path_define.outputs_dir.joinpath(f'ark-pixel-{self.font_size}px-{width_mode}-{language_flavor}.{font_format}')
                 if font_format == 'woff2':
                     builder.save_otf(file_path, flavor=Flavor.WOFF2)
                 else:
@@ -193,6 +197,6 @@ class DesignContext:
                 logger.info("Make font: '{}'", file_path)
         else:
             collection_builder = self._get_collection_builder(width_mode)
-            file_path = path_define.outputs_dir.joinpath(f'ark-pixel-{self.font_config.font_size}px-{width_mode}.{font_format}')
+            file_path = path_define.outputs_dir.joinpath(f'ark-pixel-{self.font_size}px-{width_mode}.{font_format}')
             getattr(collection_builder, f'save_{font_format}')(file_path)
             logger.info("Make font collection: '{}'", file_path)
