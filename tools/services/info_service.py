@@ -1,4 +1,3 @@
-import logging
 from collections import defaultdict
 from collections.abc import Callable
 from io import StringIO
@@ -6,13 +5,12 @@ from typing import TextIO
 
 import unidata_blocks
 from character_encoding_utils import gb2312, big5, shiftjis, ksx1001
+from loguru import logger
 from unidata_blocks import UnicodeBlock
 
 from tools import configs
 from tools.configs import path_define
 from tools.services.font_service import DesignContext
-
-logger = logging.getLogger(__name__)
 
 
 def _get_unicode_chr_count_infos(alphabet: set[str]) -> list[tuple[UnicodeBlock, int]]:
@@ -147,7 +145,7 @@ def make_font_info(design_context: DesignContext, width_mode: str):
     path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
     file_path = path_define.outputs_dir.joinpath(f'font-info-{design_context.font_config.font_size}px-{width_mode}.md')
     file_path.write_text(output.getvalue(), 'utf-8')
-    logger.info("Make font info: '%s'", file_path)
+    logger.info("Make font info: '{}'", file_path)
 
 
 def make_alphabet_txt(design_context: DesignContext, width_mode: str):
@@ -156,4 +154,4 @@ def make_alphabet_txt(design_context: DesignContext, width_mode: str):
     path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
     file_path = path_define.outputs_dir.joinpath(f'alphabet-{design_context.font_config.font_size}px-{width_mode}.txt')
     file_path.write_text(''.join(alphabet), 'utf-8')
-    logger.info("Make alphabet txt: '%s'", file_path)
+    logger.info("Make alphabet txt: '{}'", file_path)
