@@ -7,7 +7,7 @@ def main():
     for font_size in configs.font_sizes:
         font_config = FontConfig.load(font_size)
         design_context = DesignContext.load(font_config)
-        design_context.standardized()
+        design_context.format_glyph_files()
 
 
 if __name__ == '__main__':

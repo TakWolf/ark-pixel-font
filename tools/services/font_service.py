@@ -129,7 +129,7 @@ class DesignContext:
         self._character_mapping_pool = {}
         self._glyph_files_pool = {}
 
-    def standardized(self):
+    def format_glyph_files(self):
         root_dir = path_define.glyphs_dir.joinpath(str(self.font_config.font_size))
         for width_mode_dir_name, code_point_registry in self._glyph_file_registry.items():
             width_mode_dir = root_dir.joinpath(width_mode_dir_name)
@@ -178,7 +178,7 @@ class DesignContext:
                         file_dir.mkdir(parents=True, exist_ok=True)
                         glyph_file.file_path.rename(file_path)
                         glyph_file.file_path = file_path
-                        logger.info("Standardize glyph file path: '%s'", glyph_file.file_path)
+                        logger.info("Format glyph file path: '%s'", glyph_file.file_path)
 
         for file_dir, _, _ in root_dir.walk(top_down=False):
             if fs_util.is_empty_dir(file_dir):

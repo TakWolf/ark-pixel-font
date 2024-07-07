@@ -8,7 +8,7 @@ def main():
     font_configs = {font_size: FontConfig.load(font_size) for font_size in configs.font_sizes}
     for font_config in font_configs.values():
         design_context = DesignContext.load(font_config)
-        design_context.standardized()
+        design_context.format_glyph_files()
         for width_mode in configs.width_modes:
             font_context = FontContext(design_context, width_mode)
             font_context.make_fonts('woff2')

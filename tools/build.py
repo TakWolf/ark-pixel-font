@@ -15,7 +15,7 @@ def main():
     font_configs = {font_size: FontConfig.load(font_size) for font_size in configs.font_sizes}
     for font_size, font_config in font_configs.items():
         design_context = DesignContext.load(font_config)
-        design_context.standardized()
+        design_context.format_glyph_files()
         for width_mode in configs.width_modes:
             font_context = FontContext(design_context, width_mode)
             for font_format in itertools.chain(configs.font_formats, configs.font_collection_formats):
