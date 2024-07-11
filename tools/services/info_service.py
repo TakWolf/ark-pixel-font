@@ -109,7 +109,7 @@ def make_font_info(design_context: DesignContext, width_mode: WidthMode):
     output.write('\n')
     output.write('| 属性 | 值 |\n')
     output.write('|---|---|\n')
-    output.write(f'| 版本号 | {configs.font_version} |\n')
+    output.write(f'| 版本号 | {configs.version} |\n')
     output.write(f'| 字符总数 | {len(alphabet)} |\n')
     output.write('\n')
     output.write('## Unicode 字符分布\n')
