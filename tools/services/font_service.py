@@ -60,7 +60,7 @@ class DesignContext:
         if width_mode in self._alphabet_cache:
             alphabet = self._alphabet_cache[width_mode]
         else:
-            alphabet = set(chr(code_point) for code_point in self.glyph_files[width_mode] if code_point >= 0)
+            alphabet = {chr(code_point) for code_point in self.glyph_files[width_mode] if code_point >= 0}
             self._alphabet_cache[width_mode] = alphabet
         return alphabet
 
