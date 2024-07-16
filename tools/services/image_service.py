@@ -6,17 +6,12 @@ from loguru import logger
 
 from tools.configs import path_define, FontSize, WidthMode, LanguageFlavor
 from tools.configs.font import FontConfig
+from tools.services.font_service import DesignContext
 
 
-def _load_alphabet(font_config: FontConfig, width_mode: WidthMode) -> list[str]:
-    file_path = path_define.outputs_dir.joinpath(f'alphabet-{font_config.font_size}px-{width_mode}.txt')
-    text = file_path.read_text('utf-8')
-    return sorted(text)
-
-
-def _load_font(font_config: FontConfig, width_mode: WidthMode, language_flavor: LanguageFlavor, scale: int = 1) -> FreeTypeFont:
-    file_path = path_define.outputs_dir.joinpath(f'ark-pixel-{font_config.font_size}px-{width_mode}-{language_flavor}.woff2')
-    return ImageFont.truetype(file_path, font_config.font_size * scale)
+def _load_font(font_size: FontSize, width_mode: WidthMode, language_flavor: LanguageFlavor, scale: int = 1) -> FreeTypeFont:
+    file_path = path_define.outputs_dir.joinpath(f'ark-pixel-{font_size}px-{width_mode}-{language_flavor}.woff2')
+    return ImageFont.truetype(file_path, font_size * scale)
 
 
 def _draw_text(
@@ -73,10 +68,10 @@ def _draw_text_background(
 
 
 def make_preview_image(font_config: FontConfig):
-    font_latin = _load_font(font_config, 'proportional', 'latin')
-    font_zh_cn = _load_font(font_config, 'proportional', 'zh_cn')
-    font_zh_tr = _load_font(font_config, 'proportional', 'zh_tr')
-    font_ja = _load_font(font_config, 'proportional', 'ja')
+    font_latin = _load_font(font_config.font_size, 'proportional', 'latin')
+    font_zh_cn = _load_font(font_config.font_size, 'proportional', 'zh_cn')
+    font_zh_tr = _load_font(font_config.font_size, 'proportional', 'zh_tr')
+    font_ja = _load_font(font_config.font_size, 'proportional', 'ja')
 
     image = Image.new('RGBA', (font_config.font_size * 27, font_config.font_size * 2 + font_config.line_height * 9), (255, 255, 255, 255))
     _draw_text(image, (font_config.font_size, font_config.font_size), '方舟像素字体 / Ark Pixel Font', font_zh_cn)
@@ -96,11 +91,11 @@ def make_preview_image(font_config: FontConfig):
     logger.info("Make preview image: '{}'", file_path)
 
 
-def make_readme_banner(font_configs: dict[FontSize, FontConfig]):
-    font_config = font_configs[12]
-    alphabet = _load_alphabet(font_config, 'proportional')
-    font_x1 = _load_font(font_config, 'proportional', 'zh_cn')
-    font_x2 = _load_font(font_config, 'proportional', 'zh_cn', 2)
+def make_readme_banner(design_contexts: dict[FontSize, DesignContext]):
+    font_config = design_contexts[12].font_config
+    font_x1 = _load_font(font_config.font_size, 'proportional', 'zh_cn')
+    font_x2 = _load_font(font_config.font_size, 'proportional', 'zh_cn', 2)
+    alphabet = sorted(design_contexts[12].get_alphabet('proportional'))
     box_size = 14
     text_color = (255, 255, 255, 255)
     shadow_color = (80, 80, 80, 255)
@@ -119,14 +114,14 @@ def make_readme_banner(font_configs: dict[FontSize, FontConfig]):
     logger.info("Make readme banner: '{}'", file_path)
 
 
-def make_github_banner(font_configs: dict[FontSize, FontConfig]):
-    font_config = font_configs[12]
-    alphabet = _load_alphabet(font_config, 'proportional')
-    font_title = _load_font(font_config, 'proportional', 'zh_cn', 2)
-    font_latin = _load_font(font_config, 'proportional', 'latin')
-    font_zh_cn = _load_font(font_config, 'proportional', 'zh_cn')
-    font_zh_tr = _load_font(font_config, 'proportional', 'zh_tr')
-    font_ja = _load_font(font_config, 'proportional', 'ja')
+def make_github_banner(design_contexts: dict[FontSize, DesignContext]):
+    font_config = design_contexts[12].font_config
+    font_title = _load_font(font_config.font_size, 'proportional', 'zh_cn', 2)
+    font_latin = _load_font(font_config.font_size, 'proportional', 'latin')
+    font_zh_cn = _load_font(font_config.font_size, 'proportional', 'zh_cn')
+    font_zh_tr = _load_font(font_config.font_size, 'proportional', 'zh_tr')
+    font_ja = _load_font(font_config.font_size, 'proportional', 'ja')
+    alphabet = sorted(design_contexts[12].get_alphabet('proportional'))
     box_size = 14
     text_color = (255, 255, 255, 255)
     shadow_color = (80, 80, 80, 255)
@@ -152,11 +147,11 @@ def make_github_banner(font_configs: dict[FontSize, FontConfig]):
     logger.info("Make github banner: '{}'", file_path)
 
 
-def make_itch_io_banner(font_configs: dict[FontSize, FontConfig]):
-    font_config = font_configs[12]
-    alphabet = _load_alphabet(font_config, 'proportional')
-    font_x1 = _load_font(font_config, 'proportional', 'zh_cn')
-    font_x2 = _load_font(font_config, 'proportional', 'zh_cn', 2)
+def make_itch_io_banner(design_contexts: dict[FontSize, DesignContext]):
+    font_config = design_contexts[12].font_config
+    font_x1 = _load_font(font_config.font_size, 'proportional', 'zh_cn')
+    font_x2 = _load_font(font_config.font_size, 'proportional', 'zh_cn', 2)
+    alphabet = sorted(design_contexts[12].get_alphabet('proportional'))
     box_size = 14
     text_color = (255, 255, 255, 255)
     shadow_color = (80, 80, 80, 255)
@@ -175,10 +170,10 @@ def make_itch_io_banner(font_configs: dict[FontSize, FontConfig]):
     logger.info("Make itch.io banner: '{}'", file_path)
 
 
-def make_itch_io_background(font_configs: dict[FontSize, FontConfig]):
-    font_config = font_configs[12]
-    alphabet = _load_alphabet(font_config, 'proportional')
-    font = _load_font(font_config, 'proportional', 'zh_cn')
+def make_itch_io_background(design_contexts: dict[FontSize, DesignContext]):
+    font_config = design_contexts[12].font_config
+    font = _load_font(font_config.font_size, 'proportional', 'zh_cn')
+    alphabet = sorted(design_contexts[12].get_alphabet('proportional'))
     box_size = 14
 
     image = Image.new('RGBA', (box_size * 50, box_size * 50), (0, 0, 0, 0))
@@ -193,11 +188,11 @@ def make_itch_io_background(font_configs: dict[FontSize, FontConfig]):
 
 def make_itch_io_cover(font_configs: dict[FontSize, FontConfig]):
     font_config = font_configs[12]
-    font_title = _load_font(font_config, 'proportional', 'zh_cn', 2)
-    font_latin = _load_font(font_config, 'proportional', 'latin')
-    font_zh_cn = _load_font(font_config, 'proportional', 'zh_cn')
-    font_zh_tr = _load_font(font_config, 'proportional', 'zh_tr')
-    font_ja = _load_font(font_config, 'proportional', 'ja')
+    font_title = _load_font(font_config.font_size, 'proportional', 'zh_cn', 2)
+    font_latin = _load_font(font_config.font_size, 'proportional', 'latin')
+    font_zh_cn = _load_font(font_config.font_size, 'proportional', 'zh_cn')
+    font_zh_tr = _load_font(font_config.font_size, 'proportional', 'zh_tr')
+    font_ja = _load_font(font_config.font_size, 'proportional', 'ja')
     text_color = (255, 255, 255, 255)
     shadow_color = (80, 80, 80, 255)
 
@@ -223,11 +218,11 @@ def make_itch_io_cover(font_configs: dict[FontSize, FontConfig]):
 
 def make_afdian_cover(font_configs: dict[FontSize, FontConfig]):
     font_config = font_configs[12]
-    font_title = _load_font(font_config, 'proportional', 'zh_cn', 2)
-    font_latin = _load_font(font_config, 'proportional', 'latin')
-    font_zh_cn = _load_font(font_config, 'proportional', 'zh_cn')
-    font_zh_tr = _load_font(font_config, 'proportional', 'zh_tr')
-    font_ja = _load_font(font_config, 'proportional', 'ja')
+    font_title = _load_font(font_config.font_size, 'proportional', 'zh_cn', 2)
+    font_latin = _load_font(font_config.font_size, 'proportional', 'latin')
+    font_zh_cn = _load_font(font_config.font_size, 'proportional', 'zh_cn')
+    font_zh_tr = _load_font(font_config.font_size, 'proportional', 'zh_tr')
+    font_ja = _load_font(font_config.font_size, 'proportional', 'ja')
     text_color = (255, 255, 255, 255)
     shadow_color = (80, 80, 80, 255)
 

@@ -5,9 +5,14 @@ from tools.services.font_service import DesignContext
 
 
 def main():
-    font_configs = {font_size: FontConfig.load(font_size) for font_size in configs.font_sizes}
-    for font_config in font_configs.values():
+    font_configs = {}
+    design_contexts = {}
+
+    for font_size in configs.font_sizes:
+        font_config = FontConfig.load(font_size)
+        font_configs[font_size] = font_config
         design_context = DesignContext.load(font_config)
+        design_contexts[font_size] = design_context
         for width_mode in configs.width_modes:
             design_context.make_fonts(width_mode, 'woff2')
             template_service.make_alphabet_html(design_context, width_mode)
