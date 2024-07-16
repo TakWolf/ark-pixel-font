@@ -32,7 +32,12 @@ def check_glyph_files(font_config: FontConfig):
                 block = unidata_blocks.get_block_by_code_point(code_point)
                 east_asian_width = unicodedata.east_asian_width(chr(code_point))
 
+            bitmap_strings = set()
             for glyph_file in set(flavor_group.values()):
+                bitmap_string = str(glyph_file.bitmap)
+                assert bitmap_string not in bitmap_strings, f"[{font_config.font_size}px] duplicate glyph bitmaps: '{glyph_file.file_path}'"
+                bitmap_strings.add(bitmap_string)
+
                 if width_mode_dir_name == 'common' or width_mode_dir_name == 'monospaced':
                     assert glyph_file.height == font_config.font_size, f"[{font_config.font_size}px] glyph bitmap error: '{glyph_file.file_path}'"
 
