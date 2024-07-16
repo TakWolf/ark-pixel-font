@@ -7,3 +7,4 @@ pillow==10.4.0
 beautifulsoup4==4.12.3
 Jinja2==3.1.4
 loguru==0.7.2
+cyclopts==2.9.3

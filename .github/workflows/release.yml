@@ -8,6 +8,12 @@ jobs:
   release:
     permissions:
       contents: write
+    strategy:
+      matrix:
+        font-size: [10, 12, 16]
+        width-mode: [monospaced, proportional]
+        font-format: [otf, woff2, ttf, bdf, pcf, otc, ttc]
+      fail-fast: false
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -21,7 +27,7 @@ jobs:
           python -m pip install pip --upgrade
           python -m pip install -r requirements.txt
       - name: Build
-        run: python -m tools.build
+        run: python -m tools.cli --cleanup --font-sizes ${{ matrix.font-size }} --width-modes ${{ matrix.width-mode }} --font-formats ${{ matrix.font-format }} --release
       - name: Release
         uses: softprops/action-gh-release@v2
         with:

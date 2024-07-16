@@ -160,6 +160,7 @@ brew install font-ark-pixel-16px-proportional
 - [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/)
 - [Jinja](https://github.com/pallets/jinja)
 - [Loguru](https://github.com/Delgan/loguru)
+- [Cyclopts](https://github.com/BrianPugh/cyclopts)
 
 ## 字形依赖
 
