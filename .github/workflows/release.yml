@@ -12,7 +12,7 @@ jobs:
       matrix:
         font-size: [10, 12, 16]
         width-mode: [monospaced, proportional]
-        font-format: [otf, woff2, ttf, bdf, pcf, otc, ttc]
+        font-format: [otf, ttf, woff2, bdf, pcf, otc, ttc]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:

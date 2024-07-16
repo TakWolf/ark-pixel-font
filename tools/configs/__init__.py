@@ -22,7 +22,7 @@ type LanguageFlavor = Literal[
 ]
 language_flavors = list[LanguageFlavor](get_args(LanguageFlavor.__value__))
 
-type FontFormat = Literal['otf', 'woff2', 'ttf', 'bdf', 'pcf']
+type FontFormat = Literal['otf', 'ttf', 'woff2', 'bdf', 'pcf']
 font_formats = list[FontFormat](get_args(FontFormat.__value__))
 
 type FontCollectionFormat = Literal['otc', 'ttc']
