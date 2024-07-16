@@ -41,7 +41,7 @@ def format_glyph_files(font_config: FontConfig):
                     file_name = f'{code_name}.png'
                 file_path = file_dir.joinpath(file_name)
                 if glyph_file.file_path != file_path:
-                    assert not file_path.exists(), f"[{font_config.font_size}px] glyph file duplication: '{glyph_file.file_path}' -> '{file_path}'"
+                    assert not file_path.exists(), f"[{font_config.font_size}px] duplicate glyph files: '{glyph_file.file_path}' -> '{file_path}'"
                     file_dir.mkdir(parents=True, exist_ok=True)
                     glyph_file.file_path.rename(file_path)
                     logger.info("Format glyph file path: '{}' -> '{}'", glyph_file.file_path, file_path)
