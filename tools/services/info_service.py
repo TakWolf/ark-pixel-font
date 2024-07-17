@@ -1,6 +1,5 @@
 from collections import defaultdict
 from collections.abc import Callable
-from io import StringIO
 from typing import TextIO
 
 import unidata_blocks
@@ -75,9 +74,9 @@ def _get_ksx1001_chr_count_infos(alphabet: set[str]) -> list[tuple[str, int, int
     ]
 
 
-def _write_unicode_chr_count_infos_table(output: TextIO, infos: list[tuple[UnicodeBlock, int]]):
-    output.write('| 区块范围 | 区块名称 | 区块含义 | 完成数 | 缺失数 | 进度 |\n')
-    output.write('|---|---|---|---:|---:|---:|\n')
+def _write_unicode_chr_count_infos_table(file: TextIO, infos: list[tuple[UnicodeBlock, int]]):
+    file.write('| 区块范围 | 区块名称 | 区块含义 | 完成数 | 缺失数 | 进度 |\n')
+    file.write('|---|---|---|---:|---:|---:|\n')
     for block, count in infos:
         code_point_range = f'{block.code_start:04X} ~ {block.code_end:04X}'
         name = block.name
@@ -86,63 +85,61 @@ def _write_unicode_chr_count_infos_table(output: TextIO, infos: list[tuple[Unico
         missing = total - count if total > 0 else 0
         progress = count / total if total > 0 else 1
         finished_emoji = '🚩' if progress == 1 else '🚧'
-        output.write(f'| {code_point_range} | {name} | {name_zh} | {count} / {total} | {missing} | {progress:.2%} {finished_emoji} |\n')
+        file.write(f'| {code_point_range} | {name} | {name_zh} | {count} / {total} | {missing} | {progress:.2%} {finished_emoji} |\n')
 
 
-def _write_locale_chr_count_infos_table(output: TextIO, infos: list[tuple[str, int, int]]):
-    output.write('| 区块名称 | 完成数 | 缺失数 | 进度 |\n')
-    output.write('|---|---:|---:|---:|\n')
+def _write_locale_chr_count_infos_table(file: TextIO, infos: list[tuple[str, int, int]]):
+    file.write('| 区块名称 | 完成数 | 缺失数 | 进度 |\n')
+    file.write('|---|---:|---:|---:|\n')
     for name, count, total in infos:
         missing = total - count
         progress = count / total
         finished_emoji = '🚩' if progress == 1 else '🚧'
-        output.write(f'| {name} | {count} / {total} | {missing} | {progress:.2%} {finished_emoji} |\n')
+        file.write(f'| {name} | {count} / {total} | {missing} | {progress:.2%} {finished_emoji} |\n')
 
 
 def make_font_info(design_context: DesignContext, width_mode: WidthMode):
     alphabet = design_context.get_alphabet(width_mode)
 
-    output = StringIO()
-    output.write(f'# Ark Pixel {design_context.font_size}px {'等宽模式' if width_mode == 'monospaced' else '比例模式'}\n')
-    output.write('\n')
-    output.write('## 基本信息\n')
-    output.write('\n')
-    output.write('| 属性 | 值 |\n')
-    output.write('|---|---|\n')
-    output.write(f'| 版本号 | {configs.version} |\n')
-    output.write(f'| 字符总数 | {len(alphabet)} |\n')
-    output.write('\n')
-    output.write('## Unicode 字符分布\n')
-    output.write('\n')
-    output.write(f'Unicode 版本：{unidata_blocks.unicode_version}\n')
-    output.write('\n')
-    _write_unicode_chr_count_infos_table(output, _get_unicode_chr_count_infos(alphabet))
-    output.write('\n')
-    output.write('## GB2312 字符分布\n')
-    output.write('\n')
-    output.write('简体中文参考字符集。统计范围不包含 ASCII。\n')
-    output.write('\n')
-    _write_locale_chr_count_infos_table(output, _get_gb2312_chr_count_infos(alphabet))
-    output.write('\n')
-    output.write('## Big5 字符分布\n')
-    output.write('\n')
-    output.write('繁体中文参考字符集。统计范围不包含 ASCII。\n')
-    output.write('\n')
-    _write_locale_chr_count_infos_table(output, _get_big5_chr_count_infos(alphabet))
-    output.write('\n')
-    output.write('## Shift-JIS 字符分布\n')
-    output.write('\n')
-    output.write('日语参考字符集。\n')
-    output.write('\n')
-    _write_locale_chr_count_infos_table(output, _get_shiftjis_chr_count_infos(alphabet))
-    output.write('\n')
-    output.write('## KS-X-1001 字符分布\n')
-    output.write('\n')
-    output.write('韩语参考字符集。统计范围不包含 ASCII。\n')
-    output.write('\n')
-    _write_locale_chr_count_infos_table(output, _get_ksx1001_chr_count_infos(alphabet))
-
     path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
     file_path = path_define.outputs_dir.joinpath(f'font-info-{design_context.font_size}px-{width_mode}.md')
-    file_path.write_text(output.getvalue(), 'utf-8')
+    with file_path.open('w', encoding='utf-8') as file:
+        file.write(f'# Ark Pixel {design_context.font_size}px {'等宽模式' if width_mode == 'monospaced' else '比例模式'}\n')
+        file.write('\n')
+        file.write('## 基本信息\n')
+        file.write('\n')
+        file.write('| 属性 | 值 |\n')
+        file.write('|---|---|\n')
+        file.write(f'| 版本号 | {configs.version} |\n')
+        file.write(f'| 字符总数 | {len(alphabet)} |\n')
+        file.write('\n')
+        file.write('## Unicode 字符分布\n')
+        file.write('\n')
+        file.write(f'Unicode 版本：{unidata_blocks.unicode_version}\n')
+        file.write('\n')
+        _write_unicode_chr_count_infos_table(file, _get_unicode_chr_count_infos(alphabet))
+        file.write('\n')
+        file.write('## GB2312 字符分布\n')
+        file.write('\n')
+        file.write('简体中文参考字符集。统计范围不包含 ASCII。\n')
+        file.write('\n')
+        _write_locale_chr_count_infos_table(file, _get_gb2312_chr_count_infos(alphabet))
+        file.write('\n')
+        file.write('## Big5 字符分布\n')
+        file.write('\n')
+        file.write('繁体中文参考字符集。统计范围不包含 ASCII。\n')
+        file.write('\n')
+        _write_locale_chr_count_infos_table(file, _get_big5_chr_count_infos(alphabet))
+        file.write('\n')
+        file.write('## Shift-JIS 字符分布\n')
+        file.write('\n')
+        file.write('日语参考字符集。\n')
+        file.write('\n')
+        _write_locale_chr_count_infos_table(file, _get_shiftjis_chr_count_infos(alphabet))
+        file.write('\n')
+        file.write('## KS-X-1001 字符分布\n')
+        file.write('\n')
+        file.write('韩语参考字符集。统计范围不包含 ASCII。\n')
+        file.write('\n')
+        _write_locale_chr_count_infos_table(file, _get_ksx1001_chr_count_infos(alphabet))
     logger.info("Make font info: '{}'", file_path)
