@@ -99,7 +99,7 @@ class DesignContext:
         builder.font_metric.horizontal_layout.ascent = layout_param.ascent
         builder.font_metric.horizontal_layout.descent = layout_param.descent
         builder.font_metric.vertical_layout.ascent = math.ceil(layout_param.line_height / 2)
-        builder.font_metric.vertical_layout.descent = math.floor(layout_param.line_height / 2)
+        builder.font_metric.vertical_layout.descent = -math.floor(layout_param.line_height / 2)
         builder.font_metric.x_height = layout_param.x_height
         builder.font_metric.cap_height = layout_param.cap_height
 
