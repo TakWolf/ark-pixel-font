@@ -186,7 +186,7 @@ brew install font-ark-pixel-16px-proportional
 如果这个项目对您有帮助，请考虑赞助来支持开发工作。
 
 [![赞赏码](https://raw.githubusercontent.com/TakWolf/TakWolf/master/images/badge-payqr@2x.png)](https://github.com/TakWolf/TakWolf/blob/master/payment-qr-codes.md)
-[![爱发电](https://raw.githubusercontent.com/TakWolf/TakWolf/master/images/badge-afdian@2x.png)](https://afdian.com/@takwolf)
+[![爱发电](https://raw.githubusercontent.com/TakWolf/TakWolf/master/images/badge-afdian@2x.png)](https://afdian.com/a/takwolf)
 
 请通过下面的链接来查看收到的赞助的具体情况：
 
