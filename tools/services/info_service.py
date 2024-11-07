@@ -98,11 +98,11 @@ def _write_locale_chr_count_infos_table(file: TextIO, infos: list[tuple[str, int
         file.write(f'| {name} | {count} / {total} | {missing} | {progress:.2%} {finished_emoji} |\n')
 
 
-def make_font_info(design_context: DesignContext, width_mode: WidthMode):
+def make_info(design_context: DesignContext, width_mode: WidthMode):
     alphabet = design_context.get_alphabet(width_mode)
 
     path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
-    file_path = path_define.outputs_dir.joinpath(f'font-info-{design_context.font_size}px-{width_mode}.md')
+    file_path = path_define.outputs_dir.joinpath(f'info-{design_context.font_size}px-{width_mode}.md')
     with file_path.open('w', encoding='utf-8') as file:
         file.write(f'# Ark Pixel {design_context.font_size}px {'等宽模式' if width_mode == 'monospaced' else '比例模式'}\n')
         file.write('\n')
@@ -142,4 +142,4 @@ def make_font_info(design_context: DesignContext, width_mode: WidthMode):
         file.write('韩语参考字符集。统计范围不包含 ASCII。\n')
         file.write('\n')
         _write_locale_chr_count_infos_table(file, _get_ksx1001_chr_count_infos(alphabet))
-    logger.info("Make font info: '{}'", file_path)
+    logger.info("Make info: '{}'", file_path)

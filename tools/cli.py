@@ -20,7 +20,7 @@ def main(
         font_formats: list[FontFormat | FontCollectionFormat] | None = None,
         all_attachments: bool = False,
         release: bool = False,
-        font_info: bool = False,
+        info: bool = False,
         html: bool = False,
         image: bool = False,
 ):
@@ -32,7 +32,7 @@ def main(
         font_formats = configs.font_formats + configs.font_collection_formats
     if all_attachments:
         release = True
-        font_info = True
+        info = True
         html = True
         image = True
 
@@ -44,7 +44,7 @@ def main(
     print(f'width_modes = {repr(width_modes)}')
     print(f'font_formats = {repr(font_formats)}')
     print(f'release = {release}')
-    print(f'font_info = {font_info}')
+    print(f'info = {info}')
     print(f'html = {html}')
     print(f'image = {image}')
     print()
@@ -70,11 +70,11 @@ def main(
                 for font_format in font_formats:
                     publish_service.make_release_zip(font_size, width_mode, font_format)
 
-    if font_info:
+    if info:
         for font_size in font_sizes:
             design_context = design_contexts[font_size]
             for width_mode in width_modes:
-                info_service.make_font_info(design_context, width_mode)
+                info_service.make_info(design_context, width_mode)
 
     if html:
         for font_size in font_sizes:

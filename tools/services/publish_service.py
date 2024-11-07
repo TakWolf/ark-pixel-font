@@ -26,7 +26,7 @@ def make_release_zip(font_size: FontSize, width_mode: WidthMode, font_format: Fo
 def update_docs():
     for file_dir, _, file_names in path_define.outputs_dir.walk():
         for file_name in file_names:
-            if re.match(r'font-info-.*px-.*\.md|preview-.*px\.png', file_name) is None and file_name != 'readme-banner.png':
+            if re.match(r'info-.*px-.*\.md|preview-.*px\.png', file_name) is None and file_name != 'readme-banner.png':
                 continue
             path_from = file_dir.joinpath(file_name)
             path_to = path_define.docs_dir.joinpath(path_from.relative_to(path_define.outputs_dir))
