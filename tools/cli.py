@@ -4,7 +4,7 @@ from cyclopts import App
 from loguru import logger
 
 from tools import configs
-from tools.configs import path_define, FontSize, WidthMode, FontFormat, FontCollectionFormat
+from tools.configs import path_define, FontSize, WidthMode, FontFormat
 from tools.configs.font import FontConfig
 from tools.services import publish_service, info_service, template_service, image_service
 from tools.services.font_service import DesignContext
@@ -17,7 +17,7 @@ def main(
         cleanup: bool = False,
         font_sizes: list[FontSize] | None = None,
         width_modes: list[WidthMode] | None = None,
-        font_formats: list[FontFormat | FontCollectionFormat] | None = None,
+        font_formats: list[FontFormat] | None = None,
         all_attachments: bool = False,
         release: bool = False,
         info: bool = False,
@@ -29,7 +29,7 @@ def main(
     if width_modes is None:
         width_modes = configs.width_modes
     if font_formats is None:
-        font_formats = configs.font_formats + configs.font_collection_formats
+        font_formats = configs.font_formats
     if all_attachments:
         release = True
         info = True

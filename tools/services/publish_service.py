@@ -5,21 +5,21 @@ import zipfile
 from loguru import logger
 
 from tools import configs
-from tools.configs import path_define, FontSize, WidthMode, FontFormat, FontCollectionFormat
+from tools.configs import path_define, FontSize, WidthMode, FontFormat
 
 
-def make_release_zip(font_size: FontSize, width_mode: WidthMode, font_format: FontFormat | FontCollectionFormat):
+def make_release_zip(font_size: FontSize, width_mode: WidthMode, font_format: FontFormat):
     path_define.releases_dir.mkdir(parents=True, exist_ok=True)
     file_path = path_define.releases_dir.joinpath(f'ark-pixel-font-{font_size}px-{width_mode}-{font_format}-v{configs.version}.zip')
     with zipfile.ZipFile(file_path, 'w') as file:
         file.write(path_define.project_root_dir.joinpath('LICENSE-OFL'), 'OFL.txt')
-        if font_format in configs.font_formats:
+        if font_format in configs.font_collection_formats:
+            font_file_name = f'ark-pixel-{font_size}px-{width_mode}.{font_format}'
+            file.write(path_define.outputs_dir.joinpath(font_file_name), font_file_name)
+        else:
             for language_flavor in configs.language_flavors:
                 font_file_name = f'ark-pixel-{font_size}px-{width_mode}-{language_flavor}.{font_format}'
                 file.write(path_define.outputs_dir.joinpath(font_file_name), font_file_name)
-        else:
-            font_file_name = f'ark-pixel-{font_size}px-{width_mode}.{font_format}'
-            file.write(path_define.outputs_dir.joinpath(font_file_name), font_file_name)
     logger.info("Make release zip: '{}'", file_path)
 
 

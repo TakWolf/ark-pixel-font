@@ -10,7 +10,7 @@ from pixel_font_knife import glyph_file_util
 from pixel_font_knife.glyph_file_util import GlyphFile, GlyphFlavorGroup
 
 from tools import configs
-from tools.configs import path_define, FontSize, WidthMode, LanguageFlavor, FontFormat, FontCollectionFormat
+from tools.configs import path_define, FontSize, WidthMode, LanguageFlavor, FontFormat
 from tools.configs.font import FontConfig
 
 
@@ -165,9 +165,14 @@ class DesignContext:
             self._collection_builder_cache[width_mode] = collection_builder
         return collection_builder
 
-    def make_fonts(self, width_mode: WidthMode, font_format: FontFormat | FontCollectionFormat):
+    def make_fonts(self, width_mode: WidthMode, font_format: FontFormat):
         path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
-        if font_format in configs.font_formats:
+        if font_format in configs.font_collection_formats:
+            collection_builder = self._get_collection_builder(width_mode)
+            file_path = path_define.outputs_dir.joinpath(f'ark-pixel-{self.font_size}px-{width_mode}.{font_format}')
+            getattr(collection_builder, f'save_{font_format}')(file_path)
+            logger.info("Make font collection: '{}'", file_path)
+        else:
             for language_flavor in configs.language_flavors:
                 builder = self._get_builder(width_mode, language_flavor)
                 file_path = path_define.outputs_dir.joinpath(f'ark-pixel-{self.font_size}px-{width_mode}-{language_flavor}.{font_format}')
@@ -176,8 +181,3 @@ class DesignContext:
                 else:
                     getattr(builder, f'save_{font_format}')(file_path)
                 logger.info("Make font: '{}'", file_path)
-        else:
-            collection_builder = self._get_collection_builder(width_mode)
-            file_path = path_define.outputs_dir.joinpath(f'ark-pixel-{self.font_size}px-{width_mode}.{font_format}')
-            getattr(collection_builder, f'save_{font_format}')(file_path)
-            logger.info("Make font collection: '{}'", file_path)
