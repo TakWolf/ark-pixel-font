@@ -4,9 +4,8 @@ from tools.services import publish_service
 
 def main():
     cli.main(
-        font_formats=[],
-        info=True,
-        image=True,
+        font_formats=set(),
+        attachments={'info', 'image'},
     )
     publish_service.update_docs()
 

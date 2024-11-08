@@ -26,3 +26,12 @@ type FontFormat = Literal['otf', 'ttf', 'woff2', 'bdf', 'pcf', 'otc', 'ttc']
 font_formats = list[FontFormat](get_args(FontFormat.__value__))
 
 font_collection_formats = ['otc', 'ttc']
+
+type Attachment = Literal[
+    'release',
+    'info',
+    'alphabet',
+    'html',
+    'image',
+]
+attachments = list[Attachment](get_args(Attachment.__value__))

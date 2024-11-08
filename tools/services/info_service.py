@@ -143,3 +143,12 @@ def make_info(design_context: DesignContext, width_mode: WidthMode):
         file.write('\n')
         _write_locale_chr_count_infos_table(file, _get_ksx1001_chr_count_infos(alphabet))
     logger.info("Make info: '{}'", file_path)
+
+
+def make_alphabet_txt(design_context: DesignContext, width_mode: WidthMode):
+    alphabet = sorted(design_context.get_alphabet(width_mode))
+
+    path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
+    file_path = path_define.outputs_dir.joinpath(f'alphabet-{design_context.font_size}px-{width_mode}.txt')
+    file_path.write_text(''.join(alphabet), 'utf-8')
+    logger.info("Make alphabet txt: '{}'", file_path)
