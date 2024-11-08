@@ -41,13 +41,11 @@ def main(
         attachments = sorted(attachments, key=lambda x: configs.attachments.index(x))
     all_font_sizes = font_sizes == configs.font_sizes
 
-    print()
-    print(f'cleanup = {cleanup}')
-    print(f'font_sizes = {font_sizes}')
-    print(f'width_modes = {width_modes}')
-    print(f'font_formats = {font_formats}')
-    print(f'attachments = {attachments}')
-    print()
+    logger.info('cleanup = {}', cleanup)
+    logger.info('font_sizes = {}', font_sizes)
+    logger.info('width_modes = {}', width_modes)
+    logger.info('font_formats = {}', font_formats)
+    logger.info('attachments = {}', attachments)
 
     if cleanup and path_define.build_dir.exists():
         shutil.rmtree(path_define.build_dir)
