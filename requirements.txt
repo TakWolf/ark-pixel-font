@@ -1,5 +1,5 @@
 pixel-font-builder==0.0.28
-pixel-font-knife==0.0.5
+pixel-font-knife==0.0.7
 unidata-blocks==0.0.15
 character-encoding-utils==0.0.8
 PyYAML==6.0.2

@@ -23,7 +23,7 @@ def check_glyph_files(font_config: FontConfig):
         width_mode_dir = path_define.glyphs_dir.joinpath(str(font_config.font_size), width_mode_dir_name)
         context = glyph_file_util.load_context(width_mode_dir)
         for code_point, flavor_group in context.items():
-            assert '' in flavor_group, f'[{font_config.font_size}px] missing default flavor: {width_mode_dir_name} {code_point:04X}'
+            assert None in flavor_group, f'[{font_config.font_size}px] missing default flavor: {width_mode_dir_name} {code_point:04X}'
 
             if code_point == -1:
                 block = None
