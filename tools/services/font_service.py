@@ -19,8 +19,8 @@ class DesignContext:
     def load(font_config: FontConfig) -> 'DesignContext':
         contexts = {}
         for width_mode_dir_name in itertools.chain(['common'], configs.width_modes):
-            width_mode_dir = path_define.glyphs_dir.joinpath(str(font_config.font_size), width_mode_dir_name)
-            contexts[width_mode_dir_name] = glyph_file_util.load_context(width_mode_dir)
+            context = glyph_file_util.load_context(path_define.glyphs_dir.joinpath(str(font_config.font_size), width_mode_dir_name))
+            contexts[width_mode_dir_name] = context
 
         glyph_files = {}
         for width_mode in configs.width_modes:
