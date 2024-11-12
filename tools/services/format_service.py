@@ -2,7 +2,7 @@ import itertools
 import shutil
 from pathlib import Path
 
-from pixel_font_knife import glyph_file_util
+from pixel_font_knife import glyph_file_util, glyph_mapping_util
 
 from tools import configs
 from tools.configs import path_define
@@ -26,3 +26,8 @@ def format_glyphs(font_config: FontConfig):
         for file_dir, _, _ in width_mode_dir.walk(top_down=False):
             if _is_empty_dir(file_dir):
                 shutil.rmtree(file_dir)
+
+
+def format_mapping(file_path: Path):
+    mapping = glyph_mapping_util.load_mapping(file_path)
+    glyph_mapping_util.save_mapping(mapping, file_path, configs.language_flavors)

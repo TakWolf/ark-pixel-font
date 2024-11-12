@@ -6,8 +6,9 @@ from pathlib import Path
 from loguru import logger
 from pixel_font_builder import FontBuilder, FontCollectionBuilder, WeightName, SerifStyle, SlantStyle, WidthStyle, Glyph
 from pixel_font_builder.opentype import Flavor
-from pixel_font_knife import glyph_file_util
+from pixel_font_knife import glyph_file_util, glyph_mapping_util
 from pixel_font_knife.glyph_file_util import GlyphFile, GlyphFlavorGroup
+from pixel_font_knife.glyph_mapping_util import SourceFlavorGroup
 
 from tools import configs
 from tools.configs import path_define, FontSize, WidthMode, LanguageFlavor, FontFormat
@@ -16,11 +17,15 @@ from tools.configs.font import FontConfig
 
 class DesignContext:
     @staticmethod
-    def load(font_config: FontConfig) -> 'DesignContext':
+    def load(font_config: FontConfig, mappings: list[dict[int, SourceFlavorGroup]]) -> 'DesignContext':
         contexts = {}
         for width_mode_dir_name in itertools.chain(['common'], configs.width_modes):
             context = glyph_file_util.load_context(path_define.glyphs_dir.joinpath(str(font_config.font_size), width_mode_dir_name))
             contexts[width_mode_dir_name] = context
+
+            if width_mode_dir_name == 'common':
+                for mapping in mappings:
+                    glyph_mapping_util.apply_mapping(context, mapping)
 
         glyph_files = {}
         for width_mode in configs.width_modes:

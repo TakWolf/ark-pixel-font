@@ -3,6 +3,7 @@ from typing import Literal
 
 from cyclopts import App
 from loguru import logger
+from pixel_font_knife import glyph_mapping_util
 
 from tools import configs
 from tools.configs import path_define, FontSize, WidthMode, FontFormat, Attachment
@@ -51,12 +52,16 @@ def main(
         shutil.rmtree(path_define.build_dir)
         logger.info("Delete dir: '{}'", path_define.build_dir)
 
+    mappings = [
+        glyph_mapping_util.load_mapping(path_define.assets_dir.joinpath('cjk-radicals-supplement-mapping.yml')),
+        glyph_mapping_util.load_mapping(path_define.assets_dir.joinpath('kangxi-radicals-mapping.yml')),
+    ]
     font_configs = {}
     design_contexts = {}
     for font_size in font_sizes:
         font_config = FontConfig.load(font_size)
         font_configs[font_size] = font_config
-        design_context = DesignContext.load(font_config)
+        design_context = DesignContext.load(font_config, mappings)
         design_contexts[font_size] = design_context
         for width_mode in width_modes:
             for font_format in font_formats:
