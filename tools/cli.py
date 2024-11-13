@@ -1,7 +1,7 @@
 import shutil
 from typing import Literal
 
-from cyclopts import App
+from cyclopts import App, Parameter
 from loguru import logger
 from pixel_font_knife import glyph_mapping_util
 
@@ -11,7 +11,10 @@ from tools.configs.font import FontConfig
 from tools.services import publish_service, info_service, template_service, image_service
 from tools.services.font_service import DesignContext
 
-app = App(version=configs.version)
+app = App(
+    version=configs.version,
+    default_parameter=Parameter(consume_multiple=True),
+)
 
 
 @app.default
