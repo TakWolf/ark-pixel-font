@@ -23,9 +23,8 @@ class DesignContext:
             context = glyph_file_util.load_context(path_define.glyphs_dir.joinpath(str(font_config.font_size), width_mode_dir_name))
             contexts[width_mode_dir_name] = context
 
-            if width_mode_dir_name == 'common':
-                for mapping in mappings:
-                    glyph_mapping_util.apply_mapping(context, mapping)
+            for mapping in mappings:
+                glyph_mapping_util.apply_mapping(context, mapping)
 
         glyph_files = {}
         for width_mode in configs.width_modes:
