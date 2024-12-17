@@ -31,9 +31,10 @@ class DesignContext:
             glyph_files[width_mode] = dict(contexts['common'])
             glyph_files[width_mode].update(contexts[width_mode])
 
-        return DesignContext(font_config, glyph_files)
+        return DesignContext(font_config, contexts, glyph_files)
 
     font_config: FontConfig
+    _contexts: dict[str, dict[int, GlyphFlavorGroup]]
     _glyph_files: dict[WidthMode, dict[int, GlyphFlavorGroup]]
     _alphabet_cache: dict[str, set[str]]
     _character_mapping_cache: dict[str, dict[int, str]]
@@ -45,9 +46,11 @@ class DesignContext:
     def __init__(
             self,
             font_config: FontConfig,
+            contexts: dict[str, dict[int, GlyphFlavorGroup]],
             glyph_files: dict[WidthMode, dict[int, GlyphFlavorGroup]],
     ):
         self.font_config = font_config
+        self._contexts = contexts
         self._glyph_files = glyph_files
         self._alphabet_cache = {}
         self._character_mapping_cache = {}
