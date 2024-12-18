@@ -96,7 +96,6 @@ class DesignContext:
         return glyph_pool
 
     def _create_builder(self, width_mode: WidthMode, language_flavor: LanguageFlavor, is_collection: bool) -> FontBuilder:
-        glyph_pool = self._get_glyph_pool(width_mode)
         layout_param = self.font_config.layout_params[width_mode]
 
         builder = FontBuilder()
@@ -129,6 +128,7 @@ class DesignContext:
         builder.character_mapping.update(character_mapping)
 
         glyph_sequence = self._get_glyph_sequence(width_mode, None if is_collection else language_flavor)
+        glyph_pool = self._get_glyph_pool(width_mode)
         for glyph_file in glyph_sequence:
             if glyph_file.file_path in glyph_pool:
                 glyph = glyph_pool[glyph_file.file_path]
