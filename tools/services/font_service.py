@@ -5,7 +5,7 @@ from pathlib import Path
 
 from loguru import logger
 from pixel_font_builder import FontBuilder, FontCollectionBuilder, WeightName, SerifStyle, SlantStyle, WidthStyle, Glyph
-from pixel_font_builder.opentype import Flavor
+from pixel_font_builder.opentype import FeatureFile, Flavor
 from pixel_font_knife import glyph_file_util, glyph_mapping_util
 from pixel_font_knife.glyph_file_util import GlyphFile, GlyphFlavorGroup
 from pixel_font_knife.glyph_mapping_util import SourceFlavorGroup
@@ -13,6 +13,7 @@ from pixel_font_knife.glyph_mapping_util import SourceFlavorGroup
 from tools import configs
 from tools.configs import path_define, FontSize, WidthMode, LanguageFlavor, FontFormat
 from tools.configs.font import FontConfig
+from tools.services import kerning_service
 
 
 class DesignContext:
@@ -39,6 +40,7 @@ class DesignContext:
     _character_mapping_cache: dict[str, dict[int, str]]
     _glyph_sequence_cache: dict[str, list[GlyphFile]]
     _glyph_pool_cache: dict[str, dict[Path, Glyph]]
+    _kerning_feature_file_cache: FeatureFile | None
     _builder_cache: dict[str, FontBuilder]
     _collection_builder_cache: dict[str, FontCollectionBuilder]
 
@@ -55,6 +57,7 @@ class DesignContext:
         self._character_mapping_cache = {}
         self._glyph_sequence_cache = {}
         self._glyph_pool_cache = {}
+        self._kerning_feature_file_cache = None
         self._builder_cache = {}
         self._collection_builder_cache = {}
 
@@ -95,6 +98,11 @@ class DesignContext:
             glyph_pool = {}
             self._glyph_pool_cache[width_mode] = glyph_pool
         return glyph_pool
+
+    def _get_kerning_feature_file(self) -> FeatureFile:
+        if self._kerning_feature_file_cache is None:
+            self._kerning_feature_file_cache = kerning_service.make_kerning_feature_file(self.font_size, self._contexts['proportional'])
+        return self._kerning_feature_file_cache
 
     def _create_builder(self, width_mode: WidthMode, language_flavor: LanguageFlavor, is_collection: bool) -> FontBuilder:
         layout_param = self.font_config.layout_params[width_mode]
@@ -148,6 +156,10 @@ class DesignContext:
                 )
                 glyph_pool[glyph_file.file_path] = glyph
             builder.glyphs.append(glyph)
+
+        if width_mode == 'proportional':
+            kerning_feature_file = self._get_kerning_feature_file()
+            builder.opentype_config.feature_files.append(kerning_feature_file)
 
         return builder
 
