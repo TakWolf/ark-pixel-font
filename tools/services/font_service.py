@@ -35,7 +35,7 @@ class DesignContext:
         return DesignContext(font_config, glyph_files)
 
     font_config: FontConfig
-    glyph_files: dict[WidthMode, dict[int, GlyphFlavorGroup]]
+    _glyph_files: dict[WidthMode, dict[int, GlyphFlavorGroup]]
     _alphabet_cache: dict[str, set[str]]
     _character_mapping_cache: dict[str, dict[int, str]]
     _glyph_sequence_cache: dict[str, list[GlyphFile]]
@@ -49,7 +49,7 @@ class DesignContext:
             glyph_files: dict[WidthMode, dict[int, GlyphFlavorGroup]],
     ):
         self.font_config = font_config
-        self.glyph_files = glyph_files
+        self._glyph_files = glyph_files
         self._alphabet_cache = {}
         self._character_mapping_cache = {}
         self._glyph_sequence_cache = {}
@@ -65,7 +65,7 @@ class DesignContext:
         if width_mode in self._alphabet_cache:
             alphabet = self._alphabet_cache[width_mode]
         else:
-            alphabet = {chr(code_point) for code_point in self.glyph_files[width_mode] if code_point >= 0}
+            alphabet = {chr(code_point) for code_point in self._glyph_files[width_mode] if code_point >= 0}
             self._alphabet_cache[width_mode] = alphabet
         return alphabet
 
@@ -74,7 +74,7 @@ class DesignContext:
         if key in self._character_mapping_cache:
             character_mapping = self._character_mapping_cache[key]
         else:
-            character_mapping = glyph_file_util.get_character_mapping(self.glyph_files[width_mode], language_flavor)
+            character_mapping = glyph_file_util.get_character_mapping(self._glyph_files[width_mode], language_flavor)
             self._character_mapping_cache[key] = character_mapping
         return character_mapping
 
@@ -83,7 +83,7 @@ class DesignContext:
         if key in self._glyph_sequence_cache:
             glyph_sequence = self._glyph_sequence_cache[key]
         else:
-            glyph_sequence = glyph_file_util.get_glyph_sequence(self.glyph_files[width_mode], configs.language_flavors if language_flavor is None else [language_flavor])
+            glyph_sequence = glyph_file_util.get_glyph_sequence(self._glyph_files[width_mode], configs.language_flavors if language_flavor is None else [language_flavor])
             self._glyph_sequence_cache[key] = glyph_sequence
         return glyph_sequence
 
