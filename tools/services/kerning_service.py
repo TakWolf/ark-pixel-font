@@ -75,6 +75,8 @@ def _calculate_kerning(alphabet: set[int], context: dict[int, GlyphFlavorGroup])
                 if mask != test_mask:
                     break
                 offset -= 1
+                if offset <= -(right_glyph_file.width - 1):
+                    break
             if offset < 0:
                 pairs[(left_glyph_file.glyph_name, right_glyph_file.glyph_name)] = offset
     return pairs
