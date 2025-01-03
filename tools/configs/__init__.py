@@ -1,5 +1,7 @@
 from typing import Literal, get_args
 
+from tools.configs import path_define
+
 version = '2024.11.04'
 
 type FontSize = Literal[10, 12, 16]
@@ -35,3 +37,9 @@ type Attachment = Literal[
     'image',
 ]
 attachments = list[Attachment](get_args(Attachment.__value__))
+
+mapping_file_paths = [
+    path_define.mappings_dir.joinpath('2700-27BF Dingbats.yml'),
+    path_define.mappings_dir.joinpath('2E80-2EFF CJK Radicals Supplement.yml'),
+    path_define.mappings_dir.joinpath('2F00-2FDF Kangxi Radicals.yml'),
+]

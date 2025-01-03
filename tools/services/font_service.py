@@ -21,11 +21,9 @@ class DesignContext:
         contexts = {}
         for width_mode_dir_name in itertools.chain(['common'], configs.width_modes):
             context = glyph_file_util.load_context(path_define.glyphs_dir.joinpath(str(font_config.font_size), width_mode_dir_name))
+            for mapping in mappings:
+                glyph_mapping_util.apply_mapping(context, mapping)
             contexts[width_mode_dir_name] = context
-
-            if width_mode_dir_name == 'common':
-                for mapping in mappings:
-                    glyph_mapping_util.apply_mapping(context, mapping)
 
         glyph_files = {}
         for width_mode in configs.width_modes:

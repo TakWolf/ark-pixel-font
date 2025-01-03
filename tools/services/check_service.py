@@ -2,7 +2,8 @@ import itertools
 import unicodedata
 
 import unidata_blocks
-from pixel_font_knife import glyph_file_util
+from pixel_font_knife import glyph_file_util, glyph_mapping_util
+from pixel_font_knife.glyph_mapping_util import SourceFlavorGroup
 
 from tools import configs
 from tools.configs import path_define
@@ -18,10 +19,12 @@ def check_font_config(font_config: FontConfig):
             assert (layout_param.line_height - font_config.font_size) % 2 == 0, f"[{font_config.font_size}px] font config illegal 'proportional.line_height': {layout_param.line_height}"
 
 
-def check_glyph_files(font_config: FontConfig):
+def check_glyph_files(font_config: FontConfig, mappings: list[dict[int, SourceFlavorGroup]]):
     for width_mode_dir_name in itertools.chain(['common'], configs.width_modes):
-        width_mode_dir = path_define.glyphs_dir.joinpath(str(font_config.font_size), width_mode_dir_name)
-        context = glyph_file_util.load_context(width_mode_dir)
+        context = glyph_file_util.load_context(path_define.glyphs_dir.joinpath(str(font_config.font_size), width_mode_dir_name))
+        for mapping in mappings:
+            glyph_mapping_util.apply_mapping(context, mapping)
+
         for code_point, flavor_group in context.items():
             assert None in flavor_group, f'[{font_config.font_size}px] missing default flavor: {width_mode_dir_name} {code_point:04X}'
 
