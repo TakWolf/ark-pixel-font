@@ -2,7 +2,7 @@ from typing import Literal, get_args
 
 from tools.configs import path_define
 
-version = '2024.11.04'
+version = '2025.01.06'
 
 type FontSize = Literal[10, 12, 16]
 font_sizes = list[FontSize](get_args(FontSize.__value__))
