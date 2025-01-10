@@ -43,4 +43,5 @@ mapping_file_paths = [
     path_define.mappings_dir.joinpath('2700-27BF Dingbats.yml'),
     path_define.mappings_dir.joinpath('2E80-2EFF CJK Radicals Supplement.yml'),
     path_define.mappings_dir.joinpath('2F00-2FDF Kangxi Radicals.yml'),
+    path_define.mappings_dir.joinpath('F900-FAFF CJK Compatibility Ideographs.yml'),
 ]
