@@ -8,10 +8,23 @@
 [![Itch.io](https://img.shields.io/badge/itch.io-ark--pixel--font-FF2449?logo=itch.io&logoColor=white)](https://takwolf.itch.io/ark-pixel-font)
 [![Discord](https://img.shields.io/badge/discord-像素字体工房-4E5AF0?logo=discord&logoColor=white)](https://discord.gg/3GKtPKtjdU)
 [![QQ Group](https://img.shields.io/badge/QQ群-像素字体工房-brightgreen?logo=qq&logoColor=white)](https://qm.qq.com/q/X1mLrLLGYS)
+[<img src="https://api.gitsponsors.com/api/badge/img?id=366474401" height="20">](https://api.gitsponsors.com/api/badge/link?p=8OzF5pbDhGDxInnd0KutBn9YV37qGPPqwM/ir/ESx80Gp9HaCzsGYnfjrEYQDbTZwqhJCxUlDh5/kqVMyal18ljtHALK73vhzohuFq4w7jfM42aj+wAbdJ4zzqe/W4QpX165r1QS2CcoLVcPm8CPXw==)
 
 开源的泛中日韩像素字体，黑体无衬线风格，支持 10、12 和 16 像素。
 
 这个项目不仅提供了全部的字形源文件，也提供了构建字体所需要的完整程序。
+
+> [!WARNING]
+> 
+> 该字体目前处于积极开发阶段，仍然缺少大量汉字。
+> 
+> 生产环境请考虑临时性过渡方案：[缝合像素字体](https://github.com/TakWolf/fusion-pixel-font)
+
+> [!IMPORTANT]
+> 
+> 这是一个开源项目，字体可以免费商用。
+> 
+> 如果这个项目对您有帮助，请考虑 [赞助](#赞助) 来支持开发工作。
 
 ## 预览
 
