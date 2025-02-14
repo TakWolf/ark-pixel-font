@@ -148,35 +148,35 @@
     <div id="page">
         {{ content_html }}
     </div>
-    <script>
-        let page = document.getElementById('page')
-
-        let settings = {
+    <script type="module">
+        const settings = {
             widthMode: 'proportional',
             theme: 'light',
         }
+        const json = localStorage.getItem('settings:demo-{{ font_config.font_size }}px')
+        if (json) {
+            Object.assign(settings, JSON.parse(json))
+        }
 
-        function applySettings() {
+        const page = document.getElementById('page')
+
+        window.applySettings = () => {
             localStorage.setItem('settings:demo-{{ font_config.font_size }}px', JSON.stringify(settings))
             page.className = 'font-' + settings.widthMode
             document.body.className = 'theme-' + settings.theme
         }
 
-        function onWidthModeChange(widthMode) {
+        window.onWidthModeChange = widthMode => {
             settings.widthMode = widthMode
-            applySettings()
+            window.applySettings()
         }
 
-        function onThemeChange(theme) {
+        window.onThemeChange = theme => {
             settings.theme = theme
-            applySettings()
+            window.applySettings()
         }
 
-        let json = localStorage.getItem('settings:demo-{{ font_config.font_size }}px')
-        if (json) {
-            Object.assign(settings, JSON.parse(json))
-        }
         document.getElementById('radio-width-mode-' + settings.widthMode).checked = true
-        applySettings()
+        window.applySettings()
     </script>
 {% endblock %}

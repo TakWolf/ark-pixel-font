@@ -105,28 +105,28 @@
         <br>
         {{ alphabet }}
     </div>
-    <script>
-        let content = document.getElementById('content')
-
-        let settings = {
+    <script type="module">
+        const settings = {
             locale: 'zh-cn',
         }
+        const json = localStorage.getItem('settings:alphabet-{{ font_config.font_size }}px-{{ width_mode }}')
+        if (json) {
+            Object.assign(settings, JSON.parse(json))
+        }
 
-        function applySettings() {
+        const content = document.getElementById('content')
+
+        window.applySettings = () => {
             localStorage.setItem('settings:alphabet-{{ font_config.font_size }}px-{{ width_mode }}', JSON.stringify(settings))
             content.setAttribute('lang', settings.locale)
         }
 
-        function onLocaleChange(locale) {
+        window.onLocaleChange = locale => {
             settings.locale = locale
-            applySettings()
+            window.applySettings()
         }
 
-        let json = localStorage.getItem('settings:alphabet-{{ font_config.font_size }}px-{{ width_mode }}')
-        if (json) {
-            Object.assign(settings, JSON.parse(json))
-        }
         document.getElementById('radio-locale-' + settings.locale).checked = true
-        applySettings()
+        window.applySettings()
     </script>
 {% endblock %}

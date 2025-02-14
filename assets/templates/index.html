@@ -164,28 +164,28 @@
         <br>
         <div class="copyright" lang="en">© 2021 TakWolf</div>
     </div>
-    <script>
-        let page = document.getElementById('page')
-
-        let settings = {
+    <script type="module">
+        const settings = {
             fontSize: 12,
         }
+        const json = localStorage.getItem('settings:index')
+        if (json) {
+            Object.assign(settings, JSON.parse(json))
+        }
 
-        function applySettings() {
+        const page = document.getElementById('page')
+
+        window.applySettings = () => {
             localStorage.setItem('settings:index', JSON.stringify(settings))
             page.className = 'font-' + settings.fontSize + 'px-proportional'
         }
 
-        function onFontSizeChange(fontSize) {
+        window.onFontSizeChange = fontSize => {
             settings.fontSize = fontSize
-            applySettings()
+            window.applySettings()
         }
 
-        let json = localStorage.getItem('settings:index')
-        if (json) {
-            Object.assign(settings, JSON.parse(json))
-        }
         document.getElementById('radio-font-size-' + settings.fontSize).checked = true
-        applySettings()
+        window.applySettings()
     </script>
 {% endblock %}
