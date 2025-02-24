@@ -108,8 +108,6 @@
 - [GitHub Releases](https://github.com/TakWolf/ark-pixel-font/releases)
 - [itch.io](https://takwolf.itch.io/ark-pixel-font)
 
-目前提供 `.otf`、`.ttf`、`.woff2`、`.bdf`、`.pcf` 五种单字体格式，以及 `.otc`、`.ttc` 两种集合字体格式。
-
 ## 使用包管理器安装 
 
 ### [Homebrew](https://brew.sh)
@@ -124,30 +122,10 @@ brew install font-ark-pixel-12px-proportional
 brew install font-ark-pixel-16px-proportional
 ```
 
-## 本地构建
+## 字形依赖
 
-这是一个标准的 [Python3](https://www.python.org) 项目。
-
-当您配置好运行环境后，执行 `python -m tools.build` 命令来开始构建。
-
-等待任务完成后，可在 `build/outputs` 目录下找到生成的字体文件。
-
-## 授权许可
-
-分为「字体」和「构建程序」两个部分。
-
-### 字体
-
-使用 [「SIL 开放字体许可证第 1.1 版」](LICENSE-OFL) 授权，保留字体名称「方舟像素 / Ark Pixel」。
-
-### 构建程序
-
-使用 [「MIT 许可证」](LICENSE-MIT) 授权。
-
-## 官方社区
-
-- [「像素字体工房」Discord 服务器](https://discord.gg/3GKtPKtjdU)
-- [「像素字体工房」QQ 群 (302383204)](https://qm.qq.com/q/X1mLrLLGYS)
+- [像素字形 - 谚文音节](https://github.com/TakWolf/pixel-glyphs-hangul-syllables)
+- [像素字形 - 盲文图案](https://github.com/TakWolf/pixel-glyphs-braille-patterns)
 
 ## 程序依赖
 
@@ -162,11 +140,6 @@ brew install font-ark-pixel-16px-proportional
 - [Loguru](https://github.com/Delgan/loguru)
 - [Cyclopts](https://github.com/BrianPugh/cyclopts)
 
-## 字形依赖
-
-- [像素字形 - 谚文音节](https://github.com/TakWolf/pixel-glyphs-hangul-syllables)
-- [像素字形 - 盲文图案](https://github.com/TakWolf/pixel-glyphs-braille-patterns)
-
 ## 外部工具
 
 - [SYMBL - Unicode 查询工具](https://symbl.cc)
@@ -180,6 +153,23 @@ brew install font-ark-pixel-16px-proportional
 - [Microsoft - OpenType 字体文档](https://learn.microsoft.com/en-us/typography/opentype/)
 - [Glyphs 软件教程 - 纵向量度值](https://glyphsapp.com/zh/learn/vertical-metrics)
 - [FreeType 字形约定](https://freetype.org/freetype2/docs/glyphs/index.html)
+
+## 官方社区
+
+- [「像素字体工房」Discord 服务器](https://discord.gg/3GKtPKtjdU)
+- [「像素字体工房」QQ 群 (302383204)](https://qm.qq.com/q/X1mLrLLGYS)
+
+## 许可证
+
+分为「字体」和「构建程序」两个部分。
+
+### 字体
+
+使用 [「SIL 开放字体许可证第 1.1 版」](LICENSE-OFL) 授权，保留字体名称「方舟像素 / Ark Pixel」。
+
+### 构建程序
+
+使用 [「MIT 许可证」](LICENSE-MIT) 授权。
 
 ## 赞助
 
