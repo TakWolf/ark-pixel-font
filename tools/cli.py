@@ -64,14 +64,12 @@ def main(
         design_context = DesignContext.load(font_config, mappings)
         design_contexts[font_size] = design_context
         for width_mode in width_modes:
-            for font_format in font_formats:
-                design_context.make_fonts(width_mode, font_format)
+            design_context.make_fonts(width_mode, font_formats)
 
     if 'release' in attachments:
         for font_size in font_sizes:
             for width_mode in width_modes:
-                for font_format in font_formats:
-                    publish_service.make_release_zip(font_size, width_mode, font_format)
+                publish_service.make_release_zips(font_size, width_mode, font_formats)
 
     if 'info' in attachments:
         for font_size in font_sizes:

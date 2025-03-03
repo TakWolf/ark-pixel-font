@@ -38,8 +38,6 @@ class DesignContext:
     _character_mapping_cache: dict[str, dict[int, str]]
     _glyph_sequence_cache: dict[str, list[GlyphFile]]
     _glyph_pool_cache: dict[str, dict[Path, Glyph]]
-    _builder_cache: dict[str, FontBuilder]
-    _collection_builder_cache: dict[str, FontCollectionBuilder]
 
     def __init__(
             self,
@@ -52,8 +50,6 @@ class DesignContext:
         self._character_mapping_cache = {}
         self._glyph_sequence_cache = {}
         self._glyph_pool_cache = {}
-        self._builder_cache = {}
-        self._collection_builder_cache = {}
 
     @property
     def font_size(self) -> FontSize:
@@ -148,39 +144,32 @@ class DesignContext:
 
         return builder
 
-    def _get_builder(self, width_mode: WidthMode, language_flavor: LanguageFlavor) -> FontBuilder:
-        key = f'{width_mode}#{language_flavor}'
-        if key in self._builder_cache:
-            builder = self._builder_cache[key]
-        else:
-            builder = self._create_builder(width_mode, language_flavor, is_collection=False)
-            self._builder_cache[key] = builder
-        return builder
-
-    def _get_collection_builder(self, width_mode: WidthMode) -> FontCollectionBuilder:
-        if width_mode in self._collection_builder_cache:
-            collection_builder = self._collection_builder_cache[width_mode]
-        else:
-            collection_builder = FontCollectionBuilder()
-            for language_flavor in configs.language_flavors:
-                builder = self._create_builder(width_mode, language_flavor, is_collection=True)
-                collection_builder.append(builder)
-            self._collection_builder_cache[width_mode] = collection_builder
+    def _create_collection_builder(self, width_mode: WidthMode) -> FontCollectionBuilder:
+        collection_builder = FontCollectionBuilder()
+        for language_flavor in configs.language_flavors:
+            builder = self._create_builder(width_mode, language_flavor, is_collection=True)
+            collection_builder.append(builder)
         return collection_builder
 
-    def make_fonts(self, width_mode: WidthMode, font_format: FontFormat):
+    def make_fonts(self, width_mode: WidthMode, font_formats: list[FontFormat]):
         path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
-        if font_format in configs.font_collection_formats:
-            collection_builder = self._get_collection_builder(width_mode)
-            file_path = path_define.outputs_dir.joinpath(f'ark-pixel-{self.font_size}px-{width_mode}.{font_format}')
-            getattr(collection_builder, f'save_{font_format}')(file_path)
-            logger.info("Make font collection: '{}'", file_path)
-        else:
+
+        font_single_formats = [font_format for font_format in font_formats if font_format in configs.font_single_formats]
+        if len(font_single_formats) > 0:
             for language_flavor in configs.language_flavors:
-                builder = self._get_builder(width_mode, language_flavor)
-                file_path = path_define.outputs_dir.joinpath(f'ark-pixel-{self.font_size}px-{width_mode}-{language_flavor}.{font_format}')
-                if font_format == 'woff2':
-                    builder.save_otf(file_path, flavor=Flavor.WOFF2)
-                else:
-                    getattr(builder, f'save_{font_format}')(file_path)
-                logger.info("Make font: '{}'", file_path)
+                builder = self._create_builder(width_mode, language_flavor, is_collection=False)
+                for font_format in font_single_formats:
+                    file_path = path_define.outputs_dir.joinpath(f'ark-pixel-{self.font_size}px-{width_mode}-{language_flavor}.{font_format}')
+                    if font_format == 'woff2':
+                        builder.save_otf(file_path, flavor=Flavor.WOFF2)
+                    else:
+                        getattr(builder, f'save_{font_format}')(file_path)
+                    logger.info("Make font: '{}'", file_path)
+
+        font_collection_formats = [font_format for font_format in font_formats if font_format in configs.font_collection_formats]
+        if len(font_collection_formats) > 0:
+            builder = self._create_collection_builder(width_mode)
+            for font_format in font_collection_formats:
+                file_path = path_define.outputs_dir.joinpath(f'ark-pixel-{self.font_size}px-{width_mode}.{font_format}')
+                getattr(builder, f'save_{font_format}')(file_path)
+                logger.info("Make font collection: '{}'", file_path)
