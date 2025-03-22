@@ -57,7 +57,7 @@ def check_glyph_files(font_config: FontConfig, mappings: list[dict[int, SourceFl
 
                     if block is not None:
                         if 'CJK Unified Ideographs' in block.name:
-                            assert all(alpha == 0 for alpha in glyph_file.bitmap[0]), f"[{font_config.font_size}px] glyph bitmap error: '{glyph_file.file_path}'"
+                            assert all(color == 0 for color in glyph_file.bitmap[0]), f"[{font_config.font_size}px] glyph bitmap error: '{glyph_file.file_path}'"
                             assert all(glyph_file.bitmap[i][-1] == 0 for i in range(0, len(glyph_file.bitmap))), f"[{font_config.font_size}px] glyph bitmap error: '{glyph_file.file_path}'"
 
                 if width_mode_dir_name == 'proportional':
