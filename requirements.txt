@@ -3,8 +3,8 @@ pixel-font-knife==0.0.11
 unidata-blocks==0.0.16
 character-encoding-utils==0.0.9
 PyYAML==6.0.2
-pillow==11.1.0
+pillow==11.2.0
 beautifulsoup4==4.13.3
 Jinja2==3.1.6
 loguru==0.7.3
-cyclopts==3.9.3
+cyclopts==3.12.0
