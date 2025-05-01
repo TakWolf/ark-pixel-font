@@ -1,6 +1,6 @@
-import datetime
 import itertools
 import math
+from datetime import datetime
 from pathlib import Path
 
 from loguru import logger
@@ -102,7 +102,7 @@ class DesignContext:
         builder.font_metric.cap_height = layout_param.cap_height
 
         builder.meta_info.version = configs.version
-        builder.meta_info.created_time = datetime.datetime.fromisoformat(f'{configs.version.replace('.', '-')}T00:00:00Z')
+        builder.meta_info.created_time = datetime.fromisoformat(f'{configs.version.replace('.', '-')}T00:00:00Z')
         builder.meta_info.modified_time = builder.meta_info.created_time
         builder.meta_info.family_name = f'Ark Pixel {self.font_size}px {width_mode.capitalize()} {language_flavor}'
         builder.meta_info.weight_name = WeightName.REGULAR
