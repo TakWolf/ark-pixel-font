@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import itertools
 import math
 from datetime import datetime
@@ -17,7 +19,7 @@ from tools.configs.font import FontConfig
 
 class DesignContext:
     @staticmethod
-    def load(font_config: FontConfig, mappings: list[dict[int, SourceFlavorGroup]]) -> 'DesignContext':
+    def load(font_config: FontConfig, mappings: list[dict[int, SourceFlavorGroup]]) -> DesignContext:
         contexts = {}
         for width_mode_dir_name in itertools.chain(['common'], configs.width_modes):
             context = glyph_file_util.load_context(path_define.glyphs_dir.joinpath(str(font_config.font_size), width_mode_dir_name))

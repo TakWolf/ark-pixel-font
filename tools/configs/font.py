@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import yaml
 
 from tools.configs import path_define, FontSize, WidthMode
@@ -22,7 +24,7 @@ class LayoutParam:
 
 class FontConfig:
     @staticmethod
-    def load(font_size: FontSize) -> 'FontConfig':
+    def load(font_size: FontSize) -> FontConfig:
         file_path = path_define.glyphs_dir.joinpath(str(font_size), 'config.yml')
         config_data = yaml.safe_load(file_path.read_bytes())
 
