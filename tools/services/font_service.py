@@ -1,9 +1,8 @@
-from __future__ import annotations
-
 import itertools
 import math
 from datetime import datetime
 from pathlib import Path
+from typing import Self
 
 from loguru import logger
 from pixel_font_builder import FontBuilder, FontCollectionBuilder, WeightName, SerifStyle, SlantStyle, WidthStyle, Glyph
@@ -18,8 +17,8 @@ from tools.configs.font import FontConfig
 
 
 class DesignContext:
-    @staticmethod
-    def load(font_config: FontConfig, mappings: list[dict[int, SourceFlavorGroup]]) -> DesignContext:
+    @classmethod
+    def load(cls, font_config: FontConfig, mappings: list[dict[int, SourceFlavorGroup]]) -> Self:
         contexts = {}
         for width_mode_dir_name in itertools.chain(['common'], configs.width_modes):
             context = glyph_file_util.load_context(path_define.glyphs_dir.joinpath(str(font_config.font_size), width_mode_dir_name))
@@ -32,7 +31,7 @@ class DesignContext:
             glyph_files[width_mode] = dict(contexts['common'])
             glyph_files[width_mode].update(contexts[width_mode])
 
-        return DesignContext(font_config, glyph_files)
+        return cls(font_config, glyph_files)
 
     font_config: FontConfig
     _glyph_files: dict[WidthMode, dict[int, GlyphFlavorGroup]]

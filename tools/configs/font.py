@@ -1,4 +1,4 @@
-from __future__ import annotations
+from typing import Self
 
 import yaml
 
@@ -23,8 +23,8 @@ class LayoutParam:
 
 
 class FontConfig:
-    @staticmethod
-    def load(font_size: FontSize) -> FontConfig:
+    @classmethod
+    def load(cls, font_size: FontSize) -> Self:
         file_path = path_define.glyphs_dir.joinpath(str(font_size), 'config.yml')
         config_data = yaml.safe_load(file_path.read_bytes())
 
@@ -37,7 +37,7 @@ class FontConfig:
                 layout_param_data['cap-height'],
             )
 
-        return FontConfig(font_size, layout_params)
+        return cls(font_size, layout_params)
 
     font_size: FontSize
     layout_params: dict[WidthMode, LayoutParam]
