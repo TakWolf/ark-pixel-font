@@ -12,6 +12,7 @@ mappings = [
     glyph_mapping_util.load_mapping(path_define.mappings_dir.joinpath('2700-27BF Dingbats.yml')),
     glyph_mapping_util.load_mapping(path_define.mappings_dir.joinpath('2E80-2EFF CJK Radicals Supplement.yml')),
     glyph_mapping_util.load_mapping(path_define.mappings_dir.joinpath('2F00-2FDF Kangxi Radicals.yml')),
+    glyph_mapping_util.load_mapping(path_define.mappings_dir.joinpath('F900-FAFF CJK Compatibility Ideographs.yml')),
     glyph_mapping_util.load_mapping(path_define.mappings_dir.joinpath('1F100-1F1FF Enclosed Alphanumeric Supplement.yml')),
 ]
 
