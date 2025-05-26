@@ -24,10 +24,10 @@ type LanguageFlavor = Literal[
 ]
 language_flavors = list[LanguageFlavor](get_args(LanguageFlavor.__value__))
 
-type FontFormat = Literal['otf', 'ttf', 'woff2', 'bdf', 'pcf', 'otc', 'ttc']
+type FontFormat = Literal['otf', 'otf.woff', 'otf.woff2', 'ttf', 'ttf.woff', 'ttf.woff2', 'otc', 'ttc', 'bdf', 'pcf']
 font_formats = list[FontFormat](get_args(FontFormat.__value__))
 
-font_single_formats = ['otf', 'ttf', 'woff2', 'bdf', 'pcf']
+font_single_formats = ['otf', 'otf.woff', 'otf.woff2', 'ttf', 'ttf.woff', 'ttf.woff2', 'bdf', 'pcf']
 font_collection_formats = ['otc', 'ttc']
 
 type Attachment = Literal[

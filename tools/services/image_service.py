@@ -10,7 +10,7 @@ from tools.services.font_service import DesignContext
 
 
 def _load_font(font_size: FontSize, width_mode: WidthMode, language_flavor: LanguageFlavor, scale: int = 1) -> FreeTypeFont:
-    file_path = path_define.outputs_dir.joinpath(f'ark-pixel-{font_size}px-{width_mode}-{language_flavor}.woff2')
+    file_path = path_define.outputs_dir.joinpath(f'ark-pixel-{font_size}px-{width_mode}-{language_flavor}.otf.woff2')
     return ImageFont.truetype(file_path, font_size * scale)
 
 
