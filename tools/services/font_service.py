@@ -3,7 +3,6 @@ from __future__ import annotations
 import itertools
 import math
 from datetime import datetime
-from pathlib import Path
 
 from loguru import logger
 from pixel_font_builder import FontBuilder, FontCollectionBuilder, WeightName, SerifStyle, SlantStyle, WidthStyle, Glyph
@@ -39,7 +38,6 @@ class DesignContext:
     _alphabet_cache: dict[str, set[str]]
     _character_mapping_cache: dict[str, dict[int, str]]
     _glyph_sequence_cache: dict[str, list[GlyphFile]]
-    _glyph_pool_cache: dict[str, dict[Path, Glyph]]
 
     def __init__(
             self,
@@ -51,7 +49,6 @@ class DesignContext:
         self._alphabet_cache = {}
         self._character_mapping_cache = {}
         self._glyph_sequence_cache = {}
-        self._glyph_pool_cache = {}
 
     @property
     def font_size(self) -> FontSize:
@@ -82,14 +79,6 @@ class DesignContext:
             glyph_sequence = glyph_file_util.get_glyph_sequence(self._glyph_files[width_mode], configs.language_flavors if language_flavor is None else [language_flavor])
             self._glyph_sequence_cache[key] = glyph_sequence
         return glyph_sequence
-
-    def _get_glyph_pool(self, width_mode: WidthMode) -> dict[Path, Glyph]:
-        if width_mode in self._glyph_pool_cache:
-            glyph_pool = self._glyph_pool_cache[width_mode]
-        else:
-            glyph_pool = {}
-            self._glyph_pool_cache[width_mode] = glyph_pool
-        return glyph_pool
 
     def _create_builder(self, width_mode: WidthMode, language_flavor: LanguageFlavor, is_collection: bool) -> FontBuilder:
         layout_param = self.font_config.layout_params[width_mode]
@@ -124,25 +113,19 @@ class DesignContext:
         builder.character_mapping.update(character_mapping)
 
         glyph_sequence = self._get_glyph_sequence(width_mode, None if is_collection else language_flavor)
-        glyph_pool = self._get_glyph_pool(width_mode)
         for glyph_file in glyph_sequence:
-            if glyph_file.file_path in glyph_pool:
-                glyph = glyph_pool[glyph_file.file_path]
-            else:
-                horizontal_offset_x = 0
-                horizontal_offset_y = (layout_param.ascent + layout_param.descent - glyph_file.height) // 2
-                vertical_offset_x = -math.ceil(glyph_file.width / 2)
-                vertical_offset_y = (self.font_size - glyph_file.height) // 2 - 1
-                glyph = Glyph(
-                    name=glyph_file.glyph_name,
-                    horizontal_offset=(horizontal_offset_x, horizontal_offset_y),
-                    advance_width=glyph_file.width,
-                    vertical_offset=(vertical_offset_x, vertical_offset_y),
-                    advance_height=self.font_size,
-                    bitmap=glyph_file.bitmap.data,
-                )
-                glyph_pool[glyph_file.file_path] = glyph
-            builder.glyphs.append(glyph)
+            horizontal_offset_x = 0
+            horizontal_offset_y = (layout_param.ascent + layout_param.descent - glyph_file.height) // 2
+            vertical_offset_x = -math.ceil(glyph_file.width / 2)
+            vertical_offset_y = (self.font_size - glyph_file.height) // 2 - 1
+            builder.glyphs.append(Glyph(
+                name=glyph_file.glyph_name,
+                horizontal_offset=(horizontal_offset_x, horizontal_offset_y),
+                advance_width=glyph_file.width,
+                vertical_offset=(vertical_offset_x, vertical_offset_y),
+                advance_height=self.font_size,
+                bitmap=glyph_file.bitmap.data,
+            ))
 
         return builder
 
