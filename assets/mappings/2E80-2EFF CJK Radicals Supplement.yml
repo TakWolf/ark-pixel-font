@@ -1,383 +1,490 @@
 
 # ⺁
 0x2E81:
+  # 𠂆
   ~: 0x20086
 
 # ⺂
 0x2E82:
+  # 乛
   ~: 0x4E5B
 
 # ⺃
 0x2E83:
+  # 乚
   ~: 0x4E5A
 
 # ⺅
 0x2E85:
+  # 亻
   ~: 0x4EBB
 
 # ⺇
 0x2E87:
+  # 𠘨
   ~: 0x20628
 
 # ⺉
 0x2E89:
+  # 刂
   ~: 0x5202
 
 # ⺋
 0x2E8B:
+  # 㔾
   ~: 0x353E
 
 # ⺍
 0x2E8D:
+  # 𭕄
   ~: 0x2D544
 
 # ⺎
 0x2E8E:
+  # 兀
   ~: 0x5140
 
 # ⺏
 0x2E8F:
+  # 尣
   ~: 0x5C23
 
 # ⺐
 0x2E90:
+  # 尢
   ~: 0x5C22
 
 # ⺑
 0x2E91:
+  # 𡯂
   ~: 0x21BC2
 
 # ⺒
 0x2E92:
+  # 巳
   ~: 0x5DF3
 
 # ⺓
 0x2E93:
+  # 幺
   ~: 0x5E7A zh_cn
+  # 幺
   zh_tr,ja,ko: 0x5E7A zh_tr
 
 # ⺔
 0x2E94:
+  # 彑
   ~: 0x5F51 zh_cn
+  # 彑
   zh_tr,ja,ko: 0x5F51 ja
 
 # ⺕
 0x2E95:
+  # 彐
   ~: 0x5F50 zh_cn
 
 # ⺖
 0x2E96:
+  # 忄
   ~: 0x5FC4
 
 # ⺘
 0x2E98:
+  # 扌
   ~: 0x624C
 
 # ⺙
 0x2E99:
+  # 攵
   ~: 0x6535
 
 # ⺛
 0x2E9B:
+  # 旡
   ~: 0x65E1 zh_cn
+  # 旡
   zh_tr,ja,ko: 0x65E1 zh_tr
 
 # ⺞
 0x2E9E:
+  # 歺
   ~: 0x6B7A zh_cn
+  # 歺
   zh_tr,ja,ko: 0x6B7A ja
 
 # ⺟
 0x2E9F:
+  # 母
   ~: 0x6BCD zh_cn
+  # 母
   zh_tr,ja,ko: 0x6BCD zh_tr
 
 # ⺠
 0x2EA0:
+  # 民
   ~: 0x6C11 zh_cn
+  # 民
   zh_tr,ja,ko: 0x6C11 zh_tr
 
 # ⺡
 0x2EA1:
+  # 氵
   ~: 0x6C35
 
 # ⺢
 0x2EA2:
+  # 氺
   ~: 0x6C3A
 
 # ⺣
 0x2EA3:
+  # 灬
   ~: 0x706C
 
 # ⺤
 0x2EA4:
+  # 爫
   ~: 0x722B zh_cn
 
 # ⺦
 0x2EA6:
+  # 丬
   ~: 0x4E2C
 
 # ⺨
 0x2EA8:
+  # 犭
   ~: 0x72AD
 
 # ⺩
 0x2EA9:
+  # 𤣩
   ~: 0x248E9
 
 # ⺫
 0x2EAB:
+  # 罒
   ~: 0x7F52
 
 # ⺭
 0x2EAD:
+  # 礻
   ~: 0x793B zh_cn
+  # 礻
   zh_tr,ja,ko: 0x793B zh_tr
 
 # ⺮
 0x2EAE:
+  # 𥫗
   ~: 0x25AD7
 
 # ⺯
 0x2EAF:
+  # 糹
   ~: 0x7CF9
 
 # ⺰
 0x2EB0:
+  # 纟
   ~: 0x7E9F
 
 # ⺱
 0x2EB1:
+  # 罓
   ~: 0x7F53
 
 # ⺲
 0x2EB2:
+  # 罒
   ~: 0x7F52
 
 # ⺳
 0x2EB3:
+  # 㓁
   ~: 0x34C1 zh_cn
 
 # ⺹
 0x2EB9:
+  # 耂
   ~: 0x8002
 
 # ⺺
 0x2EBA:
+  # 肀
   ~: 0x8080
 
 # ⺽
 0x2EBD:
+  # 𦥑
   ~: 0x26951
 
 # ⺾
 0x2EBE:
+  # 艹
   ~: 0x8279 zh_cn
 
 # ⺿
 0x2EBF:
+  # 艹
   ~: 0x8279 zh_hk
 
 # ⻁
 0x2EC1:
+  # 虎
   ~: 0x864E zh_cn
 
 # ⻂
 0x2EC2:
+  # 衤
   ~: 0x8864 zh_cn
+  # 衤
   zh_tr,ja,ko: 0x8864 zh_tr
 
 # ⻃
 0x2EC3:
+  # 覀
   ~: 0x8980
 
 # ⻄
 0x2EC4:
+  # 西
   ~: 0x897F ja
 
 # ⻅
 0x2EC5:
+  # 见
   ~: 0x89C1
 
 # ⻆
 0x2EC6:
+  # 角
   ~: 0x89D2 zh_cn
 
 # ⻇
 0x2EC7:
+  # 𧢲
   ~: 0x278B2
 
 # ⻈
 0x2EC8:
+  # 讠
   ~: 0x8BA0
 
 # ⻉
 0x2EC9:
+  # 贝
   ~: 0x8D1D
 
 # ⻊
 0x2ECA:
+  # 𧾷
   ~: 0x27FB7
 
 # ⻋
 0x2ECB:
+  # 车
   ~: 0x8F66
 
 # ⻌
 0x2ECC:
+  # 辶
   ~: 0x8FB6 zh_cn
 
 # ⻍
 0x2ECD:
+  # 辶
   ~: 0x8FB6 zh_tr
 
 # ⻎
 0x2ECE:
+  # 辶
   ~: 0x8FB6 zh_hk
 
 # ⻐
 0x2ED0:
+  # 钅
   ~: 0x9485
 
 # ⻑
 0x2ED1:
+  # 長
   ~: 0x9577 zh_cn
+  # 長
   zh_tr,ja,ko: 0x9577 zh_tr
 
 # ⻒
 0x2ED2:
+  # 镸
   ~: 0x9578 zh_cn
+  # 镸
   zh_tr,ja,ko: 0x9578 zh_tr
 
 # ⻓
 0x2ED3:
+  # 长
   ~: 0x957F
 
 # ⻔
 0x2ED4:
+  # 门
   ~: 0x95E8 zh_cn
 
 # ⻕
 0x2ED5:
+  # 𨸏
   ~: 0x28E0F
 
 # ⻖
 0x2ED6:
+  # 阝
   ~: 0x961D
 
 # ⻘
 0x2ED8:
+  # 青
   ~: 0x9752 zh_cn
 
 # ⻙
 0x2ED9:
+  # 韦
   ~: 0x97E6
 
 # ⻚
 0x2EDA:
+  # 页
   ~: 0x9875
 
 # ⻛
 0x2EDB:
+  # 风
   ~: 0x98CE
 
 # ⻜
 0x2EDC:
+  # 飞
   ~: 0x98DE
 
 # ⻝
 0x2EDD:
+  # 食
   ~: 0x98DF zh_cn
+  # 食
   zh_tr,ja,ko: 0x98DF ko
 
 # ⻞
 0x2EDE:
+  # 𩙿
   ~: 0x2967F zh_cn
+  # 𩙿
   zh_tr,ja,ko: 0x2967F zh_tr
 
 # ⻟
 0x2EDF:
+  # 飠
   ~: 0x98E0 zh_cn
+  # 飠
   zh_tr,ja,ko: 0x98E0 zh_tr
 
 # ⻠
 0x2EE0:
+  # 饣
   ~: 0x9963
 
 # ⻡
 0x2EE1:
+  # 𩠐
   ~: 0x29810
 
 # ⻢
 0x2EE2:
+  # 马
   ~: 0x9A6C
 
 # ⻣
 0x2EE3:
+  # 骨
   ~: 0x9AA8 zh_cn
 
 # ⻤
 0x2EE4:
+  # 鬼
   ~: 0x9B3C zh_cn
 
 # ⻥
 0x2EE5:
+  # 鱼
   ~: 0x9C7C
 
 # ⻦
 0x2EE6:
+  # 鸟
   ~: 0x9E1F
 
 # ⻧
 0x2EE7:
+  # 卤
   ~: 0x5364
 
 # ⻨
 0x2EE8:
+  # 麦
   ~: 0x9EA6
 
 # ⻩
 0x2EE9:
+  # 黄
   ~: 0x9EC4
 
 # ⻪
 0x2EEA:
+  # 黾
   ~: 0x9EFE
 
 # ⻫
 0x2EEB:
+  # 斉
   ~: 0x6589 zh_cn
+  # 斉
   zh_tr,ja,ko: 0x6589 zh_tr
 
 # ⻬
 0x2EEC:
+  # 齐
   ~: 0x9F50 zh_cn
+  # 齐
   zh_tr,ja,ko: 0x9F50 zh_tr
 
 # ⻭
 0x2EED:
+  # 歯
   ~: 0x6B6F
 
 # ⻮
 0x2EEE:
+  # 齿
   ~: 0x9F7F
 
 # ⻯
 0x2EEF:
+  # 竜
   ~: 0x7ADC zh_cn
 
 # ⻰
 0x2EF0:
+  # 龙
   ~: 0x9F99
 
 # ⻱
 0x2EF1:
+  # 龜
   ~: 0x9F9C zh_cn
 
 # ⻲
 0x2EF2:
+  # 亀
   ~: 0x4E80
 
 # ⻳
 0x2EF3:
+  # 龟
   ~: 0x9F9F zh_cn

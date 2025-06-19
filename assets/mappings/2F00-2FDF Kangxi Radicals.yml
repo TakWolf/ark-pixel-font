@@ -1,952 +1,1262 @@
 
 # ⼀
 0x2F00:
+  # 一
   ~: 0x4E00
 
 # ⼁
 0x2F01:
+  # 丨
   ~: 0x4E28
 
 # ⼂
 0x2F02:
+  # 丶
   ~: 0x4E36
 
 # ⼃
 0x2F03:
+  # 丿
   ~: 0x4E3F
 
 # ⼄
 0x2F04:
+  # 乙
   ~: 0x4E59
 
 # ⼅
 0x2F05:
+  # 亅
   ~: 0x4E85
 
 # ⼆
 0x2F06:
+  # 二
   ~: 0x4E8C
 
 # ⼇
 0x2F07:
+  # 亠
   ~: 0x4EA0 zh_cn
+  # 亠
   zh_tr,ja,ko: 0x4EA0 zh_tr
 
 # ⼈
 0x2F08:
+  # 人
   ~: 0x4EBA
 
 # ⼉
 0x2F09:
+  # 儿
   ~: 0x513F
 
 # ⼊
 0x2F0A:
+  # 入
   ~: 0x5165 zh_tr
+  # 入
   zh_cn: 0x5165 zh_cn
 
 # ⼋
 0x2F0B:
+  # 八
   ~: 0x516B zh_cn
+  # 八
   zh_tw: 0x516B zh_tw
+  # 八
   zh_tr,ja,ko: 0x516B zh_tr
 
 # ⼌
 0x2F0C:
+  # 冂
   ~: 0x5182
 
 # ⼍
 0x2F0D:
+  # 冖
   ~: 0x5196
 
 # ⼎
 0x2F0E:
+  # 冫
   ~: 0x51AB
 
 # ⼏
 0x2F0F:
+  # 几
   ~: 0x51E0
 
 # ⼐
 0x2F10:
+  # 凵
   ~: 0x51F5
 
 # ⼑
 0x2F11:
+  # 刀
   ~: 0x5200
 
 # ⼒
 0x2F12:
+  # 力
   ~: 0x529B
 
 # ⼓
 0x2F13:
+  # 勹
   ~: 0x52F9
 
 # ⼔
 0x2F14:
+  # 匕
   ~: 0x5315 zh_cn
+  # 匕
   zh_tw: 0x5315 zh_tw
 
 # ⼕
 0x2F15:
+  # 匚
   ~: 0x531A
 
 # ⼖
 0x2F16:
+  # 匸
   ~: 0x5338 zh_cn
+  # 匸
   zh_hk,zh_tr,ja,ko: 0x5338 ja
 
 # ⼗
 0x2F17:
+  # 十
   ~: 0x5341
 
 # ⼘
 0x2F18:
+  # 卜
   ~: 0x535C
 
 # ⼙
 0x2F19:
+  # 卩
   ~: 0x5369
 
 # ⼚
 0x2F1A:
+  # 厂
   ~: 0x5382
 
 # ⼛
 0x2F1B:
+  # 厶
   ~: 0x53B6 zh_cn
+  # 厶
   zh_tr,ja,ko: 0x53B6 zh_tr
 
 # ⼜
 0x2F1C:
+  # 又
   ~: 0x53C8
 
 # ⼝
 0x2F1D:
+  # 口
   ~: 0x53E3
 
 # ⼞
 0x2F1E:
+  # 囗
   ~: 0x56D7
 
 # ⼟
 0x2F1F:
+  # 土
   ~: 0x571F
 
 # ⼠
 0x2F20:
+  # 士
   ~: 0x58EB
 
 # ⼡
 0x2F21:
+  # 夂
   ~: 0x5902
 
 # ⼢
 0x2F22:
+  # 夊
   ~: 0x590A
 
 # ⼣
 0x2F23:
+  # 夕
   ~: 0x5915
 
 # ⼤
 0x2F24:
+  # 大
   ~: 0x5927
 
 # ⼥
 0x2F25:
+  # 女
   ~: 0x5973 zh_cn
+  # 女
   zh_hk,zh_tw: 0x5973 zh_hk
 
 # ⼦
 0x2F26:
+  # 子
   ~: 0x5B50
 
 # ⼧
 0x2F27:
+  # 宀
   ~: 0x5B80 zh_cn
+  # 宀
   zh_tr,ja,ko: 0x5B80 zh_tr
 
 # ⼨
 0x2F28:
+  # 寸
   ~: 0x5BF8
 
 # ⼩
 0x2F29:
+  # 小
   ~: 0x5C0F
 
 # ⼪
 0x2F2A:
+  # 尢
   ~: 0x5C22
 
 # ⼫
 0x2F2B:
+  # 尸
   ~: 0x5C38
 
 # ⼬
 0x2F2C:
+  # 屮
   ~: 0x5C6E zh_cn
 
 # ⼭
 0x2F2D:
+  # 山
   ~: 0x5C71
 
 # ⼮
 0x2F2E:
+  # 巛
   ~: 0x5DDB
 
 # ⼯
 0x2F2F:
+  # 工
   ~: 0x5DE5
 
 # ⼰
 0x2F30:
+  # 己
   ~: 0x5DF1
 
 # ⼱
 0x2F31:
+  # 巾
   ~: 0x5DFE
 
 # ⼲
 0x2F32:
+  # 干
   ~: 0x5E72
 
 # ⼳
 0x2F33:
+  # 幺
   ~: 0x5E7A zh_cn
+  # 幺
   zh_tr,ja,ko: 0x5E7A zh_tr
 
 # ⼴
 0x2F34:
+  # 广
   ~: 0x5E7F zh_cn
+  # 广
   zh_tr,ja,ko: 0x5E7F zh_tr
 
 # ⼵
 0x2F35:
+  # 廴
   ~: 0x5EF4
 
 # ⼶
 0x2F36:
+  # 廾
   ~: 0x5EFE
 
 # ⼷
 0x2F37:
+  # 弋
   ~: 0x5F0B
 
 # ⼸
 0x2F38:
+  # 弓
   ~: 0x5F13
 
 # ⼹
 0x2F39:
+  # 彐
   ~: 0x5F50 ja
 
 # ⼺
 0x2F3A:
+  # 彡
   ~: 0x5F61
 
 # ⼻
 0x2F3B:
+  # 彳
   ~: 0x5F73
 
 # ⼼
 0x2F3C:
+  # 心
   ~: 0x5FC3
 
 # ⼽
 0x2F3D:
+  # 戈
   ~: 0x6208
 
 # ⼾
 0x2F3E:
+  # 戶
   ~: 0x6236
+  # 户
   zh_cn: 0x6237
+  # 戸
   ja: 0x6238
 
 # ⼿
 0x2F3F:
+  # 手
   ~: 0x624B
 
 # ⽀
 0x2F40:
+  # 支
   ~: 0x652F
 
 # ⽁
 0x2F41:
+  # 攴
   ~: 0x6534
 
 # ⽂
 0x2F42:
+  # 文
   ~: 0x6587 zh_cn
+  # 文
   zh_tr,ja,ko: 0x6587 zh_tr
 
 # ⽃
 0x2F43:
+  # 斗
   ~: 0x6597
 
 # ⽄
 0x2F44:
+  # 斤
   ~: 0x65A4
 
 # ⽅
 0x2F45:
+  # 方
   ~: 0x65B9 zh_cn
+  # 方
   zh_tr,ja,ko: 0x65B9 zh_tr
 
 # ⽆
 0x2F46:
+  # 无
   ~: 0x65E0
 
 # ⽇
 0x2F47:
+  # 日
   ~: 0x65E5
 
 # ⽈
 0x2F48:
+  # 曰
   ~: 0x66F0
 
 # ⽉
 0x2F49:
+  # 月
   ~: 0x6708
 
 # ⽊
 0x2F4A:
+  # 木
   ~: 0x6728
 
 # ⽋
 0x2F4B:
+  # 欠
   ~: 0x6B20 zh_cn
+  # 欠
   zh_tr,ja,ko: 0x6B20 zh_tr
 
 # ⽌
 0x2F4C:
+  # 止
   ~: 0x6B62
 
 # ⽍
 0x2F4D:
+  # 歹
   ~: 0x6B79
 
 # ⽎
 0x2F4E:
+  # 殳
   ~: 0x6BB3 zh_cn
+  # 殳
   zh_tr,ja,ko: 0x6BB3 zh_tr
 
 # ⽏
 0x2F4F:
+  # 毋
   ~: 0x6BCB zh_cn
+  # 毋
   zh_tr,ja,ko: 0x6BCB zh_tr
 
 # ⽐
 0x2F50:
+  # 比
   ~: 0x6BD4 zh_cn
+  # 比
   zh_hk,zh_tw: 0x6BD4 zh_hk
+  # 比
   zh_tr,ja,ko: 0x6BD4 zh_tr
 
 # ⽑
 0x2F51:
+  # 毛
   ~: 0x6BDB
 
 # ⽒
 0x2F52:
+  # 氏
   ~: 0x6C0F zh_cn
+  # 氏
   zh_tr,ja,ko: 0x6C0F zh_tr
 
 # ⽓
 0x2F53:
+  # 气
   ~: 0x6C14
 
 # ⽔
 0x2F54:
+  # 水
   ~: 0x6C34
 
 # ⽕
 0x2F55:
+  # 火
   ~: 0x706B zh_cn
+  # 火
   zh_hk,zh_tw: 0x706B zh_hk
 
 # ⽖
 0x2F56:
+  # 爪
   ~: 0x722A
 
 # ⽗
 0x2F57:
+  # 父
   ~: 0x7236
 
 # ⽘
 0x2F58:
+  # 爻
   ~: 0x723B
 
 # ⽙
 0x2F59:
+  # 爿
   ~: 0x723F
 
 # ⽚
 0x2F5A:
+  # 片
   ~: 0x7247 zh_cn
+  # 片
   zh_tw: 0x7247 zh_tw
 
 # ⽛
 0x2F5B:
+  # 牙
   ~: 0x7259 zh_cn
+  # 牙
   zh_hk,zh_tw: 0x7259 zh_hk
+  # 牙
   zh_tr,ja,ko: 0x7259 ja
 
 # ⽜
 0x2F5C:
+  # 牛
   ~: 0x725B
 
 # ⽝
 0x2F5D:
+  # 犬
   ~: 0x72AC
 
 # ⽞
 0x2F5E:
+  # 玄
   ~: 0x7384 zh_cn
+  # 玄
   zh_tr,ja,ko: 0x7384 zh_tr
 
 # ⽟
 0x2F5F:
+  # 玉
   ~: 0x7389
 
 # ⽠
 0x2F60:
+  # 瓜
   ~: 0x74DC zh_cn
+  # 瓜
   zh_tr,ja,ko: 0x74DC zh_tr
 
 # ⽡
 0x2F61:
+  # 瓦
   ~: 0x74E6 zh_tr
+  # 瓦
   zh_cn: 0x74E6 zh_cn
 
 # ⽢
 0x2F62:
+  # 甘
   ~: 0x7518
 
 # ⽣
 0x2F63:
+  # 生
   ~: 0x751F
 
 # ⽤
 0x2F64:
+  # 用
   ~: 0x7528
 
 # ⽥
 0x2F65:
+  # 田
   ~: 0x7530
 
 # ⽦
 0x2F66:
+  # 疋
   ~: 0x758B
 
 # ⽧
 0x2F67:
+  # 疒
   ~: 0x7592 zh_cn
+  # 疒
   zh_tr,ja,ko: 0x7592 zh_tr
 
 # ⽨
 0x2F68:
+  # 癶
   ~: 0x7676
 
 # ⽩
 0x2F69:
+  # 白
   ~: 0x767D
 
 # ⽪
 0x2F6A:
+  # 皮
   ~: 0x76AE
 
 # ⽫
 0x2F6B:
+  # 皿
   ~: 0x76BF
 
 # ⽬
 0x2F6C:
+  # 目
   ~: 0x76EE
 
 # ⽭
 0x2F6D:
+  # 矛
   ~: 0x77DB
 
 # ⽮
 0x2F6E:
+  # 矢
   ~: 0x77E2
 
 # ⽯
 0x2F6F:
+  # 石
   ~: 0x77F3
 
 # ⽰
 0x2F70:
+  # 示
   ~: 0x793A zh_cn
+  # 示
   zh_tw: 0x793A zh_tw
 
 # ⽱
 0x2F71:
+  # 禸
   ~: 0x79B8 zh_cn
+  # 禸
   zh_hk,zh_tw: 0x79B8 zh_hk
+  # 禸
   zh_tr,ja,ko: 0x79B8 zh_tr
 
 # ⽲
 0x2F72:
+  # 禾
   ~: 0x79BE
 
 # ⽳
 0x2F73:
+  # 穴
   ~: 0x7A74 zh_cn
+  # 穴
   zh_tw: 0x7A74 zh_tw
+  # 穴
   zh_tr,ja,ko: 0x7A74 ja
 
 # ⽴
 0x2F74:
+  # 立
   ~: 0x7ACB zh_cn
+  # 立
   zh_tr,ja,ko: 0x7ACB zh_tr
 
 # ⽵
 0x2F75:
+  # 竹
   ~: 0x7AF9
 
 # ⽶
 0x2F76:
+  # 米
   ~: 0x7C73 zh_cn
+  # 米
   zh_tw: 0x7C73 zh_tw
 
 # ⽷
 0x2F77:
+  # 糸
   ~: 0x7CF8 zh_cn
+  # 糸
   zh_tr,ja,ko: 0x7CF8 zh_tr
 
 # ⽸
 0x2F78:
+  # 缶
   ~: 0x7F36
 
 # ⽹
 0x2F79:
+  # 网
   ~: 0x7F51
 
 # ⽺
 0x2F7A:
+  # 羊
   ~: 0x7F8A
 
 # ⽻
 0x2F7B:
+  # 羽
   ~: 0x7FBD zh_cn
 
 # ⽼
 0x2F7C:
+  # 老
   ~: 0x8001 zh_cn
+  # 老
   zh_tw: 0x8001 zh_tw
 
 # ⽽
 0x2F7D:
+  # 而
   ~: 0x800C
 
 # ⽾
 0x2F7E:
+  # 耒
   ~: 0x8012 ja
+  # 耒
   zh_cn: 0x8012 zh_cn
 
 # ⽿
 0x2F7F:
+  # 耳
   ~: 0x8033 zh_cn
+  # 耳
   zh_hk,zh_tw: 0x8033 zh_hk
 
 # ⾀
 0x2F80:
+  # 聿
   ~: 0x807F
 
 # ⾁
 0x2F81:
+  # 肉
   ~: 0x8089
 
 # ⾂
 0x2F82:
+  # 臣
   ~: 0x81E3
 
 # ⾃
 0x2F83:
+  # 自
   ~: 0x81EA
 
 # ⾄
 0x2F84:
+  # 至
   ~: 0x81F3 zh_cn
+  # 至
   zh_tr,ja,ko: 0x81F3 zh_tr
 
 # ⾅
 0x2F85:
+  # 臼
   ~: 0x81FC
 
 # ⾆
 0x2F86:
+  # 舌
   ~: 0x820C zh_cn
+  # 舌
   zh_tw: 0x820C zh_tw
 
 # ⾇
 0x2F87:
+  # 舛
   ~: 0x821B zh_cn
+  # 舛
   zh_hk,zh_tw: 0x821B zh_hk
+  # 舛
   zh_tr,ja,ko: 0x821B ja
 
 # ⾈
 0x2F88:
+  # 舟
   ~: 0x821F zh_cn
+  # 舟
   zh_tr,ja,ko: 0x821F zh_tr
 
 # ⾉
 0x2F89:
+  # 艮
   ~: 0x826E zh_cn
+  # 艮
   zh_tr,ja,ko: 0x826E zh_tr
 
 # ⾊
 0x2F8A:
+  # 色
   ~: 0x8272
 
 # ⾋
 0x2F8B:
+  # 艸
   ~: 0x8278
 
 # ⾌
 0x2F8C:
+  # 虍
   ~: 0x864D zh_cn
+  # 虍
   zh_hk,zh_tw: 0x864D zh_hk
 
 # ⾍
 0x2F8D:
+  # 虫
   ~: 0x866B
 
 # ⾎
 0x2F8E:
+  # 血
   ~: 0x8840
 
 # ⾏
 0x2F8F:
+  # 行
   ~: 0x884C
 
 # ⾐
 0x2F90:
+  # 衣
   ~: 0x8863 zh_cn
+  # 衣
   zh_tr,ja,ko: 0x8863 zh_tr
 
 # ⾑
 0x2F91:
+  # 襾
   ~: 0x897E zh_cn
+  # 襾
   zh_tr,ja,ko: 0x897E zh_tr
 
 # ⾒
 0x2F92:
+  # 見
   ~: 0x898B
 
 # ⾓
 0x2F93:
+  # 角
   ~: 0x89D2 ja
 
 # ⾔
 0x2F94:
+  # 言
   ~: 0x8A00 zh_cn
+  # 言
   zh_tr,ja,ko: 0x8A00 zh_tr
 
 # ⾕
 0x2F95:
+  # 谷
   ~: 0x8C37
 
 # ⾖
 0x2F96:
+  # 豆
   ~: 0x8C46
 
 # ⾗
 0x2F97:
+  # 豕
   ~: 0x8C55 zh_cn
+  # 豕
   zh_tr,ja,ko: 0x8C55 zh_tr
 
 # ⾘
 0x2F98:
+  # 豸
   ~: 0x8C78
 
 # ⾙
 0x2F99:
+  # 貝
   ~: 0x8C9D
 
 # ⾚
 0x2F9A:
+  # 赤
   ~: 0x8D64 zh_cn
+  # 赤
   zh_hk: 0x8D64 zh_hk
 
 # ⾛
 0x2F9B:
+  # 走
   ~: 0x8D70
 
 # ⾜
 0x2F9C:
+  # 足
   ~: 0x8DB3
 
 # ⾝
 0x2F9D:
+  # 身
   ~: 0x8EAB
 
 # ⾞
 0x2F9E:
+  # 車
   ~: 0x8ECA
 
 # ⾟
 0x2F9F:
+  # 辛
   ~: 0x8F9B zh_cn
+  # 辛
   zh_tr,ja,ko: 0x8F9B zh_tr
 
 # ⾠
 0x2FA0:
+  # 辰
   ~: 0x8FB0 zh_cn
+  # 辰
   zh_hk,zh_tw: 0x8FB0 zh_hk
+  # 辰
   zh_tr,ja,ko: 0x8FB0 zh_tr
 
 # ⾡
 0x2FA1:
+  # 辵
   ~: 0x8FB5
 
 # ⾢
 0x2FA2:
+  # 邑
   ~: 0x9091
 
 # ⾣
 0x2FA3:
+  # 酉
   ~: 0x9149 zh_cn
+  # 酉
   zh_hk,zh_tw: 0x9149 zh_hk
+  # 酉
   zh_tr,ja,ko: 0x9149 zh_tr
 
 # ⾤
 0x2FA4:
+  # 釆
   ~: 0x91C6
 
 # ⾥
 0x2FA5:
+  # 里
   ~: 0x91CC
 
 # ⾦
 0x2FA6:
+  # 金
   ~: 0x91D1
 
 # ⾧
 0x2FA7:
+  # 長
   ~: 0x9577 zh_cn
+  # 長
   zh_tr,ja,ko: 0x9577 zh_tr
 
 # ⾨
 0x2FA8:
+  # 門
   ~: 0x9580
 
 # ⾩
 0x2FA9:
+  # 阜
   ~: 0x961C
 
 # ⾪
 0x2FAA:
+  # 隶
   ~: 0x96B6 zh_cn
+  # 隶
   zh_hk,zh_tw: 0x96B6 zh_hk
+  # 隶
   zh_tr,ja,ko: 0x96B6 zh_tr
 
 # ⾫
 0x2FAB:
+  # 隹
   ~: 0x96B9 zh_cn
+  # 隹
   zh_tr,ja,ko: 0x96B9 zh_tr
 
 # ⾬
 0x2FAC:
+  # 雨
   ~: 0x96E8 zh_cn
+  # 雨
   zh_hk,zh_tw: 0x96E8 zh_hk
 
 # ⾭
 0x2FAD:
+  # 靑
   ~: 0x9751
 
 # ⾮
 0x2FAE:
+  # 非
   ~: 0x975E zh_hk
+  # 非
   zh_cn: 0x975E zh_cn
+  # 非
   ja: 0x975E ja
 
 # ⾯
 0x2FAF:
+  # 面
   ~: 0x9762
 
 # ⾰
 0x2FB0:
+  # 革
   ~: 0x9769
 
 # ⾱
 0x2FB1:
+  # 韋
   ~: 0x97CB zh_cn
+  # 韋
   zh_tr,ja,ko: 0x97CB zh_tr
 
 # ⾲
 0x2FB2:
+  # 韭
   ~: 0x97ED
 
 # ⾳
 0x2FB3:
+  # 音
   ~: 0x97F3 zh_cn
+  # 音
   zh_tr,ja,ko: 0x97F3 ja
 
 # ⾴
 0x2FB4:
+  # 頁
   ~: 0x9801
 
 # ⾵
 0x2FB5:
+  # 風
   ~: 0x98A8 zh_cn
+  # 風
   zh_hk,zh_tw: 0x98A8 zh_hk
 
 # ⾶
 0x2FB6:
+  # 飛
   ~: 0x98DB
 
 # ⾷
 0x2FB7:
+  # 食
   ~: 0x98DF zh_cn
+  # 食
   zh_hk,zh_tw: 0x98DF zh_hk
+  # 食
   zh_tr,ja,ko: 0x98DF ja
 
 # ⾸
 0x2FB8:
+  # 首
   ~: 0x9996
 
 # ⾹
 0x2FB9:
+  # 香
   ~: 0x9999
 
 # ⾺
 0x2FBA:
+  # 馬
   ~: 0x99AC
 
 # ⾻
 0x2FBB:
+  # 骨
   ~: 0x9AA8 ja
+  # 骨
   zh_tw: 0x9AA8 zh_tw
 
 # ⾼
 0x2FBC:
+  # 高
   ~: 0x9AD8 zh_cn
+  # 高
   zh_tr,ja,ko: 0x9AD8 zh_tr
 
 # ⾽
 0x2FBD:
+  # 髟
   ~: 0x9ADF zh_cn
+  # 髟
   zh_tr,ja,ko: 0x9ADF zh_tr
 
 # ⾾
 0x2FBE:
+  # 鬥
   ~: 0x9B25
 
 # ⾿
 0x2FBF:
+  # 鬯
   ~: 0x9B2F zh_cn
+  # 鬯
   zh_hk: 0x9B2F zh_hk
+  # 鬯
   zh_tw: 0x9B2F zh_tw
 
 # ⿀
 0x2FC0:
+  # 鬲
   ~: 0x9B32 zh_cn
+  # 鬲
   zh_tr,ja,ko: 0x9B32 zh_tr
 
 # ⿁
 0x2FC1:
+  # 鬼
   ~: 0x9B3C zh_cn
+  # 鬼
   zh_hk,zh_tw: 0x9B3C zh_hk
+  # 鬼
   zh_tr,ja,ko: 0x9B3C zh_tr
 
 # ⿂
 0x2FC2:
+  # 魚
   ~: 0x9B5A
 
 # ⿃
 0x2FC3:
+  # 鳥
   ~: 0x9CE5
 
 # ⿄
 0x2FC4:
+  # 鹵
   ~: 0x9E75
 
 # ⿅
 0x2FC5:
+  # 鹿
   ~: 0x9E7F zh_cn
+  # 鹿
   zh_hk,zh_tw: 0x9E7F zh_hk
+  # 鹿
   zh_tr,ja,ko: 0x9E7F zh_tr
 
 # ⿆
 0x2FC6:
+  # 麥
   ~: 0x9EA5 ja
+  # 麥
   zh_hk: 0x9EA5 zh_hk
+  # 麥
   zh_tw: 0x9EA5 zh_tw
 
 # ⿇
 0x2FC7:
+  # 麻
   ~: 0x9EBB zh_cn
+  # 麻
   zh_tw: 0x9EBB zh_tw
+  # 麻
   zh_tr,ja,ko: 0x9EBB ja
 
 # ⿈
 0x2FC8:
+  # 黃
   ~: 0x9EC3
 
 # ⿉
 0x2FC9:
+  # 黍
   ~: 0x9ECD ja
+  # 黍
   zh_cn: 0x9ECD zh_cn
 
 # ⿊
 0x2FCA:
+  # 黑
   ~: 0x9ED1
 
 # ⿋
 0x2FCB:
+  # 黹
   ~: 0x9EF9 zh_cn
+  # 黹
   zh_tw: 0x9EF9 zh_tw
+  # 黹
   zh_tr,ja,ko: 0x9EF9 zh_tr
 
 # ⿌
 0x2FCC:
+  # 黽
   ~: 0x9EFD zh_cn
+  # 黽
   zh_hk,zh_tw: 0x9EFD zh_hk
 
 # ⿍
 0x2FCD:
+  # 鼎
   ~: 0x9F0E zh_cn
+  # 鼎
   zh_tr,ja,ko: 0x9F0E zh_tr
 
 # ⿎
 0x2FCE:
+  # 鼓
   ~: 0x9F13
 
 # ⿏
 0x2FCF:
+  # 鼠
   ~: 0x9F20 zh_cn
+  # 鼠
   zh_hk,zh_tw: 0x9F20 zh_hk
+  # 鼠
   zh_tr,ja,ko: 0x9F20 zh_tr
 
 # ⿐
 0x2FD0:
+  # 鼻
   ~: 0x9F3B zh_cn
+  # 鼻
   zh_tr,ja,ko: 0x9F3B ja
 
 # ⿑
 0x2FD1:
+  # 齊
   ~: 0x9F4A zh_cn
+  # 齊
   zh_hk: 0x9F4A zh_hk
+  # 齊
   zh_tr,ja,ko: 0x9F4A zh_tr
 
 # ⿒
 0x2FD2:
+  # 齒
   ~: 0x9F52
 
 # ⿓
 0x2FD3:
+  # 龍
   ~: 0x9F8D zh_cn
+  # 龍
   zh_tw: 0x9F8D zh_tw
 
 # ⿔
 0x2FD4:
+  # 龜
   ~: 0x9F9C ja
+  # 龜
   zh_hk: 0x9F9C zh_hk
+  # 龜
   zh_tw: 0x9F9C zh_tw
 
 # ⿕
 0x2FD5:
+  # 龠
   ~: 0x9FA0
