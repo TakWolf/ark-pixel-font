@@ -10,15 +10,6 @@ from tools.configs import path_define
 from tools.configs.font import FontConfig
 
 
-def check_font_config(font_config: FontConfig):
-    for width_mode, layout_param in font_config.layout_params.items():
-        if width_mode == 'monospaced':
-            assert layout_param.line_height == font_config.font_size, f"[{font_config.font_size}px] font config illegal 'monospaced.line_height': {layout_param.line_height}"
-        else:
-            assert width_mode == 'proportional', f"[{font_config.font_size}px] font config illegal 'width_mode': {width_mode}"
-            assert (layout_param.line_height - font_config.font_size) % 2 == 0, f"[{font_config.font_size}px] font config illegal 'proportional.line_height': {layout_param.line_height}"
-
-
 def check_glyph_files(font_config: FontConfig, mappings: list[dict[int, SourceFlavorGroup]]):
     for width_mode_dir_name in itertools.chain(['common'], configs.width_modes):
         context = glyph_file_util.load_context(path_define.glyphs_dir.joinpath(str(font_config.font_size), width_mode_dir_name))
