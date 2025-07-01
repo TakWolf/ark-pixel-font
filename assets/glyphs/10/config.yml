@@ -1,11 +1,21 @@
+
+font-size: 10
+canvas-size: 16
+
 monospaced:
+  baseline: 9
   ascent: 9
   descent: -1
   x-height: 5
   cap-height: 7
+  underline-position: -1
+  strikeout-position: 4
 
 proportional:
-  ascent: 12
-  descent: -4
+  baseline: 9
+  ascent: 11
+  descent: -3
   x-height: 5
   cap-height: 7
+  underline-position: -2
+  strikeout-position: 4

@@ -77,16 +77,20 @@ class DesignContext:
         return glyph_sequence
 
     def _create_builder(self, width_mode: WidthMode, language_flavor: LanguageFlavor, is_collection: bool) -> FontBuilder:
-        layout_param = configs.font_configs[self.font_size].layout_params[width_mode]
+        layout_metric = configs.font_configs[self.font_size].layout_metrics[width_mode]
 
         builder = FontBuilder()
         builder.font_metric.font_size = self.font_size
-        builder.font_metric.horizontal_layout.ascent = layout_param.ascent
-        builder.font_metric.horizontal_layout.descent = layout_param.descent
-        builder.font_metric.vertical_layout.ascent = math.ceil(layout_param.line_height / 2)
-        builder.font_metric.vertical_layout.descent = -math.floor(layout_param.line_height / 2)
-        builder.font_metric.x_height = layout_param.x_height
-        builder.font_metric.cap_height = layout_param.cap_height
+        builder.font_metric.horizontal_layout.ascent = layout_metric.ascent
+        builder.font_metric.horizontal_layout.descent = layout_metric.descent
+        builder.font_metric.vertical_layout.ascent = math.ceil(layout_metric.line_height / 2)
+        builder.font_metric.vertical_layout.descent = -math.floor(layout_metric.line_height / 2)
+        builder.font_metric.x_height = layout_metric.x_height
+        builder.font_metric.cap_height = layout_metric.cap_height
+        builder.font_metric.underline_position = layout_metric.underline_position
+        builder.font_metric.underline_thickness = 1
+        builder.font_metric.strikeout_position = layout_metric.strikeout_position
+        builder.font_metric.strikeout_thickness = 1
 
         builder.meta_info.version = configs.version
         builder.meta_info.created_time = datetime.fromisoformat(f'{configs.version.replace('.', '-')}T00:00:00Z')
@@ -111,7 +115,7 @@ class DesignContext:
         glyph_sequence = self._get_glyph_sequence(width_mode, None if is_collection else language_flavor)
         for glyph_file in glyph_sequence:
             horizontal_offset_x = 0
-            horizontal_offset_y = (layout_param.ascent + layout_param.descent - glyph_file.height) // 2
+            horizontal_offset_y = layout_metric.baseline - self.font_size - (glyph_file.height - self.font_size) // 2
             vertical_offset_x = -math.ceil(glyph_file.width / 2)
             vertical_offset_y = (self.font_size - glyph_file.height) // 2 - 1
             builder.glyphs.append(Glyph(

@@ -11,7 +11,7 @@ from tools.configs.options import FontSize
 
 
 def check_glyph_files(font_size: FontSize, mappings: list[dict[int, SourceFlavorGroup]]):
-    line_height = configs.font_configs[font_size].line_height
+    canvas_size = configs.font_configs[font_size].canvas_size
 
     for width_mode_dir_name in itertools.chain(['common'], options.width_modes):
         context = glyph_file_util.load_context(path_define.glyphs_dir.joinpath(str(font_size), width_mode_dir_name))
@@ -53,4 +53,4 @@ def check_glyph_files(font_size: FontSize, mappings: list[dict[int, SourceFlavor
                             assert all(glyph_file.bitmap[i][-1] == 0 for i in range(0, len(glyph_file.bitmap))), f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
 
                 if width_mode_dir_name == 'proportional':
-                    assert glyph_file.height == line_height, f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
+                    assert glyph_file.height == canvas_size, f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
