@@ -160,3 +160,14 @@ class DesignContext:
                 file_path = path_define.outputs_dir.joinpath(f'ark-pixel-{self.font_size}px-{width_mode}.{font_format}')
                 getattr(builder, f'save_{font_format}')(file_path)
                 logger.info("Make font collection: '{}'", file_path)
+
+
+def load_mappings() -> list[dict[int, SourceFlavorGroup]]:
+    mappings = [glyph_mapping_util.load_mapping(file_path) for file_path in configs.mapping_file_paths]
+    return mappings
+
+
+def load_design_contexts(font_sizes: list[FontSize]) -> dict[FontSize, DesignContext]:
+    mappings = load_mappings()
+    design_contexts = {font_size: DesignContext.load(font_size, mappings) for font_size in font_sizes}
+    return design_contexts
