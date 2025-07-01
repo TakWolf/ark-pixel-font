@@ -4,12 +4,12 @@ from pathlib import Path
 from pixel_font_knife import glyph_file_util, glyph_mapping_util
 
 from tools.configs import path_define, options
-from tools.configs.font import FontConfig
+from tools.configs.options import FontSize
 
 
-def format_glyphs(font_config: FontConfig):
+def format_glyphs(font_size: FontSize):
     for width_mode_dir_name in itertools.chain(['common'], options.width_modes):
-        width_mode_dir = path_define.glyphs_dir.joinpath(str(font_config.font_size), width_mode_dir_name)
+        width_mode_dir = path_define.glyphs_dir.joinpath(str(font_size), width_mode_dir_name)
         context = glyph_file_util.load_context(width_mode_dir)
         glyph_file_util.normalize_context(context, width_mode_dir, options.language_flavors)
 

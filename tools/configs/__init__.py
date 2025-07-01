@@ -1,6 +1,9 @@
-from tools.configs import path_define
+from tools.configs import path_define, options
+from tools.configs.font import FontConfig
 
 version = '2025.03.14'
+
+font_configs = {font_size: FontConfig.load(font_size) for font_size in options.font_sizes}
 
 mapping_file_paths = [
     path_define.mappings_dir.joinpath('2700-27BF Dingbats.yml'),

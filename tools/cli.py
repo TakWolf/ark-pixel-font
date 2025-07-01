@@ -7,7 +7,6 @@ from pixel_font_knife import glyph_mapping_util
 
 from tools import configs
 from tools.configs import path_define, options
-from tools.configs.font import FontConfig
 from tools.configs.options import FontSize, WidthMode, FontFormat, Attachment
 from tools.services import publish_service, info_service, template_service, image_service
 from tools.services.font_service import DesignContext
@@ -57,12 +56,9 @@ def main(
         logger.info("Delete dir: '{}'", path_define.build_dir)
 
     mappings = [glyph_mapping_util.load_mapping(file_path) for file_path in configs.mapping_file_paths]
-    font_configs = {}
     design_contexts = {}
     for font_size in font_sizes:
-        font_config = FontConfig.load(font_size)
-        font_configs[font_size] = font_config
-        design_context = DesignContext.load(font_config, mappings)
+        design_context = DesignContext.load(font_size, mappings)
         design_contexts[font_size] = design_context
         for width_mode in width_modes:
             design_context.make_fonts(width_mode, font_formats)
@@ -91,20 +87,19 @@ def main(
                 template_service.make_alphabet_html(design_context, width_mode)
             template_service.make_demo_html(design_context)
         if all_font_sizes:
-            template_service.make_index_html(font_configs)
-            template_service.make_playground_html(font_configs)
+            template_service.make_index_html()
+            template_service.make_playground_html()
 
     if 'image' in attachments:
         for font_size in font_sizes:
-            font_config = font_configs[font_size]
-            image_service.make_preview_image(font_config)
+            image_service.make_preview_image(font_size)
         if all_font_sizes:
             image_service.make_readme_banner(design_contexts)
             image_service.make_github_banner(design_contexts)
             image_service.make_itch_io_banner(design_contexts)
             image_service.make_itch_io_background(design_contexts)
-            image_service.make_itch_io_cover(font_configs)
-            image_service.make_afdian_cover(font_configs)
+            image_service.make_itch_io_cover()
+            image_service.make_afdian_cover()
 
 
 if __name__ == '__main__':

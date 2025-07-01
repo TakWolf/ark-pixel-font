@@ -13,16 +13,15 @@ from pixel_font_knife.glyph_mapping_util import SourceFlavorGroup
 
 from tools import configs
 from tools.configs import path_define, options
-from tools.configs.font import FontConfig
 from tools.configs.options import FontSize, WidthMode, LanguageFlavor, FontFormat
 
 
 class DesignContext:
     @staticmethod
-    def load(font_config: FontConfig, mappings: list[dict[int, SourceFlavorGroup]]) -> DesignContext:
+    def load(font_size: FontSize, mappings: list[dict[int, SourceFlavorGroup]]) -> DesignContext:
         contexts = {}
         for width_mode_dir_name in itertools.chain(['common'], options.width_modes):
-            context = glyph_file_util.load_context(path_define.glyphs_dir.joinpath(str(font_config.font_size), width_mode_dir_name))
+            context = glyph_file_util.load_context(path_define.glyphs_dir.joinpath(str(font_size), width_mode_dir_name))
             for mapping in mappings:
                 glyph_mapping_util.apply_mapping(context, mapping)
             contexts[width_mode_dir_name] = context
@@ -32,9 +31,9 @@ class DesignContext:
             glyph_files[width_mode] = dict(contexts['common'])
             glyph_files[width_mode].update(contexts[width_mode])
 
-        return DesignContext(font_config, glyph_files)
+        return DesignContext(font_size, glyph_files)
 
-    font_config: FontConfig
+    font_size: FontSize
     _glyph_files: dict[WidthMode, dict[int, GlyphFlavorGroup]]
     _alphabet_cache: dict[str, set[str]]
     _character_mapping_cache: dict[str, dict[int, str]]
@@ -42,18 +41,14 @@ class DesignContext:
 
     def __init__(
             self,
-            font_config: FontConfig,
+            font_size: FontSize,
             glyph_files: dict[WidthMode, dict[int, GlyphFlavorGroup]],
     ):
-        self.font_config = font_config
+        self.font_size = font_size
         self._glyph_files = glyph_files
         self._alphabet_cache = {}
         self._character_mapping_cache = {}
         self._glyph_sequence_cache = {}
-
-    @property
-    def font_size(self) -> FontSize:
-        return self.font_config.font_size
 
     def get_alphabet(self, width_mode: WidthMode) -> set[str]:
         if width_mode in self._alphabet_cache:
@@ -82,7 +77,7 @@ class DesignContext:
         return glyph_sequence
 
     def _create_builder(self, width_mode: WidthMode, language_flavor: LanguageFlavor, is_collection: bool) -> FontBuilder:
-        layout_param = self.font_config.layout_params[width_mode]
+        layout_param = configs.font_configs[self.font_size].layout_params[width_mode]
 
         builder = FontBuilder()
         builder.font_metric.font_size = self.font_size

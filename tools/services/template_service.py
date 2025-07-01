@@ -4,9 +4,9 @@ import bs4
 from jinja2 import Environment, FileSystemLoader
 from loguru import logger
 
+from tools import configs
 from tools.configs import path_define, options
-from tools.configs.font import FontConfig
-from tools.configs.options import FontSize, WidthMode
+from tools.configs.options import WidthMode
 from tools.services.font_service import DesignContext
 
 _environment = Environment(
@@ -31,6 +31,7 @@ _locale_to_language_flavor = {
 def _make_html(template_name: str, file_name: str, params: dict[str, object] | None = None):
     params = {} if params is None else dict(params)
     params['build_random_key'] = _build_random_key
+    params['font_configs'] = configs.font_configs
     params['width_modes'] = options.width_modes
     params['locale_to_language_flavor'] = _locale_to_language_flavor
 
@@ -44,7 +45,7 @@ def _make_html(template_name: str, file_name: str, params: dict[str, object] | N
 
 def make_alphabet_html(design_context: DesignContext, width_mode: WidthMode):
     _make_html('alphabet.html', f'alphabet-{design_context.font_size}px-{width_mode}.html', {
-        'font_config': design_context.font_config,
+        'font_config': configs.font_configs[design_context.font_size],
         'width_mode': width_mode,
         'alphabet': ''.join(sorted(c for c in design_context.get_alphabet(width_mode) if ord(c) >= 128)),
     })
@@ -116,18 +117,14 @@ def make_demo_html(design_context: DesignContext):
     content_html = str(soup)
 
     _make_html('demo.html', f'demo-{design_context.font_size}px.html', {
-        'font_config': design_context.font_config,
+        'font_config': configs.font_configs[design_context.font_size],
         'content_html': content_html,
     })
 
 
-def make_index_html(font_configs: dict[FontSize, FontConfig]):
-    _make_html('index.html', 'index.html', {
-        'font_configs': font_configs,
-    })
+def make_index_html():
+    _make_html('index.html', 'index.html')
 
 
-def make_playground_html(font_configs: dict[FontSize, FontConfig]):
-    _make_html('playground.html', 'playground.html', {
-        'font_configs': font_configs,
-    })
+def make_playground_html():
+    _make_html('playground.html', 'playground.html')
