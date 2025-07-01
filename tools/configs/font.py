@@ -2,7 +2,8 @@ from __future__ import annotations
 
 import yaml
 
-from tools.configs import path_define, FontSize, WidthMode
+from tools.configs import path_define
+from tools.configs.options import FontSize, WidthMode
 
 
 class LayoutParam:

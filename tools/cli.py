@@ -6,8 +6,9 @@ from loguru import logger
 from pixel_font_knife import glyph_mapping_util
 
 from tools import configs
-from tools.configs import path_define, FontSize, WidthMode, FontFormat, Attachment
+from tools.configs import path_define, options
 from tools.configs.font import FontConfig
+from tools.configs.options import FontSize, WidthMode, FontFormat, Attachment
 from tools.services import publish_service, info_service, template_service, image_service
 from tools.services.font_service import DesignContext
 
@@ -26,24 +27,24 @@ def main(
         attachments: set[Attachment | Literal['all']] | None = None,
 ):
     if font_sizes is None:
-        font_sizes = configs.font_sizes
+        font_sizes = options.font_sizes
     else:
-        font_sizes = sorted(font_sizes, key=lambda x: configs.font_sizes.index(x))
+        font_sizes = sorted(font_sizes, key=lambda x: options.font_sizes.index(x))
     if width_modes is None:
-        width_modes = configs.width_modes
+        width_modes = options.width_modes
     else:
-        width_modes = sorted(width_modes, key=lambda x: configs.width_modes.index(x))
+        width_modes = sorted(width_modes, key=lambda x: options.width_modes.index(x))
     if font_formats is None:
-        font_formats = configs.font_formats
+        font_formats = options.font_formats
     else:
-        font_formats = sorted(font_formats, key=lambda x: configs.font_formats.index(x))
+        font_formats = sorted(font_formats, key=lambda x: options.font_formats.index(x))
     if attachments is None:
         attachments = []
     elif 'all' in attachments:
-        attachments = configs.attachments
+        attachments = options.attachments
     else:
-        attachments = sorted(attachments, key=lambda x: configs.attachments.index(x))
-    all_font_sizes = font_sizes == configs.font_sizes
+        attachments = sorted(attachments, key=lambda x: options.attachments.index(x))
+    all_font_sizes = font_sizes == options.font_sizes
 
     logger.info('cleanup = {}', cleanup)
     logger.info('font_sizes = {}', font_sizes)

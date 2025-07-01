@@ -8,7 +8,8 @@ from loguru import logger
 from unidata_blocks import UnicodeBlock
 
 from tools import configs
-from tools.configs import path_define, WidthMode
+from tools.configs import path_define
+from tools.configs.options import WidthMode
 from tools.services.font_service import DesignContext
 
 

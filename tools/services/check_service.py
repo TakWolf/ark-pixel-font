@@ -5,13 +5,12 @@ import unidata_blocks
 from pixel_font_knife import glyph_file_util, glyph_mapping_util
 from pixel_font_knife.glyph_mapping_util import SourceFlavorGroup
 
-from tools import configs
-from tools.configs import path_define
+from tools.configs import path_define, options
 from tools.configs.font import FontConfig
 
 
 def check_glyph_files(font_config: FontConfig, mappings: list[dict[int, SourceFlavorGroup]]):
-    for width_mode_dir_name in itertools.chain(['common'], configs.width_modes):
+    for width_mode_dir_name in itertools.chain(['common'], options.width_modes):
         context = glyph_file_util.load_context(path_define.glyphs_dir.joinpath(str(font_config.font_size), width_mode_dir_name))
         for mapping in mappings:
             glyph_mapping_util.apply_mapping(context, mapping)
