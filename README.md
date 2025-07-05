@@ -150,9 +150,10 @@ brew install font-ark-pixel-16px-proportional
 ## 参考资料
 
 - [字体开发最佳实践](https://silnrsi.github.io/FDBP/)
-- [Microsoft - OpenType 字体文档](https://learn.microsoft.com/en-us/typography/opentype/)
-- [Glyphs 软件教程 - 纵向量度值](https://glyphsapp.com/zh/learn/vertical-metrics)
-- [FreeType 字形约定](https://freetype.org/freetype2/docs/glyphs/index.html)
+- [Microsoft - OpenType 规范](https://learn.microsoft.com/en-us/typography/opentype/spec/)
+- [Glyphs 学习 - 纵向量度值](https://glyphsapp.com/zh/learn/vertical-metrics)
+- [Glyphs 学习 - 完美像素适配](https://glyphsapp.com/zh/learn/pixel-perfection)
+- [FreeType - 字形约定](https://freetype.org/freetype2/docs/glyphs/index.html)
 
 ## 官方社区
 
