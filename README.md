@@ -1,11 +1,11 @@
-![banner](docs/readme-banner.png)
+![Banner](docs/readme-banner.png)
 
 # 方舟像素字体 / Ark Pixel Font
 
 [![License OFL](https://img.shields.io/badge/license-OFL--1.1-orange)](LICENSE-OFL)
 [![License MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE-MIT)
 [![Releases](https://img.shields.io/github/v/release/TakWolf/ark-pixel-font)](https://github.com/TakWolf/ark-pixel-font/releases)
-[![Itch.io](https://img.shields.io/badge/itch.io-ark--pixel--font-FF2449?logo=itch.io&logoColor=white)](https://takwolf.itch.io/ark-pixel-font)
+[![itch.io](https://img.shields.io/badge/itch.io-ark--pixel--font-FF2449?logo=itch.io&logoColor=white)](https://takwolf.itch.io/ark-pixel-font)
 [![Discord](https://img.shields.io/badge/discord-像素字体工房-4E5AF0?logo=discord&logoColor=white)](https://discord.gg/3GKtPKtjdU)
 [![QQ Group](https://img.shields.io/badge/QQ群-像素字体工房-brightgreen?logo=qq&logoColor=white)](https://qm.qq.com/q/X1mLrLLGYS)
 
@@ -21,19 +21,19 @@
 
 [示例文本](https://ark-pixel-font.takwolf.com/demo-10px.html) · [等宽模式-字母表](https://ark-pixel-font.takwolf.com/alphabet-10px-monospaced.html) · [比例模式-字母表](https://ark-pixel-font.takwolf.com/alphabet-10px-proportional.html)
 
-![preview-10px](docs/preview-10px.png)
+![Preview-10px](docs/preview-10px.png)
 
 ### 12 像素
 
 [示例文本](https://ark-pixel-font.takwolf.com/demo-12px.html) · [等宽模式-字母表](https://ark-pixel-font.takwolf.com/alphabet-12px-monospaced.html) · [比例模式-字母表](https://ark-pixel-font.takwolf.com/alphabet-12px-proportional.html)
 
-![preview-12px](docs/preview-12px.png)
+![Preview-12px](docs/preview-12px.png)
 
 ### 16 像素
 
 [示例文本](https://ark-pixel-font.takwolf.com/demo-16px.html) · [等宽模式-字母表](https://ark-pixel-font.takwolf.com/alphabet-16px-monospaced.html) · [比例模式-字母表](https://ark-pixel-font.takwolf.com/alphabet-16px-proportional.html)
 
-![preview-16px](docs/preview-16px.png)
+![Preview-16px](docs/preview-16px.png)
 
 ## 字符统计
 
