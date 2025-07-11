@@ -10,3 +10,13 @@ mapping_file_paths = [
     path_define.mappings_dir.joinpath('2E80-2EFF CJK Radicals Supplement.yml'),
     path_define.mappings_dir.joinpath('2F00-2FDF Kangxi Radicals.yml'),
 ]
+
+locale_to_language_flavor = {
+    'en': 'latin',
+    'zh-cn': 'zh_cn',
+    'zh-hk': 'zh_hk',
+    'zh-tw': 'zh_tw',
+    'zh-tr': 'zh_tr',
+    'ja': 'ja',
+    'ko': 'ko',
+}
