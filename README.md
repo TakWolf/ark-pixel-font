@@ -13,6 +13,18 @@
 
 这个项目不仅提供了全部的字形源文件，也提供了构建字体所需要的完整程序。
 
+> [!WARNING]
+> 
+> 该字体目前处于积极开发阶段，仍然缺少大量汉字。
+> 
+> 生产环境请考虑临时性过渡方案：[缝合像素字体](https://github.com/TakWolf/fusion-pixel-font)
+
+> [!IMPORTANT]
+> 
+> 这是一个开源项目，字体可以免费商用。
+> 
+> 如果这个项目对您有帮助，请考虑 [赞助](#赞助) 来支持开发工作。
+
 ## 预览
 
 可以通过 [Playground](https://ark-pixel-font.takwolf.com/playground.html) 实时预览字体效果。
