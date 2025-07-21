@@ -101,27 +101,6 @@
 | ja | 日语 | 字形采用日本参考规范 [《常用汉字表》](https://zh.wikipedia.org/wiki/%E5%B8%B8%E7%94%A8%E6%BC%A2%E5%AD%97) 中的写法。 |
 | ko | 朝鲜语 | |
 
-## 下载
-
-可通过以下渠道下载最新的版本：
-
-- [GitHub Releases](https://github.com/TakWolf/ark-pixel-font/releases)
-- [itch.io](https://takwolf.itch.io/ark-pixel-font)
-
-## 使用包管理器安装 
-
-### [Homebrew](https://brew.sh)
-
-```shell
-brew install font-ark-pixel-10px-monospaced
-brew install font-ark-pixel-12px-monospaced
-brew install font-ark-pixel-16px-monospaced
-
-brew install font-ark-pixel-10px-proportional
-brew install font-ark-pixel-12px-proportional
-brew install font-ark-pixel-16px-proportional
-```
-
 ## 字形依赖
 
 - [像素字形 - 谚文音节](https://github.com/TakWolf/pixel-glyphs-hangul-syllables)
