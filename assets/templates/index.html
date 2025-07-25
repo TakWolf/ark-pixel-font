@@ -122,7 +122,7 @@
     </style>
 {% endblock %}
 {% block body %}
-    <form class="options-group">
+    <div class="options-group">
         {% for font_config in font_configs.values() %}
         <label class="option">
             <input id="radio-font-size-{{ font_config.font_size }}" name="font_size" type="radio" onchange="onFontSizeChange('{{ font_config.font_size }}')">
@@ -130,7 +130,7 @@
             {{ font_config.font_size }}px
         </label>
         {% endfor %}
-    </form>
+    </div>
     <div id="page">
         <h1 class="title" lang="zh-cn">方舟像素字体 / Ark Pixel Font</h1>
         <br>

@@ -87,7 +87,7 @@
     </style>
 {% endblock %}
 {% block body %}
-    <form class="options-group">
+    <div class="options-group">
         {% for locale, language_flavor in locale_to_language_flavor.items() %}
         <label class="option">
             <input id="radio-locale-{{ locale }}" name="locale" type="radio" onchange="onLocaleChange('{{ locale }}')">
@@ -95,7 +95,7 @@
             {{ language_flavor.replace('_', '-') }}
         </label>
         {% endfor %}
-    </form>
+    </div>
     <div id="content">
         ABCDEFGHIJKLMNOPQRSTUVWXYZ
         <br>

@@ -134,7 +134,7 @@
     </style>
 {% endblock %}
 {% block body %}
-    <form class="options-group">
+    <div class="options-group">
         {% for width_mode in width_modes %}
         <label class="option">
             <input id="radio-width-mode-{{ width_mode }}" name="width_mode" type="radio" onchange="onWidthModeChange('{{ width_mode }}')">
@@ -142,7 +142,7 @@
             {{ width_mode }}
         </label>
         {% endfor %}
-    </form>
+    </div>
     <div class="btn-apply-theme theme-light" style="top: 36px; left: 0;" onclick="onThemeChange('light')"></div>
     <div class="btn-apply-theme theme-dark" style="top: 36px; right: 0;" onclick="onThemeChange('dark')"></div>
     <div id="page">

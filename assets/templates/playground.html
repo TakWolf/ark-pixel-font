@@ -84,7 +84,7 @@
     </style>
 {% endblock %}
 {% block body %}
-    <form class="toolbar">
+    <div class="toolbar">
         <div class="options-group">
             {% for font_config in font_configs.values() %}
             <label class="option">
@@ -112,7 +112,7 @@
             </label>
             {% endfor %}
         </div>
-    </form>
+    </div>
     <label class="content">
         <textarea id="input-box" placeholder="请随便写点什么… / Please input something…"></textarea>
     </label>
