@@ -1,7 +1,7 @@
 from tools.configs import path_define, options
 from tools.configs.font import FontConfig
 
-version = '2025.07.21'
+version = '2025.07.30'
 
 font_configs = {font_size: FontConfig.load(font_size) for font_size in options.font_sizes}
 
