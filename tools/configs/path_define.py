@@ -3,6 +3,7 @@ from pathlib import Path
 project_root_dir = Path(__file__).parent.joinpath('..', '..').resolve()
 
 assets_dir = project_root_dir.joinpath('assets')
+configs_dir = assets_dir.joinpath('configs')
 glyphs_dir = assets_dir.joinpath('glyphs')
 mappings_dir = assets_dir.joinpath('mappings')
 templates_dir = assets_dir.joinpath('templates')
