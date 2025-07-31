@@ -18,7 +18,7 @@ def check_glyph_files(font_size: FontSize, mappings: list[dict[int, SourceFlavor
         for mapping in mappings:
             glyph_mapping_util.apply_mapping(context, mapping)
 
-        for code_point, flavor_group in context.items():
+        for code_point, flavor_group in sorted(context.items()):
             assert None in flavor_group, f'[{font_size}px] missing default flavor: {width_mode_dir_name} {code_point:04X}'
 
             if code_point == -1:
@@ -34,6 +34,21 @@ def check_glyph_files(font_size: FontSize, mappings: list[dict[int, SourceFlavor
                 assert bitmap_string not in bitmap_strings, f"[{font_size}px] duplicate glyph bitmaps:\n'{glyph_file.file_path}'\n'{bitmap_strings[bitmap_string].file_path}'"
                 bitmap_strings[bitmap_string] = glyph_file
 
+                if width_mode_dir_name == 'common':
+                    if block is not None:
+                        if block.name not in (
+                                'Box Drawing',
+                                'Block Elements',
+                                'Halfwidth and Fullwidth Forms',
+                        ) and code_point not in (
+                                0x2013,
+                                0x2015,
+                                0x25EF,
+                                0x3030,
+                        ):
+                            assert all(color == 0 for color in glyph_file.bitmap[0]), f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
+                            assert all(glyph_file.bitmap[i][-1] == 0 for i in range(0, len(glyph_file.bitmap))), f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
+
                 if width_mode_dir_name == 'common' or width_mode_dir_name == 'monospaced':
                     assert glyph_file.height == font_size, f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
 
@@ -46,11 +61,6 @@ def check_glyph_files(font_size: FontSize, mappings: list[dict[int, SourceFlavor
                     # A/Ambiguous or N/Neutral
                     else:
                         assert glyph_file.width == font_size / 2 or glyph_file.width == font_size, f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
-
-                    if block is not None:
-                        if 'CJK Unified Ideographs' in block.name:
-                            assert all(color == 0 for color in glyph_file.bitmap[0]), f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
-                            assert all(glyph_file.bitmap[i][-1] == 0 for i in range(0, len(glyph_file.bitmap))), f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
 
                 if width_mode_dir_name == 'proportional':
                     assert glyph_file.height == canvas_size, f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
