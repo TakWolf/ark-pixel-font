@@ -1,10 +1,10 @@
-pixel-font-builder==0.0.37
+pixel-font-builder==0.0.38
 pixel-font-knife==0.0.16
-unidata-blocks==0.0.17
+unidata-blocks==0.0.18
 character-encoding-utils==0.0.9
 pyyaml==6.0.2
 pillow==11.3.0
 beautifulsoup4==4.13.4
 jinja2==3.1.6
 loguru==0.7.3
-cyclopts==3.22.3
+cyclopts==3.22.5
