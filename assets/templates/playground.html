@@ -20,7 +20,7 @@
             src: url("{{ font_family }}.otf.woff2?r={{ build_random_key }}");
         }
         .font-{{ font_config.font_size }}px-{{ width_mode }}:lang({{ locale }}) {
-            font-family: {{ font_family }}, serif;
+            font-family: {{ font_family }}, sans-serif;
         }
         {% endwith %}
         {% endfor %}
