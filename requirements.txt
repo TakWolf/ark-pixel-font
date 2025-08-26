@@ -4,7 +4,7 @@ unidata-blocks==0.0.18
 character-encoding-utils==0.0.9
 pyyaml==6.0.2
 pillow==11.3.0
-beautifulsoup4==4.13.4
+beautifulsoup4==4.13.5
 jinja2==3.1.6
 loguru==0.7.3
-cyclopts==3.22.5
+cyclopts==3.23.1
