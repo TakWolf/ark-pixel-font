@@ -14,9 +14,15 @@
             font-family: {{ font_family }};
             src: url("{{ font_family }}.otf.woff2?r={{ build_random_key }}");
         }
+        {% if locale == 'en' %}
+        .font-{{ width_mode }} {
+            font-family: {{ font_family }}, sans-serif;
+        }
+        {% else %}
         .font-{{ width_mode }} :lang({{ locale }}) {
             font-family: {{ font_family }}, sans-serif;
         }
+        {% endif %}
         {% endwith %}
         {% endfor %}
         {% endfor %}
@@ -52,6 +58,9 @@
         }
         a:visited {
             color: cornflowerblue;
+        }
+        pre {
+            font-family: inherit;
         }
         .options-group {
             height: 36px;
