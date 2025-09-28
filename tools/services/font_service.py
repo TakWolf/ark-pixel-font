@@ -14,6 +14,7 @@ from pixel_font_knife.glyph_mapping_util import SourceFlavorGroup
 from tools import configs
 from tools.configs import path_define, options
 from tools.configs.options import FontSize, WidthMode, LanguageFlavor, FontFormat
+from tools.services import kerning_service
 
 
 class DesignContext:
@@ -31,24 +32,29 @@ class DesignContext:
             glyph_files[width_mode] = dict(contexts['common'])
             glyph_files[width_mode].update(contexts[width_mode])
 
-        return DesignContext(font_size, glyph_files)
+        return DesignContext(font_size, contexts, glyph_files)
 
     font_size: FontSize
+    _contexts: dict[str, dict[int, GlyphFlavorGroup]]
     _glyph_files: dict[WidthMode, dict[int, GlyphFlavorGroup]]
     _alphabet_cache: dict[str, set[str]]
     _character_mapping_cache: dict[str, dict[int, str]]
     _glyph_sequence_cache: dict[str, list[GlyphFile]]
+    _proportional_kerning_pairs: dict[tuple[str, str], int] | None
 
     def __init__(
             self,
             font_size: FontSize,
+            contexts: dict[str, dict[int, GlyphFlavorGroup]],
             glyph_files: dict[WidthMode, dict[int, GlyphFlavorGroup]],
     ):
         self.font_size = font_size
+        self._contexts = contexts
         self._glyph_files = glyph_files
         self._alphabet_cache = {}
         self._character_mapping_cache = {}
         self._glyph_sequence_cache = {}
+        self._proportional_kerning_pairs = None
 
     def get_alphabet(self, width_mode: WidthMode) -> set[str]:
         if width_mode in self._alphabet_cache:
@@ -75,6 +81,11 @@ class DesignContext:
             glyph_sequence = glyph_file_util.get_glyph_sequence(self._glyph_files[width_mode], options.language_flavors if language_flavor is None else [language_flavor])
             self._glyph_sequence_cache[key] = glyph_sequence
         return glyph_sequence
+
+    def _get_proportional_kerning_pairs(self) -> dict[tuple[str, str], int]:
+        if self._proportional_kerning_pairs is None:
+            self._proportional_kerning_pairs = kerning_service.generate_kerning_pairs(self.font_size, self._contexts['proportional'])
+        return self._proportional_kerning_pairs
 
     def _create_builder(self, width_mode: WidthMode, language_flavor: LanguageFlavor, is_collection: bool) -> FontBuilder:
         layout_metric = configs.font_configs[self.font_size].layout_metrics[width_mode]
@@ -126,6 +137,9 @@ class DesignContext:
                 advance_height=self.font_size,
                 bitmap=glyph_file.bitmap.data,
             ))
+
+        if width_mode == 'proportional':
+            builder.kerning_pairs.update(self._get_proportional_kerning_pairs())
 
         return builder
 
