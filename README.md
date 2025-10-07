@@ -121,19 +121,19 @@
 
 ## 外部工具
 
-- [SYMBL - Unicode 查询工具](https://symbl.cc)
-- [字嗨 - 漢字部件檢索](https://zi-hi.com/sp/uni/CJKSeeker)
-- [字統网 - 字形檢字](https://zi.tools/?secondary=search)
+- [SYMBL](https://symbl.cc)
+- [字嗨 - 漢字檢索](https://zi-hi.com/sp/uni/CJKSeeker)
+- [字統网](https://zi.tools)
 - [汉语国学 - 汉语字典在线查字](https://www.hanyuguoxue.com)
 - [思源映射查看器](https://source-han-mapping-viewer.takwolf.com)
 
 ## 参考资料
 
-- [字体开发最佳实践](https://silnrsi.github.io/FDBP/)
-- [Microsoft - OpenType 规范](https://learn.microsoft.com/en-us/typography/opentype/spec/)
+- [Writing Systems Technical Resources](https://writingsystems.info)
+- [Microsoft - OpenType Specification](https://learn.microsoft.com/en-us/typography/opentype/spec/)
 - [Glyphs 学习 - 纵向量度值](https://glyphsapp.com/zh/learn/vertical-metrics)
 - [Glyphs 学习 - 完美像素适配](https://glyphsapp.com/zh/learn/pixel-perfection)
-- [FreeType - 字形约定](https://freetype.org/freetype2/docs/glyphs/index.html)
+- [FreeType Glyph Conventions](https://freetype.org/freetype2/docs/glyphs/index.html)
 
 ## 官方社区
 
