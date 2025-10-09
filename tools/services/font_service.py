@@ -35,9 +35,9 @@ class DesignContext:
     font_size: FontSize
     _contexts: dict[str, dict[int, GlyphFlavorGroup]]
     _glyph_files: dict[WidthMode, dict[int, GlyphFlavorGroup]]
-    _alphabet_cache: dict[str, set[str]]
-    _character_mapping_cache: dict[str, dict[int, str]]
     _glyph_sequence_cache: dict[str, list[GlyphFile]]
+    _character_mapping_cache: dict[str, dict[int, str]]
+    _alphabet_cache: dict[str, set[str]]
     _proportional_kerning_pairs: dict[tuple[str, str], int] | None
 
     def __init__(
@@ -49,18 +49,19 @@ class DesignContext:
         self.font_size = font_size
         self._contexts = contexts
         self._glyph_files = glyph_files
-        self._alphabet_cache = {}
-        self._character_mapping_cache = {}
         self._glyph_sequence_cache = {}
+        self._character_mapping_cache = {}
+        self._alphabet_cache = {}
         self._proportional_kerning_pairs = None
 
-    def get_alphabet(self, width_mode: WidthMode) -> set[str]:
-        if width_mode in self._alphabet_cache:
-            alphabet = self._alphabet_cache[width_mode]
+    def _get_glyph_sequence(self, width_mode: WidthMode, language_flavor: LanguageFlavor | None = None) -> list[GlyphFile]:
+        key = f'{width_mode}#{'' if language_flavor is None else language_flavor}'
+        if key in self._glyph_sequence_cache:
+            glyph_sequence = self._glyph_sequence_cache[key]
         else:
-            alphabet = {chr(code_point) for code_point in self._glyph_files[width_mode] if code_point >= 0}
-            self._alphabet_cache[width_mode] = alphabet
-        return alphabet
+            glyph_sequence = glyph_file_util.get_glyph_sequence(self._glyph_files[width_mode], options.language_flavors if language_flavor is None else [language_flavor])
+            self._glyph_sequence_cache[key] = glyph_sequence
+        return glyph_sequence
 
     def _get_character_mapping(self, width_mode: WidthMode, language_flavor: LanguageFlavor) -> dict[int, str]:
         key = f'{width_mode}#{language_flavor}'
@@ -71,14 +72,13 @@ class DesignContext:
             self._character_mapping_cache[key] = character_mapping
         return character_mapping
 
-    def _get_glyph_sequence(self, width_mode: WidthMode, language_flavor: LanguageFlavor | None = None) -> list[GlyphFile]:
-        key = f'{width_mode}#{'' if language_flavor is None else language_flavor}'
-        if key in self._glyph_sequence_cache:
-            glyph_sequence = self._glyph_sequence_cache[key]
+    def get_alphabet(self, width_mode: WidthMode) -> set[str]:
+        if width_mode in self._alphabet_cache:
+            alphabet = self._alphabet_cache[width_mode]
         else:
-            glyph_sequence = glyph_file_util.get_glyph_sequence(self._glyph_files[width_mode], options.language_flavors if language_flavor is None else [language_flavor])
-            self._glyph_sequence_cache[key] = glyph_sequence
-        return glyph_sequence
+            alphabet = {chr(code_point) for code_point in self._glyph_files[width_mode] if code_point >= 0}
+            self._alphabet_cache[width_mode] = alphabet
+        return alphabet
 
     def _get_proportional_kerning_pairs(self) -> dict[tuple[str, str], int]:
         if self._proportional_kerning_pairs is None:
@@ -118,9 +118,6 @@ class DesignContext:
         builder.meta_info.designer_url = 'https://takwolf.com'
         builder.meta_info.license_url = 'https://github.com/TakWolf/ark-pixel-font/blob/master/LICENSE-OFL'
 
-        character_mapping = self._get_character_mapping(width_mode, language_flavor)
-        builder.character_mapping.update(character_mapping)
-
         glyph_sequence = self._get_glyph_sequence(width_mode, None if is_collection else language_flavor)
         for glyph_file in glyph_sequence:
             horizontal_offset_x = 0
@@ -135,6 +132,9 @@ class DesignContext:
                 advance_height=self.font_size,
                 bitmap=glyph_file.bitmap.data,
             ))
+
+        character_mapping = self._get_character_mapping(width_mode, language_flavor)
+        builder.character_mapping.update(character_mapping)
 
         if width_mode == 'proportional':
             builder.kerning_pairs.update(self._get_proportional_kerning_pairs())
