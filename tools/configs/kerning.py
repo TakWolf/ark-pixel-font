@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import yaml
 
 from tools.configs import path_define
