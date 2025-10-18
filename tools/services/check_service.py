@@ -35,6 +35,8 @@ def check_glyph_files(font_size: FontSize, mappings: list[dict[int, SourceFlavor
                 bitmap_strings[bitmap_string] = glyph_file
 
                 if width_mode_dir_name == 'common':
+                    assert glyph_file.height == font_size or glyph_file.height == font_size * 2, f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
+
                     if block is not None:
                         if block.name not in (
                                 'Box Drawing',
@@ -45,13 +47,18 @@ def check_glyph_files(font_size: FontSize, mappings: list[dict[int, SourceFlavor
                                 0x2015,
                                 0x25EF,
                                 0x3030,
+                                0x3035,
                         ):
                             assert all(color == 0 for color in glyph_file.bitmap[0]), f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
                             assert all(glyph_file.bitmap[i][-1] == 0 for i in range(0, len(glyph_file.bitmap))), f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
 
-                if width_mode_dir_name == 'common' or width_mode_dir_name == 'monospaced':
+                if width_mode_dir_name == 'monospaced':
                     assert glyph_file.height == font_size, f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
 
+                if width_mode_dir_name == 'proportional':
+                    assert glyph_file.height == canvas_size, f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
+
+                if width_mode_dir_name == 'common' or width_mode_dir_name == 'monospaced':
                     # H/Halfwidth or Na/Narrow
                     if east_asian_width == 'H' or east_asian_width == 'Na':
                         assert glyph_file.width == font_size / 2, f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
@@ -61,6 +68,3 @@ def check_glyph_files(font_size: FontSize, mappings: list[dict[int, SourceFlavor
                     # A/Ambiguous or N/Neutral
                     else:
                         assert glyph_file.width == font_size / 2 or glyph_file.width == font_size, f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
-
-                if width_mode_dir_name == 'proportional':
-                    assert glyph_file.height == canvas_size, f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
