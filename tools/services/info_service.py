@@ -1,3 +1,4 @@
+import unicodedata
 from collections import defaultdict
 from collections.abc import Callable
 from typing import TextIO
@@ -16,10 +17,10 @@ from tools.services.font_service import DesignContext
 def _get_unicode_chr_count_infos(alphabet: set[str]) -> list[tuple[UnicodeBlock, int]]:
     count_infos = defaultdict(int)
     for c in alphabet:
-        code_point = ord(c)
-        block = unidata_blocks.get_block_by_code_point(code_point)
-        if not c.isprintable() and block.printable_count > 0:
+        category = unicodedata.category(c)
+        if category == 'Zs' and c != ' ':
             continue
+        block = unidata_blocks.get_block_by_chr(c)
         count_infos[block.code_start] += 1
     return [(unidata_blocks.get_block_by_code_point(code_start), count) for code_start, count in sorted(count_infos.items())]
 
