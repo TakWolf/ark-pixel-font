@@ -1,5 +1,4 @@
 import re
-import shutil
 import zipfile
 
 from loguru import logger
@@ -32,6 +31,5 @@ def update_docs():
     for path_from in path_define.outputs_dir.iterdir():
         if re.match(r'info-.*px-.*\.md|preview-.*px\.png', path_from.name) is None and path_from.name != 'readme-banner.png':
             continue
-        path_to = path_define.docs_dir.joinpath(path_from.name)
-        shutil.copyfile(path_from, path_to)
+        path_to = path_from.copy_into(path_define.docs_dir)
         logger.info("Copy file: '{}' -> '{}'", path_from, path_to)
