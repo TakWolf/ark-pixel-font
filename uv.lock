@@ -23,11 +23,11 @@ dependencies = [
 requires-dist = [
     { name = "beautifulsoup4", specifier = "==4.14.2" },
     { name = "character-encoding-utils", specifier = "==0.0.11" },
-    { name = "cyclopts", specifier = "==3.24.0" },
+    { name = "cyclopts", specifier = "==4.1.0" },
     { name = "jinja2", specifier = "==3.1.6" },
     { name = "loguru", specifier = "==0.7.3" },
     { name = "pillow", specifier = "==12.0.0" },
-    { name = "pixel-font-builder", specifier = "==0.0.41" },
+    { name = "pixel-font-builder", specifier = "==0.0.42" },
     { name = "pixel-font-knife", specifier = "==0.0.19" },
     { name = "pyyaml", specifier = "==6.0.3" },
     { name = "unidata-blocks", specifier = "==0.0.23" },
@@ -140,17 +140,17 @@ wheels = [
 
 [[package]]
 name = "cyclopts"
-version = "3.24.0"
+version = "4.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "attrs" },
-    { name = "docstring-parser", marker = "python_full_version < '4'" },
+    { name = "docstring-parser" },
     { name = "rich" },
     { name = "rich-rst" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/30/ca/7782da3b03242d5f0a16c20371dff99d4bd1fedafe26bc48ff82e42be8c9/cyclopts-3.24.0.tar.gz", hash = "sha256:de6964a041dfb3c57bf043b41e68c43548227a17de1bad246e3a0bfc5c4b7417", size = 76131, upload-time = "2025-09-08T15:40:57.75Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/89/98/ddc27d2f9b1784d872ba214e893b473aaf05f7cfed29482821591b1cf7ff/cyclopts-4.1.0.tar.gz", hash = "sha256:18d3e4647729c88fda3a3192d7fab905e6770769465476658f173f02c28ef1ec", size = 147072, upload-time = "2025-10-28T18:23:16.403Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f0/8b/2c95f0645c6f40211896375e6fa51f504b8ccb29c21f6ae661fe87ab044e/cyclopts-3.24.0-py3-none-any.whl", hash = "sha256:809d04cde9108617106091140c3964ee6fceb33cecdd537f7ffa360bde13ed71", size = 86154, upload-time = "2025-09-08T15:40:56.41Z" },
+    { url = "https://files.pythonhosted.org/packages/0c/63/8e5ab2a38281432f568f6b981ad4bf46093c3adbbedb979bc5b6e589e2d1/cyclopts-4.1.0-py3-none-any.whl", hash = "sha256:6468e7e7467af4b6378bf17d0aaf204b713ddc5df383d9ffa7cae6e285da1329", size = 182506, upload-time = "2025-10-28T18:23:15.007Z" },
 ]
 
 [[package]]
@@ -371,16 +371,16 @@ wheels = [
 
 [[package]]
 name = "pixel-font-builder"
-version = "0.0.41"
+version = "0.0.42"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "bdffont" },
     { name = "fonttools", extra = ["woff"] },
     { name = "pcffont" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/5e/4a/6d024d52f8adef9034aa8394ced82af017ae44d17eed8620a5a2dc261b54/pixel_font_builder-0.0.41.tar.gz", hash = "sha256:9e34f0eb8805d6667ebe45d727b0b2d64fca27fa553a5ef4ac4c4c5e68f36864", size = 12036, upload-time = "2025-10-14T03:09:20.45Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/63/0f/4ca7705e18a8851863679e4d781c26a42b18995d3e5d37d5e28934f58546/pixel_font_builder-0.0.42.tar.gz", hash = "sha256:a20d2d3826aa8f6de820955bf7e994269f885e448eaf7c9f1f00006b6b12081d", size = 12110, upload-time = "2025-10-23T04:47:54.832Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ed/ff/9223377e101e60f6261668815b2183252acd7f6f42c82691590ff8c61208/pixel_font_builder-0.0.41-py3-none-any.whl", hash = "sha256:0d1b77f7b8b6fb973207cfc21cb7a5724f3c9805cf1e99bc8dce8fa5a152800f", size = 18057, upload-time = "2025-10-14T03:09:18.824Z" },
+    { url = "https://files.pythonhosted.org/packages/84/9a/d99139a627aaf00c100f617a2f7ef69712bc2cca38392cbf707802473ed5/pixel_font_builder-0.0.42-py3-none-any.whl", hash = "sha256:0fa3748456241da7a5cbe73ecbd6eb5f6f9da12d6db278e9543e2dee1e45a9be", size = 18119, upload-time = "2025-10-23T04:47:53.894Z" },
 ]
 
 [[package]]
