@@ -38,7 +38,7 @@ class DesignContext:
     _glyph_sequence_cache: dict[str, list[GlyphFile]]
     _character_mapping_cache: dict[str, dict[int, str]]
     _alphabet_cache: dict[str, set[str]]
-    _proportional_kerning_pairs: dict[tuple[str, str], int] | None
+    _proportional_kerning_values: dict[tuple[str, str], int] | None
 
     def __init__(
             self,
@@ -52,7 +52,7 @@ class DesignContext:
         self._glyph_sequence_cache = {}
         self._character_mapping_cache = {}
         self._alphabet_cache = {}
-        self._proportional_kerning_pairs = None
+        self._proportional_kerning_values = None
 
     def _get_glyph_sequence(self, width_mode: WidthMode, language_flavor: LanguageFlavor | None = None) -> list[GlyphFile]:
         key = f'{width_mode}#{'' if language_flavor is None else language_flavor}'
@@ -80,10 +80,10 @@ class DesignContext:
             self._alphabet_cache[width_mode] = alphabet
         return alphabet
 
-    def _get_proportional_kerning_pairs(self) -> dict[tuple[str, str], int]:
-        if self._proportional_kerning_pairs is None:
-            self._proportional_kerning_pairs = kerning_service.generate_kerning_pairs(self.font_size, self._contexts['proportional'])
-        return self._proportional_kerning_pairs
+    def _get_proportional_kerning_values(self) -> dict[tuple[str, str], int]:
+        if self._proportional_kerning_values is None:
+            self._proportional_kerning_values = kerning_service.generate_kerning_values(self.font_size, self._contexts['proportional'])
+        return self._proportional_kerning_values
 
     def _create_builder(self, width_mode: WidthMode, language_flavor: LanguageFlavor, is_collection: bool) -> FontBuilder:
         layout_metric = configs.font_configs[self.font_size].layout_metrics[width_mode]
@@ -137,7 +137,7 @@ class DesignContext:
         builder.character_mapping.update(character_mapping)
 
         if width_mode == 'proportional':
-            builder.kerning_pairs.update(self._get_proportional_kerning_pairs())
+            builder.kerning_values.update(self._get_proportional_kerning_values())
 
         return builder
 
