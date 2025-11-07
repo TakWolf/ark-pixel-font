@@ -138,7 +138,7 @@
 ## 官方社区
 
 - [「像素字体工房」Discord 服务器](https://discord.gg/3GKtPKtjdU)
-- [「像素字体工房」QQ 群 (302383204)](https://qm.qq.com/q/jPk8sSitUI)
+- [「像素字体工房」QQ 群](https://qm.qq.com/q/jPk8sSitUI)
 
 ## 许可证
 
