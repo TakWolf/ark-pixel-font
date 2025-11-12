@@ -4,10 +4,10 @@ from tools.configs.kerning import KerningConfig
 from tools.configs.options import FontSize
 
 
-def generate_kerning_pairs(font_size: FontSize, context: dict[int, GlyphFlavorGroup]) -> dict[tuple[str, str], int]:
+def generate_kerning_values(font_size: FontSize, context: dict[int, GlyphFlavorGroup]) -> dict[tuple[str, str], int]:
     kerning_config = KerningConfig.load(font_size)
 
-    kerning_pairs = {}
+    kerning_values = {}
 
     for (left_group_name, right_group_name), offset in kerning_config.templates.items():
         if offset >= 0:
@@ -36,6 +36,6 @@ def generate_kerning_pairs(font_size: FontSize, context: dict[int, GlyphFlavorGr
                     actual_offset += 1
 
                 if actual_offset < 0:
-                    kerning_pairs[(left_file.glyph_name, right_file.glyph_name)] = actual_offset
+                    kerning_values[(left_file.glyph_name, right_file.glyph_name)] = actual_offset
 
-    return kerning_pairs
+    return kerning_values
