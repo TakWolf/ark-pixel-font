@@ -10,7 +10,8 @@ groups:
   latin_V: VṼṾⱯ
   latin_W: WŴẀẂẄẆẈ
   latin_Y: YÝŶŸȲẎỲỴỶỸ
-  latin_acemnosuxz: aàáâãäåæāăąǎǟǡǣǻǽȁȃȧḁẚạảấầẩẫậắằẳẵặcçćĉċčḉeèéêëēĕėęěǝȅȇȩḕḗḙḛḝẹẻẽếềểễệĸmḿṁṃnñńņňŉŋǌǹṅṇṉṋoòóôõöøōŏőœǒǫǭǿȍȏȫȭȯȱṍṏṑṓọỏốồổỗộsśŝşšșṡṣṥṧṩuùúûüũūŭůűųǔǖǘǚǜȕȗṳṵṷṹṻụủxẋẍzźżžẑẓẕ
+  latin_a: aàáâãäåæāăąǎǟǡǣǻǽȁȃȧḁẚạảấầẩẫậắằẳẵặ
+  latin_cemnosuxz: cçćĉċčḉeèéêëēĕėęěǝȅȇȩḕḗḙḛḝẹẻẽếềểễệĸmḿṁṃnñńņňŉŋǌǹṅṇṉṋoòóôõöøōŏőœǒǫǭǿȍȏȫȭȯȱṍṏṑṓọỏốồổỗộsśŝşšșṡṣṥṧṩuùúûüũūŭůűųǔǖǘǚǜȕȗṳṵṷṹṻụủxẋẍzźżžẑẓẕ
   latin_bhk: bƀƃḃḅḇhĥħȟḣḥḧḩḫẖꜧkķǩḱḳḵꝁ
   latin_d: dƌďđǆǳḋḍḏḑḓ
   latin_f: fƒḟ
@@ -42,7 +43,8 @@ templates:
   latin_A,latin_w: 0
   latin_F,latin_A: -1
   latin_F,latin_Æ: -1
-  latin_F,latin_acemnosuxz: -1
+  latin_F,latin_a: -1
+  latin_F,latin_cemnosuxz: -1
   latin_F,latin_d: -1
   latin_F,latin_f: -1
   latin_F,latin_g: -1
@@ -71,10 +73,12 @@ templates:
   latin_L,latin_y: -1
   latin_P,latin_A: -1
   latin_P,latin_Æ: -1
+  latin_P,latin_a: -1
   latin_P,period: -1
   latin_T,latin_A: -1
   latin_T,latin_Æ: -1
-  latin_T,latin_acemnosuxz: -1
+  latin_T,latin_a: -1
+  latin_T,latin_cemnosuxz: -1
   latin_T,latin_d: -1
   latin_T,latin_f: -1
   latin_T,latin_i: 0
@@ -91,7 +95,8 @@ templates:
   latin_T,period: -1
   latin_Ư,latin_A: -1
   latin_Ư,latin_Æ: -1
-  latin_Ư,latin_acemnosuxz: -1
+  latin_Ư,latin_a: -1
+  latin_Ư,latin_cemnosuxz: -1
   latin_Ư,latin_d: -1
   latin_Ư,latin_f: -1
   latin_Ư,latin_i: 0
@@ -108,7 +113,8 @@ templates:
   latin_Ư,period: -1
   latin_V,latin_A: -1
   latin_V,latin_Æ: -1
-  latin_V,latin_acemnosuxz: -1
+  latin_V,latin_a: -1
+  latin_V,latin_cemnosuxz: -1
   latin_V,latin_d: -1
   latin_V,latin_f: -1
   latin_V,latin_g: -1
@@ -126,7 +132,8 @@ templates:
   latin_V,period: -1
   latin_W,latin_A: -1
   latin_W,latin_Æ: -1
-  latin_W,latin_acemnosuxz: -1
+  latin_W,latin_a: -1
+  latin_W,latin_cemnosuxz: -1
   latin_W,latin_d: -1
   latin_W,latin_f: 0
   latin_W,latin_g: -1
@@ -144,7 +151,8 @@ templates:
   latin_W,period: -1
   latin_Y,latin_A: -1
   latin_Y,latin_Æ: -1
-  latin_Y,latin_acemnosuxz: -1
+  latin_Y,latin_a: -1
+  latin_Y,latin_cemnosuxz: -1
   latin_Y,latin_d: -1
   latin_Y,latin_f: -1
   latin_Y,latin_g: -1
@@ -160,10 +168,15 @@ templates:
   latin_Y,latin_w: -1
   latin_Y,latin_y: -1
   latin_Y,period: -1
+  latin_f,latin_a: -1
   latin_f,period: -1
   latin_l,latin_j: -1
+  latin_ơ,latin_a: -1
   latin_ơ,period: -1
+  latin_r,latin_a: -1
   latin_r,period: -1
+  latin_ư,latin_a: -1
+  latin_ư,latin_cemnosuxz: -1
   latin_ư,period: -1
   latin_v,period: -1
   latin_w,period: -1
