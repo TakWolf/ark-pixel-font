@@ -141,6 +141,10 @@ class DesignContext:
         builder.opentype_config.fields_override.head_y_max = layout_metric.ascent
         builder.opentype_config.fields_override.head_y_min = layout_metric.descent
 
+        if width_mode == 'monospaced':
+            builder.opentype_config.is_monospaced = True
+            builder.opentype_config.fields_override.os2_x_avg_char_width = self.font_size // 2
+
         return builder
 
     def _create_collection_builder(self, width_mode: WidthMode) -> FontCollectionBuilder:
