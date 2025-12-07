@@ -11,6 +11,31 @@
 
 开源的泛拉丁与泛中日韩像素字体，黑体风格。
 
+> [!WARNING]
+>
+> 该字体目前处于积极开发阶段，仍然缺少大量字符。
+>
+> 对于 10px、12px 请考虑临时性过渡方案：[缝合像素字体](https://github.com/TakWolf/fusion-pixel-font)
+>
+
+> [!WARNING]
+>
+> 16px 尺寸已废弃，相关构建和素材已经移除。
+>
+> 请参考 [此链接](https://github.com/pixel-font-studio/ark-pixel-font-16px-glyphs-archive) 了解详细情况。
+>
+> 最后一个包含 16px 尺寸的构建版本为 [2026.09.01](https://github.com/TakWolf/ark-pixel-font/releases/tag/2026.09.01)
+>
+> 对于 16px 的替代品，请考虑 [Unifont](https://unifoundry.com/unifont/index.html)
+
+> [!IMPORTANT]
+>
+> 我们正在进行有关像素字体的使用情况调查。
+>
+> 如果可以，请帮忙填写下面链接的问卷。非常感谢！
+>
+> https://wj.qq.com/s2/24009025/7f6a/
+
 ## 预览
 
 [点击此链接](https://ark-pixel-font.takwolf.com/playground.html) 实时预览字体效果。
