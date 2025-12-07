@@ -11,6 +11,22 @@
 
 开源的泛中日韩像素字体，黑体风格。
 
+> [!WARNING]
+> 
+> 该字体目前处于积极开发阶段，仍然缺少大量汉字。
+> 
+> 对于 8px、10px、12px 请考虑临时性过渡方案：[缝合像素字体](https://github.com/TakWolf/fusion-pixel-font)
+> 
+> 对于 16px 请考虑 [Unifont](https://unifoundry.com/unifont/index.html)
+
+> [!IMPORTANT]
+> 
+> 我们正在进行有关像素字体的使用情况调查。
+> 
+> 如果可以，请帮忙填写下面链接的问卷。非常感谢！
+> 
+> https://wj.qq.com/s2/24009025/7f6a/
+
 ## 预览
 
 ### 10 像素
