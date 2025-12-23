@@ -24,7 +24,7 @@ type LanguageFlavor = Literal[
 ]
 language_flavors = list[LanguageFlavor](get_args(LanguageFlavor.__value__))
 
-type FontSingleFormat = Literal[
+type FontFormat = Literal[
     'otf',
     'otf.woff',
     'otf.woff2',
@@ -34,16 +34,7 @@ type FontSingleFormat = Literal[
     'bdf',
     'pcf',
 ]
-font_single_formats = list[FontSingleFormat](get_args(FontSingleFormat.__value__))
-
-type FontCollectionFormat = Literal[
-    'otc',
-    'ttc',
-]
-font_collection_formats = list[FontCollectionFormat](get_args(FontCollectionFormat.__value__))
-
-type FontFormat = FontSingleFormat | FontCollectionFormat
-font_formats: list[FontFormat] = font_single_formats + font_collection_formats
+font_formats = list[FontFormat](get_args(FontFormat.__value__))
 
 type Attachment = Literal[
     'release',

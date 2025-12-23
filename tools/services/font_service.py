@@ -3,7 +3,7 @@ import math
 from datetime import datetime
 
 from loguru import logger
-from pixel_font_builder import FontBuilder, FontCollectionBuilder, WeightName, SerifStyle, SlantStyle, WidthStyle, Glyph, opentype
+from pixel_font_builder import FontBuilder, WeightName, SerifStyle, SlantStyle, WidthStyle, Glyph, opentype
 from pixel_font_knife import glyph_file_util, glyph_mapping_util
 from pixel_font_knife.glyph_file_util import GlyphFile, GlyphFlavorGroup
 from pixel_font_knife.glyph_mapping_util import SourceFlavorGroup
@@ -53,12 +53,12 @@ class DesignContext:
         self._alphabet_cache = {}
         self._proportional_kerning_values = None
 
-    def _get_glyph_sequence(self, width_mode: WidthMode, language_flavor: LanguageFlavor | None = None) -> list[GlyphFile]:
-        key = f'{width_mode}#{'' if language_flavor is None else language_flavor}'
+    def _get_glyph_sequence(self, width_mode: WidthMode, language_flavor: LanguageFlavor) -> list[GlyphFile]:
+        key = f'{width_mode}#{language_flavor}'
         if key in self._glyph_sequence_cache:
             glyph_sequence = self._glyph_sequence_cache[key]
         else:
-            glyph_sequence = glyph_file_util.get_glyph_sequence(self._glyph_files[width_mode], options.language_flavors if language_flavor is None else [language_flavor])
+            glyph_sequence = glyph_file_util.get_glyph_sequence(self._glyph_files[width_mode], [language_flavor])
             self._glyph_sequence_cache[key] = glyph_sequence
         return glyph_sequence
 
@@ -84,7 +84,7 @@ class DesignContext:
             self._proportional_kerning_values = kerning_service.generate_kerning_values(self.font_size, self._contexts['proportional'])
         return self._proportional_kerning_values
 
-    def _create_builder(self, width_mode: WidthMode, language_flavor: LanguageFlavor, is_collection: bool) -> FontBuilder:
+    def _create_builder(self, width_mode: WidthMode, language_flavor: LanguageFlavor) -> FontBuilder:
         layout_metric = configs.font_configs[self.font_size].layout_metrics[width_mode]
 
         builder = FontBuilder()
@@ -117,7 +117,7 @@ class DesignContext:
         builder.meta_info.designer_url = 'https://takwolf.com'
         builder.meta_info.license_url = 'https://github.com/TakWolf/ark-pixel-font/blob/master/LICENSE-OFL'
 
-        glyph_sequence = self._get_glyph_sequence(width_mode, None if is_collection else language_flavor)
+        glyph_sequence = self._get_glyph_sequence(width_mode, language_flavor)
         for glyph_file in glyph_sequence:
             horizontal_offset_x = 0
             horizontal_offset_y = layout_metric.baseline - self.font_size - (glyph_file.height - self.font_size) // 2
@@ -147,21 +147,13 @@ class DesignContext:
 
         return builder
 
-    def _create_collection_builder(self, width_mode: WidthMode) -> FontCollectionBuilder:
-        collection_builder = FontCollectionBuilder()
-        for language_flavor in options.language_flavors:
-            builder = self._create_builder(width_mode, language_flavor, is_collection=True)
-            collection_builder.append(builder)
-        return collection_builder
-
     def make_fonts(self, width_mode: WidthMode, font_formats: list[FontFormat]):
         path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
 
-        font_single_formats = [font_format for font_format in font_formats if font_format in options.font_single_formats]
-        if len(font_single_formats) > 0:
+        if len(font_formats) > 0:
             for language_flavor in options.language_flavors:
-                builder = self._create_builder(width_mode, language_flavor, is_collection=False)
-                for font_format in font_single_formats:
+                builder = self._create_builder(width_mode, language_flavor)
+                for font_format in font_formats:
                     file_path = path_define.outputs_dir.joinpath(f'ark-pixel-{self.font_size}px-{width_mode}-{language_flavor}.{font_format}')
                     if font_format == 'otf.woff':
                         builder.save_otf(file_path, flavor=opentype.Flavor.WOFF)
@@ -174,14 +166,6 @@ class DesignContext:
                     else:
                         getattr(builder, f'save_{font_format}')(file_path)
                     logger.info("Make font: '{}'", file_path)
-
-        font_collection_formats = [font_format for font_format in font_formats if font_format in options.font_collection_formats]
-        if len(font_collection_formats) > 0:
-            builder = self._create_collection_builder(width_mode)
-            for font_format in font_collection_formats:
-                file_path = path_define.outputs_dir.joinpath(f'ark-pixel-{self.font_size}px-{width_mode}.{font_format}')
-                getattr(builder, f'save_{font_format}')(file_path)
-                logger.info("Make font collection: '{}'", file_path)
 
 
 def load_mappings() -> list[dict[int, SourceFlavorGroup]]:
