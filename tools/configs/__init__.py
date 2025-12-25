@@ -1,3 +1,5 @@
+from pixel_font_knife.kerning_util import KerningConfig
+
 from tools.configs import path_define, options
 from tools.configs.font import FontConfig
 
@@ -11,6 +13,8 @@ mapping_file_paths = [
     path_define.mappings_dir.joinpath('2F00-2FDF Kangxi Radicals.yml'),
     path_define.mappings_dir.joinpath('1F100-1F1FF Enclosed Alphanumeric Supplement.yml'),
 ]
+
+kerning_config = KerningConfig.load(path_define.kernings_dir.joinpath('default.yml'))
 
 locale_to_language_flavor = {
     'en': 'latin',

@@ -40,7 +40,7 @@ templates:
   latin_A,latin_l: -1
   latin_A,latin_t: -1
   latin_A,latin_v: -1
-  latin_A,latin_w: 0
+  latin_A,latin_w: -1
   latin_F,latin_A: -1
   latin_F,latin_Æ: -1
   latin_F,latin_a: -1
@@ -48,7 +48,7 @@ templates:
   latin_F,latin_d: -1
   latin_F,latin_f: -1
   latin_F,latin_g: -1
-  latin_F,latin_i: 0
+  latin_F,latin_i: -1
   latin_F,latin_j: -1
   latin_F,latin_ơ: -1
   latin_F,latin_p: -1
@@ -69,7 +69,7 @@ templates:
   latin_L,latin_l: -1
   latin_L,latin_t: -1
   latin_L,latin_v: -1
-  latin_L,latin_w: 0
+  latin_L,latin_w: -1
   latin_L,latin_y: -1
   latin_P,latin_A: -1
   latin_P,latin_Æ: -1
@@ -81,7 +81,7 @@ templates:
   latin_T,latin_cemnosuxz: -1
   latin_T,latin_d: -1
   latin_T,latin_f: -1
-  latin_T,latin_i: 0
+  latin_T,latin_i: -1
   latin_T,latin_j: -1
   latin_T,latin_ơ: -1
   latin_T,latin_p: -1
@@ -99,7 +99,7 @@ templates:
   latin_Ư,latin_cemnosuxz: -1
   latin_Ư,latin_d: -1
   latin_Ư,latin_f: -1
-  latin_Ư,latin_i: 0
+  latin_Ư,latin_i: -1
   latin_Ư,latin_j: -1
   latin_Ư,latin_ơ: -1
   latin_Ư,latin_p: -1
@@ -118,7 +118,7 @@ templates:
   latin_V,latin_d: -1
   latin_V,latin_f: -1
   latin_V,latin_g: -1
-  latin_V,latin_i: 0
+  latin_V,latin_i: -1
   latin_V,latin_j: -1
   latin_V,latin_ơ: -1
   latin_V,latin_p: -1
@@ -135,19 +135,19 @@ templates:
   latin_W,latin_a: -1
   latin_W,latin_cemnosuxz: -1
   latin_W,latin_d: -1
-  latin_W,latin_f: 0
+  latin_W,latin_f: -1
   latin_W,latin_g: -1
-  latin_W,latin_i: 0
-  latin_W,latin_j: 0
+  latin_W,latin_i: -1
+  latin_W,latin_j: -1
   latin_W,latin_ơ: -1
   latin_W,latin_p: -1
   latin_W,latin_q: -1
-  latin_W,latin_r: 0
-  latin_W,latin_t: 0
-  latin_W,latin_ư: 0
-  latin_W,latin_v: 0
-  latin_W,latin_w: 0
-  latin_W,latin_y: 0
+  latin_W,latin_r: -1
+  latin_W,latin_t: -1
+  latin_W,latin_ư: -1
+  latin_W,latin_v: -1
+  latin_W,latin_w: -1
+  latin_W,latin_y: -1
   latin_W,period: -1
   latin_Y,latin_A: -1
   latin_Y,latin_Æ: -1
@@ -156,7 +156,7 @@ templates:
   latin_Y,latin_d: -1
   latin_Y,latin_f: -1
   latin_Y,latin_g: -1
-  latin_Y,latin_i: 0
+  latin_Y,latin_i: -1
   latin_Y,latin_j: -1
   latin_Y,latin_ơ: -1
   latin_Y,latin_p: -1

@@ -6,6 +6,7 @@ assets_dir = project_root_dir.joinpath('assets')
 configs_dir = assets_dir.joinpath('configs')
 glyphs_dir = assets_dir.joinpath('glyphs')
 mappings_dir = assets_dir.joinpath('mappings')
+kernings_dir = assets_dir.joinpath('kernings')
 templates_dir = assets_dir.joinpath('templates')
 images_dir = assets_dir.joinpath('images')
 

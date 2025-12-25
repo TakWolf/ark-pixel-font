@@ -4,14 +4,13 @@ from datetime import datetime
 
 from loguru import logger
 from pixel_font_builder import FontBuilder, WeightName, SerifStyle, SlantStyle, WidthStyle, Glyph, opentype
-from pixel_font_knife import glyph_file_util, glyph_mapping_util
+from pixel_font_knife import glyph_file_util, glyph_mapping_util, kerning_util
 from pixel_font_knife.glyph_file_util import GlyphFlavorGroup
 from pixel_font_knife.glyph_mapping_util import SourceFlavorGroup
 
 from tools import configs
 from tools.configs import path_define, options
 from tools.configs.options import FontSize, WidthMode, LanguageFlavor, FontFormat
-from tools.services import kerning_service
 
 
 class DesignContext:
@@ -110,7 +109,7 @@ class DesignContext:
 
         if width_mode == 'proportional':
             if self._proportional_kerning_values is None:
-                self._proportional_kerning_values = kerning_service.generate_kerning_values(self.font_size, self._contexts['proportional'])
+                self._proportional_kerning_values = kerning_util.calculate_kerning_values(configs.kerning_config, self._contexts['proportional'])
             builder.kerning_values.update(self._proportional_kerning_values)
 
         builder.opentype_config.fields_override.head_y_max = layout_metric.ascent
