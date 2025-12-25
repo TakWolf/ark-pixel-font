@@ -1,5 +1,3 @@
-import random
-
 import bs4
 from jinja2 import Environment, FileSystemLoader
 from loguru import logger
@@ -15,12 +13,9 @@ _environment = Environment(
     loader=FileSystemLoader(path_define.templates_dir),
 )
 
-_build_random_key = random.random()
-
 
 def _make_html(template_name: str, file_name: str, params: dict[str, object] | None = None):
     params = {} if params is None else dict(params)
-    params['build_random_key'] = _build_random_key
     params['font_configs'] = configs.font_configs
     params['width_modes'] = options.width_modes
     params['locale_to_language_flavor'] = configs.locale_to_language_flavor

@@ -10,7 +10,7 @@
         {% with font_family = 'ark-pixel-12px-monospaced-latin' %}
         @font-face {
             font-family: {{ font_family }};
-            src: url("{{ font_family }}.otf.woff2?r={{ build_random_key }}");
+            src: url("{{ font_family }}.otf.woff2");
         }
         {% endwith %}
         {% for font_config in font_configs.values() %}
@@ -18,7 +18,7 @@
         {% with font_family = 'ark-pixel-' ~ font_config.font_size ~ 'px-proportional-' ~ language_flavor %}
         @font-face {
             font-family: {{ font_family }};
-            src: url("{{ font_family }}.otf.woff2?r={{ build_random_key }}");
+            src: url("{{ font_family }}.otf.woff2");
         }
         .font-{{ font_config.font_size }}px-proportional :lang({{ locale }}) {
             font-family: {{ font_family }}, sans-serif;

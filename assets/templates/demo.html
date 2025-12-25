@@ -12,7 +12,7 @@
         {% with font_family = 'ark-pixel-' ~ font_config.font_size ~ 'px-' ~ width_mode ~ '-' ~ language_flavor %}
         @font-face {
             font-family: {{ font_family }};
-            src: url("{{ font_family }}.otf.woff2?r={{ build_random_key }}");
+            src: url("{{ font_family }}.otf.woff2");
         }
         {% if locale == 'en' %}
         .font-{{ width_mode }} {
@@ -30,7 +30,7 @@
         {% with font_family = 'ark-pixel-12px-monospaced-latin' %}
         @font-face {
             font-family: {{ font_family }};
-            src: url("{{ font_family }}.otf.woff2?r={{ build_random_key }}");
+            src: url("{{ font_family }}.otf.woff2");
         }
         {% endwith %}
         {% endif %}
