@@ -3,19 +3,18 @@ import unicodedata
 
 import unidata_blocks
 from pixel_font_knife import glyph_file_util, glyph_mapping_util
-from pixel_font_knife.glyph_mapping_util import SourceFlavorGroup
 
 from tools import configs
 from tools.configs import path_define, options
 from tools.configs.options import FontSize
 
 
-def check_glyph_files(font_size: FontSize, mappings: list[dict[int, SourceFlavorGroup]]):
+def check_glyphs(font_size: FontSize):
     canvas_size = configs.font_configs[font_size].canvas_size
 
     for width_mode_dir_name in itertools.chain(['common'], options.width_modes):
         context = glyph_file_util.load_context(path_define.glyphs_dir.joinpath(str(font_size), width_mode_dir_name))
-        for mapping in mappings:
+        for mapping in configs.mappings:
             glyph_mapping_util.apply_mapping(context, mapping)
 
         for code_point, flavor_group in sorted(context.items()):

@@ -6,7 +6,6 @@ from loguru import logger
 from pixel_font_builder import FontBuilder, WeightName, SerifStyle, SlantStyle, WidthStyle, Glyph, opentype
 from pixel_font_knife import glyph_file_util, glyph_mapping_util, kerning_util
 from pixel_font_knife.glyph_file_util import GlyphFlavorGroup
-from pixel_font_knife.glyph_mapping_util import SourceFlavorGroup
 
 from tools import configs
 from tools.configs import path_define, options
@@ -15,11 +14,11 @@ from tools.configs.options import FontSize, WidthMode, LanguageFlavor, FontForma
 
 class DesignContext:
     @staticmethod
-    def load(font_size: FontSize, mappings: list[dict[int, SourceFlavorGroup]]) -> DesignContext:
+    def load(font_size: FontSize) -> DesignContext:
         contexts = {}
         for width_mode_dir_name in itertools.chain(['common'], options.width_modes):
             context = glyph_file_util.load_context(path_define.glyphs_dir.joinpath(str(font_size), width_mode_dir_name))
-            for mapping in mappings:
+            for mapping in configs.mappings:
                 glyph_mapping_util.apply_mapping(context, mapping)
             contexts[width_mode_dir_name] = context
 
@@ -142,12 +141,6 @@ class DesignContext:
                     logger.info("Make font: '{}'", file_path)
 
 
-def load_mappings() -> list[dict[int, SourceFlavorGroup]]:
-    mappings = [glyph_mapping_util.load_mapping(file_path) for file_path in configs.mapping_file_paths]
-    return mappings
-
-
 def load_design_contexts(font_sizes: list[FontSize]) -> dict[FontSize, DesignContext]:
-    mappings = load_mappings()
-    design_contexts = {font_size: DesignContext.load(font_size, mappings) for font_size in font_sizes}
+    design_contexts = {font_size: DesignContext.load(font_size) for font_size in font_sizes}
     return design_contexts

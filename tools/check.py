@@ -1,11 +1,10 @@
 from tools.configs import options
-from tools.services import font_service, check_service
+from tools.services import check_service
 
 
 def main():
-    mappings = font_service.load_mappings()
     for font_size in options.font_sizes:
-        check_service.check_glyph_files(font_size, mappings)
+        check_service.check_glyphs(font_size)
 
 
 if __name__ == '__main__':
