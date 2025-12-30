@@ -9,7 +9,7 @@
 [![Discord](https://img.shields.io/badge/discord-像素字体工房-4E5AF0?logo=discord&logoColor=white)](https://discord.gg/3GKtPKtjdU)
 [![QQ Group](https://img.shields.io/badge/QQ群-像素字体工房-brightgreen?logo=qq&logoColor=white)](https://qm.qq.com/q/jPk8sSitUI)
 
-开源的泛中日韩像素字体，黑体无衬线风格，支持 10、12 和 16 像素。
+开源的泛中日韩像素字体，黑体风格。
 
 这个项目不仅提供了全部的字形源文件，也提供了构建字体所需要的完整程序。
 
@@ -86,8 +86,6 @@
 | 16px | 22px |
 
 ## 语言特定字形
-
-不同国家或地区，由于规范或书写习惯不同，同一个字符，字形可能存在差别。这种情况大部分为汉字，少量为标点符号。
 
 目前支持以下语言特定字形版本：
 
