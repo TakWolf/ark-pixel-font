@@ -5,14 +5,14 @@ requires-python = ">=3.14"
 
 dependencies = [
     "pixel-font-builder==0.0.47",
-    "pixel-font-knife==0.0.20",
-    "unicodedata2==17.0.0",
-    "unidata-blocks==0.0.23",
-    "character-encoding-utils==0.0.11",
+    "pixel-font-knife==0.0.21",
+    "unicodedata2==17.0.1",
+    "unidata-blocks==0.0.24",
+    "character-encoding-utils==0.0.12",
     "pyyaml==6.0.3",
-    "pillow==12.1.0",
+    "pillow==12.1.1",
     "beautifulsoup4==4.14.3",
     "jinja2==3.1.6",
     "loguru==0.7.3",
-    "cyclopts==4.4.3",
+    "cyclopts==4.6.0",
 ]
