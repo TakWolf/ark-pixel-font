@@ -58,12 +58,13 @@ def check_glyphs(font_size: FontSize):
                     assert glyph_file.height == canvas_size, f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
 
                 if width_mode_dir_name == 'common' or width_mode_dir_name == 'monospaced':
-                    # H/Halfwidth or Na/Narrow
-                    if east_asian_width == 'H' or east_asian_width == 'Na':
-                        assert glyph_file.width == font_size / 2, f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
-                    # F/Fullwidth or W/Wide
-                    elif east_asian_width == 'F' or east_asian_width == 'W':
-                        assert glyph_file.width == font_size, f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
-                    # A/Ambiguous or N/Neutral
-                    else:
-                        assert glyph_file.width == font_size / 2 or glyph_file.width == font_size, f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
+                    match east_asian_width:
+                        # H/Halfwidth or Na/Narrow
+                        case 'H' | 'Na':
+                            assert glyph_file.width == font_size / 2, f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
+                        # F/Fullwidth or W/Wide
+                        case 'F' | 'W':
+                            assert glyph_file.width == font_size, f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
+                        # A/Ambiguous or N/Neutral
+                        case _:
+                            assert glyph_file.width == font_size / 2 or glyph_file.width == font_size, f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
