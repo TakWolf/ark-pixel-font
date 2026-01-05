@@ -23,8 +23,8 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "beautifulsoup4", specifier = "==4.14.3" },
-    { name = "character-encoding-utils", specifier = "==0.0.11" },
-    { name = "cyclopts", specifier = "==4.4.3" },
+    { name = "character-encoding-utils", specifier = "==0.0.12" },
+    { name = "cyclopts", specifier = "==4.4.4" },
     { name = "jinja2", specifier = "==3.1.6" },
     { name = "loguru", specifier = "==0.7.3" },
     { name = "pillow", specifier = "==12.1.0" },
@@ -32,7 +32,7 @@ requires-dist = [
     { name = "pixel-font-knife", specifier = "==0.0.20" },
     { name = "pyyaml", specifier = "==6.0.3" },
     { name = "unicodedata2", specifier = "==17.0.0" },
-    { name = "unidata-blocks", specifier = "==0.0.23" },
+    { name = "unidata-blocks", specifier = "==0.0.24" },
 ]
 
 [[package]]
@@ -135,11 +135,11 @@ wheels = [
 
 [[package]]
 name = "character-encoding-utils"
-version = "0.0.11"
+version = "0.0.12"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/62/f0/694d8d6af280012510e031462dcf737a4a2838318e3255ccf71595a4045e/character_encoding_utils-0.0.11.tar.gz", hash = "sha256:9b386eea18814909dc4dd7523795fbf37b28edec3f273c1714955b276a098771", size = 4508, upload-time = "2025-10-14T02:47:39.488Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/8d/33/19993bbe81a0ddc2bc20a57a87169cb8dc1b7b45ced935472823c64a54b1/character_encoding_utils-0.0.12.tar.gz", hash = "sha256:b0e5dda4eedcd84a5b35b24ad56218c7f5dbe54188316f1d6b0d79e15fcda54d", size = 4524, upload-time = "2026-01-04T01:26:31.237Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/23/35/4273df0bb2a773318fd5ed173f933b596f4b2027693b6c2cf286fe3c2fa6/character_encoding_utils-0.0.11-py3-none-any.whl", hash = "sha256:c9b017065961520595dcf5fcd6377b97637d6b205accfd9140b050105cbeb244", size = 8245, upload-time = "2025-10-14T02:47:38.483Z" },
+    { url = "https://files.pythonhosted.org/packages/75/f5/12c5338bf48cc62e5a1ec4b4cf2693864d8865273aa306a9420cfae83fbd/character_encoding_utils-0.0.12-py3-none-any.whl", hash = "sha256:a0e8d553d41245c70ce997653fa58f6ee2777c5cc061f2315b6149f4d46f66ac", size = 8262, upload-time = "2026-01-04T01:26:30.527Z" },
 ]
 
 [[package]]
@@ -153,7 +153,7 @@ wheels = [
 
 [[package]]
 name = "cyclopts"
-version = "4.4.3"
+version = "4.4.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "attrs" },
@@ -161,9 +161,9 @@ dependencies = [
     { name = "rich" },
     { name = "rich-rst" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/8f/21/732453ae69d65d72fe37a34f8b1a455c72313b8b0a905b876da20ff7e81a/cyclopts-4.4.3.tar.gz", hash = "sha256:03797c71b49a39dcad8324d6655363056fb998e2ba0240940050331a7f63fe65", size = 159360, upload-time = "2025-12-28T18:57:03.831Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/43/c4/60b6068e703c78656d07b249919754f8f60e9e7da3325560574ee27b4e39/cyclopts-4.4.4.tar.gz", hash = "sha256:f30c591c971d974ab4f223e099f881668daed72de713713c984ca41479d393dd", size = 160046, upload-time = "2026-01-05T03:40:18.438Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/8b/28/03f9b8fbf396b3f2eaf65a7ff441ba2fb7dd397109d563a4e556dc5b3efb/cyclopts-4.4.3-py3-none-any.whl", hash = "sha256:951611a9d4d88d9916716ae281faca9af1cb79b88bb4f22bd0192cff54e7dec6", size = 196707, upload-time = "2025-12-28T18:57:04.884Z" },
+    { url = "https://files.pythonhosted.org/packages/20/5b/0eceb9a5990de9025733a0d212ca43649ba9facd58b8552b6bf93c11439d/cyclopts-4.4.4-py3-none-any.whl", hash = "sha256:316f798fe2f2a30cb70e7140cfde2a46617bfbb575d31bbfdc0b2410a447bd83", size = 197398, upload-time = "2026-01-05T03:40:17.141Z" },
 ]
 
 [[package]]
@@ -492,14 +492,14 @@ wheels = [
 
 [[package]]
 name = "unidata-blocks"
-version = "0.0.23"
+version = "0.0.24"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "langcodes" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ff/cf/88b8d253ae178914791b6ee1c77401f802efb4742b14bcd8d4224f7ad1eb/unidata_blocks-0.0.23.tar.gz", hash = "sha256:380fc450994c0d7a17c88a6b9386d5c3c00d97b2f7fd591f0ce464073b317834", size = 13857, upload-time = "2025-10-18T21:08:19.049Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/c6/2f/b3e885772999793f58e29c1b607619f465bfe58b0f2fc0e8ad584d920315/unidata_blocks-0.0.24.tar.gz", hash = "sha256:c90256e2ed2ff53ad834f39e12a84e9c272ecab8298f8432d5ac8b05e0a0a761", size = 13728, upload-time = "2026-01-06T04:16:25.696Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ea/cf/04b28a6a348180b641aaf07cb76db099a0c6846491717f5f297c75846ccf/unidata_blocks-0.0.23-py3-none-any.whl", hash = "sha256:04d66a96071188bc9bef154297595b826cb64162a17d8c18f02b2a8acf856927", size = 19213, upload-time = "2025-10-18T21:08:17.433Z" },
+    { url = "https://files.pythonhosted.org/packages/4e/00/ca4902d1b03147c270e463095ac11094c4ec8f9eb655e0f979f332cc68f0/unidata_blocks-0.0.24-py3-none-any.whl", hash = "sha256:9ce6448307afdcef54fefc056dfb5d91a89b3d4e8da7b4f7c601ecba35de7818", size = 19115, upload-time = "2026-01-06T04:16:26.844Z" },
 ]
 
 [[package]]
