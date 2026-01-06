@@ -1,6 +1,6 @@
 import itertools
-import unicodedata
 
+import unicodedata2
 import unidata_blocks
 from pixel_font_knife import glyph_file_util, glyph_mapping_util
 
@@ -25,7 +25,7 @@ def check_glyphs(font_size: FontSize):
                 east_asian_width = 'F'
             else:
                 block = unidata_blocks.get_block_by_code_point(code_point)
-                east_asian_width = unicodedata.east_asian_width(chr(code_point))
+                east_asian_width = unicodedata2.east_asian_width(chr(code_point))
 
             bitmap_strings = {}
             for glyph_file in set(flavor_group.values()):

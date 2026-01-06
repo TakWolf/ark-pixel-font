@@ -1,8 +1,8 @@
-import unicodedata
 from collections import defaultdict
 from collections.abc import Callable
 from typing import TextIO
 
+import unicodedata2
 import unidata_blocks
 from character_encoding_utils import gb2312, big5, shiftjis, ksx1001
 from loguru import logger
@@ -17,7 +17,7 @@ from tools.services.font_service import DesignContext
 def _get_unicode_chr_count_infos(alphabet: set[str]) -> list[tuple[UnicodeBlock, int]]:
     count_infos = defaultdict(int)
     for c in alphabet:
-        category = unicodedata.category(c)
+        category = unicodedata2.category(c)
         if category == 'Zs' and c != ' ':
             continue
         block = unidata_blocks.get_block_by_chr(c)

@@ -108,6 +108,7 @@
 
 - [Pixel Font Builder](https://github.com/TakWolf/pixel-font-builder)
 - [Pixel Font Knife](https://github.com/TakWolf/pixel-font-knife)
+- [unicodedata2](https://github.com/fonttools/unicodedata2)
 - [Unidata Blocks](https://github.com/TakWolf/unidata-blocks)
 - [Character Encoding Utils](https://github.com/TakWolf/character-encoding-utils)
 - [PyYAML](https://github.com/yaml/pyyaml)
