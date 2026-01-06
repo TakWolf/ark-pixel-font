@@ -36,7 +36,7 @@ Unicode 版本：17.0.0
 | 2E80 ~ 2EFF | CJK Radicals Supplement | 中日韩部首增补 | 2 / 115 | 113 | 1.74% 🚧 |
 | 2F00 ~ 2FDF | Kangxi Radicals | 康熙部首 | 23 / 214 | 191 | 10.75% 🚧 |
 | 2FF0 ~ 2FFF | Ideographic Description Characters | 表意文字描述字符 | 16 / 16 | 0 | 100.00% 🚩 |
-| 3000 ~ 303F | CJK Symbols and Punctuation | 中日韩符号与标点 | 63 / 63 | 0 | 100.00% 🚩 |
+| 3000 ~ 303F | CJK Symbols and Punctuation | 中日韩符号与标点 | 64 / 64 | 0 | 100.00% 🚩 |
 | 3040 ~ 309F | Hiragana | 平假名 | 93 / 93 | 0 | 100.00% 🚩 |
 | 30A0 ~ 30FF | Katakana | 片假名 | 96 / 96 | 0 | 100.00% 🚩 |
 | 3100 ~ 312F | Bopomofo | 注音字母 | 43 / 43 | 0 | 100.00% 🚩 |
@@ -45,12 +45,12 @@ Unicode 版本：17.0.0
 | 3300 ~ 33FF | CJK Compatibility | 中日韩兼容 | 60 / 256 | 196 | 23.44% 🚧 |
 | 3400 ~ 4DBF | CJK Unified Ideographs Extension A | 中日韩统一表意文字扩充 A | 2 / 6592 | 6590 | 0.03% 🚧 |
 | 4E00 ~ 9FFF | CJK Unified Ideographs | 中日韩统一表意文字 | 95 / 20992 | 20897 | 0.45% 🚧 |
-| A720 ~ A7FF | Latin Extended-D | 拉丁扩充-D | 7 / 199 | 192 | 3.52% 🚧 |
+| A720 ~ A7FF | Latin Extended-D | 拉丁扩充-D | 7 / 204 | 197 | 3.43% 🚧 |
 | FE10 ~ FE1F | Vertical Forms | 竖排形式 | 10 / 10 | 0 | 100.00% 🚩 |
 | FE30 ~ FE4F | CJK Compatibility Forms | 中日韩兼容形式 | 32 / 32 | 0 | 100.00% 🚩 |
 | FF00 ~ FFEF | Halfwidth and Fullwidth Forms | 半宽与全宽形式 | 173 / 225 | 52 | 76.89% 🚧 |
 | FFF0 ~ FFFF | Specials | 特殊 | 2 / 2 | 0 | 100.00% 🚩 |
-| 16FE0 ~ 16FFF | Ideographic Symbols and Punctuation | 表意文字符号与标点 | 5 / 7 | 2 | 71.43% 🚧 |
+| 16FE0 ~ 16FFF | Ideographic Symbols and Punctuation | 表意文字符号与标点 | 5 / 12 | 7 | 41.67% 🚧 |
 | 1F100 ~ 1F1FF | Enclosed Alphanumeric Supplement | 包围字母数字增补 | 135 / 200 | 65 | 67.50% 🚧 |
 
 ## GB2312 字符分布

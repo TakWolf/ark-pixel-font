@@ -14,15 +14,32 @@ from tools.configs.options import WidthMode
 from tools.services.font_service import DesignContext
 
 
-def _get_unicode_chr_count_infos(alphabet: set[str]) -> list[tuple[UnicodeBlock, int]]:
-    count_infos = defaultdict(int)
+def _do_we_need_to_create_a_glyph(c: str) -> bool:
+    if c in ('\u0020', '\u3000'):
+        return True
+    category = unicodedata2.category(c)
+    return category.startswith(('L', 'M', 'N', 'P', 'S'))
+
+
+def _get_unicode_chr_count_infos(alphabet: set[str]) -> list[tuple[UnicodeBlock, int, int]]:
+    in_block_counts = defaultdict(int)
     for c in alphabet:
-        category = unicodedata2.category(c)
-        if category == 'Zs' and c != ' ':
-            continue
         block = unidata_blocks.get_block_by_chr(c)
-        count_infos[block.code_start] += 1
-    return [(unidata_blocks.get_block_by_code_point(code_start), count) for code_start, count in sorted(count_infos.items())]
+        if 'Private Use Area' not in block.name:
+            assert _do_we_need_to_create_a_glyph(c)
+        in_block_counts[block.code_start] += 1
+
+    count_infos = []
+    for code_start, count in sorted(in_block_counts.items()):
+        block = unidata_blocks.get_block_by_code_point(code_start)
+        total = 0
+        if 'Private Use Area' not in block.name:
+            for code_point in range(block.code_start, block.code_end + 1):
+                c = chr(code_point)
+                if _do_we_need_to_create_a_glyph(c):
+                    total += 1
+        count_infos.append((block, count, total))
+    return count_infos
 
 
 def _get_locale_chr_count_infos(alphabet: set[str], query_category_func: Callable[[str], str | None]) -> defaultdict[str, int]:
@@ -76,14 +93,13 @@ def _get_ksx1001_chr_count_infos(alphabet: set[str]) -> list[tuple[str, int, int
     ]
 
 
-def _write_unicode_chr_count_infos_table(file: TextIO, infos: list[tuple[UnicodeBlock, int]]):
+def _write_unicode_chr_count_infos_table(file: TextIO, infos: list[tuple[UnicodeBlock, int, int]]):
     file.write('| 区块范围 | 区块名称 | 区块含义 | 完成数 | 缺失数 | 进度 |\n')
     file.write('|---|---|---|---:|---:|---:|\n')
-    for block, count in infos:
+    for block, count, total in infos:
         code_point_range = f'{block.code_start:04X} ~ {block.code_end:04X}'
         name = block.name
         name_zh = block.name_localized('zh', '')
-        total = block.printable_count
         missing = total - count if total > 0 else 0
         progress = count / total if total > 0 else 1
         finished_emoji = '🚩' if progress == 1 else '🚧'
