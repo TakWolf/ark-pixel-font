@@ -172,21 +172,6 @@ def make_itch_io_banner(design_contexts: dict[FontSize, DesignContext]):
     logger.info("Make itch.io banner: '{}'", file_path)
 
 
-def make_itch_io_background(design_contexts: dict[FontSize, DesignContext]):
-    font = _load_font(12, 'proportional', 'zh_cn')
-    alphabet = sorted(design_contexts[12].get_alphabet('proportional'))
-    box_size = 14
-
-    image = Image.new('RGBA', (box_size * 50, box_size * 50), (0, 0, 0, 0))
-    _draw_text_background(image, alphabet, 5, box_size, font, (30, 30, 30, 255))
-    image = image.resize((image.width * 2, image.height * 2), Image.Resampling.NEAREST)
-
-    path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
-    file_path = path_define.outputs_dir.joinpath('itch-io-background.png')
-    image.save(file_path)
-    logger.info("Make itch.io background: '{}'", file_path)
-
-
 def make_itch_io_cover():
     font_title = _load_font(12, 'proportional', 'zh_cn', 2)
     font_latin = _load_font(12, 'proportional', 'latin')

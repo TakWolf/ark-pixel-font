@@ -92,7 +92,6 @@ def main(
             image_service.make_readme_banner(design_contexts)
             image_service.make_github_banner(design_contexts)
             image_service.make_itch_io_banner(design_contexts)
-            image_service.make_itch_io_background(design_contexts)
             image_service.make_itch_io_cover()
             image_service.make_afdian_cover()
 
