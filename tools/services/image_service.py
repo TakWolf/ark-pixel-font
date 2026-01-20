@@ -52,19 +52,17 @@ def _draw_text_background(
         text_color: tuple[int, int, int, int],
 ):
     draw = ImageDraw.Draw(image)
-    alphabet_index = 0
-    for index, c in enumerate(alphabet):
-        code_point = ord(c)
-        if code_point >= 0x4E00:
-            alphabet_index = index
-            break
+    alphabet = [c for c in alphabet if 0x4E00 <= ord(c) <= 0x9FFF]
+    if not alphabet:
+        alphabet.append('\u3000')
     count_x = math.ceil(image.width / box_size)
     count_y = math.ceil(image.height / box_size)
     offset_x = (image.width - count_x * box_size) / 2 + (box_size - font.size) / 2
     offset_y = (image.height - count_y * box_size) / 2 + (box_size - sum(font.getmetrics())) / 2
+    alphabet_index = 0
     for y in range(count_y):
         for x in range(count_x):
-            draw.text((offset_x + x * box_size, offset_y + y * box_size), alphabet[alphabet_index], fill=text_color, font=font)
+            draw.text((offset_x + x * box_size, offset_y + y * box_size), alphabet[alphabet_index % len(alphabet)], fill=text_color, font=font)
             alphabet_index += step
 
 
