@@ -121,7 +121,7 @@
             widthMode: 'proportional',
             locale: 'zh-cn',
         }
-        const json = localStorage.getItem('settings:playground')
+        const json = localStorage.getItem('ark-pixel-font:settings:playground')
         if (json) {
             Object.assign(settings, JSON.parse(json))
         }
@@ -129,7 +129,7 @@
         const inputBox = document.getElementById('input-box')
 
         window.applySettings = () => {
-            localStorage.setItem('settings:playground', JSON.stringify(settings))
+            localStorage.setItem('ark-pixel-font:settings:playground', JSON.stringify(settings))
             inputBox.className = 'font-' + settings.fontSize + 'px-' + settings.widthMode
             inputBox.setAttribute('lang', settings.locale)
         }

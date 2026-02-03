@@ -107,7 +107,7 @@
         const settings = {
             locale: 'zh-cn',
         }
-        const json = localStorage.getItem('settings:alphabet-{{ font_config.font_size }}px-{{ width_mode }}')
+        const json = localStorage.getItem('ark-pixel-font:settings:alphabet-{{ font_config.font_size }}px-{{ width_mode }}')
         if (json) {
             Object.assign(settings, JSON.parse(json))
         }
@@ -115,7 +115,7 @@
         const content = document.getElementById('content')
 
         window.applySettings = () => {
-            localStorage.setItem('settings:alphabet-{{ font_config.font_size }}px-{{ width_mode }}', JSON.stringify(settings))
+            localStorage.setItem('ark-pixel-font:settings:alphabet-{{ font_config.font_size }}px-{{ width_mode }}', JSON.stringify(settings))
             content.setAttribute('lang', settings.locale)
         }
 

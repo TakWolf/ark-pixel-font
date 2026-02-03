@@ -173,7 +173,7 @@
         const settings = {
             fontSize: 12,
         }
-        const json = localStorage.getItem('settings:index')
+        const json = localStorage.getItem('ark-pixel-font:settings:index')
         if (json) {
             Object.assign(settings, JSON.parse(json))
         }
@@ -181,7 +181,7 @@
         const page = document.getElementById('page')
 
         window.applySettings = () => {
-            localStorage.setItem('settings:index', JSON.stringify(settings))
+            localStorage.setItem('ark-pixel-font:settings:index', JSON.stringify(settings))
             page.className = 'font-' + settings.fontSize + 'px-proportional'
         }
 
