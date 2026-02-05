@@ -160,7 +160,7 @@ def make_itch_io_banner(design_contexts: dict[FontSize, DesignContext]):
     image = Image.new('RGBA', (image_background.width, image_background.height), (0, 0, 0, 0))
     _draw_text_background(image, alphabet, 38, box_size, font_x1, (200, 200, 200, 255))
     image.paste(image_background, mask=image_background)
-    _draw_text(image, (image.width / 2, 36), '方舟像素字体 / Ark Pixel Font', font_x2, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
+    _draw_text(image, (image.width / 2, 36), '方舟像素字体', font_x2, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     _draw_text(image, (image.width / 2, 36 + line_height * 2 + 4), '★ 开源的泛中日韩像素字体 ★', font_x1, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     image = image.resize((image.width * 2, image.height * 2), Image.Resampling.NEAREST)
 
