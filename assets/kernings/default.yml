@@ -12,7 +12,6 @@ groups:
   latin_Y: YÝŶŸȲẎỲỴỶỸ
   latin_a: aàáâãäåæāăąǎǟǡǣǻǽȁȃȧḁẚạảấầẩẫậắằẳẵặ
   latin_cemnosuxz: cçćĉċčḉeèéêëēĕėęěǝȅȇȩḕḗḙḛḝẹẻẽếềểễệĸmḿṁṃnñńņňŉŋǌǹṅṇṉṋoòóôõöøōŏőœǒǫǭǿȍȏȫȭȯȱṍṏṑṓọỏốồổỗộsśŝşšșṡṣṥṧṩuùúûüũūŭůűųǔǖǘǚǜȕȗṳṵṷṹṻụủxẋẍzźżžẑẓẕ
-  latin_bhk: bƀƃḃḅḇhĥħȟḣḥḧḩḫẖꜧkķǩḱḳḵꝁ
   latin_d: dƌďđǆǳḋḍḏḑḓ
   latin_f: fƒḟ
   latin_g: gĝğġģǧǵḡ
@@ -170,6 +169,7 @@ templates:
   latin_Y,period: -1
   latin_f,latin_a: -1
   latin_f,period: -1
+  latin_i,latin_j: -1
   latin_l,latin_j: -1
   latin_ơ,latin_a: -1
   latin_ơ,period: -1
