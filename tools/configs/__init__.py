@@ -4,7 +4,7 @@ from pixel_font_knife.kerning_util import KerningConfig
 from tools.configs import path_define, options
 from tools.configs.font import FontConfig
 
-version = '2026.01.04'
+version = '2026.02.27'
 
 font_configs = {font_size: FontConfig.load(font_size) for font_size in options.font_sizes}
 
