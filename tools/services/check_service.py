@@ -34,31 +34,25 @@ def check_glyphs(font_size: FontSize):
                 assert bitmap_string not in bitmap_strings, f"[{font_size}px] duplicate glyph bitmaps:\n'{glyph_file.file_path}'\n'{bitmap_strings[bitmap_string].file_path}'"
                 bitmap_strings[bitmap_string] = glyph_file
 
-                if width_mode_dir_name == 'common':
-                    if block is not None and block.name not in (
-                            'Box Drawing',
-                            'Block Elements',
-                            'Halfwidth and Fullwidth Forms',
-                    ) and code_point not in (
-                            0x2013,
-                            0x2015,
-                            0x25EF,
-                            0x3030,
+                if width_mode_dir_name == 'common' and block is not None and block.name not in (
+                        'Box Drawing',
+                        'Block Elements',
+                ):
+                    if code_point not in (
                             0x3035,
                     ):
                         assert all(color == 0 for color in glyph_file.bitmap[0]), f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
+
+                    if code_point not in (
+                            0x2013,
+                            0x2015,
+                            0x3030,
+                    ):
                         assert all(glyph_file.bitmap[i][-1] == 0 for i in range(0, len(glyph_file.bitmap))), f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
 
-                if width_mode_dir_name == 'common':
+                if width_mode_dir_name == 'common' or width_mode_dir_name == 'monospaced':
                     assert glyph_file.height % font_size == 0, f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
 
-                if width_mode_dir_name == 'monospaced':
-                    assert glyph_file.height == font_size, f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
-
-                if width_mode_dir_name == 'proportional':
-                    assert glyph_file.height == canvas_size, f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
-
-                if width_mode_dir_name == 'common' or width_mode_dir_name == 'monospaced':
                     match east_asian_width:
                         case 'H' | 'Na':  # Halfwidth or Narrow
                             assert glyph_file.width == font_size / 2, f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
@@ -66,3 +60,6 @@ def check_glyphs(font_size: FontSize):
                             assert glyph_file.width == font_size, f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
                         case _:  # Ambiguous (A) or Neutral (N)
                             assert glyph_file.width % (font_size / 2) == 0, f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
+
+                if width_mode_dir_name == 'proportional':
+                    assert glyph_file.height == canvas_size, f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
