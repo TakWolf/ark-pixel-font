@@ -10,9 +10,9 @@ dependencies = [
     "unidata-blocks==0.0.24",
     "character-encoding-utils==0.0.12",
     "pyyaml==6.0.3",
-    "pillow==12.1.1",
+    "pillow==12.2.0",
     "beautifulsoup4==4.14.3",
     "jinja2==3.1.6",
     "loguru==0.7.3",
-    "cyclopts==4.6.0",
+    "cyclopts==4.10.1",
 ]
