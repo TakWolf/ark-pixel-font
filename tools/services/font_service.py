@@ -2,6 +2,7 @@ import itertools
 import math
 from datetime import datetime
 
+import unidata_blocks
 from loguru import logger
 from pixel_font_builder import FontBuilder, WeightName, SerifStyle, SlantStyle, WidthStyle, Glyph, opentype
 from pixel_font_knife import glyph_file_util, glyph_mapping_util, kerning_util
@@ -90,16 +91,42 @@ class DesignContext:
 
         glyph_sequence = glyph_file_util.get_glyph_sequence(self._glyph_files[width_mode], [language_flavor])
         for glyph_file in glyph_sequence:
+            code_point = glyph_file.code_point
+            block = unidata_blocks.get_block_by_code_point(code_point)
+
             horizontal_offset_x = 0
             horizontal_offset_y = layout_metric.baseline - self.font_size - (glyph_file.height - self.font_size) // 2
+            advance_width = glyph_file.width
+
             vertical_offset_x = -math.ceil(glyph_file.width / 2)
-            vertical_offset_y = (self.font_size - glyph_file.height) // 2 - 1
+            if code_point in (
+                    0x3031,
+                    0x3032,
+            ):
+                vertical_offset_y = (self.font_size * 2 - glyph_file.height) // 2
+                advance_height = self.font_size * 2
+            else:
+                vertical_offset_y = (self.font_size - glyph_file.height) // 2
+                advance_height = self.font_size
+
+            if block is not None and block.name not in (
+                    'Box Drawing',
+                    'Block Elements',
+            ) and code_point not in (
+                    0x3031,
+                    0x3032,
+                    0x3033,
+                    0x3034,
+                    0x3035,
+            ):
+                vertical_offset_y -= 1
+
             builder.glyphs.append(Glyph(
                 name=glyph_file.glyph_name,
                 horizontal_offset=(horizontal_offset_x, horizontal_offset_y),
-                advance_width=glyph_file.width,
+                advance_width=advance_width,
                 vertical_offset=(vertical_offset_x, vertical_offset_y),
-                advance_height=self.font_size,
+                advance_height=advance_height,
                 bitmap=glyph_file.bitmap.data,
             ))
 
