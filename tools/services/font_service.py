@@ -100,8 +100,7 @@ class DesignContext:
 
             vertical_offset_x = -math.ceil(glyph_file.width / 2)
             if code_point in (
-                    0x3031,
-                    0x3032,
+                    0x3031, 0x3032,
             ):
                 vertical_offset_y = (self.font_size * 2 - glyph_file.height) // 2
                 advance_height = self.font_size * 2
@@ -113,11 +112,10 @@ class DesignContext:
                     'Box Drawing',
                     'Block Elements',
             ) and code_point not in (
-                    0x3031,
-                    0x3032,
-                    0x3033,
-                    0x3034,
-                    0x3035,
+                    0x25D8, 0x25D9, 0x25DA, 0x25DB,
+                    0x25E2, 0x25E3, 0x25E4, 0x25E5,
+                    0x25F8, 0x25F9, 0x25FA, 0x25FF,
+                    0x3031, 0x3032, 0x3033, 0x3034, 0x3035,
             ):
                 vertical_offset_y -= 1
 

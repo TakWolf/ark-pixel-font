@@ -37,6 +37,10 @@ def check_glyphs(font_size: FontSize):
                 if width_mode_dir_name == 'common' and block is not None and block.name not in (
                         'Box Drawing',
                         'Block Elements',
+                ) and code_point not in (
+                        0x25D8, 0x25D9, 0x25DA, 0x25DB,
+                        0x25E2, 0x25E3, 0x25E4, 0x25E5,
+                        0x25F8, 0x25F9, 0x25FA, 0x25FF,
                 ):
                     if code_point not in (
                             0x3035,
