@@ -4,8 +4,8 @@
 
 | 属性 | 值 |
 |---|---|
-| 版本号 | 2026.02.27 |
-| 字符总数 | 3168 |
+| 版本号 | 2026.05.07 |
+| 字符总数 | 3186 |
 
 ## Unicode 字符分布
 
@@ -24,7 +24,7 @@ Unicode 版本：17.0.0
 | 2100 ~ 214F | Letterlike Symbols | 字母式符号 | 9 / 80 | 71 | 11.25% 🚧 |
 | 2150 ~ 218F | Number Forms | 数字形式 | 60 / 60 | 0 | 100.00% 🚩 |
 | 2190 ~ 21FF | Arrows | 箭头 | 112 / 112 | 0 | 100.00% 🚩 |
-| 2300 ~ 23FF | Miscellaneous Technical | 各式技术符号 | 43 / 256 | 213 | 16.80% 🚧 |
+| 2300 ~ 23FF | Miscellaneous Technical | 各式技术符号 | 46 / 256 | 210 | 17.97% 🚧 |
 | 2460 ~ 24FF | Enclosed Alphanumerics | 包围字母数字 | 160 / 160 | 0 | 100.00% 🚩 |
 | 2500 ~ 257F | Box Drawing | 制表符 | 128 / 128 | 0 | 100.00% 🚩 |
 | 2580 ~ 259F | Block Elements | 方块元素 | 32 / 32 | 0 | 100.00% 🚩 |
@@ -46,13 +46,13 @@ Unicode 版本：17.0.0
 | 3400 ~ 4DBF | CJK Unified Ideographs Extension A | 中日韩统一表意文字扩充 A | 2 / 6592 | 6590 | 0.03% 🚧 |
 | 4E00 ~ 9FFF | CJK Unified Ideographs | 中日韩统一表意文字 | 95 / 20992 | 20897 | 0.45% 🚧 |
 | A720 ~ A7FF | Latin Extended-D | 拉丁扩充-D | 7 / 204 | 197 | 3.43% 🚧 |
-| E000 ~ F8FF | Private Use Area | 私用区域 | 238 / 0 | 0 | 100.00% 🚩 |
+| E000 ~ F8FF | Private Use Area | 私用区域 | 243 / 0 | 0 | 100.00% 🚩 |
 | FE10 ~ FE1F | Vertical Forms | 竖排形式 | 10 / 10 | 0 | 100.00% 🚩 |
 | FE30 ~ FE4F | CJK Compatibility Forms | 中日韩兼容形式 | 32 / 32 | 0 | 100.00% 🚩 |
 | FF00 ~ FFEF | Halfwidth and Fullwidth Forms | 半宽与全宽形式 | 173 / 225 | 52 | 76.89% 🚧 |
 | FFF0 ~ FFFF | Specials | 特殊 | 2 / 2 | 0 | 100.00% 🚩 |
 | 16FE0 ~ 16FFF | Ideographic Symbols and Punctuation | 表意文字符号与标点 | 5 / 12 | 7 | 41.67% 🚧 |
-| 1F100 ~ 1F1FF | Enclosed Alphanumeric Supplement | 包围字母数字增补 | 135 / 200 | 65 | 67.50% 🚧 |
+| 1F100 ~ 1F1FF | Enclosed Alphanumeric Supplement | 包围字母数字增补 | 145 / 200 | 55 | 72.50% 🚧 |
 
 ## GB2312 字符分布
 
