@@ -13,6 +13,8 @@
 
 ## 预览
 
+[点击此链接](https://ark-pixel-font.takwolf.com/playground.html) 实时预览字体效果。
+
 ### 10 像素
 
 ![Preview-10px](docs/preview-10px.png)
@@ -27,7 +29,7 @@
 
 ## 字符统计
 
-可以通过下面的链接来查看字体各尺寸目前支持的字符情况。
+通过下面的链接来查看字符统计信息。
 
 | 尺寸 | 等宽模式 | 比例模式 |
 |---|---|---|
@@ -35,9 +37,27 @@
 | 12px | [info-12px-monospaced](docs/info-12px-monospaced.md) | [info-12px-proportional](docs/info-12px-proportional.md) |
 | 16px | [info-16px-monospaced](docs/info-16px-monospaced.md) | [info-16px-proportional](docs/info-16px-proportional.md) |
 
+## 宽度模式
+
+目前支持「等宽」和「比例」两种模式。
+
+### 等宽模式
+
+字符为半宽或全宽，排版时可严格纵向对其。
+
+字体行高有限，基线位置略微偏高，这导致中西文混排时西文在视觉上重心偏高，美观性略差。
+
+### 比例模式
+
+字符宽度根据字形实际情况分配，字距和行高自然，支持自动字距调整。
+
+基线处于合适的位置，整体排版观感舒适。
+
+如无特殊使用场景，应该优先使用该模式。
+
 ## 语言特定字形
 
-目前支持以下语言特定字形版本：
+目前支持以下语言特定字形版本。
 
 | 版本 | 含义 | 说明 |
 |---|---|---|
@@ -48,6 +68,10 @@
 | zh_tr | 中文-传统印刷 | 字形采用 [「传统印刷体」](https://zh.wikipedia.org/wiki/%E8%88%8A%E5%AD%97%E5%BD%A2) 写法，符合传统繁体中文使用习惯。 |
 | ja | 日语 | 字形采用日本参考规范 [《常用汉字表》](https://zh.wikipedia.org/wiki/%E5%B8%B8%E7%94%A8%E6%BC%A2%E5%AD%97) 中的写法。 |
 | ko | 朝鲜语 | |
+
+## 下载
+
+[点击此链接](https://github.com/TakWolf/ark-pixel-font/releases) 下载最新版本。
 
 ## 字形依赖
 
