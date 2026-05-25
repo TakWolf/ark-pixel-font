@@ -7,7 +7,8 @@ from loguru import logger
 from tools import configs
 from tools.configs import path_define, options
 from tools.configs.options import FontSize, WidthMode, FontFormat, Attachment
-from tools.services import font_service, publish_service, info_service, template_service, image_service
+from tools.services import publish_service, info_service, template_service, image_service
+from tools.services.font_service import DesignContext
 
 app = App(
     version=configs.version,
@@ -53,8 +54,11 @@ def main(
         shutil.rmtree(path_define.build_dir)
         logger.info("Delete dir: '{}'", path_define.build_dir)
 
-    design_contexts = font_service.load_design_contexts(font_sizes)
-    for design_context in design_contexts.values():
+    design_contexts = {}
+    for font_size in font_sizes:
+        design_context = DesignContext.load(font_size)
+        design_contexts[font_size] = design_context
+
         for width_mode in width_modes:
             design_context.make_fonts(width_mode, font_formats)
 

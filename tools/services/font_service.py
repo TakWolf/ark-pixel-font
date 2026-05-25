@@ -162,8 +162,3 @@ class DesignContext:
                         case _:
                             getattr(builder, f'save_{font_format}')(file_path)
                     logger.info("Make font: '{}'", file_path)
-
-
-def load_design_contexts(font_sizes: list[FontSize]) -> dict[FontSize, DesignContext]:
-    design_contexts = {font_size: DesignContext.load(font_size) for font_size in font_sizes}
-    return design_contexts
