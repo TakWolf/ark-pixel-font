@@ -15,7 +15,7 @@ _environment = Environment(
 
 
 def _make_html(template_name: str, file_name: str, params: dict[str, object] | None = None):
-    params = {} if params is None else dict(params)
+    params = params.copy() if params is not None else {}
     params['font_configs'] = configs.font_configs
     params['width_modes'] = options.width_modes
     params['locale_to_language_flavor'] = configs.locale_to_language_flavor
