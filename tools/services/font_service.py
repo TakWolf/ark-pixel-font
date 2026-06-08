@@ -23,10 +23,10 @@ class DesignContext:
                 glyph_mapping_util.apply_mapping(context, mapping)
             contexts[width_mode_dir_name] = context
 
-        glyph_files = {}
-        for width_mode in options.width_modes:
-            glyph_files[width_mode] = dict(contexts['common'])
-            glyph_files[width_mode].update(contexts[width_mode])
+        glyph_files = {
+            width_mode: contexts['common'] | contexts[width_mode]
+            for width_mode in options.width_modes
+        }
 
         return DesignContext(font_size, glyph_files)
 
