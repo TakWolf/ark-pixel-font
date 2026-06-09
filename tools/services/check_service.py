@@ -45,7 +45,7 @@ def check_glyphs(font_size: FontSize):
                     if code_point not in (
                             0x3035,
                     ):
-                        assert all(color == 0 for color in glyph_file.bitmap[0]), f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
+                        assert all(pixel == 0 for pixel in glyph_file.bitmap[0]), f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
 
                     if code_point not in (
                             0x2013,
