@@ -19,12 +19,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7.0.0
       - name: Setup uv
-        uses: astral-sh/setup-uv@v8.2.0
+        uses: astral-sh/setup-uv@v8.3.2
       - name: Install dependencies
         run: uv sync
       - name: Build
         run: uv run -m tools.cli --cleanup --font-sizes ${{ matrix.font-size }} --width-modes ${{ matrix.width-mode }} --font-formats ${{ matrix.font-format }} --attachments release
       - name: Release
-        uses: softprops/action-gh-release@v3.0.1
+        uses: softprops/action-gh-release@v3.0.2
         with:
           files: ./build/releases/*.zip
