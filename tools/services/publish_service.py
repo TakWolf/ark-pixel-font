@@ -1,5 +1,5 @@
 import re
-import zipfile
+from zipfile import ZipFile
 
 from loguru import logger
 
@@ -13,7 +13,7 @@ def make_release_zips(font_size: FontSize, width_mode: WidthMode, font_formats: 
 
     for font_format in font_formats:
         file_path = path_define.releases_dir.joinpath(f'ark-pixel-font-{font_size}px-{width_mode}-{font_format}-v{configs.version}.zip')
-        with zipfile.ZipFile(file_path, 'w') as file:
+        with ZipFile(file_path, 'w') as file:
             file.write(path_define.project_root_dir.joinpath('LICENSE-OFL'), 'OFL.txt')
 
             for language_flavor in options.language_flavors:
