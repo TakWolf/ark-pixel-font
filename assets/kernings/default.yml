@@ -28,6 +28,8 @@ groups:
   latin_w: wŵẁẃẅẇẉẘ
   latin_y: yýÿŷȳẏẙỳỵỷỹ
   period: .,
+  slash: /
+  backslash: \
 
 templates:
   latin_A,latin_T: -1
@@ -181,3 +183,5 @@ templates:
   latin_v,period: -1
   latin_w,period: -1
   latin_y,period: -1
+  slash,slash: -1
+  backslash,backslash: -1
