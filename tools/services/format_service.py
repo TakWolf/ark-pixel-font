@@ -15,7 +15,7 @@ def format_glyphs(font_size: FontSize):
 
 def format_mappings():
     for file_path in path_define.mappings_dir.iterdir():
-        if file_path.suffix != '.yml':
+        if file_path.suffix != '.yaml':
             continue
         mapping = glyph_mapping_util.load_mapping(file_path)
         glyph_mapping_util.save_mapping(mapping, file_path, options.language_flavors)
