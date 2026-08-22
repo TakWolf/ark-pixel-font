@@ -43,13 +43,13 @@
 
 ### 等宽模式
 
-字符为半宽或全宽，排版时可严格纵向对其。
+字符为半宽或全宽，排版时可严格纵向对齐。
 
 字体行高有限，基线位置略微偏高，这导致中西文混排时西文在视觉上重心偏高，美观性略差。
 
 ### 比例模式
 
-字符宽度根据字形实际情况分配，字距和行高自然，支持自动字距调整。
+字符宽度根据字形实际情况分配，字距和行高自然，支持字偶距调整。
 
 基线处于合适的位置，整体排版观感舒适。
 
@@ -61,13 +61,13 @@
 
 | 版本 | 含义 | 说明 |
 |---|---|---|
-| latin | 泛拉丁语 | 在西文环境下使用，标点符号符合西文使用习惯。 |
-| zh_cn | 中文-中国大陆 | 字形采用中国大陆地区标准规范 [《通用规范汉字表》](https://www.moe.gov.cn/jyb_sjzl/ziliao/A19/201306/t20130601_186002.html) 中的写法。 |
-| zh_hk | 中文-香港特别行政区 | 字形采用香港地区教育规范 [《常用字字形表》](https://zh.wikipedia.org/wiki/%E5%B8%B8%E7%94%A8%E5%AD%97%E5%AD%97%E5%BD%A2%E8%A1%A8) 中的写法。 |
-| zh_tw | 中文-台湾地区 | 字形采用台湾地区教育规范 [《国字标准字体》](https://zh.wikipedia.org/wiki/%E5%9C%8B%E5%AD%97%E6%A8%99%E6%BA%96%E5%AD%97%E9%AB%94) 中的写法。 |
-| zh_tr | 中文-传统印刷 | 字形采用 [「传统印刷体」](https://zh.wikipedia.org/wiki/%E8%88%8A%E5%AD%97%E5%BD%A2) 写法，符合传统繁体中文使用习惯。 |
-| ja | 日语 | 字形采用日本参考规范 [《常用汉字表》](https://zh.wikipedia.org/wiki/%E5%B8%B8%E7%94%A8%E6%BC%A2%E5%AD%97) 中的写法。 |
-| ko | 朝鲜语 | |
+| latin | 拉丁文字环境 | 面向以拉丁文字为主的西文排版环境，标点符号的位置、宽度和间距采用西文排版习惯。 |
+| zh_cn | 中文-中国大陆 | 汉字字形主要参考国务院公布的 [《通用规范汉字表》](https://www.gov.cn/zwgk/2013-08/19/content_2469793.htm) 中的写法。 |
+| zh_hk | 中文-香港特别行政区 | 汉字字形主要参考香港特区政府 [《香港電腦漢字參考字形》](https://www.ccli.gov.hk/doc/wgcliac2016-16a.pdf) 中的写法。 |
+| zh_tw | 中文-台湾地区 | 汉字字形主要参考台湾教育主管机关 [《常用國字標準字體表》](https://language.moe.gov.tw/material/info?m=9fe3ff5a-5a8c-4817-9e60-6337dd55a509) 中的写法。 |
+| zh_tr | 中文-传统印刷 | 汉字字形主要参考 [「传统印刷体」](https://zh.wikipedia.org/wiki/%E8%88%8A%E5%AD%97%E5%BD%A2) 的写法，符合传统繁体中文使用习惯。 |
+| ja | 日语 | 汉字字形主要参考日本文化厅 [《常用漢字表》](https://www.bunka.go.jp/kokugo_nihongo/sisaku/joho/joho/kijun/naikaku/kanji/) 和 [《表外漢字字体表》](https://www.bunka.go.jp/kokugo_nihongo/sisaku/joho/joho/kakuki/22/tosin03/index.html) 中的写法。 |
+| ko | 韩语 | 汉字字形主要参考 [KS X 1001](https://standard.go.kr/KSCI/standardIntro/getStandardSearchView.do?ksNo=KSX1001) 和 [KS X 1002](https://standard.go.kr/KSCI/standardIntro/getStandardSearchView.do?ksNo=KSX1002) 中的写法。 |
 
 ## 下载
 
