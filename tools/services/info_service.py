@@ -15,10 +15,8 @@ from tools.services.font_service import DesignContext
 
 
 def _do_we_need_to_create_a_glyph(c: str) -> bool:
-    if c in ('\u0020', '\u3000'):
-        return True
     category = unicodedata2.category(c)
-    return category.startswith(('L', 'M', 'N', 'P', 'S'))
+    return category.startswith(('L', 'M', 'N', 'P', 'S')) or category == 'Zs'
 
 
 def _get_unicode_chr_count_infos(alphabet: set[str]) -> list[tuple[UnicodeBlock, int, int]]:
