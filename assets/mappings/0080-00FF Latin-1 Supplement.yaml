@@ -1,0 +1,5 @@
+
+# NO-BREAK SPACE
+0x00A0:
+  # SPACE
+  "*": 0x0020

@@ -9,6 +9,7 @@ version = '2026.08.11'
 font_configs = {font_size: FontConfig.load(font_size) for font_size in options.font_sizes}
 
 mappings = [
+    glyph_mapping_util.load_mapping(path_define.mappings_dir.joinpath('0080-00FF Latin-1 Supplement.yaml')),
     glyph_mapping_util.load_mapping(path_define.mappings_dir.joinpath('2E80-2EFF CJK Radicals Supplement.yaml')),
     glyph_mapping_util.load_mapping(path_define.mappings_dir.joinpath('2F00-2FDF Kangxi Radicals.yaml')),
 ]
