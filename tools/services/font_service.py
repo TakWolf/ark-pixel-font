@@ -136,9 +136,6 @@ class DesignContext:
         builder.opentype_config.fields_override.head_y_max = layout_metric.ascent
         builder.opentype_config.fields_override.head_y_min = layout_metric.descent
 
-        if width_mode == 'monospaced':
-            builder.dfont_config.is_monospaced = True
-
         return builder
 
     def make_fonts(self, width_mode: WidthMode, font_formats: list[FontFormat]):
