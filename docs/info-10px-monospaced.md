@@ -13,25 +13,25 @@ Unicode 版本：17.0.0
 
 | 区块范围 | 区块名称 | 区块含义 | 完成数 | 缺失数 | 进度 |
 |---|---|---|---:|---:|---:|
-| 0000 ~ 007F | Basic Latin | 基本拉丁 | 95 / 95 | 0 | 100.00% 🚩 |
-| 0080 ~ 00FF | Latin-1 Supplement | 拉丁-1 增补 | 94 / 94 | 0 | 100.00% 🚩 |
-| 0100 ~ 017F | Latin Extended-A | 拉丁扩充-A | 126 / 128 | 2 | 98.44% 🚧 |
-| 0180 ~ 024F | Latin Extended-B | 拉丁扩充-B | 115 / 208 | 93 | 55.29% 🚧 |
-| 1E00 ~ 1EFF | Latin Extended Additional | 拉丁扩充附加 | 1 / 256 | 255 | 0.39% 🚧 |
-| 2000 ~ 206F | General Punctuation | 通用标点 | 36 / 71 | 35 | 50.70% 🚧 |
+| 0000 ~ 007F | Basic Latin | 基本拉丁字母 | 95 / 95 | 0 | 100.00% 🚩 |
+| 0080 ~ 00FF | Latin-1 Supplement | 拉丁字母-1 增补 | 94 / 95 | 1 | 98.95% 🚧 |
+| 0100 ~ 017F | Latin Extended-A | 拉丁字母扩充-A | 126 / 128 | 2 | 98.44% 🚧 |
+| 0180 ~ 024F | Latin Extended-B | 拉丁字母扩充-B | 115 / 208 | 93 | 55.29% 🚧 |
+| 1E00 ~ 1EFF | Latin Extended Additional | 拉丁字母扩充附加 | 1 / 256 | 255 | 0.39% 🚧 |
+| 2000 ~ 206F | General Punctuation | 通用标点 | 36 / 84 | 48 | 42.86% 🚧 |
 | 2070 ~ 209F | Superscripts and Subscripts | 上标与下标 | 42 / 42 | 0 | 100.00% 🚩 |
 | 2100 ~ 214F | Letterlike Symbols | 字母式符号 | 9 / 80 | 71 | 11.25% 🚧 |
 | 2150 ~ 218F | Number Forms | 数字形式 | 60 / 60 | 0 | 100.00% 🚩 |
 | 2190 ~ 21FF | Arrows | 箭头 | 112 / 112 | 0 | 100.00% 🚩 |
-| 2300 ~ 23FF | Miscellaneous Technical | 各式技术符号 | 46 / 256 | 210 | 17.97% 🚧 |
+| 2300 ~ 23FF | Miscellaneous Technical | 杂项技术符号 | 46 / 256 | 210 | 17.97% 🚧 |
 | 2460 ~ 24FF | Enclosed Alphanumerics | 包围字母数字 | 160 / 160 | 0 | 100.00% 🚩 |
-| 2500 ~ 257F | Box Drawing | 制表符 | 128 / 128 | 0 | 100.00% 🚩 |
+| 2500 ~ 257F | Box Drawing | 方框绘制字符 | 128 / 128 | 0 | 100.00% 🚩 |
 | 2580 ~ 259F | Block Elements | 方块元素 | 32 / 32 | 0 | 100.00% 🚩 |
 | 25A0 ~ 25FF | Geometric Shapes | 几何形状 | 96 / 96 | 0 | 100.00% 🚩 |
-| 2600 ~ 26FF | Miscellaneous Symbols | 各式符号 | 188 / 256 | 68 | 73.44% 🚧 |
-| 2700 ~ 27BF | Dingbats | 杂锦 | 34 / 192 | 158 | 17.71% 🚧 |
+| 2600 ~ 26FF | Miscellaneous Symbols | 杂项符号 | 188 / 256 | 68 | 73.44% 🚧 |
+| 2700 ~ 27BF | Dingbats | 装饰符号 | 34 / 192 | 158 | 17.71% 🚧 |
 | 2800 ~ 28FF | Braille Patterns | 盲文图案 | 256 / 256 | 0 | 100.00% 🚩 |
-| 2C60 ~ 2C7F | Latin Extended-C | 拉丁扩充-C | 4 / 32 | 28 | 12.50% 🚧 |
+| 2C60 ~ 2C7F | Latin Extended-C | 拉丁字母扩充-C | 4 / 32 | 28 | 12.50% 🚧 |
 | 2E80 ~ 2EFF | CJK Radicals Supplement | 中日韩部首增补 | 45 / 115 | 70 | 39.13% 🚧 |
 | 2F00 ~ 2FDF | Kangxi Radicals | 康熙部首 | 88 / 214 | 126 | 41.12% 🚧 |
 | 2FF0 ~ 2FFF | Ideographic Description Characters | 表意文字描述字符 | 16 / 16 | 0 | 100.00% 🚩 |
@@ -44,12 +44,12 @@ Unicode 版本：17.0.0
 | 3300 ~ 33FF | CJK Compatibility | 中日韩兼容 | 60 / 256 | 196 | 23.44% 🚧 |
 | 3400 ~ 4DBF | CJK Unified Ideographs Extension A | 中日韩统一表意文字扩充 A | 9 / 6592 | 6583 | 0.14% 🚧 |
 | 4E00 ~ 9FFF | CJK Unified Ideographs | 中日韩统一表意文字 | 1076 / 20992 | 19916 | 5.13% 🚧 |
-| A720 ~ A7FF | Latin Extended-D | 拉丁扩充-D | 7 / 204 | 197 | 3.43% 🚧 |
+| A720 ~ A7FF | Latin Extended-D | 拉丁字母扩充-D | 7 / 204 | 197 | 3.43% 🚧 |
 | E000 ~ F8FF | Private Use Area | 私用区域 | 249 / 0 | 0 | 100.00% 🚩 |
 | FE10 ~ FE1F | Vertical Forms | 竖排形式 | 10 / 10 | 0 | 100.00% 🚩 |
 | FE30 ~ FE4F | CJK Compatibility Forms | 中日韩兼容形式 | 32 / 32 | 0 | 100.00% 🚩 |
 | FF00 ~ FFEF | Halfwidth and Fullwidth Forms | 半宽与全宽形式 | 173 / 225 | 52 | 76.89% 🚧 |
-| FFF0 ~ FFFF | Specials | 特殊 | 2 / 2 | 0 | 100.00% 🚩 |
+| FFF0 ~ FFFF | Specials | 特殊字符 | 2 / 2 | 0 | 100.00% 🚩 |
 | 16FE0 ~ 16FFF | Ideographic Symbols and Punctuation | 表意文字符号与标点 | 5 / 12 | 7 | 41.67% 🚧 |
 | 1F100 ~ 1F1FF | Enclosed Alphanumeric Supplement | 包围字母数字增补 | 145 / 200 | 55 | 72.50% 🚧 |
 | 20000 ~ 2A6DF | CJK Unified Ideographs Extension B | 中日韩统一表意文字扩充 B | 2 / 42720 | 42718 | 0.00% 🚧 |
