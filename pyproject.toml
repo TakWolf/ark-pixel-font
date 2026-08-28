@@ -4,15 +4,15 @@ version = "0.0.0"
 requires-python = ">=3.14"
 
 dependencies = [
-    "pixel-font-builder==0.0.55",
-    "pixel-font-knife==0.0.25",
+    "pixel-font-builder==0.0.56",
+    "pixel-font-knife==0.0.28",
     "unicodedata2==17.0.1",
-    "unidata-blocks==0.0.25",
+    "unidata-blocks==0.0.26",
     "character-encoding-utils==0.0.12",
     "pyyaml==6.0.3",
     "pillow==12.3.0",
     "beautifulsoup4==4.15.0",
     "jinja2==3.1.6",
     "loguru==0.7.3",
-    "cyclopts==4.22.5",
+    "cyclopts==4.23.3",
 ]
