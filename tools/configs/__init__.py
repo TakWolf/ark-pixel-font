@@ -12,6 +12,7 @@ mappings = [
     glyph_mapping_util.load_mapping(path_define.mappings_dir.joinpath('0080-00FF Latin-1 Supplement.yaml')),
     glyph_mapping_util.load_mapping(path_define.mappings_dir.joinpath('2E80-2EFF CJK Radicals Supplement.yaml')),
     glyph_mapping_util.load_mapping(path_define.mappings_dir.joinpath('2F00-2FDF Kangxi Radicals.yaml')),
+    glyph_mapping_util.load_mapping(path_define.mappings_dir.joinpath('F900-FAFF CJK Compatibility Ideographs.yaml')),
 ]
 
 kerning_config = KerningConfig.load(path_define.kernings_dir.joinpath('default.yaml'))
