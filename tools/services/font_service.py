@@ -116,13 +116,27 @@ class DesignContext:
             ):
                 vertical_offset_y -= 1
 
+            optimized_bitmap = glyph_file.optimized_bitmap
+            optimized_paddings = glyph_file.optimized_paddings
+
+            if optimized_bitmap.width == 0 or optimized_bitmap.height == 0:
+                horizontal_offset_x = 0
+                horizontal_offset_y = 0
+                vertical_offset_x = 0
+                vertical_offset_y = 0
+            else:
+                horizontal_offset_x += optimized_paddings.left
+                horizontal_offset_y += optimized_paddings.bottom
+                vertical_offset_x += optimized_paddings.left
+                vertical_offset_y += optimized_paddings.top
+
             builder.glyphs.append(Glyph(
                 name=glyph_file.glyph_name,
                 horizontal_offset=(horizontal_offset_x, horizontal_offset_y),
                 advance_width=advance_width,
                 vertical_offset=(vertical_offset_x, vertical_offset_y),
                 advance_height=advance_height,
-                bitmap=glyph_file.bitmap.data,
+                bitmap=optimized_bitmap.data,
             ))
 
         character_mapping = glyph_file_util.get_character_mapping(self._glyph_files[width_mode], language_flavor)
