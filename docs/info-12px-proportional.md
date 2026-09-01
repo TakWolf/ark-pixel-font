@@ -4,8 +4,8 @@
 
 | 属性 | 值 |
 |---|---|
-| 版本号 | 2026.08.11 |
-| 字符总数 | 24434 |
+| 版本号 | 2026.09.01 |
+| 字符总数 | 24471 |
 
 ## Unicode 字符统计
 
@@ -14,7 +14,7 @@ Unicode 版本：17.0.0
 | 区块范围 | 区块名称 | 区块含义 | 完成数 | 缺失数 | 进度 |
 |---|---|---|---:|---:|---:|
 | 0000 ~ 007F | Basic Latin | 基本拉丁字母 | 95 / 95 | 0 | 100.00% 🚩 |
-| 0080 ~ 00FF | Latin-1 Supplement | 拉丁字母-1 增补 | 94 / 95 | 1 | 98.95% 🚧 |
+| 0080 ~ 00FF | Latin-1 Supplement | 拉丁字母-1 增补 | 95 / 95 | 0 | 100.00% 🚩 |
 | 0100 ~ 017F | Latin Extended-A | 拉丁字母扩充-A | 128 / 128 | 0 | 100.00% 🚩 |
 | 0180 ~ 024F | Latin Extended-B | 拉丁字母扩充-B | 127 / 208 | 81 | 61.06% 🚧 |
 | 0370 ~ 03FF | Greek and Coptic | 希腊字母与科普特字母 | 99 / 135 | 36 | 73.33% 🚧 |
@@ -54,6 +54,7 @@ Unicode 版本：17.0.0
 | FFF0 ~ FFFF | Specials | 特殊字符 | 2 / 2 | 0 | 100.00% 🚩 |
 | 16FE0 ~ 16FFF | Ideographic Symbols and Punctuation | 表意文字符号与标点 | 5 / 12 | 7 | 41.67% 🚧 |
 | 1F100 ~ 1F1FF | Enclosed Alphanumeric Supplement | 包围字母数字增补 | 145 / 200 | 55 | 72.50% 🚧 |
+| 1FA00 ~ 1FA6F | Chess Symbols | 国际象棋符号 | 36 / 102 | 66 | 35.29% 🚧 |
 | 20000 ~ 2A6DF | CJK Unified Ideographs Extension B | 中日韩统一表意文字扩充 B | 1146 / 42720 | 41574 | 2.68% 🚧 |
 | 2A700 ~ 2B73F | CJK Unified Ideographs Extension C | 中日韩统一表意文字扩充 C | 36 / 4160 | 4124 | 0.87% 🚧 |
 | 2B740 ~ 2B81F | CJK Unified Ideographs Extension D | 中日韩统一表意文字扩充 D | 11 / 222 | 211 | 4.95% 🚧 |
