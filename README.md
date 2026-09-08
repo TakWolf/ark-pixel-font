@@ -34,7 +34,7 @@
 
 ## 宽度模式
 
-目前支持「等宽」和「比例」两种模式。
+目前支持「等宽模式」和「比例模式」两种。
 
 ### 等宽模式
 
@@ -48,7 +48,7 @@
 
 基线处于合适的位置，整体排版观感舒适。
 
-如无特殊使用场景，应该优先使用该模式。
+如无特殊需求，应该优先使用「比例模式」。
 
 ## 语言特定字形
 
@@ -84,8 +84,8 @@
 
 ## 官方社区
 
-- [「像素字体工房」Discord 服务器](https://discord.gg/3GKtPKtjdU)
-- [「像素字体工房」QQ 群](https://qm.qq.com/q/jPk8sSitUI)
+- [像素字体工房 - Discord 服务器](https://discord.gg/3GKtPKtjdU)
+- [像素字体工房 - QQ 群](https://qm.qq.com/q/jPk8sSitUI)
 
 ## 许可证
 
@@ -93,15 +93,15 @@
 
 ### 字体
 
-使用 [「SIL 开放字体许可证第 1.1 版」](LICENSE-OFL) 授权。
+采用 [SIL Open Font License version 1.1](LICENSE-OFL) 授权。
 
 ### 构建程序
 
-使用 [「MIT 许可证」](LICENSE-MIT) 授权。
+采用 [MIT License](LICENSE-MIT) 授权。
 
 ## 赞助
 
-如果这个项目对您有帮助，请考虑赞助来支持开发工作。
+如果这个项目对您有帮助，请考虑赞助来支持后续开发。
 
 [![赞赏码](https://raw.githubusercontent.com/TakWolf/TakWolf/master/images/badge-payqr@2x.png)](https://github.com/TakWolf/TakWolf/blob/master/payment-qr-codes.md)
 [![爱发电](https://raw.githubusercontent.com/TakWolf/TakWolf/master/images/badge-afdian@2x.png)](https://afdian.com/a/takwolf)
