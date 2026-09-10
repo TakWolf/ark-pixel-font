@@ -3,7 +3,7 @@ from tools.services import check_service
 
 
 def main():
-    for font_size in options.font_sizes:
+    for font_size in options.FONT_SIZES:
         check_service.check_glyphs(font_size)
 
 

@@ -117,8 +117,8 @@ def _write_locale_chr_count_infos_table(file: TextIO, infos: list[tuple[str, int
 def make_info(design_context: DesignContext, width_mode: WidthMode):
     alphabet = design_context.get_alphabet(width_mode)
 
-    path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
-    file_path = path_define.outputs_dir.joinpath(f'info-{design_context.font_size}px-{width_mode}.md')
+    path_define.OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
+    file_path = path_define.OUTPUTS_DIR.joinpath(f'info-{design_context.font_size}px-{width_mode}.md')
     with file_path.open('w', encoding='utf-8') as file:
         file.write(f'# Ark Pixel {design_context.font_size}px {'等宽模式' if width_mode == 'monospaced' else '比例模式'}\n')
         file.write('\n')
@@ -126,7 +126,7 @@ def make_info(design_context: DesignContext, width_mode: WidthMode):
         file.write('\n')
         file.write('| 属性 | 值 |\n')
         file.write('|---|---|\n')
-        file.write(f'| 版本号 | {configs.version} |\n')
+        file.write(f'| 版本号 | {configs.VERSION} |\n')
         file.write(f'| 字符总数 | {len(alphabet)} |\n')
         file.write('\n')
         file.write('## Unicode 字符统计\n')
@@ -164,7 +164,7 @@ def make_info(design_context: DesignContext, width_mode: WidthMode):
 def make_alphabet_txt(design_context: DesignContext, width_mode: WidthMode):
     alphabet = sorted(design_context.get_alphabet(width_mode))
 
-    path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
-    file_path = path_define.outputs_dir.joinpath(f'alphabet-{design_context.font_size}px-{width_mode}.txt')
+    path_define.OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
+    file_path = path_define.OUTPUTS_DIR.joinpath(f'alphabet-{design_context.font_size}px-{width_mode}.txt')
     file_path.write_text(''.join(alphabet), 'utf-8')
     logger.info("Make alphabet txt: '{}'", file_path)

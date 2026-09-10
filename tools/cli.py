@@ -11,7 +11,7 @@ from tools.services import publish_service, info_service, template_service, imag
 from tools.services.font_service import DesignContext
 
 app = App(
-    version=configs.version,
+    version=configs.VERSION,
     default_parameter=Parameter(consume_multiple=True),
 )
 
@@ -25,24 +25,24 @@ def main(
         attachments: set[Attachment | Literal['all']] | None = None,
 ):
     if font_sizes is None:
-        font_sizes = options.font_sizes
+        font_sizes = options.FONT_SIZES
     else:
-        font_sizes = sorted(font_sizes, key=lambda x: options.font_sizes.index(x))
+        font_sizes = sorted(font_sizes, key=lambda x: options.FONT_SIZES.index(x))
     if width_modes is None:
-        width_modes = options.width_modes
+        width_modes = options.WIDTH_MODES
     else:
-        width_modes = sorted(width_modes, key=lambda x: options.width_modes.index(x))
+        width_modes = sorted(width_modes, key=lambda x: options.WIDTH_MODES.index(x))
     if font_formats is None:
-        font_formats = options.font_formats
+        font_formats = options.FONT_FORMATS
     else:
-        font_formats = sorted(font_formats, key=lambda x: options.font_formats.index(x))
+        font_formats = sorted(font_formats, key=lambda x: options.FONT_FORMATS.index(x))
     if attachments is None:
         attachments = []
     elif 'all' in attachments:
-        attachments = options.attachments
+        attachments = options.ATTACHMENTS
     else:
-        attachments = sorted(attachments, key=lambda x: options.attachments.index(x))
-    all_font_sizes = font_sizes == options.font_sizes
+        attachments = sorted(attachments, key=lambda x: options.ATTACHMENTS.index(x))
+    all_font_sizes = font_sizes == options.FONT_SIZES
 
     logger.info('cleanup = {}', cleanup)
     logger.info('font_sizes = {}', font_sizes)
@@ -50,9 +50,9 @@ def main(
     logger.info('font_formats = {}', font_formats)
     logger.info('attachments = {}', attachments)
 
-    if cleanup and path_define.build_dir.exists():
-        shutil.rmtree(path_define.build_dir)
-        logger.info("Delete dir: '{}'", path_define.build_dir)
+    if cleanup and path_define.BUILD_DIR.exists():
+        shutil.rmtree(path_define.BUILD_DIR)
+        logger.info("Delete dir: '{}'", path_define.BUILD_DIR)
 
     design_contexts = {}
     for font_size in font_sizes:

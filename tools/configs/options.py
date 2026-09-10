@@ -4,13 +4,13 @@ type FontSize = Literal[
     10,
     12,
 ]
-font_sizes = list[FontSize](get_args(FontSize.__value__))
+FONT_SIZES = list[FontSize](get_args(FontSize.__value__))
 
 type WidthMode = Literal[
     'monospaced',
     'proportional',
 ]
-width_modes = list[WidthMode](get_args(WidthMode.__value__))
+WIDTH_MODES = list[WidthMode](get_args(WidthMode.__value__))
 
 type LanguageFlavor = Literal[
     'latin',
@@ -21,7 +21,7 @@ type LanguageFlavor = Literal[
     'ja',
     'ko',
 ]
-language_flavors = list[LanguageFlavor](get_args(LanguageFlavor.__value__))
+LANGUAGE_FLAVORS = list[LanguageFlavor](get_args(LanguageFlavor.__value__))
 
 type FontFormat = Literal[
     'otf',
@@ -36,7 +36,7 @@ type FontFormat = Literal[
     'bdf',
     'pcf',
 ]
-font_formats = list[FontFormat](get_args(FontFormat.__value__))
+FONT_FORMATS = list[FontFormat](get_args(FontFormat.__value__))
 
 type Attachment = Literal[
     'release',
@@ -45,4 +45,4 @@ type Attachment = Literal[
     'html',
     'image',
 ]
-attachments = list[Attachment](get_args(Attachment.__value__))
+ATTACHMENTS = list[Attachment](get_args(Attachment.__value__))

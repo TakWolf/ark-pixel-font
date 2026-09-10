@@ -1,17 +1,17 @@
 from pathlib import Path
 
-project_root_dir = Path(__file__).parent.joinpath('..', '..').resolve()
+PROJECT_ROOT_DIR = Path(__file__).parent.joinpath('..', '..').resolve()
 
-assets_dir = project_root_dir.joinpath('assets')
-configs_dir = assets_dir.joinpath('configs')
-glyphs_dir = assets_dir.joinpath('glyphs')
-mappings_dir = assets_dir.joinpath('mappings')
-kernings_dir = assets_dir.joinpath('kernings')
-templates_dir = assets_dir.joinpath('templates')
-images_dir = assets_dir.joinpath('images')
+ASSETS_DIR = PROJECT_ROOT_DIR.joinpath('assets')
+CONFIGS_DIR = ASSETS_DIR.joinpath('configs')
+GLYPHS_DIR = ASSETS_DIR.joinpath('glyphs')
+MAPPINGS_DIR = ASSETS_DIR.joinpath('mappings')
+KERNINGS_DIR = ASSETS_DIR.joinpath('kernings')
+TEMPLATES_DIR = ASSETS_DIR.joinpath('templates')
+IMAGES_DIR = ASSETS_DIR.joinpath('images')
 
-build_dir = project_root_dir.joinpath('build')
-outputs_dir = build_dir.joinpath('outputs')
-releases_dir = build_dir.joinpath('releases')
+BUILD_DIR = PROJECT_ROOT_DIR.joinpath('build')
+OUTPUTS_DIR = BUILD_DIR.joinpath('outputs')
+RELEASES_DIR = BUILD_DIR.joinpath('releases')
 
-docs_dir = project_root_dir.joinpath('docs')
+DOCS_DIR = PROJECT_ROOT_DIR.joinpath('docs')

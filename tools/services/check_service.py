@@ -10,10 +10,10 @@ from tools.configs.options import FontSize
 
 
 def check_glyphs(font_size: FontSize):
-    canvas_size = configs.font_configs[font_size].canvas_size
+    canvas_size = configs.FONT_CONFIGS[font_size].canvas_size
 
-    for width_mode_dir_name in itertools.chain(['common'], options.width_modes):
-        context = glyph_file_util.load_context(path_define.glyphs_dir.joinpath(str(font_size), width_mode_dir_name))
+    for width_mode_dir_name in itertools.chain(['common'], options.WIDTH_MODES):
+        context = glyph_file_util.load_context(path_define.GLYPHS_DIR.joinpath(str(font_size), width_mode_dir_name))
 
         for code_point, flavor_group in sorted(context.items()):
             if code_point == -1:

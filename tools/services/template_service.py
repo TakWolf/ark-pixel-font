@@ -10,27 +10,27 @@ from tools.services.font_service import DesignContext
 _environment = Environment(
     trim_blocks=True,
     lstrip_blocks=True,
-    loader=FileSystemLoader(path_define.templates_dir),
+    loader=FileSystemLoader(path_define.TEMPLATES_DIR),
 )
 
 
 def _make_html(template_name: str, file_name: str, params: dict[str, object] | None = None):
     params = params.copy() if params is not None else {}
-    params['font_configs'] = configs.font_configs
-    params['width_modes'] = options.width_modes
-    params['locale_to_language_flavor'] = configs.locale_to_language_flavor
+    params['font_configs'] = configs.FONT_CONFIGS
+    params['width_modes'] = options.WIDTH_MODES
+    params['locale_to_language_flavor'] = configs.LOCALE_TO_LANGUAGE_FLAVOR
 
     html = _environment.get_template(template_name).render(params)
 
-    path_define.outputs_dir.mkdir(parents=True, exist_ok=True)
-    file_path = path_define.outputs_dir.joinpath(file_name)
+    path_define.OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
+    file_path = path_define.OUTPUTS_DIR.joinpath(file_name)
     file_path.write_text(html, 'utf-8')
     logger.info("Make html: '{}'", file_path)
 
 
 def make_alphabet_html(design_context: DesignContext, width_mode: WidthMode):
     _make_html('alphabet.html', f'alphabet-{design_context.font_size}px-{width_mode}.html', {
-        'font_config': configs.font_configs[design_context.font_size],
+        'font_config': configs.FONT_CONFIGS[design_context.font_size],
         'width_mode': width_mode,
         'alphabet': ''.join(sorted(c for c in design_context.get_alphabet(width_mode) if ord(c) >= 128)),
     })
@@ -95,13 +95,13 @@ def _handle_demo_html_element(design_context: DesignContext, soup: bs4.Beautiful
 
 
 def make_demo_html(design_context: DesignContext):
-    content_html = path_define.templates_dir.joinpath('demo-content.html').read_text('utf-8')
+    content_html = path_define.TEMPLATES_DIR.joinpath('demo-content.html').read_text('utf-8')
     soup = bs4.BeautifulSoup(content_html, 'html.parser')
     _handle_demo_html_element(design_context, soup, soup)
     content_html = str(soup).strip()
 
     _make_html('demo.html', f'demo-{design_context.font_size}px.html', {
-        'font_config': configs.font_configs[design_context.font_size],
+        'font_config': configs.FONT_CONFIGS[design_context.font_size],
         'content_html': content_html,
     })
 
