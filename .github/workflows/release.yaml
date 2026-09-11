@@ -10,7 +10,7 @@ jobs:
       contents: write
     strategy:
       matrix:
-        font-size: [10, 12, 16]
+        font-size: [10, 12]
         width-mode: [monospaced, proportional]
         font-format: [otf, otf.woff, otf.woff2, ttf, ttf.woff, ttf.woff2, ms.bitmap.ttf, otb, dfont, bdf, pcf]
       fail-fast: false

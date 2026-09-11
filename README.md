@@ -23,10 +23,6 @@
 
 ![Preview-12px](docs/preview-12px.png)
 
-### 16 像素
-
-![Preview-16px](docs/preview-16px.png)
-
 ## 字符统计
 
 通过下面的链接来查看字符统计信息。
@@ -35,7 +31,6 @@
 |---|---|---|
 | 10px | [info-10px-monospaced](docs/info-10px-monospaced.md) | [info-10px-proportional](docs/info-10px-proportional.md) |
 | 12px | [info-12px-monospaced](docs/info-12px-monospaced.md) | [info-12px-proportional](docs/info-12px-proportional.md) |
-| 16px | [info-16px-monospaced](docs/info-16px-monospaced.md) | [info-16px-proportional](docs/info-16px-proportional.md) |
 
 ## 宽度模式
 
