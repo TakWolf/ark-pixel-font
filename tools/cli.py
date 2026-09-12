@@ -23,7 +23,7 @@ def main(
         width_modes: set[WidthMode] | None = None,
         font_formats: set[FontFormat] | None = None,
         attachments: set[Attachment | Literal['all']] | None = None,
-):
+) -> None:
     if font_sizes is None:
         font_sizes = options.FONT_SIZES
     else:

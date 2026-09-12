@@ -1,7 +1,7 @@
 from tools import cli
 
 
-def main():
+def main() -> None:
     cli.main(
         cleanup=True,
         attachments={'all'},

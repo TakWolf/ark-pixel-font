@@ -39,7 +39,7 @@ class DesignContext:
             self,
             font_size: FontSize,
             glyph_files: dict[WidthMode, dict[int, GlyphFlavorGroup]],
-    ):
+    ) -> None:
         self.font_size = font_size
         self._glyph_files = glyph_files
         self._alphabet_cache = {}
@@ -152,7 +152,7 @@ class DesignContext:
 
         return builder
 
-    def make_fonts(self, width_mode: WidthMode, font_formats: list[FontFormat]):
+    def make_fonts(self, width_mode: WidthMode, font_formats: list[FontFormat]) -> None:
         path_define.OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
 
         if len(font_formats) > 0:

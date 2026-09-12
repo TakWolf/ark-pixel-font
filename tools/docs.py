@@ -1,7 +1,7 @@
 from tools.services import publish_service
 
 
-def main():
+def main() -> None:
     publish_service.update_docs()
 
 

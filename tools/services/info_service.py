@@ -91,7 +91,7 @@ def _get_ksx1001_chr_count_infos(alphabet: set[str]) -> list[tuple[str, int, int
     ]
 
 
-def _write_unicode_chr_count_infos_table(file: TextIO, infos: list[tuple[UnicodeBlock, int, int]]):
+def _write_unicode_chr_count_infos_table(file: TextIO, infos: list[tuple[UnicodeBlock, int, int]]) -> None:
     file.write('| 区块范围 | 区块名称 | 区块含义 | 完成数 | 缺失数 | 进度 |\n')
     file.write('|---|---|---|---:|---:|---:|\n')
     for block, count, total in infos:
@@ -104,7 +104,7 @@ def _write_unicode_chr_count_infos_table(file: TextIO, infos: list[tuple[Unicode
         file.write(f'| {code_point_range} | {name} | {name_zh} | {count} / {total} | {missing} | {progress:.2%} {finished_emoji} |\n')
 
 
-def _write_locale_chr_count_infos_table(file: TextIO, infos: list[tuple[str, int, int]]):
+def _write_locale_chr_count_infos_table(file: TextIO, infos: list[tuple[str, int, int]]) -> None:
     file.write('| 区块名称 | 完成数 | 缺失数 | 进度 |\n')
     file.write('|---|---:|---:|---:|\n')
     for name, count, total in infos:
@@ -114,7 +114,7 @@ def _write_locale_chr_count_infos_table(file: TextIO, infos: list[tuple[str, int
         file.write(f'| {name} | {count} / {total} | {missing} | {progress:.2%} {finished_emoji} |\n')
 
 
-def make_info(design_context: DesignContext, width_mode: WidthMode):
+def make_info(design_context: DesignContext, width_mode: WidthMode) -> None:
     alphabet = design_context.get_alphabet(width_mode)
 
     path_define.OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -161,7 +161,7 @@ def make_info(design_context: DesignContext, width_mode: WidthMode):
     logger.info("Make info: '{}'", file_path)
 
 
-def make_alphabet_txt(design_context: DesignContext, width_mode: WidthMode):
+def make_alphabet_txt(design_context: DesignContext, width_mode: WidthMode) -> None:
     alphabet = sorted(design_context.get_alphabet(width_mode))
 
     path_define.OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)

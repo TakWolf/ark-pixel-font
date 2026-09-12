@@ -9,7 +9,7 @@ from tools.configs import path_define, options
 from tools.configs.options import FontSize
 
 
-def check_glyphs(font_size: FontSize):
+def check_glyphs(font_size: FontSize) -> None:
     canvas_size = configs.FONT_CONFIGS[font_size].canvas_size
 
     for width_mode_dir_name in itertools.chain(['common'], options.WIDTH_MODES):

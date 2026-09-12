@@ -26,7 +26,7 @@ def _draw_text(
         line_gap: int = 0,
         is_horizontal_centered: bool = False,
         is_vertical_centered: bool = False,
-):
+) -> None:
     draw = ImageDraw.Draw(image)
     x, y = xy
     default_line_height = sum(font.getmetrics())
@@ -50,7 +50,7 @@ def _draw_text_background(
         box_size: int,
         font: FreeTypeFont,
         text_color: tuple[int, int, int, int],
-):
+) -> None:
     draw = ImageDraw.Draw(image)
     alphabet = [c for c in alphabet if 0x4E00 <= ord(c) <= 0x9FFF]
     if not alphabet:
@@ -66,7 +66,7 @@ def _draw_text_background(
             alphabet_index += step
 
 
-def make_preview_image(font_size: FontSize):
+def make_preview_image(font_size: FontSize) -> None:
     font_latin = _load_font(font_size, 'proportional', 'latin')
     font_zh_cn = _load_font(font_size, 'proportional', 'zh_cn')
     font_zh_tr = _load_font(font_size, 'proportional', 'zh_tr')
@@ -91,7 +91,7 @@ def make_preview_image(font_size: FontSize):
     logger.info("Make preview image: '{}'", file_path)
 
 
-def make_readme_banner(design_contexts: dict[FontSize, DesignContext]):
+def make_readme_banner(design_contexts: dict[FontSize, DesignContext]) -> None:
     font_x1 = _load_font(12, 'proportional', 'zh_cn')
     font_x2 = _load_font(12, 'proportional', 'zh_cn', 2)
     alphabet = sorted(design_contexts[12].get_alphabet('proportional'))
@@ -114,7 +114,7 @@ def make_readme_banner(design_contexts: dict[FontSize, DesignContext]):
     logger.info("Make readme banner: '{}'", file_path)
 
 
-def make_github_banner(design_contexts: dict[FontSize, DesignContext]):
+def make_github_banner(design_contexts: dict[FontSize, DesignContext]) -> None:
     font_title = _load_font(12, 'proportional', 'zh_cn', 2)
     font_latin = _load_font(12, 'proportional', 'latin')
     font_zh_cn = _load_font(12, 'proportional', 'zh_cn')
@@ -147,7 +147,7 @@ def make_github_banner(design_contexts: dict[FontSize, DesignContext]):
     logger.info("Make github banner: '{}'", file_path)
 
 
-def make_itch_io_banner(design_contexts: dict[FontSize, DesignContext]):
+def make_itch_io_banner(design_contexts: dict[FontSize, DesignContext]) -> None:
     font_x1 = _load_font(12, 'proportional', 'zh_cn')
     font_x2 = _load_font(12, 'proportional', 'zh_cn', 2)
     alphabet = sorted(design_contexts[12].get_alphabet('proportional'))
@@ -170,7 +170,7 @@ def make_itch_io_banner(design_contexts: dict[FontSize, DesignContext]):
     logger.info("Make itch.io banner: '{}'", file_path)
 
 
-def make_itch_io_cover():
+def make_itch_io_cover() -> None:
     font_title = _load_font(12, 'proportional', 'zh_cn', 2)
     font_latin = _load_font(12, 'proportional', 'latin')
     font_zh_cn = _load_font(12, 'proportional', 'zh_cn')
@@ -200,7 +200,7 @@ def make_itch_io_cover():
     logger.info("Make itch.io cover: '{}'", file_path)
 
 
-def make_afdian_cover():
+def make_afdian_cover() -> None:
     font_title = _load_font(12, 'proportional', 'zh_cn', 2)
     font_latin = _load_font(12, 'proportional', 'latin')
     font_zh_cn = _load_font(12, 'proportional', 'zh_cn')

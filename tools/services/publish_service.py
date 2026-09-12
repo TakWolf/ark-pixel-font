@@ -8,7 +8,7 @@ from tools.configs import path_define, options
 from tools.configs.options import FontSize, WidthMode, FontFormat
 
 
-def make_release_zips(font_size: FontSize, width_mode: WidthMode, font_formats: list[FontFormat]):
+def make_release_zips(font_size: FontSize, width_mode: WidthMode, font_formats: list[FontFormat]) -> None:
     path_define.RELEASES_DIR.mkdir(parents=True, exist_ok=True)
 
     for font_format in font_formats:
@@ -22,7 +22,7 @@ def make_release_zips(font_size: FontSize, width_mode: WidthMode, font_formats: 
         logger.info("Make release zip: '{}'", file_path)
 
 
-def update_docs():
+def update_docs() -> None:
     path_define.DOCS_DIR.mkdir(parents=True, exist_ok=True)
 
     regex_file_name = re.compile(r'^(info-.*px-.*\.md|preview-.*px\.png)$')

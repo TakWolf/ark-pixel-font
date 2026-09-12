@@ -14,7 +14,7 @@ _environment = Environment(
 )
 
 
-def _make_html(template_name: str, file_name: str, params: dict[str, object] | None = None):
+def _make_html(template_name: str, file_name: str, params: dict[str, object] | None = None) -> None:
     params = params.copy() if params is not None else {}
     params['font_configs'] = configs.FONT_CONFIGS
     params['width_modes'] = options.WIDTH_MODES
@@ -28,7 +28,7 @@ def _make_html(template_name: str, file_name: str, params: dict[str, object] | N
     logger.info("Make html: '{}'", file_path)
 
 
-def make_alphabet_html(design_context: DesignContext, width_mode: WidthMode):
+def make_alphabet_html(design_context: DesignContext, width_mode: WidthMode) -> None:
     _make_html('alphabet.html', f'alphabet-{design_context.font_size}px-{width_mode}.html', {
         'font_config': configs.FONT_CONFIGS[design_context.font_size],
         'width_mode': width_mode,
@@ -36,7 +36,7 @@ def make_alphabet_html(design_context: DesignContext, width_mode: WidthMode):
     })
 
 
-def _handle_demo_html_element(design_context: DesignContext, soup: bs4.BeautifulSoup, element: bs4.PageElement):
+def _handle_demo_html_element(design_context: DesignContext, soup: bs4.BeautifulSoup, element: bs4.PageElement) -> None:
     if isinstance(element, bs4.element.Tag):
         for child_element in element.contents:
             _handle_demo_html_element(design_context, soup, child_element)
@@ -94,7 +94,7 @@ def _handle_demo_html_element(design_context: DesignContext, soup: bs4.Beautiful
         tmp_parent.unwrap()
 
 
-def make_demo_html(design_context: DesignContext):
+def make_demo_html(design_context: DesignContext) -> None:
     content_html = path_define.TEMPLATES_DIR.joinpath('demo-content.html').read_text('utf-8')
     soup = bs4.BeautifulSoup(content_html, 'html.parser')
     _handle_demo_html_element(design_context, soup, soup)
@@ -106,9 +106,9 @@ def make_demo_html(design_context: DesignContext):
     })
 
 
-def make_index_html():
+def make_index_html() -> None:
     _make_html('index.html', 'index.html')
 
 
-def make_playground_html():
+def make_playground_html() -> None:
     _make_html('playground.html', 'playground.html')

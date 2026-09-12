@@ -43,7 +43,7 @@ class LayoutMetric:
             cap_height: int,
             underline_position: int,
             strikeout_position: int,
-    ):
+    ) -> None:
         self.baseline = baseline
         self.ascent = ascent
         self.descent = descent
@@ -79,7 +79,7 @@ class FontConfig:
             font_size: FontSize,
             canvas_size: int,
             layout_metrics: dict[WidthMode, LayoutMetric],
-    ):
+    ) -> None:
         self.font_size = font_size
         self.canvas_size = canvas_size
         self.layout_metrics = layout_metrics

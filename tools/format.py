@@ -2,7 +2,7 @@ from tools.configs import options
 from tools.services import format_service
 
 
-def main():
+def main() -> None:
     for font_size in options.FONT_SIZES:
         format_service.format_glyphs(font_size)
 
