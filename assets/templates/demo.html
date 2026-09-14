@@ -8,7 +8,7 @@
             box-sizing: border-box;
         }
         {% for width_mode in width_modes %}
-        {% for locale, language_flavor in locale_to_language_flavor.items() %}
+        {% for language_flavor, locale in language_flavor_to_locale.items() %}
         {% with font_family = 'ark-pixel-' ~ font_config.font_size ~ 'px-' ~ width_mode ~ '-' ~ language_flavor %}
         @font-face {
             font-family: {{ font_family }};

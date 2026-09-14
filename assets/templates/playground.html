@@ -12,7 +12,7 @@
         .font-{{ font_config.font_size }}px-{{ width_mode }} {
             font-size: {{ font_config.font_size * 2 }}px;
         }
-        {% for locale, language_flavor in locale_to_language_flavor.items() %}
+        {% for language_flavor, locale in language_flavor_to_locale.items() %}
         {% with font_family = 'ark-pixel-' ~ font_config.font_size ~ 'px-' ~ width_mode ~ '-' ~ language_flavor %}
         @font-face {
             font-family: {{ font_family }};
@@ -103,7 +103,7 @@
             {% endfor %}
         </div>
         <div class="options-group" style="background-color: #6ebdff;">
-            {% for locale, language_flavor in locale_to_language_flavor.items() %}
+            {% for language_flavor, locale in language_flavor_to_locale.items() %}
             <label class="option">
                 <input id="radio-locale-{{ locale }}" name="locale" type="radio" onchange="onLocaleChange('{{ locale }}')">
                 <span></span>
@@ -119,7 +119,7 @@
         const settings = {
             fontSize: 12,
             widthMode: 'proportional',
-            locale: 'zh-cn',
+            locale: 'zh-Hans',
         }
         const json = localStorage.getItem('ark-pixel-font:settings:playground')
         if (json) {

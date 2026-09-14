@@ -18,7 +18,7 @@ def _make_html(template_name: str, file_name: str, params: dict[str, object] | N
     params = params.copy() if params is not None else {}
     params['font_configs'] = configs.FONT_CONFIGS
     params['width_modes'] = options.WIDTH_MODES
-    params['locale_to_language_flavor'] = configs.LOCALE_TO_LANGUAGE_FLAVOR
+    params['language_flavor_to_locale'] = configs.LANGUAGE_FLAVOR_TO_LOCALE
 
     html = _environment.get_template(template_name).render(params)
 

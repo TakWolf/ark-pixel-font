@@ -14,7 +14,7 @@
         }
         {% endwith %}
         {% for font_config in font_configs.values() %}
-        {% for locale, language_flavor in locale_to_language_flavor.items() %}
+        {% for language_flavor, locale in language_flavor_to_locale.items() %}
         {% with font_family = 'ark-pixel-' ~ font_config.font_size ~ 'px-proportional-' ~ language_flavor %}
         @font-face {
             font-family: {{ font_family }};
@@ -137,17 +137,17 @@
         {% endfor %}
     </div>
     <div id="page">
-        <h1 class="title" lang="zh-cn">方舟像素字体 / Ark Pixel Font</h1>
+        <h1 class="title" lang="zh-Hans">方舟像素字体 / Ark Pixel Font</h1>
         <br>
-        <div class="text" lang="zh-cn">★ 开源的泛拉丁与泛中日韩像素字体，黑体风格 ★</div>
+        <div class="text" lang="zh-Hans">★ 开源的泛拉丁与泛中日韩像素字体，黑体风格 ★</div>
         <div class="link-group" lang="en">
             <a class="link-tab" href="https://github.com/TakWolf/ark-pixel-font" target="_blank">github</a>
             <a class="link-tab" href="https://takwolf.itch.io/ark-pixel-font" target="_blank">itch.io</a>
             <a class="link-tab" href="https://discord.gg/3GKtPKtjdU" target="_blank">discord</a>
         </div>
         <br>
-        <div class="text" lang="zh-cn">我们度过的每个平凡的日常，也许就是连续发生的奇迹。</div>
-        <div class="text" lang="zh-tr">我們度過的每個平凡的日常，也許就是連續發生的奇蹟。</div>
+        <div class="text" lang="zh-Hans">我们度过的每个平凡的日常，也许就是连续发生的奇迹。</div>
+        <div class="text" lang="zh-Hant">我們度過的每個平凡的日常，也許就是連續發生的奇蹟。</div>
         <div class="text" lang="ja">日々、私たちが過ごしている日常は、実は奇跡の連続なのかもしれない。</div>
         <div class="text" lang="en">THE QUICK BROWN FOX JUMPS OVER A LAZY DOG.</div>
         <div class="text" lang="en">the quick brown fox jumps over a lazy dog.</div>

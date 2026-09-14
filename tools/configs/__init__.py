@@ -16,12 +16,12 @@ MAPPINGS = [
 
 KERNING_CONFIG = KerningConfig.load(path_define.KERNINGS_DIR.joinpath('default.yaml'))
 
-LOCALE_TO_LANGUAGE_FLAVOR = {
-    'en': 'latin',
-    'zh-cn': 'zh_cn',
-    'zh-hk': 'zh_hk',
-    'zh-tw': 'zh_tw',
-    'zh-tr': 'zh_tr',
+LANGUAGE_FLAVOR_TO_LOCALE = {
+    'latin': 'en',
+    'zh_cn': 'zh-Hans',
+    'zh_tr': 'zh-Hant',
+    'zh_hk': 'zh-Hant-HK',
+    'zh_tw': 'zh-Hant-TW',
     'ja': 'ja',
     'ko': 'ko',
 }
