@@ -68,15 +68,15 @@ def _draw_text_background(
 
 def make_preview_image(font_size: FontSize) -> None:
     font_latin = _load_font(font_size, 'proportional', 'latin')
-    font_zh_cn = _load_font(font_size, 'proportional', 'zh_cn')
-    font_zh_tr = _load_font(font_size, 'proportional', 'zh_tr')
+    font_zh_hans = _load_font(font_size, 'proportional', 'zh_hans')
+    font_zh_hant = _load_font(font_size, 'proportional', 'zh_hant')
     font_ja = _load_font(font_size, 'proportional', 'ja')
     line_height = configs.FONT_CONFIGS[font_size].line_height
 
     image = Image.new('RGBA', (font_size * 27, font_size * 2 + line_height * 9), (255, 255, 255, 255))
-    _draw_text(image, (font_size, font_size), '方舟像素字体 / Ark Pixel Font', font_zh_cn)
-    _draw_text(image, (font_size, font_size + line_height), '我们度过的每个平凡的日常，也许就是连续发生的奇迹。', font_zh_cn)
-    _draw_text(image, (font_size, font_size + line_height * 2), '我們度過的每個平凡的日常，也許就是連續發生的奇蹟。', font_zh_tr)
+    _draw_text(image, (font_size, font_size), '方舟像素字体 / Ark Pixel Font', font_zh_hans)
+    _draw_text(image, (font_size, font_size + line_height), '我们度过的每个平凡的日常，也许就是连续发生的奇迹。', font_zh_hans)
+    _draw_text(image, (font_size, font_size + line_height * 2), '我們度過的每個平凡的日常，也許就是連續發生的奇蹟。', font_zh_hant)
     _draw_text(image, (font_size, font_size + line_height * 3), '日々、私たちが過ごしている日常は、', font_ja)
     _draw_text(image, (font_size, font_size + line_height * 4), '実は奇跡の連続なのかもしれない。', font_ja)
     _draw_text(image, (font_size, font_size + line_height * 5), 'THE QUICK BROWN FOX JUMPS OVER A LAZY DOG.', font_latin)
@@ -92,8 +92,8 @@ def make_preview_image(font_size: FontSize) -> None:
 
 
 def make_readme_banner(design_contexts: dict[FontSize, DesignContext]) -> None:
-    font_x1 = _load_font(12, 'proportional', 'zh_cn')
-    font_x2 = _load_font(12, 'proportional', 'zh_cn', 2)
+    font_x1 = _load_font(12, 'proportional', 'zh_hans')
+    font_x2 = _load_font(12, 'proportional', 'zh_hans', 2)
     alphabet = sorted(design_contexts[12].get_alphabet('proportional'))
     line_height = configs.FONT_CONFIGS[12].line_height
     box_size = 14
@@ -115,10 +115,10 @@ def make_readme_banner(design_contexts: dict[FontSize, DesignContext]) -> None:
 
 
 def make_github_banner(design_contexts: dict[FontSize, DesignContext]) -> None:
-    font_title = _load_font(12, 'proportional', 'zh_cn', 2)
+    font_title = _load_font(12, 'proportional', 'zh_hans', 2)
     font_latin = _load_font(12, 'proportional', 'latin')
-    font_zh_cn = _load_font(12, 'proportional', 'zh_cn')
-    font_zh_tr = _load_font(12, 'proportional', 'zh_tr')
+    font_zh_hans = _load_font(12, 'proportional', 'zh_hans')
+    font_zh_hant = _load_font(12, 'proportional', 'zh_hant')
     font_ja = _load_font(12, 'proportional', 'ja')
     alphabet = sorted(design_contexts[12].get_alphabet('proportional'))
     line_height = configs.FONT_CONFIGS[12].line_height
@@ -128,12 +128,12 @@ def make_github_banner(design_contexts: dict[FontSize, DesignContext]) -> None:
 
     image_background = Image.open(path_define.IMAGES_DIR.joinpath('github-banner-background.png'))
     image = Image.new('RGBA', (image_background.width, image_background.height), (0, 0, 0, 0))
-    _draw_text_background(image, alphabet, 12, box_size, font_zh_cn, (200, 200, 200, 255))
+    _draw_text_background(image, alphabet, 12, box_size, font_zh_hans, (200, 200, 200, 255))
     image.paste(image_background, mask=image_background)
     _draw_text(image, (image.width / 2, 54 + line_height), '方舟像素字体 / Ark Pixel Font', font_title, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
-    _draw_text(image, (image.width / 2, 54 + line_height * 3), '★ 开源的泛拉丁与泛中日韩像素字体，黑体风格 ★', font_zh_cn, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
-    _draw_text(image, (image.width / 2, 54 + line_height * 5), '我们度过的每个平凡的日常，也许就是连续发生的奇迹。', font_zh_cn, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
-    _draw_text(image, (image.width / 2, 54 + line_height * 6), '我們度過的每個平凡的日常，也許就是連續發生的奇蹟。', font_zh_tr, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
+    _draw_text(image, (image.width / 2, 54 + line_height * 3), '★ 开源的泛拉丁与泛中日韩像素字体，黑体风格 ★', font_zh_hans, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
+    _draw_text(image, (image.width / 2, 54 + line_height * 5), '我们度过的每个平凡的日常，也许就是连续发生的奇迹。', font_zh_hans, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
+    _draw_text(image, (image.width / 2, 54 + line_height * 6), '我們度過的每個平凡的日常，也許就是連續發生的奇蹟。', font_zh_hant, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     _draw_text(image, (image.width / 2, 54 + line_height * 7), '日々、私たちが過ごしている日常は、実は奇跡の連続なのかもしれない。', font_ja, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     _draw_text(image, (image.width / 2, 54 + line_height * 8), 'THE QUICK BROWN FOX JUMPS OVER A LAZY DOG.', font_latin, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     _draw_text(image, (image.width / 2, 54 + line_height * 9), 'the quick brown fox jumps over a lazy dog.', font_latin, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
@@ -148,8 +148,8 @@ def make_github_banner(design_contexts: dict[FontSize, DesignContext]) -> None:
 
 
 def make_itch_io_banner(design_contexts: dict[FontSize, DesignContext]) -> None:
-    font_x1 = _load_font(12, 'proportional', 'zh_cn')
-    font_x2 = _load_font(12, 'proportional', 'zh_cn', 2)
+    font_x1 = _load_font(12, 'proportional', 'zh_hans')
+    font_x2 = _load_font(12, 'proportional', 'zh_hans', 2)
     alphabet = sorted(design_contexts[12].get_alphabet('proportional'))
     line_height = configs.FONT_CONFIGS[12].line_height
     box_size = 14
@@ -171,10 +171,10 @@ def make_itch_io_banner(design_contexts: dict[FontSize, DesignContext]) -> None:
 
 
 def make_itch_io_cover() -> None:
-    font_title = _load_font(12, 'proportional', 'zh_cn', 2)
+    font_title = _load_font(12, 'proportional', 'zh_hans', 2)
     font_latin = _load_font(12, 'proportional', 'latin')
-    font_zh_cn = _load_font(12, 'proportional', 'zh_cn')
-    font_zh_tr = _load_font(12, 'proportional', 'zh_tr')
+    font_zh_hans = _load_font(12, 'proportional', 'zh_hans')
+    font_zh_hant = _load_font(12, 'proportional', 'zh_hant')
     font_ja = _load_font(12, 'proportional', 'ja')
     line_height = configs.FONT_CONFIGS[12].line_height
     text_color = (255, 255, 255, 255)
@@ -183,8 +183,8 @@ def make_itch_io_cover() -> None:
     image = Image.open(path_define.IMAGES_DIR.joinpath('itch-io-cover-background.png'))
     _draw_text(image, (image.width / 2, 19), '方舟像素字体', font_title, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     _draw_text(image, (image.width / 2, 19 + line_height * 2), 'Ark Pixel Font', font_latin, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
-    _draw_text(image, (image.width / 2, 19 + line_height * 4), '我们度过的每个平凡的日常，也许就是连续发生的奇迹。', font_zh_cn, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
-    _draw_text(image, (image.width / 2, 19 + line_height * 5), '我們度過的每個平凡的日常，也許就是連續發生的奇蹟。', font_zh_tr, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
+    _draw_text(image, (image.width / 2, 19 + line_height * 4), '我们度过的每个平凡的日常，也许就是连续发生的奇迹。', font_zh_hans, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
+    _draw_text(image, (image.width / 2, 19 + line_height * 5), '我們度過的每個平凡的日常，也許就是連續發生的奇蹟。', font_zh_hant, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     _draw_text(image, (image.width / 2, 19 + line_height * 6), '日々、私たちが過ごしている日常は、', font_ja, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     _draw_text(image, (image.width / 2, 19 + line_height * 7), '実は奇跡の連続なのかもしれない。', font_ja, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     _draw_text(image, (image.width / 2, 19 + line_height * 8), 'THE QUICK BROWN FOX JUMPS OVER A LAZY DOG.', font_latin, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
@@ -201,10 +201,10 @@ def make_itch_io_cover() -> None:
 
 
 def make_afdian_cover() -> None:
-    font_title = _load_font(12, 'proportional', 'zh_cn', 2)
+    font_title = _load_font(12, 'proportional', 'zh_hans', 2)
     font_latin = _load_font(12, 'proportional', 'latin')
-    font_zh_cn = _load_font(12, 'proportional', 'zh_cn')
-    font_zh_tr = _load_font(12, 'proportional', 'zh_tr')
+    font_zh_hans = _load_font(12, 'proportional', 'zh_hans')
+    font_zh_hant = _load_font(12, 'proportional', 'zh_hant')
     font_ja = _load_font(12, 'proportional', 'ja')
     line_height = configs.FONT_CONFIGS[12].line_height
     text_color = (255, 255, 255, 255)
@@ -213,9 +213,9 @@ def make_afdian_cover() -> None:
     image = Image.open(path_define.IMAGES_DIR.joinpath('afdian-cover-background.png'))
     _draw_text(image, (image.width / 2, 24), '方舟像素字体', font_title, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     _draw_text(image, (image.width / 2, 24 + line_height * 2), 'Ark Pixel Font', font_latin, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
-    _draw_text(image, (image.width / 2, 36 + line_height * 3), '★ 开源的泛拉丁与泛中日韩像素字体，黑体风格 ★', font_zh_cn, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
-    _draw_text(image, (image.width / 2, 36 + line_height * 5), '我们度过的每个平凡的日常，也许就是连续发生的奇迹。', font_zh_cn, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
-    _draw_text(image, (image.width / 2, 36 + line_height * 6), '我們度過的每個平凡的日常，也許就是連續發生的奇蹟。', font_zh_tr, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
+    _draw_text(image, (image.width / 2, 36 + line_height * 3), '★ 开源的泛拉丁与泛中日韩像素字体，黑体风格 ★', font_zh_hans, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
+    _draw_text(image, (image.width / 2, 36 + line_height * 5), '我们度过的每个平凡的日常，也许就是连续发生的奇迹。', font_zh_hans, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
+    _draw_text(image, (image.width / 2, 36 + line_height * 6), '我們度過的每個平凡的日常，也許就是連續發生的奇蹟。', font_zh_hant, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     _draw_text(image, (image.width / 2, 36 + line_height * 7), '日々、私たちが過ごしている日常は、', font_ja, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     _draw_text(image, (image.width / 2, 36 + line_height * 8), '実は奇跡の連続なのかもしれない。', font_ja, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     _draw_text(image, (image.width / 2, 36 + line_height * 10), 'THE QUICK BROWN FOX JUMPS OVER A LAZY DOG.', font_latin, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)

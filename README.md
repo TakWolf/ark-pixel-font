@@ -57,10 +57,10 @@
 | 版本 | 含义 | 说明 |
 |---|---|---|
 | latin | 拉丁文字环境 | 面向以拉丁文字为主的西文排版环境，标点符号的位置、宽度和间距采用西文排版习惯。 |
-| zh_cn | 中文-中国大陆 | 汉字字形主要参考国务院公布的 [《通用规范汉字表》](https://www.gov.cn/zwgk/2013-08/19/content_2469793.htm) 中的写法。 |
-| zh_hk | 中文-香港特别行政区 | 汉字字形主要参考香港特区政府 [《香港電腦漢字參考字形》](https://www.ccli.gov.hk/doc/wgcliac2016-16a.pdf) 中的写法。 |
-| zh_tw | 中文-台湾地区 | 汉字字形主要参考台湾教育主管机关 [《常用國字標準字體表》](https://language.moe.gov.tw/material/info?m=9fe3ff5a-5a8c-4817-9e60-6337dd55a509) 中的写法。 |
-| zh_tr | 中文-传统印刷 | 汉字字形主要参考 [「传统印刷体」](https://zh.wikipedia.org/wiki/%E8%88%8A%E5%AD%97%E5%BD%A2) 的写法，符合传统繁体中文使用习惯。 |
+| zh-Hans | 简体中文 | 汉字字形主要参考国务院公布的 [《通用规范汉字表》](https://www.gov.cn/zwgk/2013-08/19/content_2469793.htm) 中的写法。 |
+| zh-Hant | 繁体中文 | 汉字字形主要参考 [「传统印刷体」](https://zh.wikipedia.org/wiki/%E8%88%8A%E5%AD%97%E5%BD%A2) 的写法。 |
+| zh-HK | 繁体中文（香港地区） | 汉字字形主要参考香港特区政府 [《香港電腦漢字參考字形》](https://www.ccli.gov.hk/doc/wgcliac2016-16a.pdf) 中的写法。 |
+| zh-TW | 繁体中文（台湾地区） | 汉字字形主要参考台湾教育主管机关 [《常用國字標準字體表》](https://language.moe.gov.tw/material/info?m=9fe3ff5a-5a8c-4817-9e60-6337dd55a509) 中的写法。 |
 | ja | 日语 | 汉字字形主要参考日本文化厅 [《常用漢字表》](https://www.bunka.go.jp/kokugo_nihongo/sisaku/joho/joho/kijun/naikaku/kanji/) 和 [《表外漢字字体表》](https://www.bunka.go.jp/kokugo_nihongo/sisaku/joho/joho/kakuki/22/tosin03/index.html) 中的写法。 |
 | ko | 韩语 | 汉字字形主要参考 [KS X 1001](https://standard.go.kr/KSCI/standardIntro/getStandardSearchView.do?ksNo=KSX1001) 和 [KS X 1002](https://standard.go.kr/KSCI/standardIntro/getStandardSearchView.do?ksNo=KSX1002) 中的写法。 |
 

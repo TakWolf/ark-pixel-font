@@ -222,7 +222,7 @@
 # ⼬
 0x2F2C:
   # 屮
-  ~: 0x5C6E zh_cn
+  ~: 0x5C6E zh_hans
 
 # ⼭
 0x2F2D:
@@ -364,7 +364,7 @@
 # ⽈
 0x2F48:
   # 曰
-  ~: 0x66F0 zh_cn
+  ~: 0x66F0 zh_hans
 
 # ⽉
 0x2F49:
@@ -619,7 +619,7 @@
 # ⽻
 0x2F7B:
   # 羽
-  ~: 0x7FBD zh_cn
+  ~: 0x7FBD zh_hans
 
 # ⽼
 0x2F7C:
@@ -739,7 +739,7 @@
 # ⾓
 0x2F93:
   # 角
-  ~: 0x89D2 zh_tr
+  ~: 0x89D2 zh_hant
 
 # ⾔
 0x2F94:
@@ -919,11 +919,11 @@
 # ⾷
 0x2FB7:
   # 食
-  ~: 0x98DF zh_cn
+  ~: 0x98DF zh_hans
+  # 食
+  zh_hant,ja,ko: 0x98DF ja
   # 食
   zh_hk,zh_tw: 0x98DF zh_hk
-  # 食
-  zh_tr,ja,ko: 0x98DF ja
 
 # ⾸
 0x2FB8:
@@ -943,7 +943,7 @@
 # ⾻
 0x2FBB:
   # 骨
-  ~: 0x9AA8 zh_tr
+  ~: 0x9AA8 zh_hant
   # 骨
   zh_tw: 0x9AA8 zh_tw
 
@@ -977,7 +977,7 @@
   # 鬼
   ~: 0x9B3C zh_hk
   # 鬼
-  zh_tr,ja,ko: 0x9B3C zh_tr
+  zh_hant,ja,ko: 0x9B3C zh_hant
 
 # ⿂
 0x2FC2:
@@ -1039,7 +1039,7 @@
 # ⿍
 0x2FCD:
   # 鼎
-  ~: 0x9F0E zh_tr
+  ~: 0x9F0E zh_hant
 
 # ⿎
 0x2FCE:
@@ -1076,7 +1076,7 @@
   # 龜
   ~: 0x9F9C ja
   # 龜
-  zh_hk,zh_tr: 0x9F9C zh_hk
+  zh_hant,zh_hk: 0x9F9C zh_hk
   # 龜
   zh_tw: 0x9F9C zh_tw
 

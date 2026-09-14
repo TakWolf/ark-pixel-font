@@ -14,10 +14,10 @@ WIDTH_MODES = list[WidthMode](get_args(WidthMode.__value__))
 
 type LanguageFlavor = Literal[
     'latin',
-    'zh_cn',
+    'zh_hans',
+    'zh_hant',
     'zh_hk',
     'zh_tw',
-    'zh_tr',
     'ja',
     'ko',
 ]

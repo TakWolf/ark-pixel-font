@@ -16,10 +16,20 @@ MAPPINGS = [
 
 KERNING_CONFIG = KerningConfig.load(path_define.KERNINGS_DIR.joinpath('default.yaml'))
 
+LANGUAGE_FLAVOR_TO_FONT_NAME = {
+    'latin': 'latin',
+    'zh_hans': 'zh-Hans',
+    'zh_hant': 'zh-Hant',
+    'zh_hk': 'zh-HK',
+    'zh_tw': 'zh-TW',
+    'ja': 'ja',
+    'ko': 'ko',
+}
+
 LANGUAGE_FLAVOR_TO_LOCALE = {
     'latin': 'en',
-    'zh_cn': 'zh-Hans',
-    'zh_tr': 'zh-Hant',
+    'zh_hans': 'zh-Hans',
+    'zh_hant': 'zh-Hant',
     'zh_hk': 'zh-Hant-HK',
     'zh_tw': 'zh-Hant-TW',
     'ja': 'ja',

@@ -77,7 +77,7 @@
 # ⺕
 0x2E95:
   # 彐
-  ~: 0x5F50 zh_cn
+  ~: 0x5F50 zh_hans
 
 # ⺖
 0x2E96:
@@ -97,16 +97,16 @@
 # ⺛
 0x2E9B:
   # 旡
-  ~: 0x65E1 zh_cn
+  ~: 0x65E1 zh_hans
   # 旡
-  zh_tr,ja,ko: 0x65E1 zh_tr
+  zh_hant,ja,ko: 0x65E1 zh_hant
 
 # ⺞
 0x2E9E:
   # 歺
-  ~: 0x6B7A zh_cn
+  ~: 0x6B7A zh_hans
   # 歺
-  zh_tr,ja,ko: 0x6B7A zh_tr
+  zh_hant,ja,ko: 0x6B7A zh_hant
 
 # ⺟
 0x2E9F:
@@ -136,7 +136,7 @@
 # ⺤
 0x2EA4:
   # 爫
-  ~: 0x722B zh_cn
+  ~: 0x722B zh_hans
 
 # ⺦
 0x2EA6:
@@ -191,7 +191,7 @@
 # ⺳
 0x2EB3:
   # 㓁
-  ~: 0x34C1 zh_cn
+  ~: 0x34C1 zh_hans
 
 # ⺹
 0x2EB9:
@@ -211,7 +211,7 @@
 # ⺾
 0x2EBE:
   # 艹
-  ~: 0x8279 zh_cn
+  ~: 0x8279 zh_hans
 
 # ⺿
 0x2EBF:
@@ -221,7 +221,7 @@
 # ⻁
 0x2EC1:
   # 虎
-  ~: 0x864E zh_cn
+  ~: 0x864E zh_hans
 
 # ⻂
 0x2EC2:
@@ -236,7 +236,7 @@
 # ⻄
 0x2EC4:
   # 西
-  ~: 0x897F zh_tr
+  ~: 0x897F zh_hant
 
 # ⻅
 0x2EC5:
@@ -246,7 +246,7 @@
 # ⻆
 0x2EC6:
   # 角
-  ~: 0x89D2 zh_cn
+  ~: 0x89D2 zh_hans
 
 # ⻇
 0x2EC7:
@@ -276,12 +276,12 @@
 # ⻌
 0x2ECC:
   # 辶
-  ~: 0x8FB6 zh_cn
+  ~: 0x8FB6 zh_hans
 
 # ⻍
 0x2ECD:
   # 辶
-  ~: 0x8FB6 zh_tr
+  ~: 0x8FB6 zh_hant
 
 # ⻎
 0x2ECE:
@@ -311,7 +311,7 @@
 # ⻔
 0x2ED4:
   # 门
-  ~: 0x95E8 zh_cn
+  ~: 0x95E8 zh_hans
 
 # ⻕
 0x2ED5:
@@ -326,7 +326,7 @@
 # ⻘
 0x2ED8:
   # 青
-  ~: 0x9752 zh_cn
+  ~: 0x9752 zh_hans
 
 # ⻙
 0x2ED9:
@@ -351,9 +351,9 @@
 # ⻝
 0x2EDD:
   # 食
-  ~: 0x98DF zh_cn
+  ~: 0x98DF zh_hans
   # 食
-  zh_tr,ja,ko: 0x98DF zh_tr
+  zh_hant,ja,ko: 0x98DF zh_hant
 
 # ⻞
 0x2EDE:
@@ -363,9 +363,9 @@
 # ⻟
 0x2EDF:
   # 飠
-  ~: 0x98E0 zh_cn
+  ~: 0x98E0 zh_hans
   # 飠
-  zh_tr,ja,ko: 0x98E0 zh_tr
+  zh_hant,ja,ko: 0x98E0 zh_hant
 
 # ⻠
 0x2EE0:
@@ -385,12 +385,12 @@
 # ⻣
 0x2EE3:
   # 骨
-  ~: 0x9AA8 zh_cn
+  ~: 0x9AA8 zh_hans
 
 # ⻤
 0x2EE4:
   # 鬼
-  ~: 0x9B3C zh_cn
+  ~: 0x9B3C zh_hans
 
 # ⻥
 0x2EE5:
@@ -445,9 +445,9 @@
 # ⻯
 0x2EEF:
   # 竜
-  ~: 0x7ADC zh_cn
+  ~: 0x7ADC zh_hans
   # 竜
-  zh_tr,ja,ko: 0x7ADC zh_tr
+  zh_hant,ja,ko: 0x7ADC zh_hant
 
 # ⻰
 0x2EF0:
@@ -457,14 +457,14 @@
 # ⻱
 0x2EF1:
   # 龜
-  ~: 0x9F9C zh_cn
+  ~: 0x9F9C zh_hans
 
 # ⻲
 0x2EF2:
   # 亀
-  ~: 0x4E80 zh_cn
+  ~: 0x4E80 zh_hans
 
 # ⻳
 0x2EF3:
   # 龟
-  ~: 0x9F9F zh_cn
+  ~: 0x9F9F zh_hans
