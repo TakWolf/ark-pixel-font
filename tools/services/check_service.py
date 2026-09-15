@@ -2,7 +2,7 @@ import itertools
 
 import unicodedata2
 import unidata_blocks
-from pixel_font_knife import glyph_file_util
+from pixel_font_knife import glyph_file_util, glyph_mapping_util
 
 from tools import configs
 from tools.configs import path_define, options
@@ -27,6 +27,9 @@ def check_glyphs(font_size: FontSize) -> None:
                     0x2E95,
             ):
                 assert None in flavor_group, f'[{font_size}px] missing default flavor: {width_mode_dir_name} {code_point:04X}'
+
+            for language_flavor, glyph_file in flavor_group.items():
+                assert language_flavor is None or language_flavor in options.LANGUAGE_FLAVORS, f"[{font_size}px] unknown flavor: {language_flavor}\n'{glyph_file.file_path}'"
 
             bitmap_strings = {}
             for glyph_file in set(flavor_group.values()):
@@ -67,3 +70,15 @@ def check_glyphs(font_size: FontSize) -> None:
 
                 if width_mode_dir_name == 'proportional':
                     assert glyph_file.height == canvas_size, f"[{font_size}px] glyph bitmap size error: '{glyph_file.file_path}'"
+
+
+def check_mappings() -> None:
+    for file_path in path_define.MAPPINGS_DIR.iterdir():
+        if file_path.suffix != '.yaml':
+            continue
+        mapping = glyph_mapping_util.load_mapping(file_path)
+
+        for code_point, flavor_group in sorted(mapping.items()):
+            for language_flavor, source_glyph in flavor_group.items():
+                assert language_flavor is None or language_flavor == '*' or language_flavor in options.LANGUAGE_FLAVORS, f"unknown target flavor: 0x{code_point:04X} {language_flavor}\n'{file_path}'"
+                assert source_glyph.flavor is None or source_glyph.flavor in options.LANGUAGE_FLAVORS, f"unknown source flavor: 0x{code_point:04X} {language_flavor} -> 0x{source_glyph.code_point:04X} {source_glyph.flavor}\n'{file_path}'"
