@@ -1,5 +1,6 @@
 import itertools
 import math
+from collections.abc import Sequence
 from datetime import datetime
 
 import unidata_blocks
@@ -152,7 +153,7 @@ class DesignContext:
 
         return builder
 
-    def make_fonts(self, width_mode: WidthMode, font_formats: list[FontFormat]) -> None:
+    def make_fonts(self, width_mode: WidthMode, font_formats: Sequence[FontFormat]) -> None:
         path_define.OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
 
         if len(font_formats) > 0:

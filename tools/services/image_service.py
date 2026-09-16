@@ -1,4 +1,5 @@
 import math
+from collections.abc import Mapping, Sequence
 
 from PIL import Image, ImageFont, ImageDraw
 from PIL.ImageFont import FreeTypeFont
@@ -45,7 +46,7 @@ def _draw_text(
 
 def _draw_text_background(
         image: Image.Image,
-        alphabet: list[str],
+        alphabet: Sequence[str],
         step: int,
         box_size: int,
         font: FreeTypeFont,
@@ -91,7 +92,7 @@ def make_preview_image(font_size: FontSize) -> None:
     logger.info("Make preview image: '{}'", file_path)
 
 
-def make_readme_banner(design_contexts: dict[FontSize, DesignContext]) -> None:
+def make_readme_banner(design_contexts: Mapping[FontSize, DesignContext]) -> None:
     font_x1 = _load_font(12, 'proportional', 'zh_hans')
     font_x2 = _load_font(12, 'proportional', 'zh_hans', 2)
     alphabet = sorted(design_contexts[12].get_alphabet('proportional'))
@@ -114,7 +115,7 @@ def make_readme_banner(design_contexts: dict[FontSize, DesignContext]) -> None:
     logger.info("Make readme banner: '{}'", file_path)
 
 
-def make_github_banner(design_contexts: dict[FontSize, DesignContext]) -> None:
+def make_github_banner(design_contexts: Mapping[FontSize, DesignContext]) -> None:
     font_title = _load_font(12, 'proportional', 'zh_hans', 2)
     font_latin = _load_font(12, 'proportional', 'latin')
     font_zh_hans = _load_font(12, 'proportional', 'zh_hans')
@@ -147,7 +148,7 @@ def make_github_banner(design_contexts: dict[FontSize, DesignContext]) -> None:
     logger.info("Make github banner: '{}'", file_path)
 
 
-def make_itch_io_banner(design_contexts: dict[FontSize, DesignContext]) -> None:
+def make_itch_io_banner(design_contexts: Mapping[FontSize, DesignContext]) -> None:
     font_x1 = _load_font(12, 'proportional', 'zh_hans')
     font_x2 = _load_font(12, 'proportional', 'zh_hans', 2)
     alphabet = sorted(design_contexts[12].get_alphabet('proportional'))

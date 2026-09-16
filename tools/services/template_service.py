@@ -1,3 +1,5 @@
+from collections.abc import Mapping
+
 import bs4
 from jinja2 import Environment, FileSystemLoader
 from loguru import logger
@@ -14,8 +16,8 @@ _environment = Environment(
 )
 
 
-def _make_html(template_name: str, file_name: str, params: dict[str, object] | None = None) -> None:
-    params = params.copy() if params is not None else {}
+def _make_html(template_name: str, file_name: str, params: Mapping[str, object] | None = None) -> None:
+    params = dict(params) if params is not None else {}
     params['font_configs'] = configs.FONT_CONFIGS
     params['width_modes'] = options.WIDTH_MODES
     params['language_flavor_to_locale'] = configs.LANGUAGE_FLAVOR_TO_LOCALE

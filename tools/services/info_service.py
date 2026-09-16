@@ -1,5 +1,5 @@
 from collections import defaultdict
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 from typing import TextIO
 
 import unicodedata2
@@ -91,7 +91,7 @@ def _get_ksx1001_chr_count_infos(alphabet: set[str]) -> list[tuple[str, int, int
     ]
 
 
-def _write_unicode_chr_count_infos_table(file: TextIO, infos: list[tuple[UnicodeBlock, int, int]]) -> None:
+def _write_unicode_chr_count_infos_table(file: TextIO, infos: Sequence[tuple[UnicodeBlock, int, int]]) -> None:
     file.write('| 区块范围 | 区块名称 | 区块含义 | 完成数 | 缺失数 | 进度 |\n')
     file.write('|---|---|---|---:|---:|---:|\n')
     for block, count, total in infos:
@@ -104,7 +104,7 @@ def _write_unicode_chr_count_infos_table(file: TextIO, infos: list[tuple[Unicode
         file.write(f'| {code_point_range} | {name} | {name_zh} | {count} / {total} | {missing} | {progress:.2%} {finished_emoji} |\n')
 
 
-def _write_locale_chr_count_infos_table(file: TextIO, infos: list[tuple[str, int, int]]) -> None:
+def _write_locale_chr_count_infos_table(file: TextIO, infos: Sequence[tuple[str, int, int]]) -> None:
     file.write('| 区块名称 | 完成数 | 缺失数 | 进度 |\n')
     file.write('|---|---:|---:|---:|\n')
     for name, count, total in infos:
