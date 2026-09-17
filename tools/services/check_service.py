@@ -14,12 +14,8 @@ def check_glyphs(font_size: FontSize) -> None:
         context = glyph_file_util.load_context(path_define.GLYPHS_DIR.joinpath(str(font_size), glyph_scope))
 
         for code_point, flavor_group in sorted(context.items()):
-            if code_point == -1:
-                block = None
-                east_asian_width = 'F'
-            else:
-                block = unidata_blocks.get_block_by_code_point(code_point)
-                east_asian_width = unicodedata2.east_asian_width(chr(code_point))
+            block = unidata_blocks.get_block_by_code_point(code_point)
+            east_asian_width = unicodedata2.east_asian_width(chr(code_point))
 
             if code_point not in (
                     0x2E95,

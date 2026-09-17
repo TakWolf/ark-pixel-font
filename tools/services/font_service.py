@@ -6,7 +6,7 @@ import unidata_blocks
 from loguru import logger
 from pixel_font_builder import FontBuilder, WeightName, SerifStyle, SlantStyle, WidthStyle, Glyph
 from pixel_font_knife import glyph_file_util, glyph_mapping_util, kerning_util
-from pixel_font_knife.glyph_file_util import GlyphFlavorGroup
+from pixel_font_knife.glyph_file_util import GlyphFile, GlyphFlavorGroup
 
 from tools import configs
 from tools.configs import path_define, options
@@ -16,6 +16,8 @@ from tools.configs.options import FontSize, WidthMode, LanguageFlavor, FontForma
 class FontBuildContext:
     @staticmethod
     def load(font_size: FontSize) -> FontBuildContext:
+        notdef_glyph_file = GlyphFile.load(path_define.GLYPHS_DIR.joinpath(str(font_size), 'notdef.png'))
+
         contexts = {}
         for glyph_scope in options.GLYPH_SCOPES:
             context = glyph_file_util.load_context(path_define.GLYPHS_DIR.joinpath(str(font_size), glyph_scope))
@@ -28,9 +30,10 @@ class FontBuildContext:
             for width_mode in options.WIDTH_MODES
         }
 
-        return FontBuildContext(font_size, glyph_files)
+        return FontBuildContext(font_size, notdef_glyph_file, glyph_files)
 
     font_size: FontSize
+    _notdef_glyph_file: GlyphFile
     _glyph_files: dict[WidthMode, dict[int, GlyphFlavorGroup]]
     _alphabet_cache: dict[str, list[str]]
     _proportional_kerning_values: dict[tuple[str, str], int] | None
@@ -38,9 +41,11 @@ class FontBuildContext:
     def __init__(
             self,
             font_size: FontSize,
+            notdef_glyph_file: GlyphFile,
             glyph_files: dict[WidthMode, dict[int, GlyphFlavorGroup]],
     ) -> None:
         self.font_size = font_size
+        self._notdef_glyph_file = notdef_glyph_file
         self._glyph_files = glyph_files
         self._alphabet_cache = {}
         self._proportional_kerning_values = None
@@ -86,7 +91,7 @@ class FontBuildContext:
         builder.meta_info.designer_url = 'https://takwolf.com'
         builder.meta_info.license_url = 'https://github.com/TakWolf/ark-pixel-font/blob/master/LICENSE-OFL'
 
-        glyph_sequence = glyph_file_util.get_glyph_sequence(self._glyph_files[width_mode], [language_flavor])
+        glyph_sequence = [self._notdef_glyph_file] + glyph_file_util.get_glyph_sequence(self._glyph_files[width_mode], [language_flavor])
         for glyph_file in glyph_sequence:
             code_point = glyph_file.code_point
             block = unidata_blocks.get_block_by_code_point(code_point)
