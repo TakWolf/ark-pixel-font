@@ -3,10 +3,13 @@ from pathlib import Path
 PROJECT_ROOT_DIR = Path(__file__).parent.joinpath('..', '..').resolve()
 
 ASSETS_DIR = PROJECT_ROOT_DIR.joinpath('assets')
+
 CONFIGS_DIR = ASSETS_DIR.joinpath('configs')
+CONFIGS_FONTS_DIR = CONFIGS_DIR.joinpath('fonts')
+CONFIGS_MAPPINGS_DIR = CONFIGS_DIR.joinpath('mappings')
+CONFIGS_KERNING_DIR = CONFIGS_DIR.joinpath('kerning')
+
 GLYPHS_DIR = ASSETS_DIR.joinpath('glyphs')
-MAPPINGS_DIR = ASSETS_DIR.joinpath('mappings')
-KERNINGS_DIR = ASSETS_DIR.joinpath('kernings')
 TEMPLATES_DIR = ASSETS_DIR.joinpath('templates')
 IMAGES_DIR = ASSETS_DIR.joinpath('images')
 

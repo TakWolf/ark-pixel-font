@@ -12,7 +12,7 @@ def format_glyphs(font_size: FontSize) -> None:
 
 
 def format_mappings() -> None:
-    for file_path in path_define.MAPPINGS_DIR.iterdir():
+    for file_path in path_define.CONFIGS_MAPPINGS_DIR.iterdir():
         if file_path.suffix != '.yaml':
             continue
         mapping = glyph_mapping_util.load_mapping(file_path)

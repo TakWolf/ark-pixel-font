@@ -144,7 +144,7 @@ class FontBuildContext:
 
         if width_mode == 'proportional':
             if self._proportional_kerning_values is None:
-                self._proportional_kerning_values = kerning_util.calculate_kerning_values(configs.KERNING_CONFIG, self._glyph_files['proportional'])
+                self._proportional_kerning_values = kerning_util.calculate_kerning_values(configs.KERNING_TEMPLATE_DEFAULT, self._glyph_files['proportional'])
             builder.kerning_values.update(self._proportional_kerning_values)
 
         builder.opentype_config.fields_override.head_y_max = layout_metric.ascent
