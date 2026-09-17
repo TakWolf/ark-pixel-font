@@ -12,6 +12,13 @@ type WidthMode = Literal[
 ]
 WIDTH_MODES = list[WidthMode](get_args(WidthMode.__value__))
 
+type GlyphScope = Literal[
+    'common',
+    'monospaced',
+    'proportional',
+]
+GLYPH_SCOPES = list[GlyphScope](get_args(GlyphScope.__value__))
+
 type LanguageFlavor = Literal[
     'latin',
     'zh_hans',

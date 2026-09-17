@@ -1,4 +1,3 @@
-import itertools
 import math
 from collections.abc import Sequence
 from datetime import datetime
@@ -18,11 +17,11 @@ class DesignContext:
     @staticmethod
     def load(font_size: FontSize) -> DesignContext:
         contexts = {}
-        for width_mode_dir_name in itertools.chain(['common'], options.WIDTH_MODES):
-            context = glyph_file_util.load_context(path_define.GLYPHS_DIR.joinpath(str(font_size), width_mode_dir_name))
+        for glyph_scope in options.GLYPH_SCOPES:
+            context = glyph_file_util.load_context(path_define.GLYPHS_DIR.joinpath(str(font_size), glyph_scope))
             for mapping in configs.MAPPINGS:
                 glyph_mapping_util.apply_mapping(context, mapping)
-            contexts[width_mode_dir_name] = context
+            contexts[glyph_scope] = context
 
         glyph_files = {
             width_mode: contexts['common'] | contexts[width_mode]
