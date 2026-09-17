@@ -8,7 +8,7 @@ from loguru import logger
 from tools import configs
 from tools.configs import path_define
 from tools.configs.options import FontSize, WidthMode, LanguageFlavor
-from tools.services.font_service import DesignContext
+from tools.services.font_service import FontBuildContext
 
 
 def _load_font(font_size: FontSize, width_mode: WidthMode, language_flavor: LanguageFlavor, scale: int = 1) -> FreeTypeFont:
@@ -92,10 +92,10 @@ def make_preview_image(font_size: FontSize) -> None:
     logger.info("Make preview image: '{}'", file_path)
 
 
-def make_readme_banner(design_contexts: Mapping[FontSize, DesignContext]) -> None:
+def make_readme_banner(build_contexts: Mapping[FontSize, FontBuildContext]) -> None:
     font_x1 = _load_font(12, 'proportional', 'zh_hans')
     font_x2 = _load_font(12, 'proportional', 'zh_hans', 2)
-    alphabet = design_contexts[12].get_alphabet('proportional')
+    alphabet = build_contexts[12].get_alphabet('proportional')
     line_height = configs.FONT_CONFIGS[12].line_height
     box_size = 14
     text_color = (255, 255, 255, 255)
@@ -115,13 +115,13 @@ def make_readme_banner(design_contexts: Mapping[FontSize, DesignContext]) -> Non
     logger.info("Make readme banner: '{}'", file_path)
 
 
-def make_github_banner(design_contexts: Mapping[FontSize, DesignContext]) -> None:
+def make_github_banner(build_contexts: Mapping[FontSize, FontBuildContext]) -> None:
     font_title = _load_font(12, 'proportional', 'zh_hans', 2)
     font_latin = _load_font(12, 'proportional', 'latin')
     font_zh_hans = _load_font(12, 'proportional', 'zh_hans')
     font_zh_hant = _load_font(12, 'proportional', 'zh_hant')
     font_ja = _load_font(12, 'proportional', 'ja')
-    alphabet = design_contexts[12].get_alphabet('proportional')
+    alphabet = build_contexts[12].get_alphabet('proportional')
     line_height = configs.FONT_CONFIGS[12].line_height
     box_size = 14
     text_color = (255, 255, 255, 255)
@@ -148,10 +148,10 @@ def make_github_banner(design_contexts: Mapping[FontSize, DesignContext]) -> Non
     logger.info("Make github banner: '{}'", file_path)
 
 
-def make_itch_io_banner(design_contexts: Mapping[FontSize, DesignContext]) -> None:
+def make_itch_io_banner(build_contexts: Mapping[FontSize, FontBuildContext]) -> None:
     font_x1 = _load_font(12, 'proportional', 'zh_hans')
     font_x2 = _load_font(12, 'proportional', 'zh_hans', 2)
-    alphabet = design_contexts[12].get_alphabet('proportional')
+    alphabet = build_contexts[12].get_alphabet('proportional')
     line_height = configs.FONT_CONFIGS[12].line_height
     box_size = 14
     text_color = (255, 255, 255, 255)

@@ -7,7 +7,7 @@ from loguru import logger
 from tools import configs
 from tools.configs import path_define, options
 from tools.configs.options import WidthMode
-from tools.services.font_service import DesignContext
+from tools.services.font_service import FontBuildContext
 
 _environment = Environment(
     trim_blocks=True,
@@ -30,11 +30,11 @@ def _make_html(template_name: str, file_name: str, params: Mapping[str, object] 
     logger.info("Make html: '{}'", file_path)
 
 
-def make_alphabet_html(design_context: DesignContext, width_mode: WidthMode) -> None:
-    _make_html('alphabet.html', f'alphabet-{design_context.font_size}px-{width_mode}.html', {
-        'font_config': configs.FONT_CONFIGS[design_context.font_size],
+def make_alphabet_html(build_context: FontBuildContext, width_mode: WidthMode) -> None:
+    _make_html('alphabet.html', f'alphabet-{build_context.font_size}px-{width_mode}.html', {
+        'font_config': configs.FONT_CONFIGS[build_context.font_size],
         'width_mode': width_mode,
-        'alphabet': ''.join(c for c in design_context.get_alphabet(width_mode) if ord(c) >= 128),
+        'alphabet': ''.join(c for c in build_context.get_alphabet(width_mode) if ord(c) >= 128),
     })
 
 
@@ -99,17 +99,17 @@ def _handle_demo_html_element(
         tmp_parent.unwrap()
 
 
-def make_demo_html(design_context: DesignContext) -> None:
-    alphabet_monospaced = set(design_context.get_alphabet('monospaced'))
-    alphabet_proportional = set(design_context.get_alphabet('proportional'))
+def make_demo_html(build_context: FontBuildContext) -> None:
+    alphabet_monospaced = set(build_context.get_alphabet('monospaced'))
+    alphabet_proportional = set(build_context.get_alphabet('proportional'))
 
     content_html = path_define.TEMPLATES_DIR.joinpath('demo-content.html').read_text('utf-8')
     soup = bs4.BeautifulSoup(content_html, 'html.parser')
     _handle_demo_html_element(soup, soup, alphabet_monospaced, alphabet_proportional)
     content_html = str(soup).strip()
 
-    _make_html('demo.html', f'demo-{design_context.font_size}px.html', {
-        'font_config': configs.FONT_CONFIGS[design_context.font_size],
+    _make_html('demo.html', f'demo-{build_context.font_size}px.html', {
+        'font_config': configs.FONT_CONFIGS[build_context.font_size],
         'content_html': content_html,
     })
 

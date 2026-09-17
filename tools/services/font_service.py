@@ -13,9 +13,9 @@ from tools.configs import path_define, options
 from tools.configs.options import FontSize, WidthMode, LanguageFlavor, FontFormat
 
 
-class DesignContext:
+class FontBuildContext:
     @staticmethod
-    def load(font_size: FontSize) -> DesignContext:
+    def load(font_size: FontSize) -> FontBuildContext:
         contexts = {}
         for glyph_scope in options.GLYPH_SCOPES:
             context = glyph_file_util.load_context(path_define.GLYPHS_DIR.joinpath(str(font_size), glyph_scope))
@@ -28,7 +28,7 @@ class DesignContext:
             for width_mode in options.WIDTH_MODES
         }
 
-        return DesignContext(font_size, glyph_files)
+        return FontBuildContext(font_size, glyph_files)
 
     font_size: FontSize
     _glyph_files: dict[WidthMode, dict[int, GlyphFlavorGroup]]
