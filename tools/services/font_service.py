@@ -1,12 +1,14 @@
 import math
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 from datetime import datetime
 
 import unidata_blocks
 from loguru import logger
 from pixel_font_builder import FontBuilder, WeightName, SerifStyle, SlantStyle, WidthStyle, Glyph
-from pixel_font_knife import glyph_file_util, glyph_mapping_util, kerning_util
-from pixel_font_knife.glyph_file_util import GlyphFile, GlyphFlavorGroup
+from pixel_font_knife.cmap.context import CmapContext
+from pixel_font_knife.cmap.file import CmapGlyphFile
+from pixel_font_knife.glyph.file import GlyphFile
+from pixel_font_knife.named.file import NamedGlyphFile
 
 from tools import configs
 from tools.configs import path_define, options
@@ -16,45 +18,69 @@ from tools.configs.options import FontSize, WidthMode, LanguageFlavor, FontForma
 class FontBuildContext:
     @staticmethod
     def load(font_size: FontSize) -> FontBuildContext:
-        notdef_glyph_file = GlyphFile.load(path_define.GLYPHS_DIR.joinpath(str(font_size), 'notdef.png'))
+        notdef_glyph_file = NamedGlyphFile.load_notdef(path_define.GLYPHS_DIR.joinpath(str(font_size), 'notdef.png'))
 
-        contexts = {}
-        for glyph_scope in options.GLYPH_SCOPES:
-            context = glyph_file_util.load_context(path_define.GLYPHS_DIR.joinpath(str(font_size), 'cmap', glyph_scope))
-            for mapping in configs.MAPPINGS:
-                glyph_mapping_util.apply_mapping(context, mapping)
-            contexts[glyph_scope] = context
+        cmap_scope_contexts = {
+            glyph_scope: CmapContext.load(
+                path_define.GLYPHS_DIR.joinpath(str(font_size), 'cmap', glyph_scope),
+                allowed_flavors=options.LANGUAGE_FLAVORS,
+            )
+            for glyph_scope in options.GLYPH_SCOPES
+        }
 
-        glyph_files = {
-            width_mode: contexts['common'] | contexts[width_mode]
+        cmap_contexts = {
+            width_mode: CmapContext().merge_by_code_point(
+                cmap_scope_contexts['common'],
+                cmap_scope_contexts[width_mode],
+            ).apply_mapping_by_flavor(*configs.MAPPINGS)
             for width_mode in options.WIDTH_MODES
         }
 
-        return FontBuildContext(font_size, notdef_glyph_file, glyph_files)
+        return FontBuildContext(font_size, notdef_glyph_file, cmap_contexts)
 
     font_size: FontSize
-    _notdef_glyph_file: GlyphFile
-    _glyph_files: dict[WidthMode, dict[int, GlyphFlavorGroup]]
-    _alphabet_cache: dict[str, list[str]]
+    _notdef_glyph_file: NamedGlyphFile
+    _cmap_contexts: dict[WidthMode, CmapContext]
+    _glyph_sequence_cache: dict[WidthMode, dict[LanguageFlavor, list[GlyphFile]]]
+    _character_mapping_cache: dict[WidthMode, dict[LanguageFlavor, dict[int, str]]]
+    _alphabet_cache: dict[WidthMode, list[str]]
     _proportional_kerning_values: dict[tuple[str, str], int] | None
 
     def __init__(
             self,
             font_size: FontSize,
-            notdef_glyph_file: GlyphFile,
-            glyph_files: dict[WidthMode, dict[int, GlyphFlavorGroup]],
+            notdef_glyph_file: NamedGlyphFile,
+            cmap_contexts: dict[WidthMode, CmapContext],
     ) -> None:
         self.font_size = font_size
         self._notdef_glyph_file = notdef_glyph_file
-        self._glyph_files = glyph_files
+        self._cmap_contexts = cmap_contexts
+        self._glyph_sequence_cache = {width_mode: {} for width_mode in options.WIDTH_MODES}
+        self._character_mapping_cache = {width_mode: {} for width_mode in options.WIDTH_MODES}
         self._alphabet_cache = {}
         self._proportional_kerning_values = None
+
+    def get_glyph_sequence(self, width_mode: WidthMode, language_flavor: LanguageFlavor) -> Sequence[GlyphFile]:
+        if language_flavor in self._glyph_sequence_cache[width_mode]:
+            glyph_sequence = self._glyph_sequence_cache[width_mode][language_flavor]
+        else:
+            glyph_sequence = [self._notdef_glyph_file] + self._cmap_contexts[width_mode].get_glyph_sequence([language_flavor])
+            self._glyph_sequence_cache[width_mode][language_flavor] = glyph_sequence
+        return glyph_sequence
+
+    def get_character_mapping(self, width_mode: WidthMode, language_flavor: LanguageFlavor) -> Mapping[int, str]:
+        if language_flavor in self._character_mapping_cache[width_mode]:
+            character_mapping = self._character_mapping_cache[width_mode][language_flavor]
+        else:
+            character_mapping = self._cmap_contexts[width_mode].get_character_mapping(language_flavor)
+            self._character_mapping_cache[width_mode][language_flavor] = character_mapping
+        return character_mapping
 
     def get_alphabet(self, width_mode: WidthMode) -> Sequence[str]:
         if width_mode in self._alphabet_cache:
             alphabet = self._alphabet_cache[width_mode]
         else:
-            alphabet = [chr(code_point) for code_point in sorted(glyph_file_util.get_character_mapping(self._glyph_files[width_mode]).keys())]
+            alphabet = [chr(code_point) for code_point in sorted(self._cmap_contexts[width_mode].get_character_mapping().keys())]
             self._alphabet_cache[width_mode] = alphabet
         return alphabet
 
@@ -91,49 +117,37 @@ class FontBuildContext:
         builder.meta_info.designer_url = 'https://takwolf.com'
         builder.meta_info.license_url = 'https://github.com/TakWolf/ark-pixel-font/blob/master/LICENSE-OFL'
 
-        glyph_sequence = [self._notdef_glyph_file] + glyph_file_util.get_glyph_sequence(self._glyph_files[width_mode], [language_flavor])
+        glyph_sequence = self.get_glyph_sequence(width_mode, language_flavor)
         for glyph_file in glyph_sequence:
-            code_point = glyph_file.code_point
-            block = unidata_blocks.get_block_by_code_point(code_point)
+            vertical_em_size = self.font_size
+            vertical_offset_y_delta = 0
 
-            horizontal_offset_x = 0
-            horizontal_offset_y = layout_metric.baseline - self.font_size - (glyph_file.height - self.font_size) // 2
-            advance_width = glyph_file.width
+            if isinstance(glyph_file, CmapGlyphFile):
+                code_point = glyph_file.code_point
+                block = unidata_blocks.get_block_by_code_point(code_point)
 
-            vertical_offset_x = -math.ceil(glyph_file.width / 2)
-            if code_point in (
-                    0x3031, 0x3032,
-            ):
-                vertical_offset_y = (self.font_size * 2 - glyph_file.height) // 2
-                advance_height = self.font_size * 2
-            else:
-                vertical_offset_y = (self.font_size - glyph_file.height) // 2
-                advance_height = self.font_size
+                if code_point in (
+                        0x3031, 0x3032,
+                ):
+                    vertical_em_size = self.font_size * 2
 
-            if block is not None and block.name not in (
-                    'Box Drawing',
-                    'Block Elements',
-            ) and code_point not in (
-                    0x25D8, 0x25D9, 0x25DA, 0x25DB,
-                    0x25E2, 0x25E3, 0x25E4, 0x25E5,
-                    0x25F8, 0x25F9, 0x25FA, 0x25FF,
-                    0x3031, 0x3032, 0x3033, 0x3034, 0x3035,
-            ):
-                vertical_offset_y -= 1
+                if not glyph_file.canvas.is_blank and block.name not in (
+                        'Box Drawing',
+                        'Block Elements',
+                ) and code_point not in (
+                        0x25D8, 0x25D9, 0x25DA, 0x25DB,
+                        0x25E2, 0x25E3, 0x25E4, 0x25E5,
+                        0x25F8, 0x25F9, 0x25FA, 0x25FF,
+                        0x3031, 0x3032, 0x3033, 0x3034, 0x3035,
+                ):
+                    vertical_offset_y_delta = -1
 
-            optimized_bitmap = glyph_file.optimized_bitmap
-            optimized_paddings = glyph_file.optimized_paddings
+            horizontal_offset_x, horizontal_offset_y = glyph_file.canvas.horizontal_offset_for_trimmed(self.font_size, layout_metric.baseline)
+            advance_width = glyph_file.canvas.advance_width()
 
-            if optimized_bitmap.width == 0 or optimized_bitmap.height == 0:
-                horizontal_offset_x = 0
-                horizontal_offset_y = 0
-                vertical_offset_x = 0
-                vertical_offset_y = 0
-            else:
-                horizontal_offset_x += optimized_paddings.left
-                horizontal_offset_y += optimized_paddings.bottom
-                vertical_offset_x += optimized_paddings.left
-                vertical_offset_y += optimized_paddings.top
+            vertical_offset_x, vertical_offset_y = glyph_file.canvas.vertical_offset_for_trimmed(vertical_em_size)
+            vertical_offset_y += vertical_offset_y_delta
+            advance_height = glyph_file.canvas.advance_height(vertical_em_size)
 
             builder.glyphs.append(Glyph(
                 name=glyph_file.glyph_name,
@@ -141,15 +155,15 @@ class FontBuildContext:
                 advance_width=advance_width,
                 vertical_offset=(vertical_offset_x, vertical_offset_y),
                 advance_height=advance_height,
-                bitmap=optimized_bitmap.data,
+                bitmap=glyph_file.canvas.trimmed_bitmap.data,
             ))
 
-        character_mapping = glyph_file_util.get_character_mapping(self._glyph_files[width_mode], language_flavor)
+        character_mapping = self.get_character_mapping(width_mode, language_flavor)
         builder.character_mapping.update(character_mapping)
 
         if width_mode == 'proportional':
             if self._proportional_kerning_values is None:
-                self._proportional_kerning_values = kerning_util.calculate_kerning_values(configs.KERNING_TEMPLATE_DEFAULT, self._glyph_files['proportional'])
+                self._proportional_kerning_values = configs.KERNING_TEMPLATE_DEFAULT.calculate_kerning_values(self._cmap_contexts['proportional'])
             builder.kerning_values.update(self._proportional_kerning_values)
 
         builder.opentype_config.fields_override.head_y_max = layout_metric.ascent
