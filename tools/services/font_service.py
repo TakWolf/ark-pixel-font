@@ -20,7 +20,7 @@ class FontBuildContext:
 
         contexts = {}
         for glyph_scope in options.GLYPH_SCOPES:
-            context = glyph_file_util.load_context(path_define.GLYPHS_DIR.joinpath(str(font_size), glyph_scope))
+            context = glyph_file_util.load_context(path_define.GLYPHS_DIR.joinpath(str(font_size), 'cmap', glyph_scope))
             for mapping in configs.MAPPINGS:
                 glyph_mapping_util.apply_mapping(context, mapping)
             contexts[glyph_scope] = context

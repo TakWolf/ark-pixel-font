@@ -11,7 +11,7 @@ def check_glyphs(font_size: FontSize) -> None:
     canvas_size = configs.FONT_CONFIGS[font_size].canvas_size
 
     for glyph_scope in options.GLYPH_SCOPES:
-        context = glyph_file_util.load_context(path_define.GLYPHS_DIR.joinpath(str(font_size), glyph_scope))
+        context = glyph_file_util.load_context(path_define.GLYPHS_DIR.joinpath(str(font_size), 'cmap', glyph_scope))
 
         for code_point, flavor_group in sorted(context.items()):
             block = unidata_blocks.get_block_by_code_point(code_point)
