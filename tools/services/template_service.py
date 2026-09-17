@@ -1,4 +1,4 @@
-from collections.abc import Mapping
+from collections.abc import Mapping, Collection
 
 import bs4
 from jinja2 import Environment, FileSystemLoader
@@ -34,17 +34,20 @@ def make_alphabet_html(design_context: DesignContext, width_mode: WidthMode) -> 
     _make_html('alphabet.html', f'alphabet-{design_context.font_size}px-{width_mode}.html', {
         'font_config': configs.FONT_CONFIGS[design_context.font_size],
         'width_mode': width_mode,
-        'alphabet': ''.join(sorted(c for c in design_context.get_alphabet(width_mode) if ord(c) >= 128)),
+        'alphabet': ''.join(c for c in design_context.get_alphabet(width_mode) if ord(c) >= 128),
     })
 
 
-def _handle_demo_html_element(design_context: DesignContext, soup: bs4.BeautifulSoup, element: bs4.PageElement) -> None:
+def _handle_demo_html_element(
+        soup: bs4.BeautifulSoup,
+        element: bs4.PageElement,
+        alphabet_monospaced: Collection[str],
+        alphabet_proportional: Collection[str],
+) -> None:
     if isinstance(element, bs4.element.Tag):
         for child_element in element.contents:
-            _handle_demo_html_element(design_context, soup, child_element)
+            _handle_demo_html_element(soup, child_element, alphabet_monospaced, alphabet_proportional)
     elif isinstance(element, bs4.element.NavigableString):
-        alphabet_monospaced = design_context.get_alphabet('monospaced')
-        alphabet_proportional = design_context.get_alphabet('proportional')
         text = str(element)
         tmp_parent = soup.new_tag('div')
         last_status = None
@@ -97,9 +100,12 @@ def _handle_demo_html_element(design_context: DesignContext, soup: bs4.Beautiful
 
 
 def make_demo_html(design_context: DesignContext) -> None:
+    alphabet_monospaced = set(design_context.get_alphabet('monospaced'))
+    alphabet_proportional = set(design_context.get_alphabet('proportional'))
+
     content_html = path_define.TEMPLATES_DIR.joinpath('demo-content.html').read_text('utf-8')
     soup = bs4.BeautifulSoup(content_html, 'html.parser')
-    _handle_demo_html_element(design_context, soup, soup)
+    _handle_demo_html_element(soup, soup, alphabet_monospaced, alphabet_proportional)
     content_html = str(soup).strip()
 
     _make_html('demo.html', f'demo-{design_context.font_size}px.html', {

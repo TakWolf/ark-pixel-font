@@ -32,7 +32,7 @@ class DesignContext:
 
     font_size: FontSize
     _glyph_files: dict[WidthMode, dict[int, GlyphFlavorGroup]]
-    _alphabet_cache: dict[str, set[str]]
+    _alphabet_cache: dict[str, list[str]]
     _proportional_kerning_values: dict[tuple[str, str], int] | None
 
     def __init__(
@@ -45,11 +45,11 @@ class DesignContext:
         self._alphabet_cache = {}
         self._proportional_kerning_values = None
 
-    def get_alphabet(self, width_mode: WidthMode) -> set[str]:
+    def get_alphabet(self, width_mode: WidthMode) -> Sequence[str]:
         if width_mode in self._alphabet_cache:
             alphabet = self._alphabet_cache[width_mode]
         else:
-            alphabet = {chr(code_point) for code_point in self._glyph_files[width_mode] if code_point >= 0}
+            alphabet = [chr(code_point) for code_point in sorted(glyph_file_util.get_character_mapping(self._glyph_files[width_mode]).keys())]
             self._alphabet_cache[width_mode] = alphabet
         return alphabet
 

@@ -95,7 +95,7 @@ def make_preview_image(font_size: FontSize) -> None:
 def make_readme_banner(design_contexts: Mapping[FontSize, DesignContext]) -> None:
     font_x1 = _load_font(12, 'proportional', 'zh_hans')
     font_x2 = _load_font(12, 'proportional', 'zh_hans', 2)
-    alphabet = sorted(design_contexts[12].get_alphabet('proportional'))
+    alphabet = design_contexts[12].get_alphabet('proportional')
     line_height = configs.FONT_CONFIGS[12].line_height
     box_size = 14
     text_color = (255, 255, 255, 255)
@@ -121,7 +121,7 @@ def make_github_banner(design_contexts: Mapping[FontSize, DesignContext]) -> Non
     font_zh_hans = _load_font(12, 'proportional', 'zh_hans')
     font_zh_hant = _load_font(12, 'proportional', 'zh_hant')
     font_ja = _load_font(12, 'proportional', 'ja')
-    alphabet = sorted(design_contexts[12].get_alphabet('proportional'))
+    alphabet = design_contexts[12].get_alphabet('proportional')
     line_height = configs.FONT_CONFIGS[12].line_height
     box_size = 14
     text_color = (255, 255, 255, 255)
@@ -151,7 +151,7 @@ def make_github_banner(design_contexts: Mapping[FontSize, DesignContext]) -> Non
 def make_itch_io_banner(design_contexts: Mapping[FontSize, DesignContext]) -> None:
     font_x1 = _load_font(12, 'proportional', 'zh_hans')
     font_x2 = _load_font(12, 'proportional', 'zh_hans', 2)
-    alphabet = sorted(design_contexts[12].get_alphabet('proportional'))
+    alphabet = design_contexts[12].get_alphabet('proportional')
     line_height = configs.FONT_CONFIGS[12].line_height
     box_size = 14
     text_color = (255, 255, 255, 255)

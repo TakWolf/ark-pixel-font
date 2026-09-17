@@ -1,5 +1,5 @@
 from collections import defaultdict
-from collections.abc import Callable, Sequence
+from collections.abc import Callable, Collection, Sequence
 from typing import TextIO
 
 import unicodedata2
@@ -19,7 +19,7 @@ def _do_we_need_to_create_a_glyph(c: str) -> bool:
     return category.startswith(('L', 'M', 'N', 'P', 'S')) or category == 'Zs'
 
 
-def _get_unicode_chr_count_infos(alphabet: set[str]) -> list[tuple[UnicodeBlock, int, int]]:
+def _get_unicode_chr_count_infos(alphabet: Collection[str]) -> list[tuple[UnicodeBlock, int, int]]:
     in_block_counts = defaultdict(int)
     for c in alphabet:
         block = unidata_blocks.get_block_by_chr(c)
@@ -40,7 +40,7 @@ def _get_unicode_chr_count_infos(alphabet: set[str]) -> list[tuple[UnicodeBlock,
     return count_infos
 
 
-def _get_locale_chr_count_infos(alphabet: set[str], query_category_func: Callable[[str], str | None]) -> defaultdict[str, int]:
+def _get_locale_chr_count_infos(alphabet: Collection[str], query_category_func: Callable[[str], str | None]) -> defaultdict[str, int]:
     count_infos = defaultdict(int)
     for c in alphabet:
         category = query_category_func(c)
@@ -50,7 +50,7 @@ def _get_locale_chr_count_infos(alphabet: set[str], query_category_func: Callabl
     return count_infos
 
 
-def _get_gb2312_chr_count_infos(alphabet: set[str]) -> list[tuple[str, int, int]]:
+def _get_gb2312_chr_count_infos(alphabet: Collection[str]) -> list[tuple[str, int, int]]:
     count_infos = _get_locale_chr_count_infos(alphabet, gb2312.query_category)
     return [
         ('一级汉字', count_infos['level-1'], gb2312.get_level_1_count()),
@@ -60,7 +60,7 @@ def _get_gb2312_chr_count_infos(alphabet: set[str]) -> list[tuple[str, int, int]
     ]
 
 
-def _get_big5_chr_count_infos(alphabet: set[str]) -> list[tuple[str, int, int]]:
+def _get_big5_chr_count_infos(alphabet: Collection[str]) -> list[tuple[str, int, int]]:
     count_infos = _get_locale_chr_count_infos(alphabet, big5.query_category)
     return [
         ('常用汉字', count_infos['level-1'], big5.get_level_1_count()),
@@ -70,7 +70,7 @@ def _get_big5_chr_count_infos(alphabet: set[str]) -> list[tuple[str, int, int]]:
     ]
 
 
-def _get_shiftjis_chr_count_infos(alphabet: set[str]) -> list[tuple[str, int, int]]:
+def _get_shiftjis_chr_count_infos(alphabet: Collection[str]) -> list[tuple[str, int, int]]:
     count_infos = _get_locale_chr_count_infos(alphabet, shiftjis.query_category)
     return [
         ('单字节-ASCII可打印字符', count_infos['single-byte-ascii-printable'], shiftjis.get_single_byte_ascii_printable_count()),
@@ -81,7 +81,7 @@ def _get_shiftjis_chr_count_infos(alphabet: set[str]) -> list[tuple[str, int, in
     ]
 
 
-def _get_ksx1001_chr_count_infos(alphabet: set[str]) -> list[tuple[str, int, int]]:
+def _get_ksx1001_chr_count_infos(alphabet: Collection[str]) -> list[tuple[str, int, int]]:
     count_infos = _get_locale_chr_count_infos(alphabet, ksx1001.query_category)
     return [
         ('谚文音节', count_infos['syllable'], ksx1001.get_syllable_count()),
@@ -115,7 +115,7 @@ def _write_locale_chr_count_infos_table(file: TextIO, infos: Sequence[tuple[str,
 
 
 def make_info(design_context: DesignContext, width_mode: WidthMode) -> None:
-    alphabet = design_context.get_alphabet(width_mode)
+    alphabet = set(design_context.get_alphabet(width_mode))
 
     path_define.OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
     file_path = path_define.OUTPUTS_DIR.joinpath(f'info-{design_context.font_size}px-{width_mode}.md')
@@ -162,7 +162,7 @@ def make_info(design_context: DesignContext, width_mode: WidthMode) -> None:
 
 
 def make_alphabet_txt(design_context: DesignContext, width_mode: WidthMode) -> None:
-    alphabet = sorted(design_context.get_alphabet(width_mode))
+    alphabet = design_context.get_alphabet(width_mode)
 
     path_define.OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
     file_path = path_define.OUTPUTS_DIR.joinpath(f'alphabet-{design_context.font_size}px-{width_mode}.txt')
