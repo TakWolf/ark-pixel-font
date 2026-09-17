@@ -31,7 +31,7 @@ groups:
   slash: /
   backslash: \
 
-templates:
+values:
   latin_A,latin_T: -1
   latin_A,latin_V: -1
   latin_A,latin_W: -1
