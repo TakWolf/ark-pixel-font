@@ -193,7 +193,9 @@ class FontBuildContext:
         builder.opentype_config.fields_override.head_y_max = layout_metric.ascent
         builder.opentype_config.fields_override.head_y_min = layout_metric.descent
 
-        builder.opentype_config.features = opentype.FeatureIncludes([])
+        builder.opentype_config.features = opentype.FeatureIncludes([
+            'calt.fea',
+        ], include_dir=path_define.CONFIGS_FEATURES_DIR)
 
         return builder
 
