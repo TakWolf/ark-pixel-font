@@ -4,7 +4,7 @@ from datetime import datetime
 
 import unidata_blocks
 from loguru import logger
-from pixel_font_builder import FontBuilder, WeightName, SerifStyle, SlantStyle, WidthStyle, Glyph
+from pixel_font_builder import FontBuilder, WeightName, SerifStyle, SlantStyle, WidthStyle, Glyph, opentype
 from pixel_font_knife.cmap.context import CmapContext
 from pixel_font_knife.cmap.file import CmapGlyphFile
 from pixel_font_knife.cmap.kerning.template import CmapKerningTemplate
@@ -184,6 +184,13 @@ class FontBuildContext:
 
         builder.opentype_config.field_overrides.head_y_max = layout_metric.ascent
         builder.opentype_config.field_overrides.head_y_min = layout_metric.descent
+
+        builder.opentype_config.features = opentype.FeatureProgram([
+            opentype.FeatureFile(
+                path_define.CONFIGS_FEATURES_DIR.joinpath('calt.fea'),
+                include_dir=path_define.CONFIGS_FEATURES_DIR,
+            ),
+        ])
 
         return builder
 
