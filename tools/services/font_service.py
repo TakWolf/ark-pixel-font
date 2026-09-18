@@ -7,6 +7,7 @@ from loguru import logger
 from pixel_font_builder import FontBuilder, WeightName, SerifStyle, SlantStyle, WidthStyle, Glyph
 from pixel_font_knife.cmap.context import CmapContext
 from pixel_font_knife.cmap.file import CmapGlyphFile
+from pixel_font_knife.named.context import NamedContext
 from pixel_font_knife.named.file import NamedGlyphFile
 
 from tools import configs
@@ -35,21 +36,40 @@ class FontBuildContext:
             for width_mode in options.WIDTH_MODES
         }
 
-        return FontBuildContext(font_size, notdef_glyph_file, cmap_contexts)
+        named_scope_contexts = {
+            glyph_scope: NamedContext.load(
+                path_define.GLYPHS_DIR.joinpath(str(font_size), 'named', glyph_scope),
+                allowed_flavors=options.LANGUAGE_FLAVORS,
+            )
+            for glyph_scope in options.GLYPH_SCOPES
+        }
+
+        named_contexts = {
+            width_mode: NamedContext().merge_by_name_key(
+                named_scope_contexts['common'],
+                named_scope_contexts[width_mode],
+            )
+            for width_mode in options.WIDTH_MODES
+        }
+
+        return FontBuildContext(font_size, notdef_glyph_file, cmap_contexts, named_contexts)
 
     font_size: FontSize
     notdef_glyph_file: NamedGlyphFile
     cmap_contexts: dict[WidthMode, CmapContext]
+    named_contexts: dict[WidthMode, NamedContext]
 
     def __init__(
             self,
             font_size: FontSize,
             notdef_glyph_file: NamedGlyphFile,
             cmap_contexts: dict[WidthMode, CmapContext],
+            named_contexts: dict[WidthMode, NamedContext],
     ) -> None:
         self.font_size = font_size
         self.notdef_glyph_file = notdef_glyph_file
         self.cmap_contexts = cmap_contexts
+        self.named_contexts = named_contexts
 
     def get_alphabet(self, width_mode: WidthMode) -> Sequence[str]:
         return [chr(code_point) for code_point in sorted(self.cmap_contexts[width_mode].get_character_mapping().keys())]
@@ -87,7 +107,7 @@ class FontBuildContext:
         builder.meta_info.designer_url = 'https://takwolf.com'
         builder.meta_info.license_url = 'https://github.com/TakWolf/ark-pixel-font/blob/master/LICENSE-OFL'
 
-        glyph_sequence = [self.notdef_glyph_file] + self.cmap_contexts[width_mode].get_glyph_sequence(language_flavor)
+        glyph_sequence = [self.notdef_glyph_file] + self.cmap_contexts[width_mode].get_glyph_sequence(language_flavor) + self.named_contexts[width_mode].get_glyph_sequence(language_flavor)
         for glyph_file in glyph_sequence:
             vertical_em_size = self.font_size
             vertical_offset_y_delta = 0
@@ -110,6 +130,10 @@ class FontBuildContext:
                         0x25F8, 0x25F9, 0x25FA, 0x25FF,
                         0x3031, 0x3032, 0x3033, 0x3034, 0x3035,
                 ):
+                    vertical_offset_y_delta = -1
+
+            if isinstance(glyph_file, NamedGlyphFile):
+                if glyph_file.name_key != '.notdef':
                     vertical_offset_y_delta = -1
 
             horizontal_offset_x, horizontal_offset_y = glyph_file.canvas.horizontal_offset_for_trimmed(self.font_size, layout_metric.baseline)

@@ -1,6 +1,7 @@
 import unicodedata2
 import unidata_blocks
 from pixel_font_knife.cmap.context import CmapContext
+from pixel_font_knife.named.context import NamedContext
 
 from tools import configs
 from tools.configs import path_define, options
@@ -61,6 +62,36 @@ def check_cmap_glyphs(font_size: FontSize) -> None:
                             assert glyph_file.canvas.width == font_size, f"[{font_size}px] glyph bitmap dimensions error: '{glyph_file.file_path}'"
                         case _:  # Ambiguous (A) or Neutral (N)
                             assert glyph_file.canvas.width % (font_size / 2) == 0, f"[{font_size}px] glyph bitmap dimensions error: '{glyph_file.file_path}'"
+
+                if glyph_scope == 'proportional':
+                    assert glyph_file.canvas.height == canvas_size, f"[{font_size}px] glyph bitmap dimensions error: '{glyph_file.file_path}'"
+
+
+def check_named_glyphs(font_size: FontSize) -> None:
+    canvas_size = configs.FONT_CONFIGS[font_size].canvas_size
+
+    for glyph_scope in options.GLYPH_SCOPES:
+        context = NamedContext.load(
+            path_define.GLYPHS_DIR.joinpath(str(font_size), 'named', glyph_scope),
+            allowed_flavors=options.LANGUAGE_FLAVORS,
+        )
+
+        for name_key, glyph_variants in sorted(context.items()):
+            assert None in glyph_variants, f'[{font_size}px] missing default flavor: {glyph_scope} {name_key}'
+
+            bitmap_strings = {}
+            for glyph_file in set(glyph_variants.values()):
+                bitmap_string = str(glyph_file.canvas.bitmap)
+                assert bitmap_string not in bitmap_strings, f"[{font_size}px] duplicate glyph bitmap:\n'{glyph_file.file_path}'\n'{bitmap_strings[bitmap_string].file_path}'"
+                bitmap_strings[bitmap_string] = glyph_file
+
+                if glyph_scope == 'common':
+                    assert glyph_file.canvas.is_blank or glyph_file.canvas.trimmed_padding.top >= 1, f"[{font_size}px] glyph has no 1px top padding: '{glyph_file.file_path}'"
+                    assert glyph_file.canvas.is_blank or glyph_file.canvas.trimmed_padding.right >= 1, f"[{font_size}px] glyph has no 1px right padding: '{glyph_file.file_path}'"
+
+                if glyph_scope == 'common' or glyph_scope == 'monospaced':
+                    assert glyph_file.canvas.height % font_size == 0, f"[{font_size}px] glyph bitmap dimensions error: '{glyph_file.file_path}'"
+                    assert glyph_file.canvas.width % (font_size / 2) == 0, f"[{font_size}px] glyph bitmap dimensions error: '{glyph_file.file_path}'"
 
                 if glyph_scope == 'proportional':
                     assert glyph_file.canvas.height == canvas_size, f"[{font_size}px] glyph bitmap dimensions error: '{glyph_file.file_path}'"

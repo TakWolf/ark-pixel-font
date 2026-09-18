@@ -5,6 +5,7 @@ from tools.services import check_service
 def main() -> None:
     for font_size in options.FONT_SIZES:
         check_service.check_cmap_glyphs(font_size)
+        check_service.check_named_glyphs(font_size)
 
 
 if __name__ == '__main__':
