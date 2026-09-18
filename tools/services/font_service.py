@@ -4,10 +4,11 @@ from datetime import datetime
 
 import unidata_blocks
 from loguru import logger
-from pixel_font_builder import FontBuilder, WeightName, SerifStyle, SlantStyle, WidthStyle, Glyph
+from pixel_font_builder import FontBuilder, WeightName, SerifStyle, SlantStyle, WidthStyle, Glyph, opentype
 from pixel_font_knife.cmap.context import CmapContext
 from pixel_font_knife.cmap.file import CmapGlyphFile
 from pixel_font_knife.glyph.file import GlyphFile
+from pixel_font_knife.named.context import NamedContext
 from pixel_font_knife.named.file import NamedGlyphFile
 
 from tools import configs
@@ -36,11 +37,28 @@ class FontBuildContext:
             for width_mode in options.WIDTH_MODES
         }
 
-        return FontBuildContext(font_size, notdef_glyph_file, cmap_contexts)
+        named_scope_contexts = {
+            glyph_scope: NamedContext.load(
+                path_define.GLYPHS_DIR.joinpath(str(font_size), 'named', glyph_scope),
+                allowed_flavors=options.LANGUAGE_FLAVORS,
+            )
+            for glyph_scope in options.GLYPH_SCOPES
+        }
+
+        named_contexts = {
+            width_mode: NamedContext().merge_by_name_key(
+                named_scope_contexts['common'],
+                named_scope_contexts[width_mode],
+            )
+            for width_mode in options.WIDTH_MODES
+        }
+
+        return FontBuildContext(font_size, notdef_glyph_file, cmap_contexts, named_contexts)
 
     font_size: FontSize
     _notdef_glyph_file: NamedGlyphFile
     _cmap_contexts: dict[WidthMode, CmapContext]
+    _named_contexts: dict[WidthMode, NamedContext]
     _glyph_sequence_cache: dict[WidthMode, dict[LanguageFlavor, list[GlyphFile]]]
     _character_mapping_cache: dict[WidthMode, dict[LanguageFlavor, dict[int, str]]]
     _alphabet_cache: dict[WidthMode, list[str]]
@@ -51,10 +69,12 @@ class FontBuildContext:
             font_size: FontSize,
             notdef_glyph_file: NamedGlyphFile,
             cmap_contexts: dict[WidthMode, CmapContext],
+            named_contexts: dict[WidthMode, NamedContext],
     ) -> None:
         self.font_size = font_size
         self._notdef_glyph_file = notdef_glyph_file
         self._cmap_contexts = cmap_contexts
+        self._named_contexts = named_contexts
         self._glyph_sequence_cache = {width_mode: {} for width_mode in options.WIDTH_MODES}
         self._character_mapping_cache = {width_mode: {} for width_mode in options.WIDTH_MODES}
         self._alphabet_cache = {}
@@ -64,7 +84,7 @@ class FontBuildContext:
         if language_flavor in self._glyph_sequence_cache[width_mode]:
             glyph_sequence = self._glyph_sequence_cache[width_mode][language_flavor]
         else:
-            glyph_sequence = [self._notdef_glyph_file] + self._cmap_contexts[width_mode].get_glyph_sequence([language_flavor])
+            glyph_sequence = [self._notdef_glyph_file] + self._cmap_contexts[width_mode].get_glyph_sequence([language_flavor]) + self._named_contexts[width_mode].get_glyph_sequence([language_flavor])
             self._glyph_sequence_cache[width_mode][language_flavor] = glyph_sequence
         return glyph_sequence
 
@@ -142,6 +162,10 @@ class FontBuildContext:
                 ):
                     vertical_offset_y_delta = -1
 
+            if isinstance(glyph_file, NamedGlyphFile):
+                if glyph_file.name_key != '.notdef':
+                    vertical_offset_y_delta = -1
+
             horizontal_offset_x, horizontal_offset_y = glyph_file.canvas.horizontal_offset_for_trimmed(self.font_size, layout_metric.baseline)
             advance_width = glyph_file.canvas.advance_width()
 
@@ -168,6 +192,8 @@ class FontBuildContext:
 
         builder.opentype_config.fields_override.head_y_max = layout_metric.ascent
         builder.opentype_config.fields_override.head_y_min = layout_metric.descent
+
+        builder.opentype_config.features = opentype.FeatureIncludes([])
 
         return builder
 

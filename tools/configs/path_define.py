@@ -8,6 +8,7 @@ CONFIGS_DIR = ASSETS_DIR.joinpath('configs')
 CONFIGS_FONTS_DIR = CONFIGS_DIR.joinpath('fonts')
 CONFIGS_MAPPINGS_DIR = CONFIGS_DIR.joinpath('mappings')
 CONFIGS_KERNING_DIR = CONFIGS_DIR.joinpath('kerning')
+CONFIGS_FEATURES_DIR = CONFIGS_DIR.joinpath('features')
 
 GLYPHS_DIR = ASSETS_DIR.joinpath('glyphs')
 TEMPLATES_DIR = ASSETS_DIR.joinpath('templates')
