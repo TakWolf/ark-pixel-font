@@ -16,3 +16,13 @@ dependencies = [
     "loguru==0.7.3",
     "cyclopts==5.0.0",
 ]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]
+
+[tool.pytest.ini_options]
+addopts = [
+    "--import-mode=importlib",
+]

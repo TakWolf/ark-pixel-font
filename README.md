@@ -81,6 +81,7 @@
 - [Jinja](https://github.com/pallets/jinja)
 - [Loguru](https://github.com/Delgan/loguru)
 - [Cyclopts](https://github.com/BrianPugh/cyclopts)
+- [pytest](https://github.com/pytest-dev/pytest)
 
 ## 官方社区
 
