@@ -1,4 +1,3 @@
-import re
 from collections.abc import Sequence
 from zipfile import ZipFile
 
@@ -26,9 +25,13 @@ def make_release_zips(font_size: FontSize, width_mode: WidthMode, font_formats: 
 def update_docs() -> None:
     path_define.DOCS_DIR.mkdir(parents=True, exist_ok=True)
 
-    regex_file_name = re.compile(r'^(info-.*px-.*\.md|preview-.*px\.png)$')
-    for path_from in path_define.OUTPUTS_DIR.iterdir():
-        if regex_file_name.match(path_from.name) is None and path_from.name != 'readme-banner.png':
+    for path_from in sorted((
+            *path_define.OUTPUTS_DIR.glob('info-*px-*.md'),
+            *path_define.OUTPUTS_DIR.glob('preview-*px.png'),
+            *path_define.OUTPUTS_DIR.glob('readme-banner.png'),
+    )):
+        if not path_from.is_file():
             continue
+
         path_to = path_from.copy_into(path_define.DOCS_DIR)
         logger.info("Copy file: '{}' -> '{}'", path_from, path_to)

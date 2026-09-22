@@ -21,8 +21,8 @@ def format_glyphs() -> None:
 
 
 def format_mappings() -> None:
-    for file_path in path_define.CONFIGS_MAPPINGS_DIR.iterdir():
-        if file_path.suffix != '.yaml':
+    for file_path in path_define.CONFIGS_MAPPINGS_DIR.rglob('*.yaml'):
+        if not file_path.is_file():
             continue
 
         mapping = CmapMapping.load_yaml(file_path, allowed_flavors=options.LANGUAGE_FLAVORS)
