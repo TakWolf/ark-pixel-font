@@ -4,9 +4,8 @@ from typing import Literal
 from cyclopts import App, Parameter
 from loguru import logger
 
-from tools.config import project, path_define
-from tools.configs import options
-from tools.configs.options import FontSize, WidthMode, FontFormat, Attachment
+from tools.config import path_define, project, options
+from tools.config.options import FontSize, WidthMode, FontFormat, Attachment
 from tools.services import publish_service, info_service, template_service, image_service
 from tools.services.font_service import FontBuildContext
 

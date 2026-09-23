@@ -11,9 +11,8 @@ from pixel_font_knife.named.context import NamedContext
 from pixel_font_knife.named.file import NamedGlyphFile
 
 from tools import configs
-from tools.config import project, path_define
-from tools.configs import options
-from tools.configs.options import FontSize, WidthMode, LanguageFlavor, FontFormat
+from tools.config import path_define, project, manifest, options
+from tools.config.options import FontSize, WidthMode, LanguageFlavor, FontFormat
 
 
 class FontBuildContext:
@@ -94,7 +93,7 @@ class FontBuildContext:
         builder.meta_info.version = project.VERSION
         builder.meta_info.created_time = datetime.fromisoformat(f'{project.VERSION.replace('.', '-')}T00:00:00Z')
         builder.meta_info.modified_time = builder.meta_info.created_time
-        builder.meta_info.family_name = f'{project.FAMILY_NAME_PREFIX} {self.font_size}px {width_mode[:4].capitalize()} {configs.LANGUAGE_FLAVOR_TO_FONT_NAME[language_flavor]}'
+        builder.meta_info.family_name = f'{project.FAMILY_NAME_PREFIX} {self.font_size}px {width_mode[:4].capitalize()} {manifest.LANGUAGE_FLAVOR_TO_FONT_NAME[language_flavor]}'
         builder.meta_info.weight_name = WeightName.REGULAR
         builder.meta_info.serif_style = SerifStyle.SANS_SERIF
         builder.meta_info.slant_style = SlantStyle.NORMAL

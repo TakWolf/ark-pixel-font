@@ -3,8 +3,9 @@ from collections.abc import Callable
 import pytest
 from pixel_font_knife.named.context import NamedContext
 
-from tools.configs import FontConfig, options
-from tools.configs.options import FontSize, GlyphScope
+from tools.config import options
+from tools.config.options import FontSize, GlyphScope
+from tools.configs import FontConfig
 
 
 @pytest.mark.parametrize('font_size', options.FONT_SIZES)

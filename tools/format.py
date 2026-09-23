@@ -1,4 +1,4 @@
-from tools.configs import options
+from tools.config import options
 from tools.services import format_service
 
 

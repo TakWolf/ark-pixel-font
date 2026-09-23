@@ -3,8 +3,7 @@ from pathlib import Path
 import pytest
 from pixel_font_knife.cmap.mapping.mapping import CmapMapping
 
-from tools.config import path_define
-from tools.configs import options
+from tools.config import path_define, options
 
 
 @pytest.mark.parametrize(

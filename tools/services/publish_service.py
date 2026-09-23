@@ -3,9 +3,8 @@ from zipfile import ZipFile
 
 from loguru import logger
 
-from tools.config import project, path_define
-from tools.configs import options
-from tools.configs.options import FontSize, WidthMode, FontFormat
+from tools.config import path_define, project, options
+from tools.config.options import FontSize, WidthMode, FontFormat
 
 
 def make_release_zips(font_size: FontSize, width_mode: WidthMode, font_formats: Sequence[FontFormat]) -> None:

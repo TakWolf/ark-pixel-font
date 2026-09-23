@@ -2,9 +2,8 @@ from typing import Any
 
 import yaml
 
-from tools.config import path_define
-from tools.configs import options
-from tools.configs.options import FontSize, WidthMode
+from tools.config import path_define, options
+from tools.config.options import FontSize, WidthMode
 
 
 class LayoutMetric:

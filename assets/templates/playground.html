@@ -7,18 +7,18 @@
             padding: 0;
             box-sizing: border-box;
         }
-        {% for font_config in font_configs.values() %}
-        {% for width_mode in width_modes %}
-        .font-{{ font_config.font_size }}px-{{ width_mode }} {
-            font-size: {{ font_config.font_size * 2 }}px;
+        {% for font_size in options.FONT_SIZES %}
+        {% for width_mode in options.WIDTH_MODES %}
+        .font-{{ font_size }}px-{{ width_mode }} {
+            font-size: {{ font_size * 2 }}px;
         }
-        {% for language_flavor, locale in language_flavor_to_locale.items() %}
-        {% with font_family = project.FILE_NAME_PREFIX ~ '-' ~ font_config.font_size ~ 'px-' ~ width_mode ~ '-' ~ language_flavor %}
+        {% for language_flavor, locale in manifest.LANGUAGE_FLAVOR_TO_LOCALE.items() %}
+        {% with font_family = project.FILE_NAME_PREFIX ~ '-' ~ font_size ~ 'px-' ~ width_mode ~ '-' ~ language_flavor %}
         @font-face {
             font-family: {{ font_family }};
             src: url("{{ font_family }}.otf.woff2");
         }
-        .font-{{ font_config.font_size }}px-{{ width_mode }}:lang({{ locale }}) {
+        .font-{{ font_size }}px-{{ width_mode }}:lang({{ locale }}) {
             font-family: {{ font_family }}, sans-serif;
         }
         {% endwith %}
@@ -85,16 +85,16 @@
 {% block body %}
     <div class="toolbar">
         <div class="options-group">
-            {% for font_config in font_configs.values() %}
+            {% for font_size in options.FONT_SIZES %}
             <label class="option">
-                <input id="radio-font-size-{{ font_config.font_size }}" name="font_size" type="radio" onchange="onFontSizeChange('{{ font_config.font_size }}')">
+                <input id="radio-font-size-{{ font_size }}" name="font_size" type="radio" onchange="onFontSizeChange('{{ font_size }}')">
                 <span></span>
-                {{ font_config.font_size }}px
+                {{ font_size }}px
             </label>
             {% endfor %}
         </div>
         <div class="options-group" style="background-color: #94e34a;">
-            {% for width_mode in width_modes %}
+            {% for width_mode in options.WIDTH_MODES %}
             <label class="option">
                 <input id="radio-width-mode-{{ width_mode }}" name="width_mode" type="radio" onchange="onWidthModeChange('{{ width_mode }}')">
                 <span></span>
@@ -103,7 +103,7 @@
             {% endfor %}
         </div>
         <div class="options-group" style="background-color: #6ebdff;">
-            {% for language_flavor, locale in language_flavor_to_locale.items() %}
+            {% for language_flavor, locale in manifest.LANGUAGE_FLAVOR_TO_LOCALE.items() %}
             <label class="option">
                 <input id="radio-locale-{{ locale }}" name="locale" type="radio" onchange="onLocaleChange('{{ locale }}')">
                 <span></span>

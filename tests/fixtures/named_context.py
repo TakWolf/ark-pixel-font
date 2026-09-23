@@ -4,9 +4,8 @@ from functools import cache
 import pytest
 from pixel_font_knife.named.context import NamedContext
 
-from tools.config import path_define
-from tools.configs import options
-from tools.configs.options import FontSize, GlyphScope
+from tools.config import path_define, options
+from tools.config.options import FontSize, GlyphScope
 
 
 @pytest.fixture(scope='session')

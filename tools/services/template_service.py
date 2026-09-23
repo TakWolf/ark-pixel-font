@@ -5,9 +5,8 @@ from jinja2 import Environment, FileSystemLoader
 from loguru import logger
 
 from tools import configs
-from tools.config import project, path_define
-from tools.configs import options
-from tools.configs.options import WidthMode
+from tools.config import path_define, project, manifest, options
+from tools.config.options import WidthMode
 from tools.services.font_service import FontBuildContext
 
 _environment = Environment(
@@ -20,9 +19,8 @@ _environment = Environment(
 def _make_html(template_name: str, file_name: str, params: Mapping[str, object] | None = None) -> None:
     params = dict(params) if params is not None else {}
     params['project'] = project
-    params['font_configs'] = configs.FONT_CONFIGS
-    params['width_modes'] = options.WIDTH_MODES
-    params['language_flavor_to_locale'] = configs.LANGUAGE_FLAVOR_TO_LOCALE
+    params['manifest'] = manifest
+    params['options'] = options
 
     html = _environment.get_template(template_name).render(params)
 

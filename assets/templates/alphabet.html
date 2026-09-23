@@ -7,7 +7,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-        {% for language_flavor, locale in language_flavor_to_locale.items() %}
+        {% for language_flavor, locale in manifest.LANGUAGE_FLAVOR_TO_LOCALE.items() %}
         {% with font_family = project.FILE_NAME_PREFIX ~ '-' ~ font_config.font_size ~ 'px-' ~ width_mode ~ '-' ~ language_flavor %}
         @font-face {
             font-family: {{ font_family }};
@@ -86,7 +86,7 @@
 {% endblock %}
 {% block body %}
     <div class="options-group">
-        {% for language_flavor, locale in language_flavor_to_locale.items() %}
+        {% for language_flavor, locale in manifest.LANGUAGE_FLAVOR_TO_LOCALE.items() %}
         <label class="option">
             <input id="radio-locale-{{ locale }}" name="locale" type="radio" onchange="onLocaleChange('{{ locale }}')">
             <span></span>

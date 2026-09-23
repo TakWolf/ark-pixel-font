@@ -1,8 +1,7 @@
 from pixel_font_knife.cmap.kerning.template import CmapKerningTemplate
 from pixel_font_knife.cmap.mapping.mapping import CmapMapping
 
-from tools.config import path_define
-from tools.configs import options
+from tools.config import path_define, options
 from tools.configs.font import FontConfig
 
 FONT_CONFIGS = {font_size: FontConfig.load(font_size) for font_size in options.FONT_SIZES}
@@ -27,23 +26,3 @@ MAPPINGS = [
 ]
 
 KERNING_TEMPLATE_DEFAULT = CmapKerningTemplate.load(path_define.CONFIGS_KERNING_DIR.joinpath('default.yaml'))
-
-LANGUAGE_FLAVOR_TO_FONT_NAME = {
-    'latin': 'latin',
-    'zh_hans': 'zh-Hans',
-    'zh_hant': 'zh-Hant',
-    'zh_hk': 'zh-HK',
-    'zh_tw': 'zh-TW',
-    'ja': 'ja',
-    'ko': 'ko',
-}
-
-LANGUAGE_FLAVOR_TO_LOCALE = {
-    'latin': 'en',
-    'zh_hans': 'zh-Hans',
-    'zh_hant': 'zh-Hant',
-    'zh_hk': 'zh-Hant-HK',
-    'zh_tw': 'zh-Hant-TW',
-    'ja': 'ja',
-    'ko': 'ko',
-}
