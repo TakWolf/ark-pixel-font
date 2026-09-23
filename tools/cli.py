@@ -4,14 +4,14 @@ from typing import Literal
 from cyclopts import App, Parameter
 from loguru import logger
 
-from tools import configs
+from tools.config import project
 from tools.configs import path_define, options
 from tools.configs.options import FontSize, WidthMode, FontFormat, Attachment
 from tools.services import publish_service, info_service, template_service, image_service
 from tools.services.font_service import FontBuildContext
 
 app = App(
-    version=configs.VERSION,
+    version=project.VERSION,
     default_parameter=Parameter(consume_multiple=True),
 )
 

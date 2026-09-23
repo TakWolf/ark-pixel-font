@@ -8,7 +8,7 @@ from character_encoding_utils import gb2312, big5, shiftjis, ksx1001
 from loguru import logger
 from unidata_blocks import UnicodeBlock
 
-from tools import configs
+from tools.config import project
 from tools.configs import path_define
 from tools.configs.options import WidthMode
 from tools.services.font_service import FontBuildContext
@@ -120,13 +120,13 @@ def make_info(build_context: FontBuildContext, width_mode: WidthMode) -> None:
     path_define.OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
     file_path = path_define.OUTPUTS_DIR.joinpath(f'info-{build_context.font_size}px-{width_mode}.md')
     with file_path.open('w', encoding='utf-8') as file:
-        file.write(f'# Ark Pixel {build_context.font_size}px {'等宽模式' if width_mode == 'monospaced' else '比例模式'}\n')
+        file.write(f'# {project.FAMILY_NAME_PREFIX} {build_context.font_size}px {'等宽模式' if width_mode == 'monospaced' else '比例模式'}\n')
         file.write('\n')
         file.write('## 基本信息\n')
         file.write('\n')
         file.write('| 属性 | 值 |\n')
         file.write('|---|---|\n')
-        file.write(f'| 版本号 | {configs.VERSION} |\n')
+        file.write(f'| 版本号 | {project.VERSION} |\n')
         file.write(f'| 字符总数 | {len(alphabet)} |\n')
         file.write('\n')
         file.write('## Unicode 字符统计\n')

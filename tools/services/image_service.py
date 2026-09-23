@@ -6,13 +6,14 @@ from PIL.ImageFont import FreeTypeFont
 from loguru import logger
 
 from tools import configs
+from tools.config import project
 from tools.configs import path_define
 from tools.configs.options import FontSize, WidthMode, LanguageFlavor
 from tools.services.font_service import FontBuildContext
 
 
 def _load_font(font_size: FontSize, width_mode: WidthMode, language_flavor: LanguageFlavor, scale: int = 1) -> FreeTypeFont:
-    file_path = path_define.OUTPUTS_DIR.joinpath(f'ark-pixel-{font_size}px-{width_mode}-{language_flavor}.otf.woff2')
+    file_path = path_define.OUTPUTS_DIR.joinpath(f'{project.FILE_NAME_PREFIX}-{font_size}px-{width_mode}-{language_flavor}.otf.woff2')
     return ImageFont.truetype(file_path, font_size * scale)
 
 

@@ -4,8 +4,6 @@ from pixel_font_knife.cmap.mapping.mapping import CmapMapping
 from tools.configs import path_define, options
 from tools.configs.font import FontConfig
 
-VERSION = '2026.09.01'
-
 FONT_CONFIGS = {font_size: FontConfig.load(font_size) for font_size in options.FONT_SIZES}
 
 MAPPINGS = [

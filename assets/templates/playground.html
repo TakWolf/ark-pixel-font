@@ -13,7 +13,7 @@
             font-size: {{ font_config.font_size * 2 }}px;
         }
         {% for language_flavor, locale in language_flavor_to_locale.items() %}
-        {% with font_family = 'ark-pixel-' ~ font_config.font_size ~ 'px-' ~ width_mode ~ '-' ~ language_flavor %}
+        {% with font_family = project.FILE_NAME_PREFIX ~ '-' ~ font_config.font_size ~ 'px-' ~ width_mode ~ '-' ~ language_flavor %}
         @font-face {
             font-family: {{ font_family }};
             src: url("{{ font_family }}.otf.woff2");
@@ -45,7 +45,7 @@
             flex-direction: row;
             align-items: center;
             color: #4b4b4b;
-            font-family: ark-pixel-12px-monospaced-latin, sans-serif;
+            font-family: {{ project.FILE_NAME_PREFIX }}-12px-monospaced-latin, sans-serif;
             font-size: 24px;
             line-height: 36px;
         }
@@ -121,7 +121,7 @@
             widthMode: 'proportional',
             locale: 'zh-Hans',
         }
-        const json = localStorage.getItem('ark-pixel-font:settings:playground')
+        const json = localStorage.getItem('{{ project.FILE_NAME_PREFIX }}-font:settings:playground')
         if (json) {
             Object.assign(settings, JSON.parse(json))
         }
@@ -129,7 +129,7 @@
         const inputBox = document.getElementById('input-box')
 
         window.applySettings = () => {
-            localStorage.setItem('ark-pixel-font:settings:playground', JSON.stringify(settings))
+            localStorage.setItem('{{ project.FILE_NAME_PREFIX }}-font:settings:playground', JSON.stringify(settings))
             inputBox.className = 'font-' + settings.fontSize + 'px-' + settings.widthMode
             inputBox.setAttribute('lang', settings.locale)
         }

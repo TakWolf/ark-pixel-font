@@ -9,7 +9,7 @@
         }
         {% for width_mode in width_modes %}
         {% for language_flavor, locale in language_flavor_to_locale.items() %}
-        {% with font_family = 'ark-pixel-' ~ font_config.font_size ~ 'px-' ~ width_mode ~ '-' ~ language_flavor %}
+        {% with font_family = project.FILE_NAME_PREFIX ~ '-' ~ font_config.font_size ~ 'px-' ~ width_mode ~ '-' ~ language_flavor %}
         @font-face {
             font-family: {{ font_family }};
             src: url("{{ font_family }}.otf.woff2");
@@ -27,7 +27,7 @@
         {% endfor %}
         {% endfor %}
         {% if font_config.font_size != 12 %}
-        {% with font_family = 'ark-pixel-12px-monospaced-latin' %}
+        {% with font_family = project.FILE_NAME_PREFIX ~ '-12px-monospaced-latin' %}
         @font-face {
             font-family: {{ font_family }};
             src: url("{{ font_family }}.otf.woff2");
@@ -82,7 +82,7 @@
             flex-direction: row;
             align-items: center;
             color: #4b4b4b;
-            font-family: ark-pixel-12px-monospaced-latin, sans-serif;
+            font-family: {{ project.FILE_NAME_PREFIX }}-12px-monospaced-latin, sans-serif;
             font-size: 24px;
             line-height: 36px;
         }
@@ -162,7 +162,7 @@
             widthMode: 'proportional',
             theme: 'light',
         }
-        const json = localStorage.getItem('ark-pixel-font:settings:demo-{{ font_config.font_size }}px')
+        const json = localStorage.getItem('{{ project.FILE_NAME_PREFIX }}-font:settings:demo-{{ font_config.font_size }}px')
         if (json) {
             Object.assign(settings, JSON.parse(json))
         }
@@ -170,7 +170,7 @@
         const page = document.getElementById('page')
 
         window.applySettings = () => {
-            localStorage.setItem('ark-pixel-font:settings:demo-{{ font_config.font_size }}px', JSON.stringify(settings))
+            localStorage.setItem('{{ project.FILE_NAME_PREFIX }}-font:settings:demo-{{ font_config.font_size }}px', JSON.stringify(settings))
             page.className = 'font-' + settings.widthMode
             document.body.className = 'theme-' + settings.theme
         }

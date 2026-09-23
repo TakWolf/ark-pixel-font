@@ -11,6 +11,7 @@ from pixel_font_knife.named.context import NamedContext
 from pixel_font_knife.named.file import NamedGlyphFile
 
 from tools import configs
+from tools.config import project
 from tools.configs import path_define, options
 from tools.configs.options import FontSize, WidthMode, LanguageFlavor, FontFormat
 
@@ -90,22 +91,22 @@ class FontBuildContext:
         builder.font_metric.strikeout_position = layout_metric.strikeout_position
         builder.font_metric.strikeout_thickness = 1
 
-        builder.meta_info.version = configs.VERSION
-        builder.meta_info.created_time = datetime.fromisoformat(f'{configs.VERSION.replace('.', '-')}T00:00:00Z')
+        builder.meta_info.version = project.VERSION
+        builder.meta_info.created_time = datetime.fromisoformat(f'{project.VERSION.replace('.', '-')}T00:00:00Z')
         builder.meta_info.modified_time = builder.meta_info.created_time
-        builder.meta_info.family_name = f'Ark Pixel {self.font_size}px {width_mode[:4].capitalize()} {configs.LANGUAGE_FLAVOR_TO_FONT_NAME[language_flavor]}'
+        builder.meta_info.family_name = f'{project.FAMILY_NAME_PREFIX} {self.font_size}px {width_mode[:4].capitalize()} {configs.LANGUAGE_FLAVOR_TO_FONT_NAME[language_flavor]}'
         builder.meta_info.weight_name = WeightName.REGULAR
         builder.meta_info.serif_style = SerifStyle.SANS_SERIF
         builder.meta_info.slant_style = SlantStyle.NORMAL
         builder.meta_info.width_style = WidthStyle(width_mode.capitalize())
-        builder.meta_info.manufacturer = 'TakWolf'
-        builder.meta_info.designer = 'TakWolf'
-        builder.meta_info.description = 'Open-source Pan-Latin and Pan-CJK pixel font in a sans-serif style'
-        builder.meta_info.copyright_info = 'Copyright (c) 2021, TakWolf (https://takwolf.com)'
-        builder.meta_info.license_info = 'This Font Software is licensed under the SIL Open Font License, Version 1.1'
-        builder.meta_info.vendor_url = 'https://ark-pixel-font.takwolf.com'
-        builder.meta_info.designer_url = 'https://takwolf.com'
-        builder.meta_info.license_url = 'https://github.com/TakWolf/ark-pixel-font/blob/master/LICENSE-OFL'
+        builder.meta_info.manufacturer = project.MANUFACTURER
+        builder.meta_info.designer = project.DESIGNER
+        builder.meta_info.description = project.DESCRIPTION
+        builder.meta_info.copyright_info = project.COPYRIGHT_INFO
+        builder.meta_info.license_info = project.LICENSE_INFO
+        builder.meta_info.vendor_url = project.VENDOR_URL
+        builder.meta_info.designer_url = project.DESIGNER_URL
+        builder.meta_info.license_url = project.LICENSE_URL
 
         glyph_sequence = [self.notdef_glyph_file] + self.cmap_contexts[width_mode].get_glyph_sequence(language_flavor) + self.named_contexts[width_mode].get_glyph_sequence(language_flavor)
         for glyph_file in glyph_sequence:
@@ -171,6 +172,6 @@ class FontBuildContext:
             for language_flavor in options.LANGUAGE_FLAVORS:
                 builder = self.create_builder(width_mode, language_flavor)
                 for font_format in font_formats:
-                    file_path = path_define.OUTPUTS_DIR.joinpath(f'ark-pixel-{self.font_size}px-{width_mode}-{language_flavor}.{font_format}')
+                    file_path = path_define.OUTPUTS_DIR.joinpath(f'{project.FILE_NAME_PREFIX}-{self.font_size}px-{width_mode}-{language_flavor}.{font_format}')
                     getattr(builder, f'save_{font_format.replace('.', '_')}')(file_path)
                     logger.info("Make font: '{}'", file_path)
