@@ -5,7 +5,8 @@ from pixel_font_knife.cmap.mapping.mapping import CmapMapping
 from pixel_font_knife.named.context import NamedContext
 from pixel_font_knife.utils import fs_util
 
-from tools.configs import path_define, options
+from tools.config import path_define
+from tools.configs import options
 from tools.configs.options import FontSize
 
 

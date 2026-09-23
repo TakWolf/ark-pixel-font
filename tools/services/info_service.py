@@ -8,8 +8,7 @@ from character_encoding_utils import gb2312, big5, shiftjis, ksx1001
 from loguru import logger
 from unidata_blocks import UnicodeBlock
 
-from tools.config import project
-from tools.configs import path_define
+from tools.config import project, path_define
 from tools.configs.options import WidthMode
 from tools.services.font_service import FontBuildContext
 

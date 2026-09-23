@@ -1,7 +1,8 @@
 from pixel_font_knife.cmap.kerning.template import CmapKerningTemplate
 from pixel_font_knife.cmap.mapping.mapping import CmapMapping
 
-from tools.configs import path_define, options
+from tools.config import path_define
+from tools.configs import options
 from tools.configs.font import FontConfig
 
 FONT_CONFIGS = {font_size: FontConfig.load(font_size) for font_size in options.FONT_SIZES}

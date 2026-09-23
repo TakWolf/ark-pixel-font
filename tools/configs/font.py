@@ -2,7 +2,8 @@ from typing import Any
 
 import yaml
 
-from tools.configs import path_define, options
+from tools.config import path_define
+from tools.configs import options
 from tools.configs.options import FontSize, WidthMode
 
 

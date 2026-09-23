@@ -11,8 +11,8 @@ from pixel_font_knife.named.context import NamedContext
 from pixel_font_knife.named.file import NamedGlyphFile
 
 from tools import configs
-from tools.config import project
-from tools.configs import path_define, options
+from tools.config import project, path_define
+from tools.configs import options
 from tools.configs.options import FontSize, WidthMode, LanguageFlavor, FontFormat
 
 

@@ -6,8 +6,7 @@ from PIL.ImageFont import FreeTypeFont
 from loguru import logger
 
 from tools import configs
-from tools.config import project
-from tools.configs import path_define
+from tools.config import project, path_define
 from tools.configs.options import FontSize, WidthMode, LanguageFlavor
 from tools.services.font_service import FontBuildContext
 

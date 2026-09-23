@@ -3,8 +3,8 @@ from zipfile import ZipFile
 
 from loguru import logger
 
-from tools.config import project
-from tools.configs import path_define, options
+from tools.config import project, path_define
+from tools.configs import options
 from tools.configs.options import FontSize, WidthMode, FontFormat
 
 
