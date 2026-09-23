@@ -58,7 +58,7 @@ def test_glyph_bitmap_dimensions(
         font_size: FontSize,
         glyph_scope: GlyphScope,
 ) -> None:
-    canvas_size = load_font_config(font_size).canvas_size
+    canvas_height = load_font_config(font_size).canvas_height
     context = load_named_context(font_size, glyph_scope)
 
     for name_key, glyph_variants in sorted(context.items()):
@@ -68,4 +68,4 @@ def test_glyph_bitmap_dimensions(
                 assert glyph_file.canvas.width % (font_size / 2) == 0, f"[{font_size}px] glyph bitmap dimensions error: '{glyph_file.file_path}'"
 
             if glyph_scope == 'proportional':
-                assert glyph_file.canvas.height == canvas_size, f"[{font_size}px] glyph bitmap dimensions error: '{glyph_file.file_path}'"
+                assert glyph_file.canvas.height == canvas_height, f"[{font_size}px] glyph bitmap dimensions error: '{glyph_file.file_path}'"

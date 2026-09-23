@@ -62,26 +62,26 @@ class FontConfig:
     def load(font_size: FontSize) -> FontConfig:
         data = yaml.safe_load(path_define.CONFIGS_FONTS_DIR.joinpath(f'font-{font_size}px.yaml').read_bytes())
         assert font_size == data['font-size']
-        canvas_size = data['canvas-size']
+        canvas_height = data['canvas-height']
         layout_metrics = {width_mode: LayoutMetric.parse(data[width_mode]) for width_mode in options.WIDTH_MODES}
         return FontConfig(
             font_size,
-            canvas_size,
+            canvas_height,
             layout_metrics,
         )
 
     font_size: FontSize
-    canvas_size: int
+    canvas_height: int
     layout_metrics: dict[WidthMode, LayoutMetric]
 
     def __init__(
             self,
             font_size: FontSize,
-            canvas_size: int,
+            canvas_height: int,
             layout_metrics: dict[WidthMode, LayoutMetric],
     ) -> None:
         self.font_size = font_size
-        self.canvas_size = canvas_size
+        self.canvas_height = canvas_height
         self.layout_metrics = layout_metrics
 
     @property
