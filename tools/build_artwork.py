@@ -1,6 +1,6 @@
 from tools.config import path_define, options
 from tools.config.font import FontConfig
-from tools.services import image_service
+from tools.extra import image_service
 
 
 def main() -> None:

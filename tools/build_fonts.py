@@ -8,8 +8,8 @@ from pixel_font_knife.cmap.mapping.mapping import CmapMapping
 from tools.config import path_define, project, manifest, options
 from tools.config.font import FontConfig
 from tools.config.options import FontSize, WidthMode, FontFormat
-from tools.services import publish_service, info_service
-from tools.services.font_service import FontBuildContext
+from tools.extra import publish_service, info_service
+from tools.font.context import FontBuildContext
 
 app = App(
     version=project.VERSION,

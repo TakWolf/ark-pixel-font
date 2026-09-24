@@ -1,5 +1,5 @@
 from tools.config import options
-from tools.services import format_service
+from tools.resource import format_service
 
 
 def main() -> None:

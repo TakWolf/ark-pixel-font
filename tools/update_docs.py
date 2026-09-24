@@ -1,4 +1,4 @@
-from tools.services import publish_service
+from tools.extra import publish_service
 
 
 def main() -> None:
