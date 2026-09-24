@@ -27,7 +27,7 @@ def _make_html(template_name: str, file_name: str, params: Mapping[str, object] 
     path_define.OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
     file_path = path_define.OUTPUTS_DIR.joinpath(file_name)
     file_path.write_text(html, 'utf-8')
-    logger.info("Make html: '{}'", file_path)
+    logger.info('Make html: {!r}', str(file_path))
 
 
 def make_alphabet_html(font_config: FontConfig, width_mode: WidthMode, alphabet: Sequence[str]) -> None:

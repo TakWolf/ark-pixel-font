@@ -18,7 +18,7 @@ def make_release_zips(font_size: FontSize, width_mode: WidthMode, font_formats: 
             for language_flavor in options.LANGUAGE_FLAVORS:
                 font_file_path = path_define.OUTPUTS_DIR.joinpath(f'{project.FILE_NAME_PREFIX}-{font_size}px-{width_mode}-{language_flavor}.{font_format}')
                 file.write(font_file_path, font_file_path.name)
-        logger.info("Make release zip: '{}'", zip_file_path)
+        logger.info('Make release zip: {!r}', str(zip_file_path))
 
 
 def update_docs() -> None:
@@ -33,4 +33,4 @@ def update_docs() -> None:
             continue
 
         path_to = path_from.copy_into(path_define.DOCS_DIR)
-        logger.info("Copy file: '{}' -> '{}'", path_from, path_to)
+        logger.info('Copy file: {!r} -> {!r}', str(path_from), str(path_to))

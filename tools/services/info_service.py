@@ -156,11 +156,11 @@ def make_info(font_size: FontSize, width_mode: WidthMode, alphabet: Sequence[str
         file.write('韩语参考字符集。统计范围不包含 ASCII。\n')
         file.write('\n')
         _write_locale_chr_count_infos_table(file, _get_ksx1001_chr_count_infos(alphabet))
-    logger.info("Make info: '{}'", file_path)
+    logger.info('Make info: {!r}', str(file_path))
 
 
 def make_alphabet_txt(font_size: FontSize, width_mode: WidthMode, alphabet: Sequence[str]) -> None:
     path_define.OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
     file_path = path_define.OUTPUTS_DIR.joinpath(f'alphabet-{font_size}px-{width_mode}.txt')
     file_path.write_text(''.join(alphabet), 'utf-8')
-    logger.info("Make alphabet txt: '{}'", file_path)
+    logger.info('Make alphabet txt: {!r}', str(file_path))

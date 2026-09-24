@@ -90,7 +90,7 @@ def make_preview_image(font_config: FontConfig) -> None:
     path_define.OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
     file_path = path_define.OUTPUTS_DIR.joinpath(f'preview-{font_size}px.png')
     image.save(file_path)
-    logger.info("Make preview image: '{}'", file_path)
+    logger.info('Make preview image: {!r}', str(file_path))
 
 
 def make_readme_banner(font_config_12px: FontConfig, alphabet_proportional_12px: Sequence[str]) -> None:
@@ -114,7 +114,7 @@ def make_readme_banner(font_config_12px: FontConfig, alphabet_proportional_12px:
     path_define.OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
     file_path = path_define.OUTPUTS_DIR.joinpath('readme-banner.png')
     image.save(file_path)
-    logger.info("Make readme banner: '{}'", file_path)
+    logger.info('Make readme banner: {!r}', str(file_path))
 
 
 def make_github_banner(font_config_12px: FontConfig, alphabet_proportional_12px: Sequence[str]) -> None:
@@ -148,7 +148,7 @@ def make_github_banner(font_config_12px: FontConfig, alphabet_proportional_12px:
     path_define.OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
     file_path = path_define.OUTPUTS_DIR.joinpath('github-banner.png')
     image.save(file_path)
-    logger.info("Make github banner: '{}'", file_path)
+    logger.info('Make github banner: {!r}', str(file_path))
 
 
 def make_itch_io_banner(font_config_12px: FontConfig, alphabet_proportional_12px: Sequence[str]) -> None:
@@ -172,7 +172,7 @@ def make_itch_io_banner(font_config_12px: FontConfig, alphabet_proportional_12px
     path_define.OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
     file_path = path_define.OUTPUTS_DIR.joinpath('itch-io-banner.png')
     image.save(file_path)
-    logger.info("Make itch.io banner: '{}'", file_path)
+    logger.info('Make itch.io banner: {!r}', str(file_path))
 
 
 def make_itch_io_cover(font_config_12px: FontConfig) -> None:
@@ -204,7 +204,7 @@ def make_itch_io_cover(font_config_12px: FontConfig) -> None:
     path_define.OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
     file_path = path_define.OUTPUTS_DIR.joinpath('itch-io-cover.png')
     image.save(file_path)
-    logger.info("Make itch.io cover: '{}'", file_path)
+    logger.info('Make itch.io cover: {!r}', str(file_path))
 
 
 def make_afdian_cover(font_config_12px: FontConfig) -> None:
@@ -237,4 +237,4 @@ def make_afdian_cover(font_config_12px: FontConfig) -> None:
     path_define.OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
     file_path = path_define.OUTPUTS_DIR.joinpath('afdian-cover.png')
     image.save(file_path)
-    logger.info("Make afdian cover: '{}'", file_path)
+    logger.info('Make afdian cover: {!r}', str(file_path))

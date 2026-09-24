@@ -196,4 +196,4 @@ class FontBuildContext:
                 for font_format in font_formats:
                     file_path = path_define.OUTPUTS_DIR.joinpath(f'{project.FILE_NAME_PREFIX}-{self.font_size}px-{width_mode}-{language_flavor}.{font_format}')
                     getattr(builder, f'save_{font_format.replace('.', '_')}')(file_path)
-                    logger.info("Make font: '{}'", file_path)
+                    logger.info('Make font: {!r}', str(file_path))
