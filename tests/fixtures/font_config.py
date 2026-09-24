@@ -3,8 +3,8 @@ from functools import cache
 
 import pytest
 
+from tools.config.font import FontConfig
 from tools.config.options import FontSize
-from tools.configs import FontConfig
 
 
 @pytest.fixture(scope='session')

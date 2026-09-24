@@ -63,7 +63,10 @@ class FontConfig:
         data = yaml.safe_load(path_define.CONFIGS_FONTS_DIR.joinpath(f'font-{font_size}px.yaml').read_bytes())
         assert font_size == data['font-size']
         canvas_height = data['canvas-height']
-        layout_metrics = {width_mode: LayoutMetric.parse(data[width_mode]) for width_mode in options.WIDTH_MODES}
+        layout_metrics = {
+            width_mode: LayoutMetric.parse(data[width_mode])
+            for width_mode in options.WIDTH_MODES
+        }
         return FontConfig(
             font_size,
             canvas_height,

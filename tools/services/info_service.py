@@ -9,8 +9,7 @@ from loguru import logger
 from unidata_blocks import UnicodeBlock
 
 from tools.config import path_define, project
-from tools.config.options import WidthMode
-from tools.services.font_service import FontBuildContext
+from tools.config.options import FontSize, WidthMode
 
 
 def _do_we_need_to_create_a_glyph(c: str) -> bool:
@@ -113,13 +112,13 @@ def _write_locale_chr_count_infos_table(file: TextIO, infos: Sequence[tuple[str,
         file.write(f'| {name} | {count} / {total} | {missing} | {progress:.2%} {finished_emoji} |\n')
 
 
-def make_info(build_context: FontBuildContext, width_mode: WidthMode) -> None:
-    alphabet = set(build_context.get_alphabet(width_mode))
+def make_info(font_size: FontSize, width_mode: WidthMode, alphabet: Sequence[str]) -> None:
+    alphabet = set(alphabet)
 
     path_define.OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
-    file_path = path_define.OUTPUTS_DIR.joinpath(f'info-{build_context.font_size}px-{width_mode}.md')
+    file_path = path_define.OUTPUTS_DIR.joinpath(f'info-{font_size}px-{width_mode}.md')
     with file_path.open('w', encoding='utf-8') as file:
-        file.write(f'# {project.FAMILY_NAME_PREFIX} {build_context.font_size}px {'等宽模式' if width_mode == 'monospaced' else '比例模式'}\n')
+        file.write(f'# {project.FAMILY_NAME_PREFIX} {font_size}px {'等宽模式' if width_mode == 'monospaced' else '比例模式'}\n')
         file.write('\n')
         file.write('## 基本信息\n')
         file.write('\n')
@@ -160,10 +159,8 @@ def make_info(build_context: FontBuildContext, width_mode: WidthMode) -> None:
     logger.info("Make info: '{}'", file_path)
 
 
-def make_alphabet_txt(build_context: FontBuildContext, width_mode: WidthMode) -> None:
-    alphabet = build_context.get_alphabet(width_mode)
-
+def make_alphabet_txt(font_size: FontSize, width_mode: WidthMode, alphabet: Sequence[str]) -> None:
     path_define.OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
-    file_path = path_define.OUTPUTS_DIR.joinpath(f'alphabet-{build_context.font_size}px-{width_mode}.txt')
+    file_path = path_define.OUTPUTS_DIR.joinpath(f'alphabet-{font_size}px-{width_mode}.txt')
     file_path.write_text(''.join(alphabet), 'utf-8')
     logger.info("Make alphabet txt: '{}'", file_path)

@@ -1,14 +1,13 @@
 import math
-from collections.abc import Mapping, Sequence
+from collections.abc import Sequence
 
 from PIL import Image, ImageFont, ImageDraw
 from PIL.ImageFont import FreeTypeFont
 from loguru import logger
 
-from tools import configs
 from tools.config import path_define, project
+from tools.config.font import FontConfig
 from tools.config.options import FontSize, WidthMode, LanguageFlavor
-from tools.services.font_service import FontBuildContext
 
 
 def _load_font(font_size: FontSize, width_mode: WidthMode, language_flavor: LanguageFlavor, scale: int = 1) -> FreeTypeFont:
@@ -67,12 +66,14 @@ def _draw_text_background(
             alphabet_index += step
 
 
-def make_preview_image(font_size: FontSize) -> None:
+def make_preview_image(font_config: FontConfig) -> None:
+    font_size = font_config.font_size
+    line_height = font_config.line_height
+
     font_latin = _load_font(font_size, 'proportional', 'latin')
     font_zh_hans = _load_font(font_size, 'proportional', 'zh_hans')
     font_zh_hant = _load_font(font_size, 'proportional', 'zh_hant')
     font_ja = _load_font(font_size, 'proportional', 'ja')
-    line_height = configs.FONT_CONFIGS[font_size].line_height
 
     image = Image.new('RGBA', (font_size * 27, font_size * 2 + line_height * 9), (255, 255, 255, 255))
     _draw_text(image, (font_size, font_size), '方舟像素字体 / Ark Pixel Font', font_zh_hans)
@@ -92,18 +93,19 @@ def make_preview_image(font_size: FontSize) -> None:
     logger.info("Make preview image: '{}'", file_path)
 
 
-def make_readme_banner(build_contexts: Mapping[FontSize, FontBuildContext]) -> None:
+def make_readme_banner(font_config_12px: FontConfig, alphabet_proportional_12px: Sequence[str]) -> None:
+    line_height = font_config_12px.line_height
+
     font_x1 = _load_font(12, 'proportional', 'zh_hans')
     font_x2 = _load_font(12, 'proportional', 'zh_hans', 2)
-    alphabet = build_contexts[12].get_alphabet('proportional')
-    line_height = configs.FONT_CONFIGS[12].line_height
+
     box_size = 14
     text_color = (255, 255, 255, 255)
     shadow_color = (80, 80, 80, 255)
 
     image_background = Image.open(path_define.IMAGES_DIR.joinpath('readme-banner-background.png'))
     image = Image.new('RGBA', (image_background.width, image_background.height), (0, 0, 0, 0))
-    _draw_text_background(image, alphabet, 50, box_size, font_x1, (200, 200, 200, 255))
+    _draw_text_background(image, alphabet_proportional_12px, 50, box_size, font_x1, (200, 200, 200, 255))
     image.paste(image_background, mask=image_background)
     _draw_text(image, (image.width / 2, 32), '方舟像素字体', font_x2, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     _draw_text(image, (image.width / 2, 32 + line_height * 2 + 4), '★ 开源的泛拉丁与泛中日韩像素字体，黑体风格 ★', font_x1, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
@@ -115,21 +117,22 @@ def make_readme_banner(build_contexts: Mapping[FontSize, FontBuildContext]) -> N
     logger.info("Make readme banner: '{}'", file_path)
 
 
-def make_github_banner(build_contexts: Mapping[FontSize, FontBuildContext]) -> None:
+def make_github_banner(font_config_12px: FontConfig, alphabet_proportional_12px: Sequence[str]) -> None:
+    line_height = font_config_12px.line_height
+
     font_title = _load_font(12, 'proportional', 'zh_hans', 2)
     font_latin = _load_font(12, 'proportional', 'latin')
     font_zh_hans = _load_font(12, 'proportional', 'zh_hans')
     font_zh_hant = _load_font(12, 'proportional', 'zh_hant')
     font_ja = _load_font(12, 'proportional', 'ja')
-    alphabet = build_contexts[12].get_alphabet('proportional')
-    line_height = configs.FONT_CONFIGS[12].line_height
+
     box_size = 14
     text_color = (255, 255, 255, 255)
     shadow_color = (80, 80, 80, 255)
 
     image_background = Image.open(path_define.IMAGES_DIR.joinpath('github-banner-background.png'))
     image = Image.new('RGBA', (image_background.width, image_background.height), (0, 0, 0, 0))
-    _draw_text_background(image, alphabet, 12, box_size, font_zh_hans, (200, 200, 200, 255))
+    _draw_text_background(image, alphabet_proportional_12px, 12, box_size, font_zh_hans, (200, 200, 200, 255))
     image.paste(image_background, mask=image_background)
     _draw_text(image, (image.width / 2, 54 + line_height), '方舟像素字体 / Ark Pixel Font', font_title, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     _draw_text(image, (image.width / 2, 54 + line_height * 3), '★ 开源的泛拉丁与泛中日韩像素字体，黑体风格 ★', font_zh_hans, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
@@ -148,18 +151,19 @@ def make_github_banner(build_contexts: Mapping[FontSize, FontBuildContext]) -> N
     logger.info("Make github banner: '{}'", file_path)
 
 
-def make_itch_io_banner(build_contexts: Mapping[FontSize, FontBuildContext]) -> None:
+def make_itch_io_banner(font_config_12px: FontConfig, alphabet_proportional_12px: Sequence[str]) -> None:
+    line_height = font_config_12px.line_height
+
     font_x1 = _load_font(12, 'proportional', 'zh_hans')
     font_x2 = _load_font(12, 'proportional', 'zh_hans', 2)
-    alphabet = build_contexts[12].get_alphabet('proportional')
-    line_height = configs.FONT_CONFIGS[12].line_height
+
     box_size = 14
     text_color = (255, 255, 255, 255)
     shadow_color = (80, 80, 80, 255)
 
     image_background = Image.open(path_define.IMAGES_DIR.joinpath('itch-io-banner-background.png'))
     image = Image.new('RGBA', (image_background.width, image_background.height), (0, 0, 0, 0))
-    _draw_text_background(image, alphabet, 38, box_size, font_x1, (200, 200, 200, 255))
+    _draw_text_background(image, alphabet_proportional_12px, 38, box_size, font_x1, (200, 200, 200, 255))
     image.paste(image_background, mask=image_background)
     _draw_text(image, (image.width / 2, 36), '方舟像素字体', font_x2, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
     _draw_text(image, (image.width / 2, 36 + line_height * 2 + 4), '★ 开源的泛拉丁与泛中日韩像素字体，黑体风格 ★', font_x1, text_color=text_color, shadow_color=shadow_color, is_horizontal_centered=True)
@@ -171,13 +175,15 @@ def make_itch_io_banner(build_contexts: Mapping[FontSize, FontBuildContext]) -> 
     logger.info("Make itch.io banner: '{}'", file_path)
 
 
-def make_itch_io_cover() -> None:
+def make_itch_io_cover(font_config_12px: FontConfig) -> None:
+    line_height = font_config_12px.line_height
+
     font_title = _load_font(12, 'proportional', 'zh_hans', 2)
     font_latin = _load_font(12, 'proportional', 'latin')
     font_zh_hans = _load_font(12, 'proportional', 'zh_hans')
     font_zh_hant = _load_font(12, 'proportional', 'zh_hant')
     font_ja = _load_font(12, 'proportional', 'ja')
-    line_height = configs.FONT_CONFIGS[12].line_height
+
     text_color = (255, 255, 255, 255)
     shadow_color = (80, 80, 80, 255)
 
@@ -201,13 +207,15 @@ def make_itch_io_cover() -> None:
     logger.info("Make itch.io cover: '{}'", file_path)
 
 
-def make_afdian_cover() -> None:
+def make_afdian_cover(font_config_12px: FontConfig) -> None:
+    line_height = font_config_12px.line_height
+
     font_title = _load_font(12, 'proportional', 'zh_hans', 2)
     font_latin = _load_font(12, 'proportional', 'latin')
     font_zh_hans = _load_font(12, 'proportional', 'zh_hans')
     font_zh_hant = _load_font(12, 'proportional', 'zh_hant')
     font_ja = _load_font(12, 'proportional', 'ja')
-    line_height = configs.FONT_CONFIGS[12].line_height
+
     text_color = (255, 255, 255, 255)
     shadow_color = (80, 80, 80, 255)
 

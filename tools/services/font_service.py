@@ -1,5 +1,5 @@
 import math
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 from datetime import datetime
 
 import unidata_blocks
@@ -7,23 +7,33 @@ from loguru import logger
 from pixel_font_builder import FontBuilder, WeightName, SerifStyle, SlantStyle, WidthStyle, Glyph
 from pixel_font_knife.cmap.context import CmapContext
 from pixel_font_knife.cmap.file import CmapGlyphFile
+from pixel_font_knife.cmap.kerning.template import CmapKerningTemplate
+from pixel_font_knife.cmap.mapping.mapping import CmapMapping
 from pixel_font_knife.named.context import NamedContext
 from pixel_font_knife.named.file import NamedGlyphFile
 
-from tools import configs
 from tools.config import path_define, project, manifest, options
-from tools.config.options import FontSize, WidthMode, LanguageFlavor, FontFormat
+from tools.config.font import FontConfig
+from tools.config.options import WidthMode, LanguageFlavor, FontFormat
 
 
 class FontBuildContext:
     @staticmethod
-    def load(font_size: FontSize) -> FontBuildContext:
+    def load(
+            font_config: FontConfig,
+            scope_mappings: Mapping[str, Sequence[CmapMapping]],
+            kerning_template: CmapKerningTemplate,
+    ) -> FontBuildContext:
+        font_size = font_config.font_size
+
         notdef_glyph_file = NamedGlyphFile.load_notdef(path_define.GLYPHS_DIR.joinpath(str(font_size), 'notdef.png'))
 
         cmap_scope_contexts = {
             glyph_scope: CmapContext.load(
                 path_define.GLYPHS_DIR.joinpath(str(font_size), 'cmap', glyph_scope),
                 allowed_flavors=options.LANGUAGE_FLAVORS,
+            ).apply_mapping_by_flavor(
+                *(scope_mappings['common'] if glyph_scope == 'common' else scope_mappings['other'])
             )
             for glyph_scope in options.GLYPH_SCOPES
         }
@@ -32,7 +42,7 @@ class FontBuildContext:
             width_mode: CmapContext().merge_by_code_point(
                 cmap_scope_contexts['common'],
                 cmap_scope_contexts[width_mode],
-            ).apply_mapping_by_flavor(*configs.MAPPINGS)
+            )
             for width_mode in options.WIDTH_MODES
         }
 
@@ -52,30 +62,43 @@ class FontBuildContext:
             for width_mode in options.WIDTH_MODES
         }
 
-        return FontBuildContext(font_size, notdef_glyph_file, cmap_contexts, named_contexts)
+        return FontBuildContext(
+            font_config,
+            notdef_glyph_file,
+            cmap_contexts,
+            named_contexts,
+            kerning_template,
+        )
 
-    font_size: FontSize
+    font_config: FontConfig
     notdef_glyph_file: NamedGlyphFile
     cmap_contexts: dict[WidthMode, CmapContext]
     named_contexts: dict[WidthMode, NamedContext]
+    kerning_template: CmapKerningTemplate
 
     def __init__(
             self,
-            font_size: FontSize,
+            font_config: FontConfig,
             notdef_glyph_file: NamedGlyphFile,
             cmap_contexts: dict[WidthMode, CmapContext],
             named_contexts: dict[WidthMode, NamedContext],
+            kerning_template: CmapKerningTemplate,
     ) -> None:
-        self.font_size = font_size
+        self.font_config = font_config
         self.notdef_glyph_file = notdef_glyph_file
         self.cmap_contexts = cmap_contexts
         self.named_contexts = named_contexts
+        self.kerning_template = kerning_template
+
+    @property
+    def font_size(self) -> int:
+        return self.font_config.font_size
 
     def get_alphabet(self, width_mode: WidthMode) -> Sequence[str]:
         return [chr(code_point) for code_point in sorted(self.cmap_contexts[width_mode].get_character_mapping().keys())]
 
     def create_builder(self, width_mode: WidthMode, language_flavor: LanguageFlavor) -> FontBuilder:
-        layout_metric = configs.FONT_CONFIGS[self.font_size].layout_metrics[width_mode]
+        layout_metric = self.font_config.layout_metrics[width_mode]
 
         builder = FontBuilder()
         builder.font_metric.font_size = self.font_size
@@ -156,7 +179,7 @@ class FontBuildContext:
         builder.character_mapping.update(character_mapping)
 
         if width_mode == 'proportional':
-            kerning_values = configs.KERNING_TEMPLATE_DEFAULT.calculate_kerning_values(self.cmap_contexts['proportional'], language_flavor)
+            kerning_values = self.kerning_template.calculate_kerning_values(self.cmap_contexts['proportional'], language_flavor)
             builder.kerning_values.update(kerning_values)
 
         builder.opentype_config.field_overrides.head_y_max = layout_metric.ascent

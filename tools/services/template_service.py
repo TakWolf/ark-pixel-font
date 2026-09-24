@@ -1,13 +1,13 @@
 from collections.abc import Mapping, Collection
+from typing import Sequence
 
 import bs4
 from jinja2 import Environment, FileSystemLoader
 from loguru import logger
 
-from tools import configs
 from tools.config import path_define, project, manifest, options
+from tools.config.font import FontConfig
 from tools.config.options import WidthMode
-from tools.services.font_service import FontBuildContext
 
 _environment = Environment(
     trim_blocks=True,
@@ -30,23 +30,22 @@ def _make_html(template_name: str, file_name: str, params: Mapping[str, object] 
     logger.info("Make html: '{}'", file_path)
 
 
-def make_alphabet_html(build_context: FontBuildContext, width_mode: WidthMode) -> None:
-    _make_html('alphabet.html', f'alphabet-{build_context.font_size}px-{width_mode}.html', {
-        'font_config': configs.FONT_CONFIGS[build_context.font_size],
+def make_alphabet_html(font_config: FontConfig, width_mode: WidthMode, alphabet: Sequence[str]) -> None:
+    _make_html('alphabet.html', f'alphabet-{font_config.font_size}px-{width_mode}.html', {
+        'font_config': font_config,
         'width_mode': width_mode,
-        'alphabet': ''.join(c for c in build_context.get_alphabet(width_mode) if ord(c) >= 128),
+        'alphabet': ''.join(c for c in alphabet if ord(c) >= 128),
     })
 
 
 def _handle_demo_html_element(
         soup: bs4.BeautifulSoup,
         element: bs4.PageElement,
-        alphabet_monospaced: Collection[str],
-        alphabet_proportional: Collection[str],
+        alphabets: Mapping[WidthMode, Collection[str]],
 ) -> None:
     if isinstance(element, bs4.element.Tag):
         for child_element in element.contents:
-            _handle_demo_html_element(soup, child_element, alphabet_monospaced, alphabet_proportional)
+            _handle_demo_html_element(soup, child_element, alphabets)
     elif isinstance(element, bs4.element.NavigableString):
         text = str(element)
         tmp_parent = soup.new_tag('div')
@@ -57,11 +56,11 @@ def _handle_demo_html_element(
                 status = last_status
             elif c == '\n':
                 status = 'all'
-            elif c in alphabet_monospaced and c in alphabet_proportional:
+            elif c in alphabets['monospaced'] and c in alphabets['proportional']:
                 status = 'all'
-            elif c in alphabet_monospaced:
+            elif c in alphabets['monospaced']:
                 status = 'monospaced'
-            elif c in alphabet_proportional:
+            elif c in alphabets['proportional']:
                 status = 'proportional'
             else:
                 status = None
@@ -99,17 +98,19 @@ def _handle_demo_html_element(
         tmp_parent.unwrap()
 
 
-def make_demo_html(build_context: FontBuildContext) -> None:
-    alphabet_monospaced = set(build_context.get_alphabet('monospaced'))
-    alphabet_proportional = set(build_context.get_alphabet('proportional'))
+def make_demo_html(font_config: FontConfig, alphabets: Mapping[WidthMode, Sequence[str]]) -> None:
+    alphabets = {
+        width_mode: set(alphabet)
+        for width_mode, alphabet in alphabets.items()
+    }
 
     content_html = path_define.TEMPLATES_DIR.joinpath('demo-content.html').read_text('utf-8')
     soup = bs4.BeautifulSoup(content_html, 'html.parser')
-    _handle_demo_html_element(soup, soup, alphabet_monospaced, alphabet_proportional)
+    _handle_demo_html_element(soup, soup, alphabets)
     content_html = str(soup).strip()
 
-    _make_html('demo.html', f'demo-{build_context.font_size}px.html', {
-        'font_config': configs.FONT_CONFIGS[build_context.font_size],
+    _make_html('demo.html', f'demo-{font_config.font_size}px.html', {
+        'font_config': font_config,
         'content_html': content_html,
     })
 
