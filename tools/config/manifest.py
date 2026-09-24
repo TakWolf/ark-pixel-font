@@ -3,12 +3,12 @@ from tools.config.options import LanguageFlavor
 
 SCOPE_MAPPING_FILE_PATHS = {
     'common': [
-        path_define.CONFIGS_MAPPINGS_DIR.joinpath('2E80-2EFF CJK Radicals Supplement.yaml'),
-        path_define.CONFIGS_MAPPINGS_DIR.joinpath('2F00-2FDF Kangxi Radicals.yaml'),
-        path_define.CONFIGS_MAPPINGS_DIR.joinpath('F900-FAFF CJK Compatibility Ideographs.yaml'),
+        path_define.CONFIGS_MAPPINGS_DIR.joinpath('common', '2E80-2EFF CJK Radicals Supplement.yaml'),
+        path_define.CONFIGS_MAPPINGS_DIR.joinpath('common', '2F00-2FDF Kangxi Radicals.yaml'),
+        path_define.CONFIGS_MAPPINGS_DIR.joinpath('common', 'F900-FAFF CJK Compatibility Ideographs.yaml'),
     ],
     'other': [
-        path_define.CONFIGS_MAPPINGS_DIR.joinpath('0080-00FF Latin-1 Supplement.yaml'),
+        path_define.CONFIGS_MAPPINGS_DIR.joinpath('other', '0080-00FF Latin-1 Supplement.yaml'),
     ],
 }
 
