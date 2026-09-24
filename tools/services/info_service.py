@@ -14,7 +14,7 @@ from tools.config.options import FontSize, WidthMode
 
 def _do_we_need_to_create_a_glyph(c: str) -> bool:
     category = unicodedata2.category(c)
-    return category.startswith(('L', 'M', 'N', 'P', 'S')) or category == 'Zs'
+    return category[0] in ('L', 'M', 'N', 'P', 'S') or category == 'Zs'
 
 
 def _get_unicode_chr_count_infos(alphabet: Collection[str]) -> list[tuple[UnicodeBlock, int, int]]:
