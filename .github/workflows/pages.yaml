@@ -25,7 +25,9 @@ jobs:
       - name: Install dependencies
         run: uv sync
       - name: Build
-        run: uv run -m tools.cli --cleanup --font-formats otf.woff2 --attachments html
+        run: |
+          uv run -m tools.build_fonts --cleanup --font-formats otf.woff2
+          uv run -m tools.build_site
       - name: Setup Pages
         uses: actions/configure-pages@v6.0.0
       - name: Upload artifact
