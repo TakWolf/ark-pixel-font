@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% block title %}Ark Pixel - Alphabet {{ font_config.font_size }}px {{ width_mode }}{% endblock %}
+{% block title %}{{ project.FAMILY_NAME_PREFIX }} - Alphabet {{ font_config.font_size }}px {{ width_mode.capitalize() }}{% endblock %}
 {% block style %}
     <style>
         * {
