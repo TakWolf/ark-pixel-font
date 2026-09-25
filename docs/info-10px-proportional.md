@@ -4,12 +4,12 @@
 
 | 属性 | 值 |
 |---|---|
-| 版本号 | 2026.09.01 |
-| 字符总数 | 4290 |
+| 版本号 | 2026.09.25 |
+| 字符总数 | 4342 |
 
 ## Unicode 字符统计
 
-Unicode 版本：17.0.0
+Unicode 版本：18.0.0
 
 | 区块范围 | 区块名称 | 区块含义 | 完成数 | 缺失数 | 进度 |
 |---|---|---|---:|---:|---:|
@@ -21,7 +21,7 @@ Unicode 版本：17.0.0
 | 0400 ~ 04FF | Cyrillic | 西里尔字母 | 153 / 256 | 103 | 59.77% 🚧 |
 | 1E00 ~ 1EFF | Latin Extended Additional | 拉丁字母扩充附加 | 1 / 256 | 255 | 0.39% 🚧 |
 | 2000 ~ 206F | General Punctuation | 通用标点 | 39 / 84 | 45 | 46.43% 🚧 |
-| 2070 ~ 209F | Superscripts and Subscripts | 上标与下标 | 42 / 42 | 0 | 100.00% 🚩 |
+| 2070 ~ 209F | Superscripts and Subscripts | 上标与下标 | 42 / 46 | 4 | 91.30% 🚧 |
 | 2100 ~ 214F | Letterlike Symbols | 字母式符号 | 9 / 80 | 71 | 11.25% 🚧 |
 | 2150 ~ 218F | Number Forms | 数字形式 | 60 / 60 | 0 | 100.00% 🚩 |
 | 2190 ~ 21FF | Arrows | 箭头 | 112 / 112 | 0 | 100.00% 🚩 |
@@ -46,14 +46,15 @@ Unicode 版本：17.0.0
 | 3300 ~ 33FF | CJK Compatibility | 中日韩兼容 | 60 / 256 | 196 | 23.44% 🚧 |
 | 3400 ~ 4DBF | CJK Unified Ideographs Extension A | 中日韩统一表意文字扩充 A | 9 / 6592 | 6583 | 0.14% 🚧 |
 | 4E00 ~ 9FFF | CJK Unified Ideographs | 中日韩统一表意文字 | 1076 / 20992 | 19916 | 5.13% 🚧 |
-| A720 ~ A7FF | Latin Extended-D | 拉丁字母扩充-D | 7 / 204 | 197 | 3.43% 🚧 |
+| A720 ~ A7FF | Latin Extended-D | 拉丁字母扩充-D | 7 / 206 | 199 | 3.40% 🚧 |
 | E000 ~ F8FF | Private Use Area | 私用区域 | 249 / 0 | 0 | 100.00% 🚩 |
+| F900 ~ FAFF | CJK Compatibility Ideographs | 中日韩兼容表意文字 | 52 / 472 | 420 | 11.02% 🚧 |
 | FE10 ~ FE1F | Vertical Forms | 竖排形式 | 10 / 10 | 0 | 100.00% 🚩 |
 | FE30 ~ FE4F | CJK Compatibility Forms | 中日韩兼容形式 | 32 / 32 | 0 | 100.00% 🚩 |
 | FF00 ~ FFEF | Halfwidth and Fullwidth Forms | 半宽与全宽形式 | 173 / 225 | 52 | 76.89% 🚧 |
 | FFF0 ~ FFFF | Specials | 特殊字符 | 2 / 2 | 0 | 100.00% 🚩 |
 | 16FE0 ~ 16FFF | Ideographic Symbols and Punctuation | 表意文字符号与标点 | 5 / 12 | 7 | 41.67% 🚧 |
-| 1F100 ~ 1F1FF | Enclosed Alphanumeric Supplement | 包围字母数字增补 | 145 / 200 | 55 | 72.50% 🚧 |
+| 1F100 ~ 1F1FF | Enclosed Alphanumeric Supplement | 包围字母数字增补 | 145 / 201 | 56 | 72.14% 🚧 |
 | 1FA00 ~ 1FA6F | Chess Symbols | 国际象棋符号 | 36 / 102 | 66 | 35.29% 🚧 |
 | 20000 ~ 2A6DF | CJK Unified Ideographs Extension B | 中日韩统一表意文字扩充 B | 2 / 42720 | 42718 | 0.00% 🚧 |
 | 2CEB0 ~ 2EBEF | CJK Unified Ideographs Extension F | 中日韩统一表意文字扩充 F | 1 / 7473 | 7472 | 0.01% 🚧 |
@@ -99,6 +100,6 @@ Unicode 版本：17.0.0
 | 区块名称 | 完成数 | 缺失数 | 进度 |
 |---|---:|---:|---:|
 | 谚文音节 | 0 / 2350 | 2350 | 0.00% 🚧 |
-| 汉字 | 522 / 4888 | 4366 | 10.68% 🚧 |
+| 汉字 | 559 / 4888 | 4329 | 11.44% 🚧 |
 | 其他字符 | 803 / 988 | 185 | 81.28% 🚧 |
-| 总计 | 1325 / 8226 | 6901 | 16.11% 🚧 |
+| 总计 | 1362 / 8226 | 6864 | 16.56% 🚧 |
