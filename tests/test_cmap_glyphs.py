@@ -7,6 +7,7 @@ from pixel_font_knife.cmap.context import CmapContext
 
 from tools.config import options
 from tools.config.font import FontConfig
+from tools.config.glyph.bitmap import GlyphBitmapRules
 from tools.config.options import FontSize, GlyphScope
 
 
@@ -14,15 +15,15 @@ from tools.config.options import FontSize, GlyphScope
 @pytest.mark.parametrize('glyph_scope', options.GLYPH_SCOPES)
 def test_default_flavor(
         load_cmap_context: Callable[[FontSize, GlyphScope], CmapContext],
+        glyph_bitmap_rules: GlyphBitmapRules,
         font_size: FontSize,
         glyph_scope: GlyphScope,
 ) -> None:
     context = load_cmap_context(font_size, glyph_scope)
+    flavor_rules = glyph_bitmap_rules.cmap_rules.flavor_rules
 
     for code_point, glyph_variants in sorted(context.items()):
-        if glyph_scope == 'common' and code_point in (
-                0x2E95,
-        ):
+        if code_point in flavor_rules.allow_missing_default.get(glyph_scope, ()):
             continue
 
         assert None in glyph_variants, f'[{font_size}px] missing default flavor: {glyph_scope} {code_point:04X}'
@@ -48,33 +49,25 @@ def test_duplicate_glyph_bitmap(
 @pytest.mark.parametrize('font_size', options.FONT_SIZES)
 def test_top_and_right_padding(
         load_cmap_context: Callable[[FontSize, GlyphScope], CmapContext],
+        glyph_bitmap_rules: GlyphBitmapRules,
         font_size: FontSize,
 ) -> None:
     context = load_cmap_context(font_size, 'common')
+    padding_rules = glyph_bitmap_rules.cmap_rules.padding_rules
 
     for code_point, glyph_variants in sorted(context.items()):
         block = unidata_blocks.get_block_by_code_point(code_point)
 
         for glyph_file in set(glyph_variants.values()):
-            if block.name in ('Box Drawing', 'Block Elements'):
-                continue
-
-            if code_point in (
-                    0x25D8, 0x25D9, 0x25DA, 0x25DB,
-                    0x25E2, 0x25E3, 0x25E4, 0x25E5,
-                    0x25F8, 0x25F9, 0x25FA, 0x25FF,
-            ):
-                continue
-
-            if code_point not in (
-                    0x3035,
+            if (
+                    block.name not in padding_rules.allow_no_top_blocks and
+                    code_point not in padding_rules.allow_no_top_code_points
             ):
                 assert glyph_file.canvas.is_blank or glyph_file.canvas.trimmed_padding.top >= 1, f'[{font_size}px] glyph has no 1px top padding: {str(glyph_file.file_path)!r}'
 
-            if code_point not in (
-                    0x2013,
-                    0x2015,
-                    0x3030,
+            if (
+                    block.name not in padding_rules.allow_no_right_blocks and
+                    code_point not in padding_rules.allow_no_right_code_points
             ):
                 assert glyph_file.canvas.is_blank or glyph_file.canvas.trimmed_padding.right >= 1, f'[{font_size}px] glyph has no 1px right padding: {str(glyph_file.file_path)!r}'
 

@@ -1,0 +1,37 @@
+
+cmap:
+  flavor:
+    allow-missing-default:
+      common:
+        # CJK Radicals Supplement
+        - 0x2E95  # ⺕
+  padding:
+    allow-no-top-and-right:
+      blocks:
+        - Box Drawing
+        - Block Elements
+      code-points:
+        # Geometric Shapes
+        - 0x25D8  # ◘
+        - 0x25D9  # ◙
+        - 0x25DA  # ◚
+        - 0x25DB  # ◛
+        - 0x25E2  # ◢
+        - 0x25E3  # ◣
+        - 0x25E4  # ◤
+        - 0x25E5  # ◥
+        - 0x25F8  # ◸
+        - 0x25F9  # ◹
+        - 0x25FA  # ◺
+        - 0x25FF  # ◿
+    allow-no-top-only:
+      code-points:
+        # CJK Symbols and Punctuation
+        - 0x3035  # 〵
+    allow-no-right-only:
+      code-points:
+        # General Punctuation
+        - 0x2013  # –
+        - 0x2015  # ―
+        # CJK Symbols and Punctuation
+        - 0x3030  # 〰
