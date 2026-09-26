@@ -159,12 +159,12 @@ class FontBuildContext:
                 if glyph_file.name_key != '.notdef':
                     vertical_offset_y_delta = -1
 
-            horizontal_offset_x, horizontal_offset_y = glyph_file.canvas.horizontal_offset_for_trimmed(self.font_size, layout_metric.baseline)
-            advance_width = glyph_file.canvas.advance_width()
+            horizontal_offset_x, horizontal_offset_y = glyph_file.suggest_horizontal_offset(self.font_size, layout_metric.baseline)
+            advance_width = glyph_file.suggest_advance_width()
 
-            vertical_offset_x, vertical_offset_y = glyph_file.canvas.vertical_offset_for_trimmed(vertical_em_size)
+            vertical_offset_x, vertical_offset_y = glyph_file.suggest_vertical_offset(vertical_em_size)
             vertical_offset_y += vertical_offset_y_delta
-            advance_height = glyph_file.canvas.advance_height(vertical_em_size)
+            advance_height = glyph_file.suggest_advance_height(vertical_em_size)
 
             builder.glyphs.append(Glyph(
                 name=glyph_file.glyph_name,
@@ -172,7 +172,7 @@ class FontBuildContext:
                 advance_width=advance_width,
                 vertical_offset=(vertical_offset_x, vertical_offset_y),
                 advance_height=advance_height,
-                bitmap=glyph_file.canvas.trimmed_bitmap.data,
+                bitmap=glyph_file.suggest_bitmap(),
             ))
 
         character_mapping = self.cmap_contexts[width_mode].get_character_mapping(language_flavor)
