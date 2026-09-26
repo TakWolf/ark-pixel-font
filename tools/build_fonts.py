@@ -7,6 +7,7 @@ from pixel_font_knife.cmap.mapping.mapping import CmapMapping
 
 from tools.config import path_define, project, manifest, options
 from tools.config.font import FontConfig
+from tools.config.glyph.metric import GlyphMetricRules
 from tools.config.options import FontSize, WidthMode, FontFormat
 from tools.extra import publish_service, info_service
 from tools.font.context import FontBuildContext
@@ -37,6 +38,8 @@ def main(
         shutil.rmtree(path_define.BUILD_DIR)
         logger.info('Delete dir: {!r}', str(path_define.BUILD_DIR))
 
+    glyph_metric_rules = GlyphMetricRules.load()
+
     scope_mappings = {
         glyph_scope: [
             CmapMapping.load_yaml(
@@ -52,7 +55,7 @@ def main(
 
     for font_size in font_sizes:
         font_config = FontConfig.load(font_size)
-        build_context = FontBuildContext.load(font_config, scope_mappings, kerning_template)
+        build_context = FontBuildContext.load(font_config, glyph_metric_rules, scope_mappings, kerning_template)
 
         for width_mode in width_modes:
             alphabet = build_context.get_alphabet(width_mode)

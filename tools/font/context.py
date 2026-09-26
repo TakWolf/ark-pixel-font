@@ -2,11 +2,9 @@ import math
 from collections.abc import Mapping, Sequence
 from datetime import datetime
 
-import unidata_blocks
 from loguru import logger
 from pixel_font_builder import FontBuilder, WeightName, SerifStyle, SlantStyle, WidthStyle, Glyph, opentype
 from pixel_font_knife.cmap.context import CmapContext
-from pixel_font_knife.cmap.file import CmapGlyphFile
 from pixel_font_knife.cmap.kerning.template import CmapKerningTemplate
 from pixel_font_knife.cmap.mapping.mapping import CmapMapping
 from pixel_font_knife.named.context import NamedContext
@@ -14,6 +12,7 @@ from pixel_font_knife.named.file import NamedGlyphFile
 
 from tools.config import path_define, project, manifest, options
 from tools.config.font import FontConfig
+from tools.config.glyph.metric import GlyphMetricRules
 from tools.config.options import WidthMode, LanguageFlavor, FontFormat
 
 
@@ -21,6 +20,7 @@ class FontBuildContext:
     @staticmethod
     def load(
             font_config: FontConfig,
+            glyph_metric_rules: GlyphMetricRules,
             scope_mappings: Mapping[str, Sequence[CmapMapping]],
             kerning_template: CmapKerningTemplate,
     ) -> FontBuildContext:
@@ -64,6 +64,7 @@ class FontBuildContext:
 
         return FontBuildContext(
             font_config,
+            glyph_metric_rules,
             notdef_glyph_file,
             cmap_contexts,
             named_contexts,
@@ -71,6 +72,7 @@ class FontBuildContext:
         )
 
     font_config: FontConfig
+    glyph_metric_rules: GlyphMetricRules
     notdef_glyph_file: NamedGlyphFile
     cmap_contexts: dict[WidthMode, CmapContext]
     named_contexts: dict[WidthMode, NamedContext]
@@ -79,12 +81,14 @@ class FontBuildContext:
     def __init__(
             self,
             font_config: FontConfig,
+            glyph_metric_rules: GlyphMetricRules,
             notdef_glyph_file: NamedGlyphFile,
             cmap_contexts: dict[WidthMode, CmapContext],
             named_contexts: dict[WidthMode, NamedContext],
             kerning_template: CmapKerningTemplate,
     ) -> None:
         self.font_config = font_config
+        self.glyph_metric_rules = glyph_metric_rules
         self.notdef_glyph_file = notdef_glyph_file
         self.cmap_contexts = cmap_contexts
         self.named_contexts = named_contexts
@@ -132,39 +136,14 @@ class FontBuildContext:
 
         glyph_sequence = [self.notdef_glyph_file] + self.cmap_contexts[width_mode].get_glyph_sequence(language_flavor) + self.named_contexts[width_mode].get_glyph_sequence(language_flavor)
         for glyph_file in glyph_sequence:
-            vertical_em_size = self.font_size
-            vertical_offset_y_delta = 0
-
-            if isinstance(glyph_file, CmapGlyphFile):
-                code_point = glyph_file.code_point
-                block = unidata_blocks.get_block_by_code_point(code_point)
-
-                if code_point in (
-                        0x3031, 0x3032,
-                ):
-                    vertical_em_size = self.font_size * 2
-
-                if not glyph_file.canvas.is_blank and block.name not in (
-                        'Box Drawing',
-                        'Block Elements',
-                ) and code_point not in (
-                        0x25D8, 0x25D9, 0x25DA, 0x25DB,
-                        0x25E2, 0x25E3, 0x25E4, 0x25E5,
-                        0x25F8, 0x25F9, 0x25FA, 0x25FF,
-                        0x3031, 0x3032, 0x3033, 0x3034, 0x3035,
-                ):
-                    vertical_offset_y_delta = -1
-
-            if isinstance(glyph_file, NamedGlyphFile):
-                if glyph_file.name_key != '.notdef':
-                    vertical_offset_y_delta = -1
-
             horizontal_offset_x, horizontal_offset_y = glyph_file.suggest_horizontal_offset(self.font_size, layout_metric.baseline)
             advance_width = glyph_file.suggest_advance_width()
 
-            vertical_offset_x, vertical_offset_y = glyph_file.suggest_vertical_offset(vertical_em_size)
-            vertical_offset_y += vertical_offset_y_delta
-            advance_height = glyph_file.suggest_advance_height(vertical_em_size)
+            vertical_em_size_scale = self.glyph_metric_rules.vertical_em_size_scale(glyph_file)
+            vertical_offset_x, vertical_offset_y = glyph_file.suggest_vertical_offset(self.font_size * vertical_em_size_scale)
+            if self.glyph_metric_rules.should_adjust_vertical_offset_y(glyph_file):
+                vertical_offset_y -= 1
+            advance_height = glyph_file.suggest_advance_height(self.font_size * vertical_em_size_scale)
 
             builder.glyphs.append(Glyph(
                 name=glyph_file.glyph_name,

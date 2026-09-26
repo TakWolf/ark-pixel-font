@@ -1,0 +1,34 @@
+
+cmap:
+  vertical-em-size-scales:
+    # CJK Symbols and Punctuation
+    0x3031: 2  # 〱
+    0x3032: 2  # 〲
+  no-vertical-offset-y-adjustment:
+    blocks:
+      - Box Drawing
+      - Block Elements
+    code-points:
+      # Geometric Shapes
+      - 0x25D8  # ◘
+      - 0x25D9  # ◙
+      - 0x25DA  # ◚
+      - 0x25DB  # ◛
+      - 0x25E2  # ◢
+      - 0x25E3  # ◣
+      - 0x25E4  # ◤
+      - 0x25E5  # ◥
+      - 0x25F8  # ◸
+      - 0x25F9  # ◹
+      - 0x25FA  # ◺
+      - 0x25FF  # ◿
+      # CJK Symbols and Punctuation
+      - 0x3031  # 〱
+      - 0x3032  # 〲
+      - 0x3033  # 〳
+      - 0x3034  # 〴
+      - 0x3035  # 〵
+
+named:
+  no-vertical-offset-y-adjustment:
+    - .notdef
