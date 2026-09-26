@@ -77,14 +77,19 @@ def test_top_and_right_padding(
 def test_glyph_bitmap_dimensions(
         load_font_config: Callable[[FontSize], FontConfig],
         load_cmap_context: Callable[[FontSize, GlyphScope], CmapContext],
+        glyph_bitmap_rules: GlyphBitmapRules,
         font_size: FontSize,
         glyph_scope: GlyphScope,
 ) -> None:
     canvas_height = load_font_config(font_size).canvas_height
     context = load_cmap_context(font_size, glyph_scope)
+    dimensions_rules = glyph_bitmap_rules.cmap_rules.dimensions_rules
 
     for code_point, glyph_variants in sorted(context.items()):
-        east_asian_width = unicodedata2.east_asian_width(chr(code_point))
+        if code_point in dimensions_rules.east_asian_width_treated_as:
+            east_asian_width = dimensions_rules.east_asian_width_treated_as[code_point]
+        else:
+            east_asian_width = unicodedata2.east_asian_width(chr(code_point))
 
         for glyph_file in set(glyph_variants.values()):
             if glyph_scope == 'common' or glyph_scope == 'monospaced':

@@ -70,26 +70,48 @@ class CmapGlyphPaddingRules:
         self.allow_no_right_code_points = allow_no_right_code_points
 
 
+class CmapGlyphDimensionsRules:
+    @staticmethod
+    def parse(data: Any) -> CmapGlyphDimensionsRules:
+        east_asian_width_treated_as = data['east-asian-width-treated-as']
+        return CmapGlyphDimensionsRules(
+            east_asian_width_treated_as,
+        )
+
+    east_asian_width_treated_as: dict[int, str]
+
+    def __init__(
+            self,
+            east_asian_width_treated_as: dict[int, str],
+    ) -> None:
+        self.east_asian_width_treated_as = east_asian_width_treated_as
+
+
 class CmapGlyphBitmapRules:
     @staticmethod
     def parse(data: Any) -> CmapGlyphBitmapRules:
         flavor_rules = CmapGlyphFlavorRules.parse(data['flavor'])
         padding_rules = CmapGlyphPaddingRules.parse(data['padding'])
+        dimensions_rules = CmapGlyphDimensionsRules.parse(data['dimensions'])
         return CmapGlyphBitmapRules(
             flavor_rules,
             padding_rules,
+            dimensions_rules,
         )
 
     flavor_rules: CmapGlyphFlavorRules
     padding_rules: CmapGlyphPaddingRules
+    dimensions_rules: CmapGlyphDimensionsRules
 
     def __init__(
             self,
             flavor_rules: CmapGlyphFlavorRules,
             padding_rules: CmapGlyphPaddingRules,
+            dimensions_rules: CmapGlyphDimensionsRules,
     ) -> None:
         self.flavor_rules = flavor_rules
         self.padding_rules = padding_rules
+        self.dimensions_rules = dimensions_rules
 
 
 class GlyphBitmapRules:
