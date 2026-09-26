@@ -46,7 +46,7 @@ def test_duplicate_glyph_bitmap(
 
 
 @pytest.mark.parametrize('font_size', options.FONT_SIZES)
-def test_top_right_padding(
+def test_top_and_right_padding(
         load_cmap_context: Callable[[FontSize, GlyphScope], CmapContext],
         font_size: FontSize,
 ) -> None:
