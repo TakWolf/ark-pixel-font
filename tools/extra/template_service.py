@@ -16,13 +16,16 @@ _environment = Environment(
 )
 
 
-def _make_html(template_name: str, file_name: str, params: Mapping[str, object] | None = None) -> None:
+def _render_html(template_name: str, params: Mapping[str, object] | None = None) -> str:
     params = dict(params) if params is not None else {}
     params['project'] = project
     params['manifest'] = manifest
     params['options'] = options
+    return _environment.get_template(template_name).render(params)
 
-    html = _environment.get_template(template_name).render(params)
+
+def _make_html(template_name: str, file_name: str, params: Mapping[str, object] | None = None) -> None:
+    html = _render_html(template_name, params)
 
     path_define.OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
     file_path = path_define.OUTPUTS_DIR.joinpath(file_name)
@@ -104,7 +107,7 @@ def make_demo_html(font_config: FontConfig, alphabets: Mapping[WidthMode, Sequen
         for width_mode, alphabet in alphabets.items()
     }
 
-    content_html = path_define.TEMPLATES_DIR.joinpath('demo-content.html').read_text('utf-8')
+    content_html = _render_html('demo-content.html')
     soup = bs4.BeautifulSoup(content_html, 'html.parser')
     _handle_demo_html_element(soup, soup, alphabets)
     content_html = str(soup).strip()

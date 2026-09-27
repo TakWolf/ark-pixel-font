@@ -130,7 +130,7 @@ class FontBuildContext:
         builder.meta_info.description = project.DESCRIPTION
         builder.meta_info.copyright_info = project.COPYRIGHT_INFO
         builder.meta_info.license_info = project.LICENSE_INFO
-        builder.meta_info.vendor_url = project.VENDOR_URL
+        builder.meta_info.vendor_url = project.HOMEPAGE_URL
         builder.meta_info.designer_url = project.DESIGNER_URL
         builder.meta_info.license_url = project.LICENSE_URL
 

@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% block title %}方舟像素字体 / Ark Pixel Font{% endblock %}
+{% block title %}{{ project.NAME_ZH }} / {{ project.NAME }}{% endblock %}
 {% block style %}
     <style>
         * {
@@ -137,13 +137,13 @@
         {% endfor %}
     </div>
     <div id="page">
-        <h1 class="title" lang="zh-Hans">方舟像素字体 / Ark Pixel Font</h1>
+        <h1 class="title" lang="zh-Hans">{{ project.NAME_ZH }} / {{ project.NAME }}</h1>
         <br>
-        <div class="text" lang="zh-Hans">★ 开源的泛拉丁与泛中日韩像素字体，黑体风格 ★</div>
+        <div class="text" lang="zh-Hans">★ {{ project.DESCRIPTION_ZH }} ★</div>
         <div class="link-group" lang="en">
-            <a class="link-tab" href="https://github.com/TakWolf/ark-pixel-font" target="_blank">github</a>
-            <a class="link-tab" href="https://takwolf.itch.io/ark-pixel-font" target="_blank">itch.io</a>
-            <a class="link-tab" href="https://discord.gg/3GKtPKtjdU" target="_blank">discord</a>
+            <a class="link-tab" href="{{ project.GITHUB_URL }}" target="_blank">github</a>
+            <a class="link-tab" href="{{ project.ITCHIO_URL }}" target="_blank">itch.io</a>
+            <a class="link-tab" href="{{ project.DISCORD_URL }}" target="_blank">discord</a>
         </div>
         <br>
         <div class="text" lang="zh-Hans">我们度过的每个平凡的日常，也许就是连续发生的奇迹。</div>
@@ -167,7 +167,7 @@
         </div>
         {% endfor %}
         <br>
-        <div class="copyright" lang="en">© 2021 TakWolf</div>
+        <div class="copyright" lang="en">© {{ project.COPYRIGHT_YEAR }} {{ project.DESIGNER }}</div>
     </div>
     <script type="module">
         const settings = {
