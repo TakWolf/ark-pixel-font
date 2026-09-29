@@ -34,21 +34,21 @@
 
 ## 宽度模式
 
-目前支持「等宽模式」和「比例模式」两种。
+目前提供「等宽模式」和「比例模式」两种规格。
 
 ### 等宽模式
 
-字符为半宽或全宽，排版时可严格纵向对齐。
+字符的横向宽度固定为半宽或全宽，字符高度和行高限制在字身框内，因此可以严格对齐。
 
-字体行高有限，基线位置略微偏高，这导致中西文混排时西文在视觉上重心偏高，美观性略差。
+这种设计确保受支持的字符能够在有限的像素尺寸内完整显示，但也压缩了字形的设计空间。部分复杂字形无法清晰绘制，因此支持的字符数量相对较少，字形的美观性也会有所牺牲。此外，字体基线略微偏高；中西文混排时，西文的视觉重心可能偏上。
 
 ### 比例模式
 
-字符宽度根据字形实际情况分配，字距和行高自然，支持字偶距调整。
+字符宽度根据字形的实际形态分配，字距与行高更加自然，并支持字偶距调整。
 
-基线处于合适的位置，整体排版观感舒适。
+字体基线更适合常规排版，整体视觉效果更加协调。
 
-如无特殊需求，应该优先使用「比例模式」。
+如无特殊需求，建议优先使用「比例模式」。
 
 ## 语言特定字形
 
@@ -107,5 +107,3 @@
 [![赞赏码](https://raw.githubusercontent.com/TakWolf/TakWolf/master/images/badge-payqr@2x.png)](https://github.com/TakWolf/TakWolf/blob/master/payment-qr-codes.md)
 [![爱发电](https://raw.githubusercontent.com/TakWolf/TakWolf/master/images/badge-afdian@2x.png)](https://afdian.com/a/takwolf)
 [![PayPal](https://raw.githubusercontent.com/TakWolf/TakWolf/master/images/badge-paypal@2x.png)](https://paypal.me/takwolf)
-
-[赞助商名单](https://github.com/TakWolf/TakWolf/blob/master/sponsors.md)
