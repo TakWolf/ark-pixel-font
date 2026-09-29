@@ -12,7 +12,8 @@ groups:
   latin_Y: YÝŶŸȲẎỲỴỶỸ
   latin_a: aàáâãäåæāăąǎǟǡǣǻǽȁȃȧḁẚạảấầẩẫậắằẳẵặ
   latin_cemnosuxz: cçćĉċčḉeèéêëēĕėęěǝȅȇȩḕḗḙḛḝẹẻẽếềểễệĸmḿṁṃnñńņňŉŋǌǹṅṇṉṋoòóôõöøōŏőœǒǫǭǿȍȏȫȭȯȱṍṏṑṓọỏốồổỗộsśŝşšșṡṣṥṧṩuùúûüũūŭůűųǔǖǘǚǜȕȗṳṵṷṹṻụủxẋẍzźżžẑẓẕ
-  latin_d: dƌďđǆǳḋḍḏḑḓ
+  latin_d: dƌǆǳḋḍḏḑḓ
+  latin_ď: ďđ
   latin_f: fƒḟ
   latin_g: gĝğġģǧǵḡ
   latin_i: iìíîïĩīĭįıĳǐȉȋḭḯỉị
@@ -47,6 +48,7 @@ values:
   latin_F,latin_a: -1
   latin_F,latin_cemnosuxz: -1
   latin_F,latin_d: -1
+  latin_F,latin_ď: -1
   latin_F,latin_f: -1
   latin_F,latin_g: -1
   latin_F,latin_i: -1
@@ -81,6 +83,7 @@ values:
   latin_T,latin_a: -1
   latin_T,latin_cemnosuxz: -1
   latin_T,latin_d: -1
+  latin_T,latin_ď: -1
   latin_T,latin_f: -1
   latin_T,latin_i: -1
   latin_T,latin_j: -1
@@ -99,6 +102,7 @@ values:
   latin_Ư,latin_a: -1
   latin_Ư,latin_cemnosuxz: -1
   latin_Ư,latin_d: -1
+  latin_Ư,latin_ď: -1
   latin_Ư,latin_f: -1
   latin_Ư,latin_i: -1
   latin_Ư,latin_j: -1
@@ -117,6 +121,7 @@ values:
   latin_V,latin_a: -1
   latin_V,latin_cemnosuxz: -1
   latin_V,latin_d: -1
+  latin_V,latin_ď: -1
   latin_V,latin_f: -1
   latin_V,latin_g: -1
   latin_V,latin_i: -1
@@ -136,6 +141,7 @@ values:
   latin_W,latin_a: -1
   latin_W,latin_cemnosuxz: -1
   latin_W,latin_d: -1
+  latin_W,latin_ď: -1
   latin_W,latin_f: -1
   latin_W,latin_g: -1
   latin_W,latin_i: -1
@@ -155,6 +161,7 @@ values:
   latin_Y,latin_a: -1
   latin_Y,latin_cemnosuxz: -1
   latin_Y,latin_d: -1
+  latin_Y,latin_ď: -1
   latin_Y,latin_f: -1
   latin_Y,latin_g: -1
   latin_Y,latin_i: -1
@@ -169,16 +176,59 @@ values:
   latin_Y,latin_w: -1
   latin_Y,latin_y: -1
   latin_Y,period: -1
+  latin_ď,latin_a: -1
+  latin_ď,latin_cemnosuxz: -1
+  latin_ď,latin_d: -1
+  latin_ď,latin_ď: -1
+  latin_ď,latin_i: -1
+  latin_ď,latin_j: -1
+  latin_ď,latin_ơ: -1
+  latin_ď,latin_p: -1
+  latin_ď,latin_q: -1
+  latin_ď,latin_r: -1
+  latin_ď,latin_t: -1
+  latin_ď,latin_ư: -1
+  latin_ď,latin_v: -1
+  latin_ď,latin_w: -1
+  latin_ď,latin_y: -1
+  latin_ď,period: -1
   latin_f,latin_a: -1
   latin_f,period: -1
   latin_i,latin_j: -1
   latin_l,latin_j: -1
   latin_ơ,latin_a: -1
+  latin_ơ,latin_cemnosuxz: -1
+  latin_ơ,latin_d: -1
+  latin_ơ,latin_ď: -1
+  latin_ơ,latin_i: -1
+  latin_ơ,latin_j: -1
+  latin_ơ,latin_ơ: -1
+  latin_ơ,latin_p: -1
+  latin_ơ,latin_q: -1
+  latin_ơ,latin_r: -1
+  latin_ơ,latin_t: -1
+  latin_ơ,latin_ư: -1
+  latin_ơ,latin_v: -1
+  latin_ơ,latin_w: -1
+  latin_ơ,latin_y: -1
   latin_ơ,period: -1
   latin_r,latin_a: -1
   latin_r,period: -1
   latin_ư,latin_a: -1
   latin_ư,latin_cemnosuxz: -1
+  latin_ư,latin_d: -1
+  latin_ư,latin_ď: -1
+  latin_ư,latin_i: -1
+  latin_ư,latin_j: -1
+  latin_ư,latin_ơ: -1
+  latin_ư,latin_p: -1
+  latin_ư,latin_q: -1
+  latin_ư,latin_r: -1
+  latin_ư,latin_t: -1
+  latin_ư,latin_ư: -1
+  latin_ư,latin_v: -1
+  latin_ư,latin_w: -1
+  latin_ư,latin_y: -1
   latin_ư,period: -1
   latin_v,period: -1
   latin_w,period: -1
