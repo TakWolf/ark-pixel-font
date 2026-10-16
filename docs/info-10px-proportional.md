@@ -4,8 +4,8 @@
 
 | 属性 | 值 |
 |---|---|
-| 版本号 | 2026.09.25 |
-| 字符总数 | 4342 |
+| 版本号 | 2026.10.16 |
+| 字符总数 | 4597 |
 
 ## Unicode 字符统计
 
@@ -14,12 +14,12 @@ Unicode 版本：18.0.0
 | 区块范围 | 区块名称 | 区块含义 | 完成数 | 缺失数 | 进度 |
 |---|---|---|---:|---:|---:|
 | 0000 ~ 007F | Basic Latin | 基本拉丁字母 | 95 / 95 | 0 | 100.00% 🚩 |
-| 0080 ~ 00FF | Latin-1 Supplement | 拉丁字母-1 增补 | 95 / 95 | 0 | 100.00% 🚩 |
+| 0080 ~ 00FF | Latin-1 Supplement | 拉丁字母增补-1 | 95 / 95 | 0 | 100.00% 🚩 |
 | 0100 ~ 017F | Latin Extended-A | 拉丁字母扩充-A | 128 / 128 | 0 | 100.00% 🚩 |
 | 0180 ~ 024F | Latin Extended-B | 拉丁字母扩充-B | 127 / 208 | 81 | 61.06% 🚧 |
 | 0370 ~ 03FF | Greek and Coptic | 希腊字母与科普特字母 | 99 / 135 | 36 | 73.33% 🚧 |
 | 0400 ~ 04FF | Cyrillic | 西里尔字母 | 153 / 256 | 103 | 59.77% 🚧 |
-| 1E00 ~ 1EFF | Latin Extended Additional | 拉丁字母扩充附加 | 1 / 256 | 255 | 0.39% 🚧 |
+| 1E00 ~ 1EFF | Latin Extended Additional | 拉丁字母扩充附加 | 256 / 256 | 0 | 100.00% 🚩 |
 | 2000 ~ 206F | General Punctuation | 通用标点 | 39 / 84 | 45 | 46.43% 🚧 |
 | 2070 ~ 209F | Superscripts and Subscripts | 上标与下标 | 42 / 46 | 4 | 91.30% 🚧 |
 | 2100 ~ 214F | Letterlike Symbols | 字母式符号 | 9 / 80 | 71 | 11.25% 🚧 |
@@ -55,7 +55,7 @@ Unicode 版本：18.0.0
 | FFF0 ~ FFFF | Specials | 特殊字符 | 2 / 2 | 0 | 100.00% 🚩 |
 | 16FE0 ~ 16FFF | Ideographic Symbols and Punctuation | 表意文字符号与标点 | 5 / 12 | 7 | 41.67% 🚧 |
 | 1F100 ~ 1F1FF | Enclosed Alphanumeric Supplement | 包围字母数字增补 | 145 / 201 | 56 | 72.14% 🚧 |
-| 1FA00 ~ 1FA6F | Chess Symbols | 国际象棋符号 | 36 / 102 | 66 | 35.29% 🚧 |
+| 1FA00 ~ 1FA6F | Chess Symbols | 棋类符号 | 36 / 102 | 66 | 35.29% 🚧 |
 | 20000 ~ 2A6DF | CJK Unified Ideographs Extension B | 中日韩统一表意文字扩充 B | 2 / 42720 | 42718 | 0.00% 🚧 |
 | 2CEB0 ~ 2EBEF | CJK Unified Ideographs Extension F | 中日韩统一表意文字扩充 F | 1 / 7473 | 7472 | 0.01% 🚧 |
 
