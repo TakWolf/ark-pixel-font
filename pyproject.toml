@@ -10,7 +10,7 @@ dependencies = [
     "unidata-blocks==0.0.28",
     "character-encoding-utils==0.0.13",
     "pyyaml==6.0.3",
-    "pillow==12.3.0",
+    "pillow==13.0.0",
     "beautifulsoup4==4.15.0",
     "jinja2==3.1.6",
     "loguru==0.7.3",
