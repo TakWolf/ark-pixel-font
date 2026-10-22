@@ -74,6 +74,7 @@
 - [Pixel Font Knife](https://github.com/TakWolf/pixel-font-knife)
 - [unicodedata2](https://github.com/fonttools/unicodedata2)
 - [Unidata Blocks](https://github.com/TakWolf/unidata-blocks)
+- [Unicode Block Translations](https://github.com/TakWolf/unicode-block-translations)
 - [Character Encoding Utils](https://github.com/TakWolf/character-encoding-utils)
 - [PyYAML](https://github.com/yaml/pyyaml)
 - [Pillow](https://github.com/python-pillow/Pillow)

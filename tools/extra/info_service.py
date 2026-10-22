@@ -2,6 +2,7 @@ from collections import defaultdict
 from collections.abc import Callable, Collection, Sequence
 from typing import TextIO
 
+import unicode_block_translations
 import unicodedata2
 import unidata_blocks
 from character_encoding_utils import gb2312, big5, shiftjis, ksx1001
@@ -95,7 +96,7 @@ def _write_unicode_chr_count_infos_table(file: TextIO, infos: Sequence[tuple[Uni
     for block, count, total in infos:
         code_point_range = f'{block.code_start:04X} ~ {block.code_end:04X}'
         name = block.name
-        name_zh = block.name_localized('zh', '')
+        name_zh = unicode_block_translations.translate(block.name, 'zh')
         missing = total - count if total > 0 else 0
         progress = count / total if total > 0 else 1
         finished_emoji = '🚩' if progress == 1 else '🚧'
@@ -129,7 +130,7 @@ def make_info(font_size: FontSize, width_mode: WidthMode, alphabet: Sequence[str
         file.write('\n')
         file.write('## Unicode 字符统计\n')
         file.write('\n')
-        file.write(f'Unicode 版本：{unidata_blocks.unicode_version}\n')
+        file.write(f'Unicode 版本：{unidata_blocks.UNICODE_VERSION}\n')
         file.write('\n')
         _write_unicode_chr_count_infos_table(file, _get_unicode_chr_count_infos(alphabet))
         file.write('\n')

@@ -16,6 +16,7 @@ dependencies = [
     { name = "pixel-font-builder" },
     { name = "pixel-font-knife" },
     { name = "pyyaml" },
+    { name = "unicode-block-translations" },
     { name = "unicodedata2" },
     { name = "unidata-blocks" },
 ]
@@ -36,8 +37,9 @@ requires-dist = [
     { name = "pixel-font-builder", specifier = "==0.0.61" },
     { name = "pixel-font-knife", specifier = "==0.0.31" },
     { name = "pyyaml", specifier = "==6.0.3" },
+    { name = "unicode-block-translations", specifier = "==18.0.0" },
     { name = "unicodedata2", specifier = "==18.0.0" },
-    { name = "unidata-blocks", specifier = "==0.0.28" },
+    { name = "unidata-blocks", specifier = "==18.0.0" },
 ]
 
 [package.metadata.requires-dev]
@@ -481,6 +483,18 @@ wheels = [
 ]
 
 [[package]]
+name = "unicode-block-translations"
+version = "18.0.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "langcodes" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/42/32/99dc64c4fa8cba9d53f1437c78f78e95e990a2d7cbac8f7993e41b8e97dc/unicode_block_translations-18.0.0.tar.gz", hash = "sha256:6b8eefb3053a336934501f908b72588403af4309afdcc8dd0ea5436bb6d19e64", size = 12879, upload-time = "2026-10-22T09:40:58.781Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/12/9d/e82624df0825dc6c44dae6e30ba36671bb31105daf80be841d4d37701f38/unicode_block_translations-18.0.0-py3-none-any.whl", hash = "sha256:7d7a50836920ed61b53a18267f7c15c3b6eba062ffb988b70dc03906ea9af28a", size = 23873, upload-time = "2026-10-22T09:40:57.654Z" },
+]
+
+[[package]]
 name = "unicodedata2"
 version = "18.0.0"
 source = { registry = "https://pypi.org/simple" }
@@ -508,14 +522,11 @@ wheels = [
 
 [[package]]
 name = "unidata-blocks"
-version = "0.0.28"
+version = "18.0.0"
 source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "langcodes" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/7a/49/f8e7cd0c53fe686ab743fe5162c7b2b3740c2def2655da74cf3df396267c/unidata_blocks-0.0.28.tar.gz", hash = "sha256:6c28b7fb125c7827e67d6e48c836a9fdcc136a7e0dcd22afe29793f463088255", size = 15258, upload-time = "2026-09-30T04:44:26.035Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/78/5d/c2fc661369e1b126203bd56b6b43ffe3c8e64c69a67d7f809044852e4131/unidata_blocks-18.0.0.tar.gz", hash = "sha256:112b268a7285cc73c5dfcf40e24c2ddad8b4d28032cd3dcc473ae0e053d0e153", size = 12147, upload-time = "2026-10-22T09:40:52.838Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/0b/ac/5b9f68b4ea223902e6fdf10ad905f81b37c9886e790a2697dde30ccdfd98/unidata_blocks-0.0.28-py3-none-any.whl", hash = "sha256:d159fefa9fc594cb636aaed17bdb461864810e1848a39dbcdab762feb185647b", size = 26021, upload-time = "2026-09-30T04:44:24.962Z" },
+    { url = "https://files.pythonhosted.org/packages/60/c8/a2887a1d33a8b9dc71a8fe525f59ef7b38afd7c6e0fbdccf9dfddd4e0d82/unidata_blocks-18.0.0-py3-none-any.whl", hash = "sha256:edd7db7d36450c330bde97e9f87db4a8be453538e7cc5e6d4dd22ba98e458f4f", size = 12929, upload-time = "2026-10-22T09:40:51.782Z" },
 ]
 
 [[package]]
