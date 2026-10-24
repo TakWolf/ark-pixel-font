@@ -1,5 +1,5 @@
 
-VERSION = '2026.10.16'
+VERSION = '2026.10.25'
 
 NAME = 'Ark Pixel Font'
 NAME_ZH = '方舟像素字体'
