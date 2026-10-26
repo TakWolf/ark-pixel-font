@@ -113,9 +113,19 @@
         </div>
     </div>
     <label class="content">
-        <textarea id="input-box" placeholder="请随便写点什么… / Please input something..."></textarea>
+        <textarea id="input-box"></textarea>
     </label>
     <script type="module">
+        const PLACEHOLDERS = {
+            'en': 'Please type something',
+            'zh-Hans': '请随便写点什么',
+            'zh-Hant': '請隨便寫點什麼',
+            'zh-Hant-HK': '請隨便寫點什麼',
+            'zh-Hant-TW': '請隨便寫點什麼',
+            'ja': '何か入力してください',
+            'ko': '아무 글이나 입력해 보세요',
+        }
+
         const settings = {
             fontSize: 12,
             widthMode: 'proportional',
@@ -132,6 +142,7 @@
             localStorage.setItem('{{ project.FILE_NAME_PREFIX }}-font:settings:playground', JSON.stringify(settings))
             inputBox.className = 'font-' + settings.fontSize + 'px-' + settings.widthMode
             inputBox.setAttribute('lang', settings.locale)
+            inputBox.placeholder = PLACEHOLDERS[settings.locale]
         }
 
         window.onFontSizeChange = fontSize => {
