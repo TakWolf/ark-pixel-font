@@ -9,7 +9,7 @@ from character_encoding_utils import gb2312, big5, shiftjis, ksx1001
 from loguru import logger
 from unidata_blocks import UnicodeBlock
 
-from tools.config import path_define, project
+from tools.config import paths, project
 from tools.config.options import FontSize, WidthMode
 
 
@@ -116,8 +116,8 @@ def _write_locale_chr_count_infos_table(file: TextIO, infos: Sequence[tuple[str,
 def make_info(font_size: FontSize, width_mode: WidthMode, alphabet: Sequence[str]) -> None:
     alphabet = set(alphabet)
 
-    path_define.OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
-    file_path = path_define.OUTPUTS_DIR.joinpath(f'info-{font_size}px-{width_mode}.md')
+    paths.OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
+    file_path = paths.OUTPUTS_DIR.joinpath(f'info-{font_size}px-{width_mode}.md')
     with file_path.open('w', encoding='utf-8') as file:
         file.write(f'# {project.FAMILY_NAME_PREFIX} {font_size}px {'等宽模式' if width_mode == 'monospaced' else '比例模式'}\n')
         file.write('\n')
@@ -161,7 +161,7 @@ def make_info(font_size: FontSize, width_mode: WidthMode, alphabet: Sequence[str
 
 
 def make_alphabet_txt(font_size: FontSize, width_mode: WidthMode, alphabet: Sequence[str]) -> None:
-    path_define.OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
-    file_path = path_define.OUTPUTS_DIR.joinpath(f'alphabet-{font_size}px-{width_mode}.txt')
+    paths.OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
+    file_path = paths.OUTPUTS_DIR.joinpath(f'alphabet-{font_size}px-{width_mode}.txt')
     file_path.write_text(''.join(alphabet), 'utf-8')
     logger.info('Make alphabet txt: {!r}', str(file_path))

@@ -2,7 +2,7 @@ from typing import Any
 
 import yaml
 
-from tools.config import path_define
+from tools.config import paths
 from tools.config.options import GlyphScope
 
 
@@ -117,7 +117,7 @@ class CmapGlyphBitmapRules:
 class GlyphBitmapRules:
     @staticmethod
     def load() -> GlyphBitmapRules:
-        data = yaml.safe_load(path_define.CONFIGS_GLYPHS_DIR.joinpath('bitmaps.yaml').read_bytes())
+        data = yaml.safe_load(paths.CONFIGS_GLYPHS_DIR.joinpath('bitmaps.yaml').read_bytes())
         cmap_rules = CmapGlyphBitmapRules.parse(data['cmap'])
         return GlyphBitmapRules(
             cmap_rules,

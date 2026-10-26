@@ -6,7 +6,7 @@ from pixel_font_knife.cmap.file import CmapGlyphFile
 from pixel_font_knife.glyph.file import GlyphFile
 from pixel_font_knife.named.file import NamedGlyphFile
 
-from tools.config import path_define
+from tools.config import paths
 
 
 class CmapGlyphMetricRules:
@@ -56,7 +56,7 @@ class NamedGlyphMetricRules:
 class GlyphMetricRules:
     @staticmethod
     def load() -> GlyphMetricRules:
-        data = yaml.safe_load(path_define.CONFIGS_GLYPHS_DIR.joinpath('metrics.yaml').read_bytes())
+        data = yaml.safe_load(paths.CONFIGS_GLYPHS_DIR.joinpath('metrics.yaml').read_bytes())
         cmap_rules = CmapGlyphMetricRules.parse(data['cmap'])
         named_rules = NamedGlyphMetricRules.parse(data['named'])
         return GlyphMetricRules(

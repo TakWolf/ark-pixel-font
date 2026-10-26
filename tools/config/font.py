@@ -2,7 +2,7 @@ from typing import Any
 
 import yaml
 
-from tools.config import path_define, options
+from tools.config import paths, options
 from tools.config.options import FontSize, WidthMode
 
 
@@ -60,7 +60,7 @@ class LayoutMetric:
 class FontConfig:
     @staticmethod
     def load(font_size: FontSize) -> FontConfig:
-        data = yaml.safe_load(path_define.CONFIGS_FONTS_DIR.joinpath(f'font-{font_size}px.yaml').read_bytes())
+        data = yaml.safe_load(paths.CONFIGS_FONTS_DIR.joinpath(f'font-{font_size}px.yaml').read_bytes())
         assert font_size == data['font-size']
         canvas_height = data['canvas-height']
         layout_metrics = {

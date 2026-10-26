@@ -1,4 +1,4 @@
-from tools.config import path_define, options
+from tools.config import paths, options
 from tools.config.font import FontConfig
 from tools.extra import template_service
 
@@ -9,7 +9,7 @@ def main() -> None:
 
         alphabets = {}
         for width_mode in options.WIDTH_MODES:
-            alphabet = list(path_define.OUTPUTS_DIR.joinpath(f'alphabet-{font_size}px-{width_mode}.txt').read_text('utf-8'))
+            alphabet = list(paths.OUTPUTS_DIR.joinpath(f'alphabet-{font_size}px-{width_mode}.txt').read_text('utf-8'))
             alphabets[width_mode] = alphabet
 
             template_service.make_alphabet_html(font_config, width_mode, alphabets[width_mode])

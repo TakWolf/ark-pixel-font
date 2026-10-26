@@ -10,7 +10,7 @@ from pixel_font_knife.cmap.mapping.mapping import CmapMapping
 from pixel_font_knife.named.context import NamedContext
 from pixel_font_knife.named.file import NamedGlyphFile
 
-from tools.config import path_define, project, manifest, options
+from tools.config import paths, project, manifest, options
 from tools.config.font import FontConfig
 from tools.config.glyph.metric import GlyphMetricRules
 from tools.config.options import WidthMode, LanguageFlavor, FontFormat
@@ -26,11 +26,11 @@ class FontBuildContext:
     ) -> FontBuildContext:
         font_size = font_config.font_size
 
-        notdef_glyph_file = NamedGlyphFile.load_notdef(path_define.GLYPHS_DIR.joinpath(str(font_size), 'notdef.png'))
+        notdef_glyph_file = NamedGlyphFile.load_notdef(paths.GLYPHS_DIR.joinpath(str(font_size), 'notdef.png'))
 
         cmap_scope_contexts = {
             glyph_scope: CmapContext.load(
-                path_define.GLYPHS_DIR.joinpath(str(font_size), 'cmap', glyph_scope),
+                paths.GLYPHS_DIR.joinpath(str(font_size), 'cmap', glyph_scope),
                 allowed_flavors=options.LANGUAGE_FLAVORS,
             ).apply_mapping_by_flavor(
                 *(scope_mappings['common'] if glyph_scope == 'common' else scope_mappings['other'])
@@ -48,7 +48,7 @@ class FontBuildContext:
 
         named_scope_contexts = {
             glyph_scope: NamedContext.load(
-                path_define.GLYPHS_DIR.joinpath(str(font_size), 'named', glyph_scope),
+                paths.GLYPHS_DIR.joinpath(str(font_size), 'named', glyph_scope),
                 allowed_flavors=options.LANGUAGE_FLAVORS,
             )
             for glyph_scope in options.GLYPH_SCOPES
@@ -166,20 +166,20 @@ class FontBuildContext:
 
         builder.opentype_config.features = opentype.FeatureProgram([
             opentype.FeatureFile(
-                path_define.CONFIGS_FEATURES_DIR.joinpath('calt.fea'),
-                include_dir=path_define.CONFIGS_FEATURES_DIR,
+                paths.CONFIGS_FEATURES_DIR.joinpath('calt.fea'),
+                include_dir=paths.CONFIGS_FEATURES_DIR,
             ),
         ])
 
         return builder
 
     def make_fonts(self, width_mode: WidthMode, font_formats: Sequence[FontFormat]) -> None:
-        path_define.OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
+        paths.OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
 
         if len(font_formats) > 0:
             for language_flavor in options.LANGUAGE_FLAVORS:
                 builder = self.create_builder(width_mode, language_flavor)
                 for font_format in font_formats:
-                    file_path = path_define.OUTPUTS_DIR.joinpath(f'{project.FILE_NAME_PREFIX}-{self.font_size}px-{width_mode}-{language_flavor}.{font_format}')
+                    file_path = paths.OUTPUTS_DIR.joinpath(f'{project.FILE_NAME_PREFIX}-{self.font_size}px-{width_mode}-{language_flavor}.{font_format}')
                     getattr(builder, f'save_{font_format.replace('.', '_')}')(file_path)
                     logger.info('Make font: {!r}', str(file_path))

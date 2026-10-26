@@ -1,4 +1,4 @@
-from tools.config import path_define, options
+from tools.config import paths, options
 from tools.config.font import FontConfig
 from tools.extra import image_service
 
@@ -10,7 +10,7 @@ def main() -> None:
         image_service.make_preview_image(font_config)
 
         if font_size == 12:
-            alphabet = list(path_define.OUTPUTS_DIR.joinpath('alphabet-12px-proportional.txt').read_text('utf-8'))
+            alphabet = list(paths.OUTPUTS_DIR.joinpath('alphabet-12px-proportional.txt').read_text('utf-8'))
 
             image_service.make_readme_banner(font_config, alphabet)
             image_service.make_github_banner(font_config, alphabet)
