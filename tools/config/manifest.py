@@ -3,6 +3,7 @@ from tools.config.options import LanguageFlavor
 
 SCOPE_MAPPING_FILE_PATHS = {
     'common': [
+        paths.CONFIGS_MAPPINGS_DIR.joinpath('common', '2000-206F General Punctuation.yaml'),
         paths.CONFIGS_MAPPINGS_DIR.joinpath('common', '2E80-2EFF CJK Radicals Supplement.yaml'),
         paths.CONFIGS_MAPPINGS_DIR.joinpath('common', '2F00-2FDF Kangxi Radicals.yaml'),
         paths.CONFIGS_MAPPINGS_DIR.joinpath('common', 'F900-FAFF CJK Compatibility Ideographs.yaml'),

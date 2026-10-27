@@ -30,9 +30,6 @@ cmap:
         - 0x3035  # 〵
     allow-no-right-only:
       code-points:
-        # General Punctuation
-        - 0x2013  # –
-        - 0x2015  # ―
         # CJK Symbols and Punctuation
         - 0x3030  # 〰
   dimensions:
