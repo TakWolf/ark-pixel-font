@@ -4,4 +4,5 @@
 
 feature calt {
   sub @digits u003A' @digits by colon.centered;
+  sub u2014' u2014 by emdash.connected;
 } calt;

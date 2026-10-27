@@ -37,3 +37,8 @@ cmap:
       # CJK Symbols and Punctuation
       0x302E: Na  # HANGUL SINGLE DOT TONE MARK
       0x302F: Na  # HANGUL DOUBLE DOT TONE MARK
+
+named:
+  padding:
+    allow-no-right-only:
+      - emdash.connected

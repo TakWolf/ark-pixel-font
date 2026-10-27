@@ -5,6 +5,7 @@ from pixel_font_knife.named.context import NamedContext
 
 from tools.config import options
 from tools.config.font import FontConfig
+from tools.config.glyph.bitmap import GlyphBitmapRules
 from tools.config.options import FontSize, GlyphScope
 
 
@@ -41,14 +42,19 @@ def test_duplicate_glyph_bitmap(
 @pytest.mark.parametrize('font_size', options.FONT_SIZES)
 def test_top_and_right_padding(
         load_named_context: Callable[[FontSize, GlyphScope], NamedContext],
+        glyph_bitmap_rules: GlyphBitmapRules,
         font_size: FontSize,
 ) -> None:
     context = load_named_context(font_size, 'common')
+    padding_rules = glyph_bitmap_rules.named_rules.padding_rules
 
     for name_key, glyph_variants in sorted(context.items()):
         for glyph_file in set(glyph_variants.values()):
-            assert glyph_file.canvas.is_blank or glyph_file.canvas.trimmed_padding.top >= 1, f'[{font_size}px] glyph has no 1px top padding: {str(glyph_file.file_path)!r}'
-            assert glyph_file.canvas.is_blank or glyph_file.canvas.trimmed_padding.right >= 1, f'[{font_size}px] glyph has no 1px right padding: {str(glyph_file.file_path)!r}'
+            if name_key not in padding_rules.allow_no_top:
+                assert glyph_file.canvas.is_blank or glyph_file.canvas.trimmed_padding.top >= 1, f'[{font_size}px] glyph has no 1px top padding: {str(glyph_file.file_path)!r}'
+
+            if name_key not in padding_rules.allow_no_right:
+                assert glyph_file.canvas.is_blank or glyph_file.canvas.trimmed_padding.right >= 1, f'[{font_size}px] glyph has no 1px right padding: {str(glyph_file.file_path)!r}'
 
 
 @pytest.mark.parametrize('font_size', options.FONT_SIZES)

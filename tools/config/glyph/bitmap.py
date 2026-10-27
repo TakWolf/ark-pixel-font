@@ -114,19 +114,69 @@ class CmapGlyphBitmapRules:
         self.dimensions_rules = dimensions_rules
 
 
+class NamedGlyphPaddingRules:
+    @staticmethod
+    def parse(data: Any) -> NamedGlyphPaddingRules:
+        allow_no_top = set()
+        allow_no_top.update(data.get('allow-no-top-and-right', ()))
+        allow_no_top.update(data.get('allow-no-top-only', ()))
+
+        allow_no_right = set()
+        allow_no_right.update(data.get('allow-no-top-and-right', ()))
+        allow_no_right.update(data.get('allow-no-right-only', ()))
+
+        return NamedGlyphPaddingRules(
+            allow_no_top,
+            allow_no_right,
+        )
+
+    allow_no_top: set[str]
+    allow_no_right: set[str]
+
+    def __init__(
+            self,
+            allow_no_top: set[str],
+            allow_no_right: set[str],
+    ) -> None:
+        self.allow_no_top = allow_no_top
+        self.allow_no_right = allow_no_right
+
+
+class NamedGlyphBitmapRules:
+    @staticmethod
+    def parse(data: Any) -> NamedGlyphBitmapRules:
+        padding_rules = NamedGlyphPaddingRules.parse(data['padding'])
+        return NamedGlyphBitmapRules(
+            padding_rules,
+        )
+
+    padding_rules: NamedGlyphPaddingRules
+
+    def __init__(
+            self,
+            padding_rules: NamedGlyphPaddingRules,
+    ) -> None:
+        self.padding_rules = padding_rules
+
+
 class GlyphBitmapRules:
     @staticmethod
     def load() -> GlyphBitmapRules:
         data = yaml.safe_load(paths.CONFIGS_GLYPHS_DIR.joinpath('bitmaps.yaml').read_bytes())
         cmap_rules = CmapGlyphBitmapRules.parse(data['cmap'])
+        named_rules = NamedGlyphBitmapRules.parse(data['named'])
         return GlyphBitmapRules(
             cmap_rules,
+            named_rules,
         )
 
     cmap_rules: CmapGlyphBitmapRules
+    named_rules: NamedGlyphBitmapRules
 
     def __init__(
             self,
             cmap_rules: CmapGlyphBitmapRules,
+            named_rules: NamedGlyphBitmapRules,
     ) -> None:
         self.cmap_rules = cmap_rules
+        self.named_rules = named_rules
