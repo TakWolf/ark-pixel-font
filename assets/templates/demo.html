@@ -138,6 +138,21 @@
             margin-bottom: {{ font_config.font_size * 2 }}px;
             font-size: {{ font_config.font_size * 2 }}px;
         }
+        .vertical-box {
+            width: 100%;
+            height: 640px;
+            margin-top: 64px;
+            margin-bottom: 64px;
+            padding-top: 32px;
+            padding-bottom: 32px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            writing-mode: vertical-rl;
+        }
+        .vertical-content {
+            margin-left: {{ font_config.font_size * 2 }}px;
+            font-size: {{ font_config.font_size * 2 }}px;
+        }
     </style>
 {% endblock %}
 {% block body %}
