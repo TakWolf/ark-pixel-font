@@ -66,7 +66,7 @@
         }
         .content {
             position: fixed;
-            top: 108px;
+            top: 144px;
             bottom: 0;
             left: 0;
             right: 0;
@@ -111,6 +111,18 @@
             </label>
             {% endfor %}
         </div>
+         <div class="options-group" style="background-color: #dac8ff;">
+            <label class="option">
+                <input id="radio-text-direction-horizontal" name="text-direction" type="radio" onchange="onTextDirectionChange('horizontal')">
+                <span></span>
+                horizontal
+            </label>
+             <label class="option">
+                <input id="radio-text-direction-vertical" name="text-direction" type="radio" onchange="onTextDirectionChange('vertical')">
+                <span></span>
+                vertical
+            </label>
+        </div>
     </div>
     <label class="content">
         <textarea id="input-box"></textarea>
@@ -130,6 +142,7 @@
             fontSize: 12,
             widthMode: 'proportional',
             locale: 'zh-Hans',
+            textDirection: 'horizontal',
         }
         const json = localStorage.getItem('{{ project.FILE_NAME_PREFIX }}-font:settings:playground')
         if (json) {
@@ -141,6 +154,7 @@
         window.applySettings = () => {
             localStorage.setItem('{{ project.FILE_NAME_PREFIX }}-font:settings:playground', JSON.stringify(settings))
             inputBox.className = `font-${settings.fontSize}px-${settings.widthMode}`
+            inputBox.style.writingMode = settings.textDirection === 'vertical' ? 'vertical-rl' : 'horizontal-tb'
             inputBox.setAttribute('lang', settings.locale)
             inputBox.placeholder = PLACEHOLDERS[settings.locale]
         }
@@ -160,9 +174,15 @@
             window.applySettings()
         }
 
+        window.onTextDirectionChange = textDirection => {
+            settings.textDirection = textDirection
+            window.applySettings()
+        }
+
         document.getElementById(`radio-font-size-${settings.fontSize}`).checked = true
         document.getElementById(`radio-width-mode-${settings.widthMode}`).checked = true
         document.getElementById(`radio-locale-${settings.locale}`).checked = true
+        document.getElementById(`radio-text-direction-${settings.textDirection}`).checked = true
         window.applySettings()
     </script>
 {% endblock %}
