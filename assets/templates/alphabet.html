@@ -124,7 +124,7 @@
             window.applySettings()
         }
 
-        document.getElementById('radio-locale-' + settings.locale).checked = true
+        document.getElementById(`radio-locale-${settings.locale}`).checked = true
         window.applySettings()
     </script>
 {% endblock %}

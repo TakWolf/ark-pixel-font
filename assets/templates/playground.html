@@ -140,7 +140,7 @@
 
         window.applySettings = () => {
             localStorage.setItem('{{ project.FILE_NAME_PREFIX }}-font:settings:playground', JSON.stringify(settings))
-            inputBox.className = 'font-' + settings.fontSize + 'px-' + settings.widthMode
+            inputBox.className = `font-${settings.fontSize}px-${settings.widthMode}`
             inputBox.setAttribute('lang', settings.locale)
             inputBox.placeholder = PLACEHOLDERS[settings.locale]
         }
@@ -160,9 +160,9 @@
             window.applySettings()
         }
 
-        document.getElementById('radio-font-size-' + settings.fontSize).checked = true
-        document.getElementById('radio-width-mode-' + settings.widthMode).checked = true
-        document.getElementById('radio-locale-' + settings.locale).checked = true
+        document.getElementById(`radio-font-size-${settings.fontSize}`).checked = true
+        document.getElementById(`radio-width-mode-${settings.widthMode}`).checked = true
+        document.getElementById(`radio-locale-${settings.locale}`).checked = true
         window.applySettings()
     </script>
 {% endblock %}

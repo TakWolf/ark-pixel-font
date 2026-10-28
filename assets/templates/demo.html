@@ -186,8 +186,8 @@
 
         window.applySettings = () => {
             localStorage.setItem('{{ project.FILE_NAME_PREFIX }}-font:settings:demo-{{ font_config.font_size }}px', JSON.stringify(settings))
-            page.className = 'font-' + settings.widthMode
-            document.body.className = 'theme-' + settings.theme
+            page.className = `font-${settings.widthMode}`
+            document.body.className = `theme-${settings.theme}`
         }
 
         window.onWidthModeChange = widthMode => {
@@ -200,7 +200,7 @@
             window.applySettings()
         }
 
-        document.getElementById('radio-width-mode-' + settings.widthMode).checked = true
+        document.getElementById(`radio-width-mode-${settings.widthMode}`).checked = true
         window.applySettings()
     </script>
 {% endblock %}
