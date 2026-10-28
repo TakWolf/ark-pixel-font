@@ -20,8 +20,8 @@ class FontBuildContext:
     @staticmethod
     def load(
             font_config: FontConfig,
-            glyph_metric_rules: GlyphMetricRules,
             scope_mappings: Mapping[str, Sequence[CmapMapping]],
+            glyph_metric_rules: GlyphMetricRules,
             kerning_template: CmapKerningTemplate,
     ) -> FontBuildContext:
         font_size = font_config.font_size
@@ -64,34 +64,34 @@ class FontBuildContext:
 
         return FontBuildContext(
             font_config,
-            glyph_metric_rules,
             notdef_glyph_file,
             cmap_contexts,
             named_contexts,
+            glyph_metric_rules,
             kerning_template,
         )
 
     font_config: FontConfig
-    glyph_metric_rules: GlyphMetricRules
     notdef_glyph_file: NamedGlyphFile
     cmap_contexts: dict[WidthMode, CmapContext]
     named_contexts: dict[WidthMode, NamedContext]
+    glyph_metric_rules: GlyphMetricRules
     kerning_template: CmapKerningTemplate
 
     def __init__(
             self,
             font_config: FontConfig,
-            glyph_metric_rules: GlyphMetricRules,
             notdef_glyph_file: NamedGlyphFile,
             cmap_contexts: dict[WidthMode, CmapContext],
             named_contexts: dict[WidthMode, NamedContext],
+            glyph_metric_rules: GlyphMetricRules,
             kerning_template: CmapKerningTemplate,
     ) -> None:
         self.font_config = font_config
-        self.glyph_metric_rules = glyph_metric_rules
         self.notdef_glyph_file = notdef_glyph_file
         self.cmap_contexts = cmap_contexts
         self.named_contexts = named_contexts
+        self.glyph_metric_rules = glyph_metric_rules
         self.kerning_template = kerning_template
 
     @property

@@ -38,8 +38,6 @@ def main(
         shutil.rmtree(paths.BUILD_DIR)
         logger.info('Delete dir: {!r}', str(paths.BUILD_DIR))
 
-    glyph_metric_rules = GlyphMetricRules.load()
-
     scope_mappings = {
         glyph_scope: [
             CmapMapping.load_yaml(
@@ -51,11 +49,13 @@ def main(
         for glyph_scope, file_paths in manifest.SCOPE_MAPPING_FILE_PATHS.items()
     }
 
+    glyph_metric_rules = GlyphMetricRules.load()
+
     kerning_template = CmapKerningTemplate.load(manifest.KERNING_TEMPLATE_FILE_PATH)
 
     for font_size in font_sizes:
         font_config = FontConfig.load(font_size)
-        build_context = FontBuildContext.load(font_config, glyph_metric_rules, scope_mappings, kerning_template)
+        build_context = FontBuildContext.load(font_config, scope_mappings, glyph_metric_rules, kerning_template)
 
         for width_mode in width_modes:
             alphabet = build_context.get_alphabet(width_mode)
