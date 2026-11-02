@@ -68,7 +68,7 @@ def _handle_demo_html_element(
             else:
                 status = None
             if last_status != status:
-                if text_buffer != '':
+                if text_buffer:
                     if last_status == 'all':
                         tmp_child = bs4.element.NavigableString(text_buffer)
                     else:
@@ -84,7 +84,7 @@ def _handle_demo_html_element(
                     text_buffer = ''
                 last_status = status
             text_buffer += c
-        if text_buffer != '':
+        if text_buffer:
             if last_status == 'all':
                 tmp_child = bs4.element.NavigableString(text_buffer)
             else:

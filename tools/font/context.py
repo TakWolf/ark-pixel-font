@@ -176,7 +176,7 @@ class FontBuildContext:
     def make_fonts(self, width_mode: WidthMode, font_formats: Sequence[FontFormat]) -> None:
         paths.OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
 
-        if len(font_formats) > 0:
+        if font_formats:
             for language_flavor in options.LANGUAGE_FLAVORS:
                 builder = self.create_builder(width_mode, language_flavor)
                 for font_format in font_formats:
