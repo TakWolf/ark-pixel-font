@@ -33,7 +33,7 @@ class FontBuildContext:
                 paths.GLYPHS_DIR.joinpath(str(font_size), 'cmap', glyph_scope),
                 allowed_flavors=options.LANGUAGE_FLAVORS,
             ).apply_mapping_by_flavor(
-                *(scope_mappings['common'] if glyph_scope == 'common' else scope_mappings['other'])
+                *(scope_mappings['common'] if glyph_scope == 'common' else scope_mappings['other']),
             )
             for glyph_scope in options.GLYPH_SCOPES
         }
