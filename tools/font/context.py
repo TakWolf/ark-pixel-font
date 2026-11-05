@@ -12,7 +12,7 @@ from pixel_font_knife.named.file import NamedGlyphFile
 
 from tools.config import paths, project, manifest, options
 from tools.config.font import FontConfig
-from tools.config.glyph.metric import GlyphMetricRules
+from tools.config.glyph.metric import MetricGlobalRules
 from tools.config.options import WidthMode, LanguageFlavor, FontFormat
 
 
@@ -21,7 +21,7 @@ class FontBuildContext:
     def load(
             font_config: FontConfig,
             scope_mappings: Mapping[str, Sequence[CmapMapping]],
-            glyph_metric_rules: GlyphMetricRules,
+            metric_global_rules: MetricGlobalRules,
             kerning_template: CmapKerningTemplate,
     ) -> FontBuildContext:
         font_size = font_config.font_size
@@ -67,7 +67,7 @@ class FontBuildContext:
             notdef_glyph_file,
             cmap_contexts,
             named_contexts,
-            glyph_metric_rules,
+            metric_global_rules,
             kerning_template,
         )
 
@@ -75,7 +75,7 @@ class FontBuildContext:
     notdef_glyph_file: NamedGlyphFile
     cmap_contexts: dict[WidthMode, CmapContext]
     named_contexts: dict[WidthMode, NamedContext]
-    glyph_metric_rules: GlyphMetricRules
+    metric_global_rules: MetricGlobalRules
     kerning_template: CmapKerningTemplate
 
     def __init__(
@@ -84,14 +84,14 @@ class FontBuildContext:
             notdef_glyph_file: NamedGlyphFile,
             cmap_contexts: dict[WidthMode, CmapContext],
             named_contexts: dict[WidthMode, NamedContext],
-            glyph_metric_rules: GlyphMetricRules,
+            metric_global_rules: MetricGlobalRules,
             kerning_template: CmapKerningTemplate,
     ) -> None:
         self.font_config = font_config
         self.notdef_glyph_file = notdef_glyph_file
         self.cmap_contexts = cmap_contexts
         self.named_contexts = named_contexts
-        self.glyph_metric_rules = glyph_metric_rules
+        self.metric_global_rules = metric_global_rules
         self.kerning_template = kerning_template
 
     @property
@@ -139,11 +139,11 @@ class FontBuildContext:
             horizontal_offset_x, horizontal_offset_y = glyph_file.suggest_horizontal_offset(self.font_size, layout_metric.baseline)
             advance_width = glyph_file.suggest_advance_width()
 
-            vertical_em_size_scale = self.glyph_metric_rules.vertical_em_size_scale(glyph_file)
-            vertical_offset_x, vertical_offset_y = glyph_file.suggest_vertical_offset(self.font_size * vertical_em_size_scale)
-            if self.glyph_metric_rules.should_adjust_vertical_offset_y(glyph_file):
+            vertical_em_scale = self.metric_global_rules.get_vertical_em_scale(glyph_file)
+            vertical_offset_x, vertical_offset_y = glyph_file.suggest_vertical_offset(self.font_size * vertical_em_scale)
+            if not glyph_file.canvas.is_blank and self.metric_global_rules.should_adjust_vertical_offset_y(glyph_file):
                 vertical_offset_y -= 1
-            advance_height = glyph_file.suggest_advance_height(self.font_size * vertical_em_size_scale)
+            advance_height = glyph_file.suggest_advance_height(self.font_size * vertical_em_scale)
 
             builder.glyphs.append(Glyph(
                 name=glyph_file.glyph_name,

@@ -7,96 +7,87 @@ from pixel_font_knife.glyph.file import GlyphFile
 from pixel_font_knife.named.file import NamedGlyphFile
 
 from tools.config import paths
+from tools.config.glyph.selector import CmapSelector, NamedSelector
 
 
-class CmapGlyphMetricRules:
+class CmapMetricGlobalRules:
     @staticmethod
-    def parse(data: Any) -> CmapGlyphMetricRules:
-        vertical_em_size_scales = data['vertical-em-size-scales']
-        no_vertical_offset_y_adjustment_blocks = set(data['no-vertical-offset-y-adjustment']['blocks'])
-        no_vertical_offset_y_adjustment_code_points = set(data['no-vertical-offset-y-adjustment']['code-points'])
-        return CmapGlyphMetricRules(
-            vertical_em_size_scales,
-            no_vertical_offset_y_adjustment_blocks,
-            no_vertical_offset_y_adjustment_code_points,
+    def parse(data: Any) -> CmapMetricGlobalRules:
+        vertical_em_scales = data['vertical-em-scales']
+        no_vertical_adjustment = CmapSelector.parse(data['no-vertical-adjustment'])
+        return CmapMetricGlobalRules(
+            vertical_em_scales,
+            no_vertical_adjustment,
         )
 
-    vertical_em_size_scales: dict[int, int]
-    no_vertical_offset_y_adjustment_blocks: set[str]
-    no_vertical_offset_y_adjustment_code_points: set[int]
+    vertical_em_scales: dict[int, int]
+    no_vertical_adjustment: CmapSelector
 
     def __init__(
             self,
-            vertical_em_size_scales: dict[int, int],
-            no_vertical_offset_y_adjustment_blocks: set[str],
-            no_vertical_offset_y_adjustment_code_points: set[int],
+            vertical_em_scales: dict[int, int],
+            no_vertical_adjustment: CmapSelector,
     ) -> None:
-        self.vertical_em_size_scales = vertical_em_size_scales
-        self.no_vertical_offset_y_adjustment_blocks = no_vertical_offset_y_adjustment_blocks
-        self.no_vertical_offset_y_adjustment_code_points = no_vertical_offset_y_adjustment_code_points
+        self.vertical_em_scales = vertical_em_scales
+        self.no_vertical_adjustment = no_vertical_adjustment
 
 
-class NamedGlyphMetricRules:
+class NamedMetricGlobalRules:
     @staticmethod
-    def parse(data: Any) -> NamedGlyphMetricRules:
-        no_vertical_offset_y_adjustment = set(data['no-vertical-offset-y-adjustment'])
-        return NamedGlyphMetricRules(
-            no_vertical_offset_y_adjustment,
+    def parse(data: Any) -> NamedMetricGlobalRules:
+        no_vertical_adjustment = NamedSelector.parse(data['no-vertical-adjustment'])
+        return NamedMetricGlobalRules(
+            no_vertical_adjustment,
         )
 
-    no_vertical_offset_y_adjustment: set[str]
+    no_vertical_adjustment: NamedSelector
 
     def __init__(
             self,
-            no_vertical_offset_y_adjustment: set[str],
+            no_vertical_adjustment: NamedSelector,
     ) -> None:
-        self.no_vertical_offset_y_adjustment = no_vertical_offset_y_adjustment
+        self.no_vertical_adjustment = no_vertical_adjustment
 
 
-class GlyphMetricRules:
+class MetricGlobalRules:
     @staticmethod
-    def load() -> GlyphMetricRules:
-        data = yaml.safe_load(paths.CONFIGS_GLYPHS_DIR.joinpath('metrics.yaml').read_bytes())
-        cmap_rules = CmapGlyphMetricRules.parse(data['cmap'])
-        named_rules = NamedGlyphMetricRules.parse(data['named'])
-        return GlyphMetricRules(
-            cmap_rules,
-            named_rules,
+    def load() -> MetricGlobalRules:
+        data = yaml.safe_load(paths.CONFIGS_GLYPHS_DIR.joinpath('metrics', 'global.yaml').read_bytes())
+        cmap_global_rules = CmapMetricGlobalRules.parse(data['cmap'])
+        named_global_rules = NamedMetricGlobalRules.parse(data['named'])
+        return MetricGlobalRules(
+            cmap_global_rules,
+            named_global_rules,
         )
 
-    cmap_rules: CmapGlyphMetricRules
-    named_rules: NamedGlyphMetricRules
+    cmap_global_rules: CmapMetricGlobalRules
+    named_global_rules: NamedMetricGlobalRules
 
     def __init__(
             self,
-            cmap_rules: CmapGlyphMetricRules,
-            named_rules: NamedGlyphMetricRules,
+            cmap_global_rules: CmapMetricGlobalRules,
+            named_global_rules: NamedMetricGlobalRules,
     ) -> None:
-        self.cmap_rules = cmap_rules
-        self.named_rules = named_rules
+        self.cmap_global_rules = cmap_global_rules
+        self.named_global_rules = named_global_rules
 
-    def vertical_em_size_scale(self, glyph_file: GlyphFile) -> int:
+    def get_vertical_em_scale(self, glyph_file: GlyphFile) -> int:
         if isinstance(glyph_file, CmapGlyphFile):
-            return self.cmap_rules.vertical_em_size_scales.get(glyph_file.code_point, 1)
-
+            return self.cmap_global_rules.vertical_em_scales.get(glyph_file.code_point, 1)
         return 1
 
     def should_adjust_vertical_offset_y(self, glyph_file: GlyphFile) -> bool:
-        if glyph_file.canvas.is_blank:
-            return False
-
         if isinstance(glyph_file, CmapGlyphFile):
             code_point = glyph_file.code_point
             block = unidata_blocks.get_block_by_code_point(code_point)
-
             if (
-                    block.name not in self.cmap_rules.no_vertical_offset_y_adjustment_blocks and
-                    code_point not in self.cmap_rules.no_vertical_offset_y_adjustment_code_points
+                    block.name not in self.cmap_global_rules.no_vertical_adjustment.blocks and
+                    code_point not in self.cmap_global_rules.no_vertical_adjustment.code_points
             ):
                 return True
 
         if isinstance(glyph_file, NamedGlyphFile):
-            if glyph_file.name_key not in self.named_rules.no_vertical_offset_y_adjustment:
+            if glyph_file.name_key not in self.named_global_rules.no_vertical_adjustment.name_keys:
                 return True
 
         return False

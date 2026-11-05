@@ -3,17 +3,18 @@ from typing import Any
 import yaml
 
 from tools.config import paths
+from tools.config.glyph.selector import CmapSelector, NamedSelector
 from tools.config.options import GlyphScope
 
 
-class CmapGlyphFlavorRules:
+class CmapFlavorGlobalRules:
     @staticmethod
-    def parse(data: Any) -> CmapGlyphFlavorRules:
+    def parse(data: Any) -> CmapFlavorGlobalRules:
         allow_missing_default = {
             glyph_scope: set(code_points)
             for glyph_scope, code_points in data['allow-missing-default'].items()
         }
-        return CmapGlyphFlavorRules(
+        return CmapFlavorGlobalRules(
             allow_missing_default,
         )
 
@@ -26,55 +27,38 @@ class CmapGlyphFlavorRules:
         self.allow_missing_default = allow_missing_default
 
 
-class CmapGlyphPaddingRules:
+class CmapPaddingGlobalRules:
     @staticmethod
-    def parse(data: Any) -> CmapGlyphPaddingRules:
-        allow_no_top_blocks = set()
-        allow_no_top_blocks.update(data['allow-no-top-and-right'].get('blocks', ()))
-        allow_no_top_blocks.update(data['allow-no-top-only'].get('blocks', ()))
-
-        allow_no_top_code_points = set()
-        allow_no_top_code_points.update(data['allow-no-top-and-right'].get('code-points', ()))
-        allow_no_top_code_points.update(data['allow-no-top-only'].get('code-points', ()))
-
-        allow_no_right_blocks = set()
-        allow_no_right_blocks.update(data['allow-no-top-and-right'].get('blocks', ()))
-        allow_no_right_blocks.update(data['allow-no-right-only'].get('blocks', ()))
-
-        allow_no_right_code_points = set()
-        allow_no_right_code_points.update(data['allow-no-top-and-right'].get('code-points', ()))
-        allow_no_right_code_points.update(data['allow-no-right-only'].get('code-points', ()))
-
-        return CmapGlyphPaddingRules(
-            allow_no_top_blocks,
-            allow_no_top_code_points,
-            allow_no_right_blocks,
-            allow_no_right_code_points,
+    def parse(data: Any) -> CmapPaddingGlobalRules:
+        allow_no_top_and_right = CmapSelector.parse(data.get('allow-no-top-and-right', {}))
+        allow_no_top_only = CmapSelector.parse(data.get('allow-no-top-only', {}))
+        allow_no_right_only = CmapSelector.parse(data.get('allow-no-right-only', {}))
+        return CmapPaddingGlobalRules(
+            allow_no_top_and_right,
+            allow_no_top_only,
+            allow_no_right_only,
         )
 
-    allow_no_top_blocks: set[str]
-    allow_no_top_code_points: set[int]
-    allow_no_right_blocks: set[str]
-    allow_no_right_code_points: set[int]
+    allow_no_top_and_right: CmapSelector
+    allow_no_top_only: CmapSelector
+    allow_no_right_only: CmapSelector
 
     def __init__(
             self,
-            allow_no_top_blocks: set[str],
-            allow_no_top_code_points: set[int],
-            allow_no_right_blocks: set[str],
-            allow_no_right_code_points: set[int],
+            allow_no_top_and_right: CmapSelector,
+            allow_no_top_only: CmapSelector,
+            allow_no_right_only: CmapSelector,
     ) -> None:
-        self.allow_no_top_blocks = allow_no_top_blocks
-        self.allow_no_top_code_points = allow_no_top_code_points
-        self.allow_no_right_blocks = allow_no_right_blocks
-        self.allow_no_right_code_points = allow_no_right_code_points
+        self.allow_no_top_and_right = allow_no_top_and_right
+        self.allow_no_top_only = allow_no_top_only
+        self.allow_no_right_only = allow_no_right_only
 
 
-class CmapGlyphDimensionsRules:
+class CmapDimensionsGlobalRules:
     @staticmethod
-    def parse(data: Any) -> CmapGlyphDimensionsRules:
+    def parse(data: Any) -> CmapDimensionsGlobalRules:
         east_asian_width_treated_as = data['east-asian-width-treated-as']
-        return CmapGlyphDimensionsRules(
+        return CmapDimensionsGlobalRules(
             east_asian_width_treated_as,
         )
 
@@ -87,96 +71,95 @@ class CmapGlyphDimensionsRules:
         self.east_asian_width_treated_as = east_asian_width_treated_as
 
 
-class CmapGlyphBitmapRules:
+class CmapBitmapGlobalRules:
     @staticmethod
-    def parse(data: Any) -> CmapGlyphBitmapRules:
-        flavor_rules = CmapGlyphFlavorRules.parse(data['flavor'])
-        padding_rules = CmapGlyphPaddingRules.parse(data['padding'])
-        dimensions_rules = CmapGlyphDimensionsRules.parse(data['dimensions'])
-        return CmapGlyphBitmapRules(
-            flavor_rules,
-            padding_rules,
-            dimensions_rules,
+    def parse(data: Any) -> CmapBitmapGlobalRules:
+        flavor_global_rules = CmapFlavorGlobalRules.parse(data['flavor'])
+        padding_global_rules = CmapPaddingGlobalRules.parse(data['padding'])
+        dimensions_global_rules = CmapDimensionsGlobalRules.parse(data['dimensions'])
+        return CmapBitmapGlobalRules(
+            flavor_global_rules,
+            padding_global_rules,
+            dimensions_global_rules,
         )
 
-    flavor_rules: CmapGlyphFlavorRules
-    padding_rules: CmapGlyphPaddingRules
-    dimensions_rules: CmapGlyphDimensionsRules
+    flavor_global_rules: CmapFlavorGlobalRules
+    padding_global_rules: CmapPaddingGlobalRules
+    dimensions_global_rules: CmapDimensionsGlobalRules
 
     def __init__(
             self,
-            flavor_rules: CmapGlyphFlavorRules,
-            padding_rules: CmapGlyphPaddingRules,
-            dimensions_rules: CmapGlyphDimensionsRules,
+            flavor_global_rules: CmapFlavorGlobalRules,
+            padding_global_rules: CmapPaddingGlobalRules,
+            dimensions_global_rules: CmapDimensionsGlobalRules,
     ) -> None:
-        self.flavor_rules = flavor_rules
-        self.padding_rules = padding_rules
-        self.dimensions_rules = dimensions_rules
+        self.flavor_global_rules = flavor_global_rules
+        self.padding_global_rules = padding_global_rules
+        self.dimensions_global_rules = dimensions_global_rules
 
 
-class NamedGlyphPaddingRules:
+class NamedPaddingGlobalRules:
     @staticmethod
-    def parse(data: Any) -> NamedGlyphPaddingRules:
-        allow_no_top = set()
-        allow_no_top.update(data.get('allow-no-top-and-right', ()))
-        allow_no_top.update(data.get('allow-no-top-only', ()))
-
-        allow_no_right = set()
-        allow_no_right.update(data.get('allow-no-top-and-right', ()))
-        allow_no_right.update(data.get('allow-no-right-only', ()))
-
-        return NamedGlyphPaddingRules(
-            allow_no_top,
-            allow_no_right,
+    def parse(data: Any) -> NamedPaddingGlobalRules:
+        allow_no_top_and_right = NamedSelector.parse(data.get('allow-no-top-and-right', {}))
+        allow_no_top_only = NamedSelector.parse(data.get('allow-no-top-only', {}))
+        allow_no_right_only = NamedSelector.parse(data.get('allow-no-right-only', {}))
+        return NamedPaddingGlobalRules(
+            allow_no_top_and_right,
+            allow_no_top_only,
+            allow_no_right_only,
         )
 
-    allow_no_top: set[str]
-    allow_no_right: set[str]
+    allow_no_top_and_right: NamedSelector
+    allow_no_top_only: NamedSelector
+    allow_no_right_only: NamedSelector
 
     def __init__(
             self,
-            allow_no_top: set[str],
-            allow_no_right: set[str],
+            allow_no_top_and_right: NamedSelector,
+            allow_no_top_only: NamedSelector,
+            allow_no_right_only: NamedSelector,
     ) -> None:
-        self.allow_no_top = allow_no_top
-        self.allow_no_right = allow_no_right
+        self.allow_no_top_and_right = allow_no_top_and_right
+        self.allow_no_top_only = allow_no_top_only
+        self.allow_no_right_only = allow_no_right_only
 
 
-class NamedGlyphBitmapRules:
+class NamedBitmapGlobalRules:
     @staticmethod
-    def parse(data: Any) -> NamedGlyphBitmapRules:
-        padding_rules = NamedGlyphPaddingRules.parse(data['padding'])
-        return NamedGlyphBitmapRules(
-            padding_rules,
+    def parse(data: Any) -> NamedBitmapGlobalRules:
+        padding_global_rules = NamedPaddingGlobalRules.parse(data['padding'])
+        return NamedBitmapGlobalRules(
+            padding_global_rules,
         )
 
-    padding_rules: NamedGlyphPaddingRules
+    padding_global_rules: NamedPaddingGlobalRules
 
     def __init__(
             self,
-            padding_rules: NamedGlyphPaddingRules,
+            padding_global_rules: NamedPaddingGlobalRules,
     ) -> None:
-        self.padding_rules = padding_rules
+        self.padding_global_rules = padding_global_rules
 
 
-class GlyphBitmapRules:
+class BitmapGlobalRules:
     @staticmethod
-    def load() -> GlyphBitmapRules:
-        data = yaml.safe_load(paths.CONFIGS_GLYPHS_DIR.joinpath('bitmaps.yaml').read_bytes())
-        cmap_rules = CmapGlyphBitmapRules.parse(data['cmap'])
-        named_rules = NamedGlyphBitmapRules.parse(data['named'])
-        return GlyphBitmapRules(
-            cmap_rules,
-            named_rules,
+    def load() -> BitmapGlobalRules:
+        data = yaml.safe_load(paths.CONFIGS_GLYPHS_DIR.joinpath('bitmaps', 'global.yaml').read_bytes())
+        cmap_global_rules = CmapBitmapGlobalRules.parse(data['cmap'])
+        named_global_rules = NamedBitmapGlobalRules.parse(data['named'])
+        return BitmapGlobalRules(
+            cmap_global_rules,
+            named_global_rules,
         )
 
-    cmap_rules: CmapGlyphBitmapRules
-    named_rules: NamedGlyphBitmapRules
+    cmap_global_rules: CmapBitmapGlobalRules
+    named_global_rules: NamedBitmapGlobalRules
 
     def __init__(
             self,
-            cmap_rules: CmapGlyphBitmapRules,
-            named_rules: NamedGlyphBitmapRules,
+            cmap_global_rules: CmapBitmapGlobalRules,
+            named_global_rules: NamedBitmapGlobalRules,
     ) -> None:
-        self.cmap_rules = cmap_rules
-        self.named_rules = named_rules
+        self.cmap_global_rules = cmap_global_rules
+        self.named_global_rules = named_global_rules

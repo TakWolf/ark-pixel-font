@@ -1,8 +1,8 @@
 import pytest
 
-from tools.config.glyph.bitmap import GlyphBitmapRules
+from tools.config.glyph.bitmap import BitmapGlobalRules
 
 
 @pytest.fixture(scope='session')
-def glyph_bitmap_rules() -> GlyphBitmapRules:
-    return GlyphBitmapRules.load()
+def bitmap_global_rules() -> BitmapGlobalRules:
+    return BitmapGlobalRules.load()

@@ -1,10 +1,10 @@
 
 cmap:
-  vertical-em-size-scales:
+  vertical-em-scales:
     # CJK Symbols and Punctuation
     0x3031: 2  # 〱
     0x3032: 2  # 〲
-  no-vertical-offset-y-adjustment:
+  no-vertical-adjustment:
     blocks:
       - Box Drawing
       - Block Elements
@@ -30,5 +30,6 @@ cmap:
       - 0x3035  # 〵
 
 named:
-  no-vertical-offset-y-adjustment:
-    - .notdef
+  no-vertical-adjustment:
+    name-keys:
+      - .notdef

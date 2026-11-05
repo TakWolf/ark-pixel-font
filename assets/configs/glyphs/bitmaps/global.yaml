@@ -41,4 +41,5 @@ cmap:
 named:
   padding:
     allow-no-right-only:
-      - emdash.connected
+      name-keys:
+        - emdash.connected
