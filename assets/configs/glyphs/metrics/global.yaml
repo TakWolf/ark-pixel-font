@@ -4,7 +4,7 @@ cmap:
     # CJK Symbols and Punctuation
     0x3031: 2  # 〱
     0x3032: 2  # 〲
-  no-vertical-adjustment:
+  skip-vertical-adjustment:
     blocks:
       - Box Drawing
       - Block Elements
@@ -30,6 +30,6 @@ cmap:
       - 0x3035  # 〵
 
 named:
-  no-vertical-adjustment:
+  skip-vertical-adjustment:
     name-keys:
       - .notdef

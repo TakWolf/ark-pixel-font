@@ -12,7 +12,7 @@ from pixel_font_knife.named.file import NamedGlyphFile
 
 from tools.config import paths, project, manifest, options
 from tools.config.font import FontConfig
-from tools.config.glyph.metric import MetricGlobalRules
+from tools.config.glyph.metric import MetricGlobalRules, MetricSizeRules
 from tools.config.options import WidthMode, LanguageFlavor, FontFormat
 
 
@@ -22,6 +22,7 @@ class FontBuildContext:
             font_config: FontConfig,
             scope_mappings: Mapping[str, Sequence[CmapMapping]],
             metric_global_rules: MetricGlobalRules,
+            metric_size_rules: MetricSizeRules,
             kerning_template: CmapKerningTemplate,
     ) -> FontBuildContext:
         font_size = font_config.font_size
@@ -68,6 +69,7 @@ class FontBuildContext:
             cmap_contexts,
             named_contexts,
             metric_global_rules,
+            metric_size_rules,
             kerning_template,
         )
 
@@ -76,6 +78,7 @@ class FontBuildContext:
     cmap_contexts: dict[WidthMode, CmapContext]
     named_contexts: dict[WidthMode, NamedContext]
     metric_global_rules: MetricGlobalRules
+    metric_size_rules: MetricSizeRules
     kerning_template: CmapKerningTemplate
 
     def __init__(
@@ -85,6 +88,7 @@ class FontBuildContext:
             cmap_contexts: dict[WidthMode, CmapContext],
             named_contexts: dict[WidthMode, NamedContext],
             metric_global_rules: MetricGlobalRules,
+            metric_size_rules: MetricSizeRules,
             kerning_template: CmapKerningTemplate,
     ) -> None:
         self.font_config = font_config
@@ -92,6 +96,7 @@ class FontBuildContext:
         self.cmap_contexts = cmap_contexts
         self.named_contexts = named_contexts
         self.metric_global_rules = metric_global_rules
+        self.metric_size_rules = metric_size_rules
         self.kerning_template = kerning_template
 
     @property
@@ -141,7 +146,11 @@ class FontBuildContext:
 
             vertical_em_scale = self.metric_global_rules.get_vertical_em_scale(glyph_file)
             vertical_offset_x, vertical_offset_y = glyph_file.suggest_vertical_offset(self.font_size * vertical_em_scale)
-            if not glyph_file.canvas.is_blank and self.metric_global_rules.should_adjust_vertical_offset_y(glyph_file):
+            if not (
+                    glyph_file.canvas.is_blank or
+                    self.metric_global_rules.should_skip_vertical_adjustment(glyph_file) or
+                    self.metric_size_rules.should_skip_vertical_adjustment(width_mode, glyph_file)
+            ):
                 vertical_offset_y -= 1
             advance_height = glyph_file.suggest_advance_height(self.font_size * vertical_em_scale)
 

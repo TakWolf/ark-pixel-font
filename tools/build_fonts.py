@@ -7,7 +7,7 @@ from pixel_font_knife.cmap.mapping.mapping import CmapMapping
 
 from tools.config import paths, project, manifest, options
 from tools.config.font import FontConfig
-from tools.config.glyph.metric import MetricGlobalRules
+from tools.config.glyph.metric import MetricGlobalRules, MetricSizeRules
 from tools.config.options import FontSize, WidthMode, FontFormat
 from tools.extra import publish_service, info_service
 from tools.font.context import FontBuildContext
@@ -55,7 +55,14 @@ def main(
 
     for font_size in font_sizes:
         font_config = FontConfig.load(font_size)
-        build_context = FontBuildContext.load(font_config, scope_mappings, metric_global_rules, kerning_template)
+        metric_size_rules = MetricSizeRules.load(font_size)
+        build_context = FontBuildContext.load(
+            font_config,
+            scope_mappings,
+            metric_global_rules,
+            metric_size_rules,
+            kerning_template,
+        )
 
         for width_mode in width_modes:
             alphabet = build_context.get_alphabet(width_mode)
