@@ -1,7 +1,13 @@
 
 cmap:
   skip-vertical-adjustment:
-    file-ids: []
+    file-ids:
+      # Vertical Forms
+      - common/0xFE10 zh_hant,zh_hk,zh_tw  # ︐
+      - common/0xFE12 zh_hant,zh_hk,zh_tw  # ︒
+      - common/0xFE13 ja  # ︓
+      - common/0xFE14 ja  # ︔
+      - common/0xFE19  # ︙
 
 named:
   skip-vertical-adjustment:
