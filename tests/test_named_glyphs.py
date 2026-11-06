@@ -5,7 +5,7 @@ from pixel_font_knife.named.context import NamedContext
 
 from tools.config import options
 from tools.config.font import FontConfig
-from tools.config.glyph.bitmap import BitmapGlobalRules
+from tools.config.glyph.bitmap import BitmapGlobalRules, BitmapSizeRules
 from tools.config.options import FontSize, GlyphScope
 
 
@@ -40,25 +40,37 @@ def test_duplicate_glyph_bitmap(
 
 
 @pytest.mark.parametrize('font_size', options.FONT_SIZES)
+@pytest.mark.parametrize('glyph_scope', options.GLYPH_SCOPES)
 def test_top_and_right_padding(
         load_named_context: Callable[[FontSize, GlyphScope], NamedContext],
         bitmap_global_rules: BitmapGlobalRules,
+        load_bitmap_size_rules: Callable[[FontSize], BitmapSizeRules],
         font_size: FontSize,
+        glyph_scope: GlyphScope,
 ) -> None:
-    context = load_named_context(font_size, 'common')
+    context = load_named_context(font_size, glyph_scope)
     padding_global_rules = bitmap_global_rules.named_global_rules.padding_global_rules
+    padding_size_rules = load_bitmap_size_rules(font_size).named_size_rules.padding_size_rules
 
     for name_key, glyph_variants in sorted(context.items()):
         for glyph_file in set(glyph_variants.values()):
+            file_id = f'{glyph_scope}/{glyph_file.name_key}'
+            if glyph_file.flavors:
+                file_id = f'{file_id} {','.join(glyph_file.flavors)}'
+
             if (
                     name_key not in padding_global_rules.allow_no_top_and_right.name_keys and
-                    name_key not in padding_global_rules.allow_no_top_only.name_keys
+                    name_key not in padding_global_rules.allow_no_top_only.name_keys and
+                    file_id not in padding_size_rules.allow_no_top_and_right.file_ids and
+                    file_id not in padding_size_rules.allow_no_top_only.file_ids
             ):
                 assert glyph_file.canvas.is_blank or glyph_file.canvas.trimmed_padding.top >= 1, f'[{font_size}px] glyph has no 1px top padding: {str(glyph_file.file_path)!r}'
 
             if (
                     name_key not in padding_global_rules.allow_no_top_and_right.name_keys and
-                    name_key not in padding_global_rules.allow_no_right_only.name_keys
+                    name_key not in padding_global_rules.allow_no_right_only.name_keys and
+                    file_id not in padding_size_rules.allow_no_top_and_right.file_ids and
+                    file_id not in padding_size_rules.allow_no_right_only.file_ids
             ):
                 assert glyph_file.canvas.is_blank or glyph_file.canvas.trimmed_padding.right >= 1, f'[{font_size}px] glyph has no 1px right padding: {str(glyph_file.file_path)!r}'
 

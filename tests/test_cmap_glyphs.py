@@ -7,7 +7,7 @@ from pixel_font_knife.cmap.context import CmapContext
 
 from tools.config import options
 from tools.config.font import FontConfig
-from tools.config.glyph.bitmap import BitmapGlobalRules
+from tools.config.glyph.bitmap import BitmapGlobalRules, BitmapSizeRules
 from tools.config.options import FontSize, GlyphScope
 
 
@@ -47,23 +47,33 @@ def test_duplicate_glyph_bitmap(
 
 
 @pytest.mark.parametrize('font_size', options.FONT_SIZES)
+@pytest.mark.parametrize('glyph_scope', options.GLYPH_SCOPES)
 def test_top_and_right_padding(
         load_cmap_context: Callable[[FontSize, GlyphScope], CmapContext],
         bitmap_global_rules: BitmapGlobalRules,
+        load_bitmap_size_rules: Callable[[FontSize], BitmapSizeRules],
         font_size: FontSize,
+        glyph_scope: GlyphScope,
 ) -> None:
-    context = load_cmap_context(font_size, 'common')
+    context = load_cmap_context(font_size, glyph_scope)
     padding_global_rules = bitmap_global_rules.cmap_global_rules.padding_global_rules
+    padding_size_rules = load_bitmap_size_rules(font_size).cmap_size_rules.padding_size_rules
 
     for code_point, glyph_variants in sorted(context.items()):
         block = unidata_blocks.get_block_by_code_point(code_point)
 
         for glyph_file in set(glyph_variants.values()):
+            file_id = f'{glyph_scope}/0x{glyph_file.code_point:04X}'
+            if glyph_file.flavors:
+                file_id = f'{file_id} {','.join(glyph_file.flavors)}'
+
             if (
                     block.name not in padding_global_rules.allow_no_top_and_right.blocks and
                     block.name not in padding_global_rules.allow_no_top_only.blocks and
                     code_point not in padding_global_rules.allow_no_top_and_right.code_points and
-                    code_point not in padding_global_rules.allow_no_top_only.code_points
+                    code_point not in padding_global_rules.allow_no_top_only.code_points and
+                    file_id not in padding_size_rules.allow_no_top_and_right.file_ids and
+                    file_id not in padding_size_rules.allow_no_top_only.file_ids
             ):
                 assert glyph_file.canvas.is_blank or glyph_file.canvas.trimmed_padding.top >= 1, f'[{font_size}px] glyph has no 1px top padding: {str(glyph_file.file_path)!r}'
 
@@ -71,7 +81,9 @@ def test_top_and_right_padding(
                     block.name not in padding_global_rules.allow_no_top_and_right.blocks and
                     block.name not in padding_global_rules.allow_no_right_only.blocks and
                     code_point not in padding_global_rules.allow_no_top_and_right.code_points and
-                    code_point not in padding_global_rules.allow_no_right_only.code_points
+                    code_point not in padding_global_rules.allow_no_right_only.code_points and
+                    file_id not in padding_size_rules.allow_no_top_and_right.file_ids and
+                    file_id not in padding_size_rules.allow_no_right_only.file_ids
             ):
                 assert glyph_file.canvas.is_blank or glyph_file.canvas.trimmed_padding.right >= 1, f'[{font_size}px] glyph has no 1px right padding: {str(glyph_file.file_path)!r}'
 

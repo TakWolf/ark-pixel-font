@@ -3,8 +3,8 @@ from typing import Any
 import yaml
 
 from tools.config import paths
-from tools.config.glyph.selector import CmapSelector, NamedSelector
-from tools.config.options import GlyphScope
+from tools.config.glyph.selector import CmapSelector, NamedSelector, FileIdSelector
+from tools.config.options import FontSize, GlyphScope
 
 
 class CmapFlavorGlobalRules:
@@ -163,3 +163,87 @@ class BitmapGlobalRules:
     ) -> None:
         self.cmap_global_rules = cmap_global_rules
         self.named_global_rules = named_global_rules
+
+
+class FileIdPaddingSizeRules:
+    @staticmethod
+    def parse(data: Any) -> FileIdPaddingSizeRules:
+        allow_no_top_and_right = FileIdSelector.parse(data.get('allow-no-top-and-right', {}))
+        allow_no_top_only = FileIdSelector.parse(data.get('allow-no-top-only', {}))
+        allow_no_right_only = FileIdSelector.parse(data.get('allow-no-right-only', {}))
+        return FileIdPaddingSizeRules(
+            allow_no_top_and_right,
+            allow_no_top_only,
+            allow_no_right_only,
+        )
+
+    allow_no_top_and_right: FileIdSelector
+    allow_no_top_only: FileIdSelector
+    allow_no_right_only: FileIdSelector
+
+    def __init__(
+            self,
+            allow_no_top_and_right: FileIdSelector,
+            allow_no_top_only: FileIdSelector,
+            allow_no_right_only: FileIdSelector,
+    ) -> None:
+        self.allow_no_top_and_right = allow_no_top_and_right
+        self.allow_no_top_only = allow_no_top_only
+        self.allow_no_right_only = allow_no_right_only
+
+
+class CmapBitmapSizeRules:
+    @staticmethod
+    def parse(data: Any) -> CmapBitmapSizeRules:
+        padding_size_rules = FileIdPaddingSizeRules.parse(data['padding'])
+        return CmapBitmapSizeRules(
+            padding_size_rules,
+        )
+
+    padding_size_rules: FileIdPaddingSizeRules
+
+    def __init__(
+            self,
+            padding_size_rules: FileIdPaddingSizeRules,
+    ) -> None:
+        self.padding_size_rules = padding_size_rules
+
+
+class NamedBitmapSizeRules:
+    @staticmethod
+    def parse(data: Any) -> NamedBitmapSizeRules:
+        padding_size_rules = FileIdPaddingSizeRules.parse(data['padding'])
+        return NamedBitmapSizeRules(
+            padding_size_rules,
+        )
+
+    padding_size_rules: FileIdPaddingSizeRules
+
+    def __init__(
+            self,
+            padding_size_rules: FileIdPaddingSizeRules,
+    ) -> None:
+        self.padding_size_rules = padding_size_rules
+
+
+class BitmapSizeRules:
+    @staticmethod
+    def load(font_size: FontSize) -> BitmapSizeRules:
+        data = yaml.safe_load(paths.CONFIGS_GLYPHS_DIR.joinpath('bitmaps', f'{font_size}px.yaml').read_bytes())
+        cmap_size_rules = CmapBitmapSizeRules.parse(data['cmap'])
+        named_size_rules = NamedBitmapSizeRules.parse(data['named'])
+        return BitmapSizeRules(
+            cmap_size_rules,
+            named_size_rules,
+        )
+
+    cmap_size_rules: CmapBitmapSizeRules
+    named_size_rules: NamedBitmapSizeRules
+
+    def __init__(
+            self,
+            cmap_size_rules: CmapBitmapSizeRules,
+            named_size_rules: NamedBitmapSizeRules,
+    ) -> None:
+        self.cmap_size_rules = cmap_size_rules
+        self.named_size_rules = named_size_rules

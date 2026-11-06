@@ -33,3 +33,18 @@ class NamedSelector:
             name_keys: set[str],
     ) -> None:
         self.name_keys = name_keys
+
+
+class FileIdSelector:
+    @staticmethod
+    def parse(data: Any) -> FileIdSelector:
+        file_ids = set(data.get('file-ids', ()))
+        return FileIdSelector(file_ids)
+
+    file_ids: set[str]
+
+    def __init__(
+            self,
+            file_ids: set[str],
+    ) -> None:
+        self.file_ids = file_ids
