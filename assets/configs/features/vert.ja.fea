@@ -1,0 +1,16 @@
+feature vert {
+  # General Punctuation
+  sub u2025.zh_hans by uFE30;  # ‥ → ︰
+  sub u2026.zh_hans by uFE19;  # … → ︙
+
+  # CJK Symbols and Punctuation
+  sub u3001 by uFE11;  # 、 → ︑
+  sub u3002 by uFE12;  # 。 → ︒
+
+  # Halfwidth and Fullwidth Forms
+  sub uFF01 by uFE15;  # ！ → ︕
+  sub uFF0C by uFE10;  # ， → ︐
+  sub uFF1A by uFE13.ja;  # ： → ︓
+  sub uFF1B by uFE14.ja;  # ； → ︔
+  sub uFF1F by uFE16;  # ？ → ︖
+} vert;

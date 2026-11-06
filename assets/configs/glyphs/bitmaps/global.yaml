@@ -40,6 +40,9 @@ cmap:
 
 named:
   padding:
+    allow-no-top-only:
+      name-keys:
+        - uFE31.connected
     allow-no-right-only:
       name-keys:
-        - emdash.connected
+        - u2014.connected

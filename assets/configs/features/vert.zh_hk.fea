@@ -1,0 +1,20 @@
+feature vert {
+  # General Punctuation
+  sub u2018.zh_hans by uFE41;  # ‘ → ﹁
+  sub u2019.zh_hans by uFE42;  # ’ → ﹂
+  sub u201C.zh_hans by uFE43;  # “ → ﹃
+  sub u201D.zh_hans by uFE44;  # ” → ﹄
+  sub u2025.zh_hans by uFE30;  # ‥ → ︰
+  sub u2026.zh_hans by uFE19;  # … → ︙
+
+  # CJK Symbols and Punctuation
+  sub u3001.zh_hant by uFE11.zh_hant;  # 、 → ︑
+  sub u3002.zh_hant by uFE12.zh_hant;  # 。 → ︒
+
+  # Halfwidth and Fullwidth Forms
+  sub uFF01 by uFE15;  # ！ → ︕
+  sub uFF0C.zh_hant by uFE10.zh_hant;  # ， → ︐
+  sub uFF1A by uFE13;  # ： → ︓
+  sub uFF1B by uFE14;  # ； → ︔
+  sub uFF1F by uFE16;  # ？ → ︖
+} vert;

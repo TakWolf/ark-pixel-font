@@ -33,3 +33,4 @@ named:
   skip-vertical-adjustment:
     name-keys:
       - .notdef
+      - uFE31.connected

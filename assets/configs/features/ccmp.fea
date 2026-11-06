@@ -1,0 +1,4 @@
+feature ccmp {
+  # Connect consecutive em dashes.
+  sub u2014' u2014 by u2014.connected;
+} ccmp;

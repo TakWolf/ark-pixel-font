@@ -178,6 +178,18 @@ class FontBuildContext:
                 paths.CONFIGS_FEATURES_DIR.joinpath('calt.fea'),
                 include_dir=paths.CONFIGS_FEATURES_DIR,
             ),
+            opentype.FeatureFile(
+                paths.CONFIGS_FEATURES_DIR.joinpath('ccmp.fea'),
+                include_dir=paths.CONFIGS_FEATURES_DIR,
+            ),
+            opentype.FeatureFile(
+                paths.CONFIGS_FEATURES_DIR.joinpath('vert.fea'),
+                include_dir=paths.CONFIGS_FEATURES_DIR,
+            ),
+            opentype.FeatureFile(
+                paths.CONFIGS_FEATURES_DIR.joinpath(f'vert.{language_flavor}.fea'),
+                include_dir=paths.CONFIGS_FEATURES_DIR,
+            ),
         ])
 
         return builder

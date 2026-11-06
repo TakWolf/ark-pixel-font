@@ -1,0 +1,71 @@
+feature vert {
+  # General Punctuation
+  sub u2013 by uFE32;  # – → ︲
+  sub u2014 by uFE31;  # — → ︱
+
+  # Use the vertical form of the connecting em dash.
+  sub u2014.connected by uFE31.connected;
+
+  # CJK Symbols and Punctuation
+  sub u3008 by uFE3F;  # 〈 → ︿
+  sub u3009 by uFE40;  # 〉 → ﹀
+  sub u300A by uFE3D;  # 《 → ︽
+  sub u300B by uFE3E;  # 》 → ︾
+  sub u300C by uFE41;  # 「 → ﹁
+  sub u300D by uFE42;  # 」 → ﹂
+  sub u300E by uFE43;  # 『 → ﹃
+  sub u300F by uFE44;  # 』 → ﹄
+  sub u3010 by uFE3B;  # 【 → ︻
+  sub u3011 by uFE3C;  # 】 → ︼
+  sub u3014 by uFE39;  # 〔 → ︹
+  sub u3015 by uFE3A;  # 〕 → ︺
+  sub u3016 by uFE17;  # 〖 → ︗
+  sub u3017 by uFE18;  # 〗 → ︘
+  sub u3018 by u3018.vert;  # 〘
+  sub u3019 by u3019.vert;  # 〙
+  sub u301A by u301A.vert;  # 〚
+  sub u301B by u301B.vert;  # 〛
+
+  # Hiragana
+  sub u3041 by u3041.vert;  # ぁ
+  sub u3043 by u3043.vert;  # ぃ
+  sub u3045 by u3045.vert;  # ぅ
+  sub u3047 by u3047.vert;  # ぇ
+  sub u3049 by u3049.vert;  # ぉ
+  sub u3063 by u3063.vert;  # っ
+  sub u3083 by u3083.vert;  # ゃ
+  sub u3085 by u3085.vert;  # ゅ
+  sub u3087 by u3087.vert;  # ょ
+  sub u308E by u308E.vert;  # ゎ
+  sub u3095 by u3095.vert;  # ゕ
+  sub u3096 by u3096.vert;  # ゖ
+
+  # Katakana
+  sub u30A1 by u30A1.vert;  # ァ
+  sub u30A3 by u30A3.vert;  # ィ
+  sub u30A5 by u30A5.vert;  # ゥ
+  sub u30A7 by u30A7.vert;  # ェ
+  sub u30A9 by u30A9.vert;  # ォ
+  sub u30C3 by u30C3.vert;  # ッ
+  sub u30E3 by u30E3.vert;  # ャ
+  sub u30E5 by u30E5.vert;  # ュ
+  sub u30E7 by u30E7.vert;  # ョ
+  sub u30EE by u30EE.vert;  # ヮ
+  sub u30F5 by u30F5.vert;  # ヵ
+  sub u30F6 by u30F6.vert;  # ヶ
+  sub u30FC by u30FC.vert;  # ー
+
+  # Halfwidth and Fullwidth Forms
+  sub uFF08 by uFE35;  # （ → ︵
+  sub uFF09 by uFE36;  # ） → ︶
+  sub uFF3B by uFE47;  # ［ → ﹇
+  sub uFF3D by uFE48;  # ］ → ﹈
+  sub uFF3F by uFE33;  # ＿ → ︳
+  sub uFF5B by uFE37;  # ｛ → ︷
+  sub uFF5D by uFE38;  # ｝ → ︸
+  sub uFF5F by uFF5F.vert;  # ｟
+  sub uFF60 by uFF60.vert;  # ｠
+
+  # Connect consecutive vertical em dashes, including directly encoded forms.
+  sub uFE31' [uFE31 uFE31.connected] by uFE31.connected;
+} vert;
