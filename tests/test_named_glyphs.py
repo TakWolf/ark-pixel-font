@@ -1,4 +1,6 @@
+import re
 from collections.abc import Callable
+from itertools import chain
 
 import pytest
 from pixel_font_knife.named.context import NamedContext
@@ -6,6 +8,7 @@ from pixel_font_knife.named.context import NamedContext
 from tools.config import options
 from tools.config.font import FontConfig
 from tools.config.glyph.bitmap import BitmapGlobalRules, BitmapSizeRules
+from tools.config.glyph.metric import MetricSizeRules
 from tools.config.options import FontSize, GlyphScope
 
 
@@ -76,6 +79,44 @@ def test_top_and_right_padding(
 
 
 @pytest.mark.parametrize('font_size', options.FONT_SIZES)
+def test_padding_size_rules(
+        load_named_context: Callable[[FontSize, GlyphScope], NamedContext],
+        load_bitmap_size_rules: Callable[[FontSize], BitmapSizeRules],
+        font_size: FontSize,
+) -> None:
+    contexts = {
+        glyph_scope: load_named_context(font_size, glyph_scope)
+        for glyph_scope in options.GLYPH_SCOPES
+    }
+    padding_size_rules = load_bitmap_size_rules(font_size).named_size_rules.padding_size_rules
+    file_id_regex = re.compile(r'[/\s,]')
+
+    for file_id in chain(padding_size_rules.allow_no_top_and_right.file_ids, padding_size_rules.allow_no_top_only.file_ids):
+        parts = file_id_regex.split(file_id)
+        glyph_scope = parts[0]
+        name_key = parts[1]
+        flavors = parts[2:]
+        flavor = flavors[0] if flavors else None
+        glyph_file = contexts[glyph_scope][name_key].get(flavor, None)
+
+        assert glyph_file is not None, f'[{font_size}px] invalid file-id in padding size rules: {file_id!r}, referenced glyph variant does not exist'
+        assert glyph_file.flavors == flavors, f'[{font_size}px] incorrect flavors in padding size rules: {file_id!r}, expected {glyph_file.flavors!r}, got {flavors!r}'
+        assert not glyph_file.canvas.is_blank and glyph_file.canvas.trimmed_padding.top == 0, f'[{font_size}px] unnecessary top padding exception in size rules: {file_id!r} ({str(glyph_file.file_path)!r})'
+
+    for file_id in chain(padding_size_rules.allow_no_top_and_right.file_ids, padding_size_rules.allow_no_right_only.file_ids):
+        parts = file_id_regex.split(file_id)
+        glyph_scope = parts[0]
+        name_key = parts[1]
+        flavors = parts[2:]
+        flavor = flavors[0] if flavors else None
+        glyph_file = contexts[glyph_scope][name_key].get(flavor, None)
+
+        assert glyph_file is not None, f'[{font_size}px] invalid file-id in padding size rules: {file_id!r}, referenced glyph variant does not exist'
+        assert glyph_file.flavors == flavors, f'[{font_size}px] incorrect flavors in padding size rules: {file_id!r}, expected {glyph_file.flavors!r}, got {flavors!r}'
+        assert not glyph_file.canvas.is_blank and glyph_file.canvas.trimmed_padding.right == 0, f'[{font_size}px] unnecessary right padding exception in size rules: {file_id!r} ({str(glyph_file.file_path)!r})'
+
+
+@pytest.mark.parametrize('font_size', options.FONT_SIZES)
 @pytest.mark.parametrize('glyph_scope', options.GLYPH_SCOPES)
 def test_glyph_bitmap_dimensions(
         load_font_config: Callable[[FontSize], FontConfig],
@@ -94,3 +135,28 @@ def test_glyph_bitmap_dimensions(
 
             if glyph_scope == 'proportional':
                 assert glyph_file.canvas.height == canvas_height, f'[{font_size}px] glyph bitmap dimensions error: {str(glyph_file.file_path)!r}'
+
+
+@pytest.mark.parametrize('font_size', options.FONT_SIZES)
+def test_metric_size_rules(
+        load_named_context: Callable[[FontSize, GlyphScope], NamedContext],
+        load_metric_size_rules: Callable[[FontSize], MetricSizeRules],
+        font_size: FontSize,
+) -> None:
+    contexts = {
+        glyph_scope: load_named_context(font_size, glyph_scope)
+        for glyph_scope in options.GLYPH_SCOPES
+    }
+    metric_size_rules = load_metric_size_rules(font_size).named_size_rules
+    file_id_regex = re.compile(r'[/\s,]')
+
+    for file_id in metric_size_rules.skip_vertical_adjustment.file_ids:
+        parts = file_id_regex.split(file_id)
+        glyph_scope = parts[0]
+        name_key = parts[1]
+        flavors = parts[2:]
+        flavor = flavors[0] if flavors else None
+        glyph_file = contexts[glyph_scope][name_key].get(flavor, None)
+
+        assert glyph_file is not None, f'[{font_size}px] invalid file-id in metric size rules: {file_id!r}, referenced glyph variant does not exist'
+        assert glyph_file.flavors == flavors, f'[{font_size}px] incorrect flavors in metric size rules: {file_id!r}, expected {glyph_file.flavors!r}, got {flavors!r}'
