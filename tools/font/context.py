@@ -202,5 +202,5 @@ class FontBuildContext:
                 builder = self.create_builder(width_mode, language_flavor)
                 for font_format in font_formats:
                     file_path = paths.OUTPUTS_DIR.joinpath(f'{project.FILE_NAME_PREFIX}-{self.font_size}px-{width_mode}-{language_flavor}.{font_format}')
-                    getattr(builder, f'save_{font_format.replace('.', '_')}')(file_path)
+                    getattr(builder, f'save_{font_format.replace('.', '_').replace('-', '_')}')(file_path)
                     logger.info('Make font: {!r}', str(file_path))

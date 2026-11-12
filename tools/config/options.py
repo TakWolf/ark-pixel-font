@@ -37,7 +37,7 @@ type FontFormat = Literal[
     'ttf',
     'ttf.woff',
     'ttf.woff2',
-    'ms.bitmap.ttf',
+    'ms-bitmap.ttf',
     'otb',
     'dfont',
     'bdf',

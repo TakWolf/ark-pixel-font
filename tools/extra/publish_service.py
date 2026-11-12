@@ -11,7 +11,7 @@ def make_release_zips(font_size: FontSize, width_mode: WidthMode, font_formats: 
     paths.RELEASES_DIR.mkdir(parents=True, exist_ok=True)
 
     for font_format in font_formats:
-        zip_file_path = paths.RELEASES_DIR.joinpath(f'{project.FILE_NAME_PREFIX}-font-{font_size}px-{width_mode}-{font_format}-v{project.VERSION}.zip')
+        zip_file_path = paths.RELEASES_DIR.joinpath(f'{project.FILE_NAME_PREFIX}-font-{font_size}px-{width_mode}-{font_format.replace('-', '_')}-v{project.VERSION}.zip')
         with ZipFile(zip_file_path, 'w') as file:
             file.write(paths.PROJECT_ROOT_DIR.joinpath('LICENSE-OFL'), 'OFL.txt')
 
