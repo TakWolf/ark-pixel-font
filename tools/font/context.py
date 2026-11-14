@@ -3,7 +3,7 @@ from collections.abc import Mapping, Sequence
 from datetime import datetime
 
 from loguru import logger
-from pixel_font_builder import FontBuilder, WeightName, SerifStyle, SlantStyle, WidthStyle, Glyph, opentype
+from pixel_font_builder import FontBuilder, WeightName, SerifStyle, SlantStyle, WidthStyle, Glyph, MonoRaster, opentype
 from pixel_font_knife.cmap.context import CmapContext
 from pixel_font_knife.cmap.kerning.template import CmapKerningTemplate
 from pixel_font_knife.cmap.mapping.mapping import CmapMapping
@@ -141,10 +141,12 @@ class FontBuildContext:
 
         glyph_sequence = [self.notdef_glyph_file] + self.cmap_contexts[width_mode].get_glyph_sequence(language_flavor) + self.named_contexts[width_mode].get_glyph_sequence(language_flavor)
         for glyph_file in glyph_sequence:
-            horizontal_offset_x, horizontal_offset_y = glyph_file.suggest_horizontal_offset(self.font_size, layout_metric.baseline)
-            advance_width = glyph_file.suggest_advance_width()
-
             vertical_em_scale = self.metric_global_rules.get_vertical_em_scale(glyph_file)
+
+            advance_width = glyph_file.suggest_advance_width()
+            advance_height = glyph_file.suggest_advance_height(self.font_size * vertical_em_scale)
+
+            horizontal_offset_x, horizontal_offset_y = glyph_file.suggest_horizontal_offset(self.font_size, layout_metric.baseline)
             vertical_offset_x, vertical_offset_y = glyph_file.suggest_vertical_offset(self.font_size * vertical_em_scale)
             if not (
                     glyph_file.canvas.is_blank or
@@ -152,15 +154,16 @@ class FontBuildContext:
                     self.metric_size_rules.should_skip_vertical_adjustment(width_mode, glyph_file)
             ):
                 vertical_offset_y -= 1
-            advance_height = glyph_file.suggest_advance_height(self.font_size * vertical_em_scale)
 
             builder.glyphs.append(Glyph(
                 name=glyph_file.glyph_name,
-                horizontal_offset=(horizontal_offset_x, horizontal_offset_y),
                 advance_width=advance_width,
-                vertical_offset=(vertical_offset_x, vertical_offset_y),
                 advance_height=advance_height,
-                bitmap=glyph_file.suggest_bitmap(),
+                mono_raster=MonoRaster(
+                    horizontal_offset=(horizontal_offset_x, horizontal_offset_y),
+                    vertical_offset=(vertical_offset_x, vertical_offset_y),
+                    bitmap=glyph_file.suggest_bitmap(),
+                ),
             ))
 
         character_mapping = self.cmap_contexts[width_mode].get_character_mapping(language_flavor)
