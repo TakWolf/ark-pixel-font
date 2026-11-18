@@ -3,7 +3,7 @@ from collections.abc import Mapping, Sequence
 from datetime import datetime
 
 from loguru import logger
-from pixel_font_builder import FontBuilder, WeightName, SerifStyle, SlantStyle, WidthStyle, Glyph, MonoRaster, opentype
+from pixel_font_builder import FontBuilder, Weight, SerifStyle, Spacing, Slant, Glyph, MonoRaster, opentype
 from pixel_font_knife.cmap.context import CmapContext
 from pixel_font_knife.cmap.kerning.template import CmapKerningTemplate
 from pixel_font_knife.cmap.mapping.mapping import CmapMapping
@@ -126,10 +126,10 @@ class FontBuildContext:
         builder.meta_info.created_time = datetime.fromisoformat(f'{project.VERSION.replace('.', '-')}T00:00:00Z')
         builder.meta_info.modified_time = builder.meta_info.created_time
         builder.meta_info.family_name = f'{project.FAMILY_NAME_PREFIX} {self.font_size}px {width_mode[:4].capitalize()} {manifest.LANGUAGE_FLAVOR_TO_FONT_NAME[language_flavor]}'
-        builder.meta_info.weight_name = WeightName.REGULAR
+        builder.meta_info.weight = Weight.REGULAR
         builder.meta_info.serif_style = SerifStyle.SANS_SERIF
-        builder.meta_info.slant_style = SlantStyle.NORMAL
-        builder.meta_info.width_style = WidthStyle(width_mode.capitalize())
+        builder.meta_info.spacing = Spacing(width_mode.capitalize())
+        builder.meta_info.slant = Slant.UPRIGHT
         builder.meta_info.manufacturer = project.MANUFACTURER
         builder.meta_info.designer = project.DESIGNER
         builder.meta_info.description = project.DESCRIPTION
